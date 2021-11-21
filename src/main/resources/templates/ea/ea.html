@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" th:href="@{/uses/Logo.png}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/ea/ea.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<title>ERP BOMB</title>
+</head>
+<body>
+
+	<!-- header -->
+	<header id="top">
+		<th:block th:include="common/header"/>
+	</header>
+
+	<section>
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a class="navbar-brand font-weight-bold" href="/">
+				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			</a>
+			<div class="collapse navbar-collapse function-tab">
+				<ul class="navbar-nav mr-3 top-tap">
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<hr class="m-0">
+		<div id="wrapper">
+
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+					<div class="sidebar-brand-icon rotate-n-15">
+					</div>
+					<div class="sidebar-brand-text mx-3">전자결재</div>
+				</a>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>전자결재</span>
+					</a>
+				</li>
+
+				<hr class="sidebar-divider">
+			</ul>
+			<!-- End of Sidebar -->
+
+			<div id="content-wrapper" class="d-flex flex-column">
+				<div style="width: 80%;" class="">
+					<!-- 여기부터 전자 결재 리스트 -->
+					<div class="">
+
+						<div class="search_form">
+							<input type="text" placeholder="검색어 입력" />
+							<button type="button" class="blue_btn">Search</button>
+						</div>
+						<ul class="tab ul-tab">
+							<li class="li-tab electronic_approval on" data-tab="all_approval"><span>전체</span></li>
+							<li class="li-tab electronic_approval" data-tab="before_approval"><span>기안 중</span></li>
+							<li class="li-tab electronic_approval" data-tab="approvaling"><span>결재 중</span></li>
+							<li class="li-tab electronic_approval" data-tab="confirm_approval"><span>결재 완료</span></li>
+							<li class="li-tab electronic_approval" data-tab="return_approval"><span>반려</span></li>
+						</ul>
+						<div id="all_approval" class="tab_contents electronic_approval current">
+							<div class="tableArea">
+								<table>
+									<caption>보낸쪽지 리스트</caption>
+									<colgroup>
+										<col style="width:10%" />
+										<col style="width:8%" />
+										<col style="width:50%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+											<th>기안서 복사</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop1">결재 중 기안입니다.
+											</td>
+											<td>황성연</td>
+											<td>황성연</td>
+											<td>결재 중</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop2">결재 완료 기안입니다.
+											</td>
+											<td>황성연</td>
+											<td>김가희</td>
+											<td>결재 완료</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop2">복사</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop3">기안 중 기안입니다.
+											</td>
+											<td>황성연</td>
+											<td></td>
+											<td>기안 중</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop3">복사</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop4">반려 기안입니다.</td>
+											<td>황성연</td>
+											<td>김성민</td>
+											<td>반려</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop4">복사</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div id="before_approval" class="tab_contents electronic_approval">
+							<div class="tableArea">
+								<table>
+									<caption>보낸쪽지 리스트</caption>
+									<colgroup>
+										<col style="width:10%" />
+										<col style="width:8%" />
+										<col style="width:50%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+											<th>기안서 복사</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>3</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop3">기안 중 기안입니다.
+											</td>
+											<td>황성연</td>
+											<td></td>
+											<td>기안 중</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop3">복사</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div id="approvaling" class="tab_contents electronic_approval">
+							<div class="tableArea">
+								<table>
+									<caption>보낸쪽지 리스트</caption>
+									<colgroup>
+										<col style="width:10%" />
+										<col style="width:8%" />
+										<col style="width:50%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+											<th>기안서 복사</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop1">결재 중 기안입니다.
+											</td>
+											<td>황성연</td>
+											<td>황성연</td>
+											<td>결재 중</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div id="confirm_approval" class="tab_contents electronic_approval">
+							<div class="tableArea">
+								<table>
+									<caption>보낸쪽지 리스트</caption>
+									<colgroup>
+										<col style="width:10%" />
+										<col style="width:8%" />
+										<col style="width:50%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+											<th>기안서 복사</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>2</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop2">결재 완료 기안입니다.
+											</td>
+											<td>황성연</td>
+											<td>김가희</td>
+											<td>결재 완료</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop2">복사</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div id="return_approval" class="tab_contents electronic_approval">
+							<div class="tableArea">
+								<table>
+									<caption>보낸쪽지 리스트</caption>
+									<colgroup>
+										<col style="width:10%" />
+										<col style="width:8%" />
+										<col style="width:50%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+											<th>기안서 복사</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>4</td>
+											<td>2021/11/07</td>
+											<td class="t_left pop_btn" data-button="approval_detail_pop4">반려 기안입니다.</td>
+											<td>황성연</td>
+											<td>김성민</td>
+											<td>반려</td>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop4">복사</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="btn_area">
+							<a href="#n" class="blue_btn pop_btn" data-button="new_approval_pop">신규</a>
+						</div>
+					</div>
+					<!-- 여기까지 전자 결재 리스트 -->
+
+					<!-- 여기부터 신규 전자 결재 팝업 -->
+					<div id="new_approval_pop" class="pop_layer">
+						<div class="top_area">
+							<h2>신규 결재</h2>
+							<button type="button" class="pop_close" data-button="new_approval_pop">닫기</button>
+						</div>
+						<div class="pop_inner">
+							<div class="line-div">
+								결재자&nbsp;
+								<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+									<option>황성연</option>
+									<option>최유정</option>
+									<option>김종현</option>
+									<option>김성민</option>
+									<option>최호진</option>
+									<option>김지혁</option>
+									<option>김가희</option>
+								</select>
+								<br>
+							</div>
+							<div class="mt-2 line-div">
+								참조자&nbsp;
+								<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+									<option>황성연</option>
+									<option>최유정</option>
+									<option>김종현</option>
+									<option>김성민</option>
+									<option>최호진</option>
+									<option>김지혁</option>
+									<option>김가희</option>
+								</select>
+								<br>
+							</div>
+							<textarea class="approval_content_text"></textarea>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="blue_btn pop_close" data-button="new_approval_pop">보내기</a>
+							<a href="#n" class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
+						</div>
+					</div>
+					<!-- 여기까지 신규 전자 결재 팝업 -->
+
+					<!-- 여기부터 전자 결재 디테일 팝업 -->
+					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop1" class="pop_layer approval_detail">
+						<div class="top_area">
+							<h2>전자 결재</h2>
+							<button type="button" class="pop_close" data-button="approval_detail_pop1">닫기</button>
+						</div>
+						<h2 class="approval_title mt-3">결재 중 기안입니다.</h2>
+						<table class="approval_line" border="1">
+							<tr>
+								<td rowspan="4">결재</td>
+								<td class="approval_person">사원<br>황성연</td>
+								<td class="approval_person">과장<br>최유정</td>
+								<td class="approval_person">이사<br>김성민</td>
+								<td class="approval_person">사장<br>김가희</td>
+							</tr>
+							<tr class="approval_status">
+								<td>결재</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>21/11/09</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
+							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
+								참조자
+							</div>
+							<div style="display: inline-block;">
+								<span style="color: black;">김지혁, 최호진</span>
+							</div>
+						</div>
+						<div class="pop_inner">
+							<div class="detail_note">
+								<div class="top">
+									<p class="name">기안 일자</p>
+									<p class="date">2021/11/07 11:17:01</p>
+								</div>
+
+								<div class="approval_content">
+									<p>
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="comment_area" style="margin: 0px 10px; margin-bottom: 10px;">
+							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+								<div style="height: auto;" class="col">
+									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
+									<p style="font-size: 13px; clear: both;" class="m-0">이게 첨언인가 뭔가 하는 거임<br>이런거 처음 보지?</p>
+								</div>
+							</div>
+							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+								<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+								<div style="height: auto;" class="col">
+									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
+									<p style="font-size: 13px;" class="m-0">이게 답글인가 하는 그거야<br>이런거 처음 보지?</p>
+								</div>
+							</div>
+							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+								<div class="col-1"></div>
+								<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+								<div style="height: auto;" class="col">
+									<span style="color: black;">황성연&nbsp;(기안자)</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
+									<p style="font-size: 13px;" class="m-0">이건 대댓글이야<br>이런거 처음 보지?</p>
+								</div>
+							</div>
+							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+								<div style="height: auto;" class="col">
+									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
+									<p style="font-size: 13px;" class="m-0">이게 첨언인가 뭔가 하는 거임<br>이런거 처음 보지?</p>
+								</div>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="blue_btn">결재 취소</a>
+							<a href="#n" class="gray_btn pop_btn" data-button="new_comment_pop">첨언</a>
+							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop1">닫기</a>
+						</div>
+						<!-- 여기부터 첨언 팝업 -->
+						<div id="new_comment_pop" class="pop_layer new_comment_pop">
+							<div class="top_area">
+								<h2>신규 첨언</h2>
+								<button type="button" class="pop_close" data-button="new_comment_pop">닫기</button>
+							</div>
+							<div class="pop_inner">
+								<textarea class="commnet_content_text"></textarea>
+							</div>
+							<div class="btn_area">
+								<a href="#n" class="blue_btn pop_close add_comment" data-button="new_comment_pop">작성</a>
+								<a href="#n" class="gray_btn pop_close close_comment" data-button="new_comment_pop">닫기</a>
+							</div>
+						</div>
+						<!-- 여기까지 첨언 팝업 -->
+					</div>
+					<!-- 여기까지 전자 결재 디테일 팝업 -->
+
+					<!-- 여기부터 전자 결재 디테일 팝업 -->
+					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop2" class="pop_layer approval_detail">
+						<div class="top_area">
+							<h2>전자 결재</h2>
+							<button type="button" class="pop_close" data-button="approval_detail_pop2">닫기</button>
+						</div>
+						<h2 class="approval_title mt-3">결재 완료 기안입니다.</h2>
+						<table class="approval_line" border="1">
+							<tr>
+								<td rowspan="4">결재</td>
+								<td class="approval_person">사원<br>황성연</td>
+								<td class="approval_person">과장<br>최유정</td>
+								<td class="approval_person">이사<br>김성민</td>
+								<td class="approval_person">사장<br>김가희</td>
+							</tr>
+							<tr class="approval_status">
+								<td>결재</td>
+								<td>결재</td>
+								<td>결재</td>
+								<td>결재</td>
+							</tr>
+							<tr>
+								<td>21/11/09</td>
+								<td>21/11/09</td>
+								<td>21/11/10</td>
+								<td>21/11/12</td>
+							</tr>
+						</table>
+						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
+							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
+								참조자
+							</div>
+							<div style="display: inline-block;">
+								<span style="color: black;">김지혁, 최호진</span>
+							</div>
+						</div>
+						<div class="pop_inner">
+							<div class="detail_note">
+								<div class="top">
+									<p class="name">기안 일자</p>
+									<p class="date">2021/11/07 11:17:01</p>
+								</div>
+								<div class="approval_content">
+									<p>
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="gray_btn">첨언</a>
+							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop2">닫기</a>
+						</div>
+					</div>
+					<!-- 여기까지 전자 결재 디테일 팝업 -->
+
+					<!-- 여기부터 전자 결재 디테일 팝업 -->
+					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop3" class="pop_layer approval_detail">
+						<div class="top_area">
+							<h2>전자 결재</h2>
+							<button type="button" class="pop_close" data-button="approval_detail_pop3">닫기</button>
+						</div>
+						<h2 class="approval_title mt-3">기안 중 기안입니다.</h2>
+						<div class="line-div ml-2">
+							결재자&nbsp;
+							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+								<option selected>황성연</option>
+								<option>최유정</option>
+								<option>김종현</option>
+								<option selected>김성민</option>
+								<option selected>최호진</option>
+								<option>김지혁</option>
+								<option selected>김가희</option>
+							</select>
+							<br>
+						</div>
+						<div class="mt-2 line-div ml-2">
+							참조자&nbsp;
+							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+								<option>황성연</option>
+								<option>최유정</option>
+								<option>김종현</option>
+								<option>김성민</option>
+								<option>최호진</option>
+								<option>김지혁</option>
+								<option>김가희</option>
+							</select>
+							<br>
+						</div>
+						<div class="pop_inner">
+							<div class="detail_note">
+								<div class="top">
+									<p class="name">기안 일자</p>
+									<p class="date">2021/11/07 11:17:01</p>
+								</div>
+								<div class="approval_content">
+									<textarea>테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="blue_btn">결재</a>
+							<a href="#n" class="blue_btn">수정</a>
+							<a href="#n" class="blue_btn">삭제</a>
+							<a href="#n" class="gray_btn">첨언</a>
+							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop3">닫기</a>
+						</div>
+					</div>
+					<!-- 여기까지 전자 결재 디테일 팝업 -->
+
+					<!-- 여기부터 전자 결재 디테일 팝업 -->
+					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop4" class="pop_layer approval_detail">
+						<div class="top_area">
+							<h2>전자 결재</h2>
+							<button type="button" class="pop_close" data-button="approval_detail_pop4">닫기</button>
+						</div>
+						<h2 class="approval_title mt-3">반려 기안입니다.</h2>
+						<table class="approval_line" border="1">
+							<tr>
+								<td rowspan="4">결재</td>
+								<td class="approval_person">사원<br>황성연</td>
+								<td class="approval_person">과장<br>최유정</td>
+								<td class="approval_person">이사<br>김성민</td>
+								<td class="approval_person">사장<br>김가희</td>
+							</tr>
+							<tr class="approval_status">
+								<td>결재</td>
+								<td>결재</td>
+								<td>반려</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>21/11/09</td>
+								<td>21/11/09</td>
+								<td>21/11/10</td>
+								<td></td>
+							</tr>
+						</table>
+						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
+							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
+								참조자
+							</div>
+							<div style="display: inline-block;">
+								<span style="color: black;">김지혁, 최호진</span>
+							</div>
+						</div>
+						<div class="pop_inner">
+							<div class="detail_note">
+								<div class="top">
+									<p class="name">기안 일자</p>
+									<p class="date">2021/11/07 11:17:01</p>
+								</div>
+								<div class="approval_content">
+									<p>
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="gray_btn">첨언</a>
+							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop4">닫기</a>
+						</div>
+					</div>
+					<!-- 여기까지 전자 결재 디테일 팝업 -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+		// select2 초기화
+		$('.select2').select2({
+			placeholder: '선택하여 주십시오.'
+		});
+
+		$(".delete_btn").click(function() {
+			$(this).parent().parent(".comment").remove();
+		});
+
+		$(".close_comment").click(function() {
+			$(this).parent().prev().children().val("");
+		});
+
+		$(".add_comment").click(function() {
+			let nowDate = new Date();
+			let $writer = "작성자";
+			let $content = $(this).parent().prev().children().val();
+			let newDate = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) + "-" + nowDate.getDate();
+			let $div = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;"><div style="height: auto;" class="col"><span style="color: black;">' + $writer + '</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">' + newDate + '</b><p style="font-size: 13px;" class="m-0">' + $content + '</p></div></div>'
+
+			$(this).parent().prev().children().val("");
+
+			$(this).parent().parent().prevAll(".comment_area").last().append($div);
+			console.log($(this).parent().parent(".comment_area").after(".comment"));
+			
+			$(".delete_btn").click(function() {
+				$(this).parent().parent(".comment").remove();
+			});
+		});
+	</script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+</body>
+</html>

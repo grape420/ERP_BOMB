@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" th:href="@{/uses/Logo.png}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/vote/vote.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<title>ERP BOMB</title>
+</head>
+<body>
+
+	<!-- header -->
+	<header id="top">
+		<th:block th:include="common/header"/>
+	</header>
+
+	<section>
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a class="navbar-brand font-weight-bold" href="/">
+				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			</a>
+			<div class="collapse navbar-collapse function-tab">
+				<ul class="navbar-nav mr-3 top-tap">
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<hr class="m-0">
+		<div id="wrapper">
+
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+					<div class="sidebar-brand-icon rotate-n-15">
+					</div>
+					<div class="sidebar-brand-text mx-3">투표 게시판</div>
+				</a>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>투표</span>
+					</a>
+				</li>
+
+				<hr class="sidebar-divider">
+			</ul>
+			<!-- End of Sidebar -->
+
+			<!-- 투표게시판 시작 -->
+			<div id="content-wrapper" class="d-flex flex-column">
+				<div style="width: 80%;" class="">
+					
+					<div id="content-wrapper" class="d-flex flex-column">
+						<div>
+							<div class="">
+								<div class="search_form">
+									<input type="text" placeholder="검색어 입력" />
+									<button type="button" class="blue_btn">Search</button>
+								</div>
+								<ul class="tab ul-tab">
+									<li class="li-tab electronic_approval on" data-tab="total-vote"><span>전체</span></li>
+									<li class="li-tab electronic_approval" data-tab="vote-ing"><span>진행 중</span></li>
+									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>									
+								</ul>
+								<div id="total-vote" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table>
+											
+											<colgroup>
+												<col style="width:5%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:5%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>2</td>
+													<td>최호진</td>
+													<td class="t_left pop_btn" data-button="vote-detail">제목 공모전입니다.</td>
+													<td>2021/11/07</td>
+													<td>2021-11-11</td>
+													<td>14</td>
+												</tr>
+												<tr>
+													<td>1</td>
+													<td>김성민</td>
+													<td class="t_left pop_btn" data-button="">여기는 제목입니다</td>
+													<td>2021/11/07</td>
+													<td>2021-11-08</td>
+													<td>1</td>
+													
+												</tr>
+												
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+								
+								<!-- 진행중인 투표 부분 -->
+								<div id="vote-ing" class="tab_contents electronic_approval">
+									<div class="tableArea">
+										<table>
+											
+											<colgroup>
+												<col style="width:5%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:5%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>2</td>
+													<td>최호진</td>
+													<td class="t_left pop_btn" data-button="">제목 공모전입니다.</td>
+													<td>2021/11/07</td>
+													<td>2021-11-11</td>
+													<td>10</td>
+												</tr>													
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="paging">
+									<button type="button" class="first_btn">처음페이지</button>
+									<button type="button" class="prev_btn">이전페이지</button>
+									<a href="#n" class="num on">1</a>
+									<a href="#n" class="num">2</a>
+									<a href="#n" class="num">3</a>
+									<a href="#n" class="num">4</a>
+									<button type="button" class="next_btn">다음페이지</button>
+									<button type="button" class="last_btn">마지막페이지</button>
+								</div>
+
+								<div class="btn_area">
+									<a href="#n" class="blue_btn pop_btn" data-button="new-vote">신규</a>								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 새로운 투표 작성 -->
+		<div id="new-vote" class="pop_layer">
+			<div class="top_area">
+				<h2>새 투표 작성</h2>
+				<button type="button" class="pop_close" data-button="new-vote">닫기</button>
+			</div>
+			<div class="pop_inner">
+				<div id="accordion">
+
+					<div class="top">
+						<form action="#" method="post">
+							<p>제목 : &nbsp;<input type="text" placeholder="제목을 쓰세요" style="width: 80%;"/></p>
+							<div id="collspse2" data-parent="#accordion" class="collapse">
+								<p>후보 : &nbsp;<input type="text" style="width: 80%;" placeholder="후보는 1명당 1개만 가능합니다."></p>
+							</div>
+							<textarea cols="80" rows="6" style="width: 100%; resize: none;" placeholder="내용을 입력하세요"></textarea>
+							
+						</form>
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="btn_area">
+				<a class="blue_btn pop_close" data-toggle="collapse" href="#collspse2">후보 추가</a>
+				<a href="#n" class="blue_btn pop_close" data-button="new-vote">작성하기</a>
+				<a href="#n" class="gray_btn pop_close" data-button="new-vote">닫기</a>
+			</div>
+		</div>
+		<!-- /새로운 투표-->
+
+		<!-- 투표 게시판 디테일 -->
+		<div id="vote-detail" class="pop_layer">
+			<div class="top_area">
+				<h2>투표</h2>
+				<button type="button" class="pop_close" data-button="vote-detail">닫기</button>
+			</div>
+			<div class="pop_inner">
+				<a href="#n" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;">결과보기</a>
+				<p>제목 : 제목 공모전입니다 </p>
+				<hr>
+				<p>내용 : 신상품의 이름을 정해주세요</p> 
+				<hr>
+				<form class="" action="#" method="POST">
+					<ol id="voteList">
+						<li><label for="test1">민트초코초코초코 아이스크림</label><input type="radio" id="test1" name="votes" class="vote"></li>
+						<li><label for="test2">초고추장맛 아이스크림</label><input type="radio" id="test2" name="votes" class="vote"></li>
+						<li><label for="test3">허니라떼는 말이야</label><input type="radio" id="test3" name="votes" class="vote"></li>
+					</ol>
+				</form>
+
+			</div>
+			<div class="btn_area">
+				<a href="#n" class="blue_btn pop_btn" data-button="insertVote">후보 등록</a>
+				<a href="#n" class="blue_btn pop_close" data-button="vote-detail">투표하기</a>
+				<button class="gray_btn" style="margin-right: 5px;" onclick="deleteVote()">삭제하기</button>
+				<a href="#n" class="gray_btn pop_close" data-button="vote-detail">닫기</a>
+			</div>
+		</div>
+	</div>
+	<!-- /투표 게시판 디테일-->
+
+	<!-- 후보 등록 -->
+	<div id="insertVote" class="pop_layer">
+		<div class="top_area">
+			<h2>후보 등록</h2>
+			<button type="button" class="pop_close" data-button="insertVote">닫기</button>
+		</div>
+		<div class="pop_inner">
+			<div class="top">
+				<p>제목 : 제목입니다</p>
+				<form action="#" method="post">
+					<p>후보 이름 : <input type="text" placeholder="후보는 1개만 가능합니다." style="width: 70%;"/></p>
+				</form>
+			</div>
+		</div>
+		<div class="btn_area">
+			<a href="#n" class="blue_btn pop_close" data-button="insertVote">추가하기</a>
+			<a href="#n" class="gray_btn pop_close" data-button="insertVote">닫기</a>
+		</div>
+	</div>
+	<!-- /후보 등록 -->
+
+	<!-- 투표 결과 -->
+	<div id="resultVote" class="pop_layer">
+		<div class="top_area">
+			<h2>투표 결과</h2>
+			<button type="button" class="pop_close" data-button="resultVote">닫기</button>
+		</div>
+		<div class="pop_inner">
+			<div class="top">
+				<div class="tableArea">
+					<table>
+						<colgroup>
+							<col style="width:2%" />
+							<col style="width:20%" />
+							<col style="width:5%" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>후보</th>
+								<th>득표수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>민트초코초코초코 아이스크림</td>
+								<td>2</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>초고추장맛 아이스크림</td>
+								<td>2</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>허니라떼는 말이야</td>
+								<td>10</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="btn_area">
+			<a href="#n" class="gray_btn pop_close" data-button="resultVote">닫기</a>
+		</div>
+	</div>
+	</section>
+
+</body>
+</html>

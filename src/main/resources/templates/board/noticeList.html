@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" th:href="@{/uses/Logo.png}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/board/noticeList.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+<title>ERP BOMB</title>
+</head>
+<body>
+
+	<!-- header -->
+	<header id="top">
+		<th:block th:include="common/header" />
+	</header>
+
+	<section>
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a class="navbar-brand font-weight-bold" href="/"> <img
+				th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			</a>
+			<div class="collapse navbar-collapse function-tab">
+				<ul class="navbar-nav mr-3 top-tap">
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<hr class="m-0">
+		<div id="wrapper">
+
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+					<div class="sidebar-brand-icon rotate-n-15">
+					</div>
+					<div class="sidebar-brand-text mx-3">게시판</div>
+				</a>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>공지사항</span>
+					</a>
+				</li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>사내게시판</span>
+					</a>
+				</li>
+				<hr class="sidebar-divider">
+			</ul>
+			<!-- End of Sidebar -->
+
+			<div id="boardList" class="container"  style="width: 80%;">
+					<table class="table table-hover">
+						<h2 style="font-weight: 900;">사내게시판</h2>
+						<tbody>
+						  <tr>
+							<td colspan="3"><a href="board detail.html" style="color: black;">[이벤트] LUCKY DRAW - 나이키 x 오프화이트 덩크로우 로트 50 & 샤넬 클래식 파우치</a></td>
+						  </tr>
+						  <tr>
+							<td colspan="3"><a href="board detail.html" style="color: black;">[이벤트] LUCKY DRAW - 나이키 x 오프화이트 덩크로우 로트 46 & 베어브릭 x 카카오 라이언 400%</a></td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트] LUCKY DRAW - 나이키 x 오프화이트 덩크로우 로트 18 & 프라다 에어팟프로 케이스</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트] 추석 연휴 판매자 정산 일정 안내</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트] 추석 연휴 쇼룸 및 오프라인 접수 운영 안내</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트] 추석 연휴 고객센터 운영 안내</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트 발표] 추석 연휴 택배사 휴무에 따른 거래 일정 안내</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트 발표] 보관판매 판매자 심사 오류 안내</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트 발표] 개인정보처리방침 변경 안내</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">[이벤트 발표] LUCKY DRAW - 루이비통 포쉐트클레 & 나이키 x 오프화이트 덩크로우 로트 1</td>
+						  </tr>
+						</tbody>
+					  </table>
+					
+					<div class="paging">
+					  <a href="#" class="btn_arr first"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="hide"></span></a>            
+					  <a href="#" class="btn_arr prev"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="hide"></span></a>     
+					  <a href="#" class="on">1</a><!-- D : 활성화페이지일 경우 : on 처리 -->
+					  <a href="#">2</a>
+					  <a href="#">3</a>
+					  <a href="#">4</a>
+					  <a href="#">5</a>
+					  <a href="#" class="btn_arr next"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="hide"></span></a>            
+					  <a href="#" class="btn_arr last"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="hide"></span></a>           
+				   </div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" th:href="@{/uses/Logo.png}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/board/noticeDetail.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<title>ERP BOMB</title>
+</head>
+<body>
+
+	<!-- header -->
+	<header id="top">
+		<th:block th:include="common/header"/>
+	</header>
+
+	<section>
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a class="navbar-brand font-weight-bold" href="/">
+				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			</a>
+			<div class="collapse navbar-collapse function-tab">
+				<ul class="navbar-nav mr-3 top-tap">
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<hr class="m-0">
+		<div id="wrapper">
+
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+					<div class="sidebar-brand-icon rotate-n-15">
+					</div>
+					<div class="sidebar-brand-text mx-3">게시판</div>
+				</a>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>공지사항</span>
+					</a>
+				</li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>사내게시판</span>
+					</a>
+				</li>
+				<hr class="sidebar-divider">
+			</ul>
+			<!-- End of Sidebar -->
+
+			<div id="boardDetail" class="container"  style="width: 80%;">
+				<h3 style="font-weight: 900;">공지사항</h3>
+				<hr>
+				<div class="bonmun">
+				2021.11.10
+				<p>[공지] 2022년 모나미와 함께한 콜라보 굿즈 아이템 제작안내</p>
+				<div class="realBonmun">
+				  안녕하세요. ERP BOOM입니다.<br>
+				  2022년 모나미와 함께한 콜라보 굿즈 아이템을 제작하였으니 확인 부탁드립니다.<br><br>
+			
+					<h3>다이어리</h3><br>
+					고급진 퀄리티의 다이어리 재질과	브라운 or 네이비 2가지 컬러로 구성되어<br><br>
+					내가 원하는 컬러로 PICK뿐만 아니라 배라의 SPECIAL 쿠폰 3종이<br><br>
+					함께 담겨있어 버릴 것이 하나 없는 소중한 다이어리<br><br>
+					🖊모나미 컬러펜<br><br>
+					배스킨라빈스 인기 플레이버 10종 컬러를 그대로 담은 형형색색 모나미 컬러펜<br><br>
+					
+					다이어리와 모나미 컬러펜 세트<br><br>
+					쿼터(15,500원) 이상 구매 시 2,000원 OFF<br><br>
+					3,900원 -> 1,900원 에 구매 가능<br><br>
+
+					*발주기간: 11/29(수) ~ 11/30(화)<br><br>
+					*판매기간: 12/19(금) ~ 12/25(일)<br><br>	
+			
+					판매 전, 안내드린 일정 참고 부탁드립니다.<br><br>
+					감사합니다.<br><br>
+				</div>
+					<button type="button" class="btn btn-outline-secondary" id="listBtn" onclick="location.href='board.html'">목록보기</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

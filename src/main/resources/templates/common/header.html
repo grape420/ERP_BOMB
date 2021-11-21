@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm navbar-light bg-light" style="padding: 0;">
+			<div class="collapse navbar-collapse justify-content-end">
+				<ul class="navbar-nav mr-3">
+					<li class="nav-item mr-2 ml-2">
+						<a style="cursor: text;">고객님 님 환영합니다.</a>
+					</li>
+					<li class="nav-item mr-2 ml-2 customer">
+						<a  href="board/list">고객센터</a>
+					</li>
+					<li class="nav-item mr-2 ml-2 logout">
+						<a href="member/logout">로그아웃</a>
+					</li>
+					<!--1107 쪽지 추가-->
+					<li class="nav-item mr-2 ml-2 send_note">
+						<a href="#n" class="pop_btn" data-button="note_pop">쪽지</a>
+					</li>
+					<!--1107 쪽지 추가-->
+					<li class="nav-item mr-2 ml-2 mypage">
+						<a href="myPage/drawHistory">마이페이지</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<!--1107 쪽지팝업-->
+		<div id="note_pop" class="pop_layer">
+			<div class="top_area">
+				<h2>쪽지</h2>
+				<button type="button" class="pop_close" data-button="note_pop">닫기</button>
+			</div>
+			<div class="search_form">
+				<input type="text" placeholder="검색어 입력" />
+				<button type="button" class="blue_btn">Search</button>
+			</div>
+			<ul class="tab ul-tab">
+				<li class="on" data-tab="send_message"><span>보낸쪽지</span></li>
+				<li data-tab="received_message"><span>받은쪽지</span></li>
+			</ul>
+			<!--보낸쪽지 내용-->
+			<div id="send_message" class="tab_contents current">
+				<div class="tableArea">
+					<table>
+						<caption>보낸쪽지 리스트</caption>
+						<colgroup>
+							<col style="width:5%" />
+							<col style="width:20%" />
+							<col style="width:45%" />
+							<col style="width:15%" />
+							<col style="width:15%" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>
+									<input type="checkbox" class="check_box" id="total_num" />
+									<label for="total_num"></label>
+								</th>
+								<th>보낸/받는사람</th>
+								<th>내용</th>
+								<th>발송일자</th>
+								<th>상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<input type="checkbox" id="num_01" class="check_box" />
+									<label for="num_01" data-num="1"></label>
+								</td>
+								<td>ERP BOMB!</td>
+								<td class="t_left pop_btn" data-button="note_detail_pop">안녕하세요</td>
+								<td>2021/11/07</td>
+								<td>
+									<div class="status">
+										<button type="button">확인</button>
+										<button type="button">미확인</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" id="num_02" class="check_box" />
+									<label for="num_02" data-num="2"></label>
+								</td>
+								<td>ERP BOMB!</td>
+								<td class="t_left pop_btn" data-button="note_detail_pop">안녕하세요</td>
+								<td>2021/11/07</td>
+								<td>
+									<div class="status">
+										<button type="button">확인</button>
+										<button type="button">미확인</button>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="paging">
+						<button type="button" class="first_btn">처음페이지</button>
+						<button type="button" class="prev_btn">이전페이지</button>
+						<a href="#n" class="num on">1</a>
+						<a href="#n" class="num">2</a>
+						<a href="#n" class="num">3</a>
+						<a href="#n" class="num">4</a>
+						<button type="button" class="next_btn">다음페이지</button>
+						<button type="button" class="last_btn">마지막페이지</button>
+					</div>
+				</div>
+			</div>
+			<!--//보낸쪽지 내용-->
+			<!--받은쪽지 내용-->
+			<div id="received_message" class="tab_contents">
+				<div class="tableArea">
+					<table>
+						<caption>받은쪽지 리스트</caption>
+						<colgroup>
+							<col style="width:5%" />
+							<col style="width:20%" />
+							<col style="width:45%" />
+							<col style="width:15%" />
+							<col style="width:15%" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>
+									<input type="checkbox" class="check_box" id="total_num" />
+									<label for="total_num"></label>
+								</th>
+								<th>보낸/받는사람</th>
+								<th>내용</th>
+								<th>발송일자</th>
+								<th>상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<input type="checkbox" id="num_01" class="check_box" />
+									<label for="num_01" data-num="1"></label>
+								</td>
+								<td>ERP BOMB!</td>
+								<td class="t_left pop_btn" data-button="note_detail_pop">안녕하세요</td>
+								<td>2021/11/07</td>
+								<td>
+									<div class="status">
+										<button type="button">확인</button>
+										<button type="button">미확인</button>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="paging">
+						<button type="button" class="first_btn">처음페이지</button>
+						<button type="button" class="prev_btn">이전페이지</button>
+						<a href="#n" class="num on">1</a>
+						<a href="#n" class="num">2</a>
+						<a href="#n" class="num">3</a>
+						<a href="#n" class="num">4</a>
+						<button type="button" class="next_btn">다음페이지</button>
+						<button type="button" class="last_btn">마지막페이지</button>
+					</div>
+				</div>
+			</div>
+			<!--//받은쪽지 내용-->
+			<div class="btn_area">
+				<a href="#n" class="blue_btn pop_btn" data-button="new_note_pop">신규</a>
+				<a href="#n" class="gray_btn">확인</a>
+				<a href="#n" class="gray_btn">선택삭제</a>
+				<a href="#n" class="gray_btn">닫기</a>
+			</div>
+		</div>
+		<!--1107 쪽지팝업-->
+
+		<!--1107 신규쪽지팝업-->
+		<div id="new_note_pop" class="pop_layer">
+			<div class="top_area">
+				<h2>새 쪽지</h2>
+				<button type="button" class="pop_close" data-button="new_note_pop">닫기</button>
+			</div>
+			<div class="pop_inner">
+				<div class="top">
+					<p>받는사람</p>
+					<input type="text" placeholder="받는사람" />
+				</div>
+				<textarea class="new_note_content"></textarea>
+			</div>
+			<div class="btn_area">
+				<a href="#n" class="blue_btn pop_close" data-button="new_note_pop">보내기</a>
+				<a href="#n" class="gray_btn pop_close" data-button="new_note_pop">닫기</a>
+			</div>
+		</div>
+		<!--//1107 신규쪽지팝업-->
+
+		<!--1107 쪽지디테일팝업-->
+		<div id="note_detail_pop" class="pop_layer">
+			<div class="top_area">
+				<h2>받은쪽지</h2>
+				<button type="button" class="pop_close" data-button="note_detail_pop">닫기</button>
+			</div>
+			<div class="pop_inner">
+				<div class="detail_note">
+					<div class="top">
+						<p class="name">ERP BOMB!</p>
+						<p class="date">2021/11/07 11:17:01</p>
+					</div>
+					<div class="btn">
+						안녕하세요.
+						<br />ERP BOMB! 고객지원팀입니다.
+						<br /><br />문의주신 내용에 대해 추후 다시 상담이 필요하신 경우,
+						<br />[전화상담요청]을 남겨주시기 바랍니다.
+						<br /><br />감사합니다.
+					</div>
+				</div>
+			</div>
+			<div class="btn_area">
+				<a href="#n" class="blue_btn">삭제</a>
+				<a href="#n" class="gray_btn">이전</a>
+				<a href="#n" class="gray_btn">다음</a>
+				<a href="#n" class="gray_btn pop_close" data-button="note_detail_pop">닫기</a>
+			</div>
+		</div>
+		<!--//1107 쪽지디테일팝업-->
+
+		<hr class="m-0">
+		
+	<script th:src="@{/uses/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/uses/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/uses/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<script th:src="@{/uses/js/sb-admin-2.min.js}"></script>
+	<script th:src="@{/uses/vendor/datatables/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/uses/js/demo/datatables-demo.js}"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+	
+	<script>
+		
+		/*1107 css 추가*/
+		$(document).ready(function () {
+
+			//상태 확인, 미확인
+			$('.status button').on('click', function () {
+				$(this).toggleClass('on');
+			})
+
+			//쪽지 탭
+			$('.tab>li').on('click', function () {
+				var this_tab = $(this).data('tab');
+
+				if ($(this).hasClass("electronic_approval")) {
+					$('.tab>li.electronic_approval').removeClass('on');
+					$('.tab_contents.electronic_approval').removeClass('current');
+				} else {
+					$('.tab>li').not(".electronic_approval").removeClass('on');
+					$('.tab_contents').not(".electronic_approval").removeClass('current');
+				}
+				$(this).addClass('on');
+				$('#' + this_tab).addClass('current');
+			});
+
+			//팝업열기닫기
+			$('.pop_btn').on('click', function () {
+				var pop_name = $(this).data('button');
+
+				$('#' + pop_name).stop().toggle();
+				pop_align();
+			});
+
+			$('.pop_close').on('click', function () {
+				var pop_name = $(this).data('button');
+
+				$('#' + pop_name).stop().toggle();
+			});
+
+			//팝업센터
+			function pop_align() {
+				var window_w = $(window).width();
+				$('.pop_layer').each(function (index, item) {
+					$(item).addClass('pop_0' + index);
+
+					var pop_width = $('.pop_0' + index).width();
+					var pop_height = $('.pop_0' + index).height();
+
+					$('.pop_0' + index).css({
+						'margin-left': -(pop_width / '2'),
+						'margin-top': -(pop_height / '2')
+					});
+				});
+				
+				$('.payroll_pop_layer').each(function (index, item) {
+					$(item).addClass('pop_0' + index);
+
+					var pop_width = $('.pop_0' + index).width();
+					var pop_height = $('.pop_0' + index).height();
+
+					$('.pop_0' + index).css({
+						'margin-left': -(pop_width / '2'),
+						'margin-top': -(pop_height / '2')
+					});
+				});
+			}
+		});
+	</script>
+</body>
+</html>
