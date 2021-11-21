@@ -58,7 +58,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 			    .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))	// 로그아웃 시 요청 경로
 			    .deleteCookies("JSESSIONID")								// 쿠키 제거
 			    .invalidateHttpSession(true)								// Session정보 무효화
-			    .logoutSuccessUrl("/")			
+			    .logoutSuccessUrl("/member/login")			
 			.and()
 				.exceptionHandling()										// exception 핸들링 설정
 				.accessDeniedPage("/common/denied");						// 접근 거부시 경로 설정

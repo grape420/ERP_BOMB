@@ -9,7 +9,7 @@ public class MainController {
 	
 	@GetMapping(value = {"/", "main"})
 	public String main() {
-		return "member/login";
+		return "main/main";
 	}
 	
 	@PostMapping(value = "/")
