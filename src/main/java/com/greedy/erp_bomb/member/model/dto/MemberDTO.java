@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
@@ -22,6 +22,7 @@ import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
 import com.greedy.erp_bomb.note.model.dto.NoteDTO;
+import com.greedy.erp_bomb.sp.model.dto.SPDTO;
 import com.greedy.erp_bomb.tna.model.dto.TNADTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
@@ -78,7 +79,7 @@ public class MemberDTO implements Serializable {
 	@Column(name = "MEMBER_EMAIL")
 	private String email;
 	
-	@OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "member")
 	private List<MemberRoleDTO> memberRoleList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "member")
@@ -88,7 +89,7 @@ public class MemberDTO implements Serializable {
 	private List<EACarbonDTO> eaBonDTOList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member")
-	private List<AddendumDTO> addenumList = new ArrayList<>();
+	private List<AddendumDTO> addendumList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "member")
 	private List<EAPathDTO> eaPathList = new ArrayList<>();
@@ -117,12 +118,15 @@ public class MemberDTO implements Serializable {
 	@OneToMany(mappedBy = "receiveMember")
 	private List<NoteDTO> receiveMemberList = new ArrayList<>();
 
+	@OneToOne(mappedBy = "member")
+	private SPDTO sp;
+	
 	public MemberDTO() {
 	}
 	public MemberDTO(String name, CompanyDTO company, DeptDTO dept, RankDTO rank, String pwd, int empNo, String birth,
 			String phone, Date joinDate, Date quitDate, int regularPay, int bonus, int annualIncome, String email,
 			List<MemberRoleDTO> memberRoleList, List<EADTO> eaList, List<EACarbonDTO> eaBonDTOList,
-			List<AddendumDTO> addenumList, List<EAPathDTO> eaPathList, List<TNADTO> tnaList, List<VoteDTO> voteList,
+			List<AddendumDTO> addendumList, List<EAPathDTO> eaPathList, List<TNADTO> tnaList, List<VoteDTO> voteList,
 			List<VoteParticipationDTO> voteParticipationList, List<VoteOptionDTO> voteOptionList,
 			List<BoardDTO> boardList, List<CommentDTO> commentList, List<NoteDTO> sentNoteList,
 			List<NoteDTO> receiveMemberList) {
@@ -143,7 +147,7 @@ public class MemberDTO implements Serializable {
 		this.memberRoleList = memberRoleList;
 		this.eaList = eaList;
 		this.eaBonDTOList = eaBonDTOList;
-		this.addenumList = addenumList;
+		this.addendumList = addendumList;
 		this.eaPathList = eaPathList;
 		this.tnaList = tnaList;
 		this.voteList = voteList;
@@ -154,7 +158,6 @@ public class MemberDTO implements Serializable {
 		this.sentNoteList = sentNoteList;
 		this.receiveMemberList = receiveMemberList;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -257,11 +260,11 @@ public class MemberDTO implements Serializable {
 	public void setEaBonDTOList(List<EACarbonDTO> eaBonDTOList) {
 		this.eaBonDTOList = eaBonDTOList;
 	}
-	public List<AddendumDTO> getAddenumList() {
-		return addenumList;
+	public List<AddendumDTO> getAddendumList() {
+		return addendumList;
 	}
-	public void setAddenumList(List<AddendumDTO> addenumList) {
-		this.addenumList = addenumList;
+	public void setAddendumList(List<AddendumDTO> addendumList) {
+		this.addendumList = addendumList;
 	}
 	public List<EAPathDTO> getEaPathList() {
 		return eaPathList;
@@ -317,15 +320,21 @@ public class MemberDTO implements Serializable {
 	public void setReceiveMemberList(List<NoteDTO> receiveMemberList) {
 		this.receiveMemberList = receiveMemberList;
 	}
+	public SPDTO getSp() {
+		return sp;
+	}
+	public void setSp(SPDTO sp) {
+		this.sp = sp;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MemberDTO [name=" + name + ", coSerialNo=" + company.getName() + ", deptNo=" + dept.getName() + ", rankNo=" + rank.getName()
 				+ ", pwd=" + pwd + ", empNo=" + empNo + ", birth=" + birth + ", phone=" + phone + ", joinDate="
 				+ joinDate + ", quitDate=" + quitDate + ", regularPay=" + regularPay + ", bonus=" + bonus
-				+ ", annualIncome=" + annualIncome + ", email=" + email + "]";
+				+ ", annualIncome=" + annualIncome + ", email=" + email + ", sp=" + sp.getServerancePay() + "]";
 	}
 }
