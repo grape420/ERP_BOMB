@@ -19,6 +19,9 @@ public class EaContorller {
 		this.eaService = eaService;
 	}
 	
+	@GetMapping("/ea")
+	public void ea() { }
+	
 	@GetMapping("/test")
 	public String test() {
 		

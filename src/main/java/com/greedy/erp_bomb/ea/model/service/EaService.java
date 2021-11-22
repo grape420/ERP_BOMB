@@ -17,7 +17,7 @@ public class EaService {
 		this.eaDAO = eaDAO;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public EADTO test() {
 		return eaDAO.test();
 	}
