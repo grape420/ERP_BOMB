@@ -15,7 +15,6 @@ public class EaDAO {
 
 	public EADTO test() {
 		EADTO ea = em.find(EADTO.class, 3);
-		
 		System.out.println("EADTO 찾아 왔는지 테스트");
 		
 		System.out.println("참조 리스트 사이즈 : " + ea.getEaCarbonList().size());
