@@ -11,4 +11,11 @@ public class MemberController {
 	@GetMapping("/login")
 	public void memberLogin() { }
 	
+	
+	/* 급여관리 */
+	@GetMapping("/salary")
+	public void salaryManagement() {
+		
+	}
+
 }
