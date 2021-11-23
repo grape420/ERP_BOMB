@@ -27,8 +27,12 @@ public class EaContorller {
 	
 	@GetMapping("/ea")
 	public void ea(Principal principal, Model model) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		List<EADTO> eaList = eaService.findMyEa(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
+		
+		List<EADTO> MyEaList = eaService.findMyEa(userName);
+		
+		List<EADTO> myEaPathList = eaService.findEaPathList(userName);
+		
 	}
 	
 	@GetMapping("/test")

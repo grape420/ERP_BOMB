@@ -26,7 +26,10 @@ public class EaService {
 	
 	@Transactional
 	public List<EADTO> findMyEa(String userName) {
-		
-		return null;
+		return eaDAO.findMyEa(userName);
+	}
+
+	public List<EADTO> findEaPathList(String userName) {
+		return eaDAO.findEaPathList(userName);
 	}
 }
