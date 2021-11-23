@@ -16,10 +16,12 @@ public class SalaryDAO {
 	@PersistenceContext	
 	private EntityManager em;
 
-	public List<SalaryDTO> findAllMySalary() {
-		String jpql = "SELECT s FROM SalaryDTO as s ORDER BY s.serialNo ASC";
+	public List<SalaryDTO> findAllMySalary(String userName) {
+		String jpql = "SELECT s FROM SalaryDTO as s WHERE s.member.name = :name ORDER BY s.serialNo DESC";
 		
-		TypedQuery<SalaryDTO> query = em.createQuery(jpql, SalaryDTO.class);
+		TypedQuery<SalaryDTO> query = em.createQuery(jpql, SalaryDTO.class)
+										.setParameter("name", userName);
+		
 		List<SalaryDTO> salaryList = query.getResultList();
 		
 		System.out.println("=====================salaryDAO======================");

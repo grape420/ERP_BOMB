@@ -44,7 +44,7 @@
 						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
@@ -113,22 +113,28 @@
 									</colgroup> -->
 									<thead>
 										<tr>
+											<th>번호</th>
 											<th>귀속연월</th>
-											<th>급여구분</th>
-											<th>사번</th>
 											<th>사원명</th>
+											<th>월급</th>
+											<th>보너스</th>
 											<th>지급총액</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="t_center pop_btn" data-button="payroll_detail_pop1">2021/11</td>
-											<td>급여</td>
-											<td>0001</td>
-											<td>김회계</td>
-											<td>1,650,000</td>
+									<!-- 관리자 X -->
+										<tr th:each="salary : ${ salaryList }">
+											<td th:text="${ salary.serialNo }"></td>
+											<td th:text="${#dates.format(salary.Date, 'yyyy-MM')}" class="t_center pop_btn" data-button="payroll_detail_pop1"></td>
+											<td th:text="${ salary.member.name }"></td>
+											<td th:text="${ salary.regularPay }"></td>
+											<td th:text="${ salary.bonus }"></td>
+											
 										</tr>
-										<tr>
+										
+									<!-- 관리자 O -->
+									
+										<!-- <tr>
 											<td class="t_center pop_btn" data-button="payroll_detail_pop2">2021/11</td>
 											<td>급여</td>
 											<td>0007</td>
@@ -155,7 +161,7 @@
 											<td>0033</td>
 											<td>최유정</td>
 											<td>1,210,000</td>
-										</tr>
+										</tr> -->
 									</tbody>
 								</table>
 
@@ -355,6 +361,7 @@
 	</section>
 	
 	<script>
+		
 	</script>
 </body>
 </html>

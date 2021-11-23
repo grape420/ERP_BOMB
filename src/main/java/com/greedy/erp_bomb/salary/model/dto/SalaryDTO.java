@@ -34,60 +34,72 @@ public class SalaryDTO implements Serializable {
 	private MemberDTO member;
 	
 	@Column(name = "SAL_DATE")
-	private java.sql.Date Date;
+	private java.util.Date Date;
 	
-	@Column(name = "SAL_REGULAR_PAY")
-	private int reularPay;
+	@Column(name = "SAL_REGULAR_PAY", nullable = true)
+	private Integer regularPay;
 	
-	@Column(name = "SAL_BONUS")
-	private int bonus;
+	@Column(name = "SAL_BONUS", nullable = true)
+	private Integer bonus;
 
 	public SalaryDTO() {
 	}
-	public SalaryDTO(int serialNo, MemberDTO member, java.sql.Date date, int reularPay, int bonus) {
+
+	public SalaryDTO(int serialNo, MemberDTO member, java.util.Date date, Integer regularPay, Integer bonus) {
 		this.serialNo = serialNo;
 		this.member = member;
 		Date = date;
-		this.reularPay = reularPay;
+		this.regularPay = regularPay;
 		this.bonus = bonus;
 	}
+
 	public int getSerialNo() {
 		return serialNo;
 	}
+
 	public void setSerialNo(int serialNo) {
 		this.serialNo = serialNo;
 	}
+
 	public MemberDTO getMember() {
 		return member;
 	}
+
 	public void setMember(MemberDTO member) {
 		this.member = member;
 	}
-	public java.sql.Date getDate() {
+
+	public java.util.Date getDate() {
 		return Date;
 	}
-	public void setDate(java.sql.Date date) {
+
+	public void setDate(java.util.Date date) {
 		Date = date;
 	}
-	public int getReularPay() {
-		return reularPay;
+
+	public Integer getRegularPay() {
+		return regularPay;
 	}
-	public void setReularPay(int reularPay) {
-		this.reularPay = reularPay;
+
+	public void setRegularPay(Integer regularPay) {
+		this.regularPay = regularPay;
 	}
-	public int getBonus() {
+
+	public Integer getBonus() {
 		return bonus;
 	}
-	public void setBonus(int bonus) {
+
+	public void setBonus(Integer bonus) {
 		this.bonus = bonus;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "SalaryDTO [serialNo=" + serialNo + ", member=" + member + ", Date=" + Date + ", reularPay=" + reularPay
-				+ ", bonus=" + bonus + "]";
+		return "SalaryDTO [serialNo=" + serialNo + ", member=" + member + ", Date=" + Date + ", regularPay="
+				+ regularPay + ", bonus=" + bonus + "]";
 	}
 }

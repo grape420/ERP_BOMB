@@ -21,18 +21,9 @@ public class SalaryService {
 	}
 	
 	@Transactional
-	public List<SalaryDTO> findAllMySalary() {
-		return salaryDAO.findAllMySalary();
+	public List<SalaryDTO> findAllMySalary(String userName) {
+		System.out.println("==========salaryService===========");
+		return salaryDAO.findAllMySalary(userName);
 	}
-	
-//	@Transactional
-//	public void registNewMenu(SalaryDTO newSalary) {
-//		salaryDAO.registNewMenu(newSalary);
-//	}
-//	
-//	@Transactional
-//	public void modifySalary(SalaryDTO salary) {
-//		salaryDAO.modifySalary(salary);
-//	}
 	
 }
