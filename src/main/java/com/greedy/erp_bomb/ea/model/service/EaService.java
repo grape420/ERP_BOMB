@@ -1,5 +1,7 @@
 package com.greedy.erp_bomb.ea.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +19,14 @@ public class EaService {
 		this.eaDAO = eaDAO;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public EADTO test() {
 		return eaDAO.test();
 	}
-
+	
+	@Transactional
+	public List<EADTO> findMyEa(String userName) {
+		
+		return null;
+	}
 }

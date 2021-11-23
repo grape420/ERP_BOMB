@@ -15,7 +15,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
-<link th:href="@{uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/vote/vote.css}">	<!-- 여기에 페이지 css파일 적용 -->
@@ -72,7 +72,7 @@
 				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
 					<div class="sidebar-brand-icon rotate-n-15">
 					</div>
-					<div class="sidebar-brand-text mx-3">투표 게시판</div>
+					<div class="sidebar-brand-text mx-3">게시판</div>
 				</a>
 
 				<!-- Divider -->
@@ -83,12 +83,22 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-						aria-expanded="true" aria-controls="collapseUtilities">
-						<span>투표</span>
+					<a class="nav-link" href="#">
+						<span>공지사항</span>
 					</a>
 				</li>
-
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<span>사내게시판</span>
+					</a>
+				</li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link" href="/vote/vote" >
+						<span>투표 게시판</span>
+					</a>
+				</li>
 				<hr class="sidebar-divider">
 			</ul>
 			<!-- End of Sidebar -->
@@ -132,24 +142,14 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>2</td>
-													<td>최호진</td>
-													<td class="t_left pop_btn" data-button="vote-detail">제목 공모전입니다.</td>
-													<td>2021/11/07</td>
-													<td>2021-11-11</td>
+												<tr th:each="vote : ${ voteList }">
+													<td th:text="${ vote.serialNo }"></td>
+													<td th:text="${ vote.member.name }"></td>
+													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail"></td>
+													<td th:text="${ vote.regDate }"></td>
+													<td th:text="${ vote.endDate }"></td>
 													<td>14</td>
 												</tr>
-												<tr>
-													<td>1</td>
-													<td>김성민</td>
-													<td class="t_left pop_btn" data-button="">여기는 제목입니다</td>
-													<td>2021/11/07</td>
-													<td>2021-11-08</td>
-													<td>1</td>
-													
-												</tr>
-												
 											</tbody>
 										</table>
 
@@ -180,13 +180,50 @@
 												</tr>
 											</thead>
 											<tbody>
+												<tr th:each="regvote : ${ regVoteList }">
+													<td th:text="${ regvote.serialNo }"></td>
+													<td th:text="${ regvote.member.name }"></td>
+													<td th:text="${ regvote.title }" class="t_left pop_btn" data-button="vote-detail"></td>
+													<td th:text="${ regvote.regDate }"></td>
+													<td th:text="${ regvote.endDate }"></td>
+													<td>14</td>
+												</tr>													
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<!-- 투표 종료 부분 -->
+								<div id="endvote" class="tab_contents electronic_approval">
+									<div class="tableArea">
+										<table>
+											
+											<colgroup>
+												<col style="width:5%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:5%" />
+											</colgroup>
+											<thead>
 												<tr>
-													<td>2</td>
-													<td>최호진</td>
-													<td class="t_left pop_btn" data-button="">제목 공모전입니다.</td>
-													<td>2021/11/07</td>
-													<td>2021-11-11</td>
-													<td>10</td>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="endvote : ${ endVoteList }">
+													<td th:text="${ endvote.serialNo }"></td>
+													<td th:text="${ endvote.member.name }"></td>
+													<td th:text="${ endvote.title }" class="t_left pop_btn" data-button="vote-detail"></td>
+													<td th:text="${ endvote.regDate }"></td>
+													<td th:text="${ endvote.endDate }"></td>
+													<td>14</td>
 												</tr>													
 											</tbody>
 										</table>
@@ -223,13 +260,15 @@
 				<div id="accordion">
 
 					<div class="top">
-						<form action="#" method="post">
-							<p>제목 : &nbsp;<input type="text" placeholder="제목을 쓰세요" style="width: 80%;"/></p>
+						<form action="/vote/insertVote" method="post">
+							<p>제목 : &nbsp;<input type="text" placeholder="제목을 쓰세요" style="width: 80%;" name="title"></p>
 							<div id="collspse2" data-parent="#accordion" class="collapse">
-								<p>후보 : &nbsp;<input type="text" style="width: 80%;" placeholder="후보는 1명당 1개만 가능합니다."></p>
+								<p>후보 : &nbsp;<input type="text" style="width: 80%;" placeholder="후보는 1명당 1개만 가능합니다." name="insertMember"></p>
 							</div>
-							<textarea cols="80" rows="6" style="width: 100%; resize: none;" placeholder="내용을 입력하세요"></textarea>
+							<p>시작 ~ 종료일 : <input type="date" name="regDate"> ~ <input type="date" name="endDate"> </p>
+							<textarea cols="80" rows="6" style="width: 100%; resize: none;" placeholder="내용을 입력하세요" name="content"></textarea>
 							
+							<button type="submit" style="display: none;" id="newVote"></button>
 						</form>
 					</div>
 					
@@ -238,10 +277,17 @@
 
 			<div class="btn_area">
 				<a class="blue_btn pop_close" data-toggle="collapse" href="#collspse2">후보 추가</a>
-				<a href="#n" class="blue_btn pop_close" data-button="new-vote">작성하기</a>
+				<button class="blue_btn pop_close" onclick="insertVote()">작성하기</button>
 				<a href="#n" class="gray_btn pop_close" data-button="new-vote">닫기</a>
 			</div>
 		</div>
+		
+		<script>
+			function insertVote(){
+				$("#newVote").trigger("click");
+			}
+		</script>
+		
 		<!-- /새로운 투표-->
 
 		<!-- 투표 게시판 디테일 -->
@@ -256,14 +302,14 @@
 				<hr>
 				<p>내용 : 신상품의 이름을 정해주세요</p> 
 				<hr>
-				<form class="" action="#" method="POST">
+				<form action="#" method="POST">
 					<ol id="voteList">
 						<li><label for="test1">민트초코초코초코 아이스크림</label><input type="radio" id="test1" name="votes" class="vote"></li>
 						<li><label for="test2">초고추장맛 아이스크림</label><input type="radio" id="test2" name="votes" class="vote"></li>
 						<li><label for="test3">허니라떼는 말이야</label><input type="radio" id="test3" name="votes" class="vote"></li>
 					</ol>
 				</form>
-
+			
 			</div>
 			<div class="btn_area">
 				<a href="#n" class="blue_btn pop_btn" data-button="insertVote">후보 등록</a>
@@ -344,6 +390,8 @@
 		</div>
 	</div>
 	</section>
+
+
 
 </body>
 </html>
