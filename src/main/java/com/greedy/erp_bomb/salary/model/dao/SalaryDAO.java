@@ -17,12 +17,15 @@ public class SalaryDAO {
 	private EntityManager em;
 
 	public List<SalaryDTO> findAllMySalary() {
-		String jpql = "SELECT s FROM SalaryDTO as s ORDER BY s.salSerialNo ASC";
+		String jpql = "SELECT s FROM SalaryDTO as s ORDER BY s.serialNo ASC";
 		
 		TypedQuery<SalaryDTO> query = em.createQuery(jpql, SalaryDTO.class);
 		List<SalaryDTO> salaryList = query.getResultList();
 		
-		
+		System.out.println("=====================salaryDAO======================");
+		for(SalaryDTO s : salaryList) {
+			System.out.println(s);
+		}
 		
 		return salaryList;	
 		}
