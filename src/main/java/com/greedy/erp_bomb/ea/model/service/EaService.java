@@ -20,16 +20,17 @@ public class EaService {
 	}
 
 	@Transactional
-	public EADTO test() {
-		return eaDAO.test();
-	}
-	
-	@Transactional
 	public List<EADTO> findMyEa(String userName) {
 		return eaDAO.findMyEa(userName);
 	}
 
-	public List<EADTO> findEaPathList(String userName) {
+	@Transactional
+	public List<EADTO> findMyEaPathList(String userName) {
 		return eaDAO.findEaPathList(userName);
+	}
+
+	@Transactional
+	public List<EADTO> findMyEaCarbonList(String userName) {
+		return eaDAO.findEaCarbonList(userName);
 	}
 }

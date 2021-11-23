@@ -29,16 +29,13 @@ public class EaContorller {
 	public void ea(Principal principal, Model model) {
 		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
 		
-		List<EADTO> MyEaList = eaService.findMyEa(userName);
+		List<EADTO> myEaList = eaService.findMyEa(userName);
+		List<EADTO> myEaPathList = eaService.findMyEaPathList(userName);
+		List<EADTO> myEaCarbonList = eaService.findMyEaCarbonList(userName);
 		
-		List<EADTO> myEaPathList = eaService.findEaPathList(userName);
-		
+		model.addAttribute("myEaList", myEaList);
+		model.addAttribute("myEaPathList", myEaPathList);
+		model.addAttribute("myEaCarbonList", myEaCarbonList);
 	}
 	
-	@GetMapping("/test")
-	public String test() {
-		EADTO ea = eaService.test();
-		return "main/main";
-	}
-
 }

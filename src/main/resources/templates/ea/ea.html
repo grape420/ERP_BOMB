@@ -102,13 +102,11 @@
 							<button type="button" class="blue_btn">Search</button>
 						</div>
 						<ul class="tab ul-tab">
-							<li class="li-tab electronic_approval on" data-tab="all_approval"><span>전체</span></li>
-							<li class="li-tab electronic_approval" data-tab="before_approval"><span>기안 중</span></li>
-							<li class="li-tab electronic_approval" data-tab="approvaling"><span>결재 중</span></li>
-							<li class="li-tab electronic_approval" data-tab="confirm_approval"><span>결재 완료</span></li>
-							<li class="li-tab electronic_approval" data-tab="return_approval"><span>반려</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>참조 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>결재 기안</span></li>
 						</ul>
-						<div id="all_approval" class="tab_contents electronic_approval current">
+						<div id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">
 								<table>
 									<caption>보낸쪽지 리스트</caption>
@@ -177,7 +175,7 @@
 							</div>
 						</div>
 
-						<div id="before_approval" class="tab_contents electronic_approval">
+						<div id="myEaPathList" class="tab_contents electronic_approval">
 							<div class="tableArea">
 								<table>
 									<caption>보낸쪽지 리스트</caption>
@@ -217,7 +215,7 @@
 							</div>
 						</div>
 
-						<div id="approvaling" class="tab_contents electronic_approval">
+						<div id="myEaCarbonList" class="tab_contents electronic_approval">
 							<div class="tableArea">
 								<table>
 									<caption>보낸쪽지 리스트</caption>
@@ -450,7 +448,7 @@
 								</div>
 							</div>
 							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+								<div style="display: flex; align-items: center;" class="col-1 p-0"><img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
 								<div style="height: auto;" class="col">
 									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
 									<p style="font-size: 13px;" class="m-0">이게 답글인가 하는 그거야<br>이런거 처음 보지?</p>
@@ -458,7 +456,7 @@
 							</div>
 							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
 								<div class="col-1"></div>
-								<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+								<div style="display: flex; align-items: center;" class="col-1 p-0"><img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
 								<div style="height: auto;" class="col">
 									<span style="color: black;">황성연&nbsp;(기안자)</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
 									<p style="font-size: 13px;" class="m-0">이건 대댓글이야<br>이런거 처음 보지?</p>

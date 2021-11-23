@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
 
@@ -16,10 +17,6 @@ public class EaDAO {
 	
 	@PersistenceContext
 	private EntityManager em;
-
-	public EADTO test() {
-		return em.find(EADTO.class, 3);
-	}
 
 	public List<EADTO> findMyEa(String userName) {
 		String jpql = "SELECT a FROM EADTO as a WHERE a.member.name = :name";
@@ -36,7 +33,7 @@ public class EaDAO {
 	}
 
 	public List<EADTO> findEaPathList(String userName) {
-		String jpql = "SELECT a FROM EA_APPROVAL_PATH as a WHERE a.member.name = :name";
+		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.member.name = :name";
 		
 		List<EAPathDTO> myEaPathList = em.createQuery(jpql, EAPathDTO.class).setParameter("name", userName).getResultList();
 		
@@ -50,6 +47,23 @@ public class EaDAO {
 		}
 		
 		return eaPathList;
+	}
+
+	public List<EADTO> findEaCarbonList(String userName) {
+		String jpql = "SELECT a FROM EACarbonDTO as a WHERE a.member.name = :name";
+		
+		List<EACarbonDTO> myEaPathList = em.createQuery(jpql, EACarbonDTO.class).setParameter("name", userName).getResultList();
+		
+		List<EADTO> eaCarbonList = new ArrayList<>();
+		
+		for(EACarbonDTO eaCarbon : myEaPathList) {
+			eaCarbon.getEa().getAddendumList().size();
+			eaCarbon.getEa().getEaApprovalPathList().size();
+			eaCarbon.getEa().getEaApprovalPathList().size();
+			eaCarbonList.add(eaCarbon.getEa());
+		}
+		
+		return eaCarbonList;
 	}
 
 }
