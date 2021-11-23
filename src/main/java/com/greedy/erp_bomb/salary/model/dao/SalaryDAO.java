@@ -17,11 +17,14 @@ public class SalaryDAO {
 	private EntityManager em;
 
 	public List<SalaryDTO> findAllMySalary() {
-		String jpql = "SELECT s FROM CategoryDTO as c ORDER BY c.code ASC";
+		String jpql = "SELECT s FROM SalaryDTO as s ORDER BY s.salSerialNo ASC";
 		
 		TypedQuery<SalaryDTO> query = em.createQuery(jpql, SalaryDTO.class);
-		List<SalaryDTO> menuList = query.getResultList();
+		List<SalaryDTO> salaryList = query.getResultList();
 		
-		return menuList;	}
+		
+		
+		return salaryList;	
+		}
 
 }
