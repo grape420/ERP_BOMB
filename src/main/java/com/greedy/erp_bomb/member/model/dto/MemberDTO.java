@@ -22,6 +22,7 @@ import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
 import com.greedy.erp_bomb.note.model.dto.NoteDTO;
+import com.greedy.erp_bomb.salary.model.dto.SalaryDTO;
 import com.greedy.erp_bomb.sp.model.dto.SPDTO;
 import com.greedy.erp_bomb.tna.model.dto.TNADTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
@@ -117,10 +118,13 @@ public class MemberDTO implements Serializable {
 	
 	@OneToMany(mappedBy = "receiveMember")
 	private List<NoteDTO> receiveMemberList = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "member")
+	private List<SalaryDTO> salaryList = new ArrayList<>();
 
 	@OneToOne(mappedBy = "member")
 	private SPDTO sp;
-	
+
 	public MemberDTO() {
 	}
 	public MemberDTO(String name, CompanyDTO company, DeptDTO dept, RankDTO rank, String pwd, int empNo, String birth,
@@ -129,7 +133,7 @@ public class MemberDTO implements Serializable {
 			List<AddendumDTO> addendumList, List<EAPathDTO> eaPathList, List<TNADTO> tnaList, List<VoteDTO> voteList,
 			List<VoteParticipationDTO> voteParticipationList, List<VoteOptionDTO> voteOptionList,
 			List<BoardDTO> boardList, List<CommentDTO> commentList, List<NoteDTO> sentNoteList,
-			List<NoteDTO> receiveMemberList) {
+			List<NoteDTO> receiveMemberList, List<SalaryDTO> salaryList, SPDTO sp) {
 		this.name = name;
 		this.company = company;
 		this.dept = dept;
@@ -157,7 +161,10 @@ public class MemberDTO implements Serializable {
 		this.commentList = commentList;
 		this.sentNoteList = sentNoteList;
 		this.receiveMemberList = receiveMemberList;
+		this.salaryList = salaryList;
+		this.sp = sp;
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -320,6 +327,12 @@ public class MemberDTO implements Serializable {
 	public void setReceiveMemberList(List<NoteDTO> receiveMemberList) {
 		this.receiveMemberList = receiveMemberList;
 	}
+	public List<SalaryDTO> getSalaryList() {
+		return salaryList;
+	}
+	public void setSalaryList(List<SalaryDTO> salaryList) {
+		this.salaryList = salaryList;
+	}
 	public SPDTO getSp() {
 		return sp;
 	}
@@ -329,7 +342,7 @@ public class MemberDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "MemberDTO [name=" + name + ", coSerialNo=" + company.getName() + ", deptNo=" + dept.getName() + ", rankNo=" + rank.getName()
