@@ -1,4 +1,4 @@
--- ½ÃÄö½º »ý¼º
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP SEQUENCE SEQ_COMMENT_CODE;
 DROP SEQUENCE SEQ_NOTE_CODE;
 DROP SEQUENCE SEQ_BOARD_CODE;
@@ -14,6 +14,7 @@ DROP SEQUENCE SEQ_DOCUMENT_CODE;
 DROP SEQUENCE SEQ_EA_PATH_CODE;
 DROP SEQUENCE SEQ_VOTE_CODE;
 DROP SEQUENCE SEQ_SP_CODE;
+DROP SEQUENCE SEQ_SALARY_CODE;
 
 CREATE SEQUENCE SEQ_COMMENT_CODE
 START WITH 1;
@@ -45,8 +46,10 @@ CREATE SEQUENCE SEQ_VOTE_CODE
 START WITH 1;
 CREATE SEQUENCE SEQ_SP_CODE
 START WITH 1;
+CREATE SEQUENCE SEQ_SALARY_CODE
+START WITH 1;
 
--- °Ô½ÃÆÇ Å×ÀÌºí
+-- ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "BOARD" CASCADE CONSTRAINTS;
 CREATE TABLE "BOARD" (
 	"BOARD_NO"	NUMBER		NOT NULL,
@@ -59,15 +62,15 @@ CREATE TABLE "BOARD" (
     CONSTRAINT UK_BOARD_CATEGORY CHECK(BOARD_CATEGORY IN ('1', '2'))
 );
 
-COMMENT ON COLUMN "BOARD"."BOARD_NO" IS '°Ô½ÃÆÇ ¹øÈ£';
-COMMENT ON COLUMN "BOARD"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "BOARD"."BOARD_CONTENT" IS '³»¿ë';
-COMMENT ON COLUMN "BOARD"."REPORTING_DATE" IS 'ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN "BOARD"."BOARD_TITLE" IS 'Á¦¸ñ';
-COMMENT ON COLUMN "BOARD"."BOARD_HITS" IS 'Á¶È¸¼ö';
-COMMENT ON COLUMN "BOARD"."BOARD_CATEGORY" IS 'Ä«Å×°í¸®(1 : °øÁö»çÇ×, 2 : »ç³»°Ô½ÃÆÇ)';
+COMMENT ON COLUMN "BOARD"."BOARD_NO" IS 'ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "BOARD"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "BOARD"."BOARD_CONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "BOARD"."REPORTING_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "BOARD"."BOARD_TITLE" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "BOARD"."BOARD_HITS" IS 'ï¿½ï¿½È¸ï¿½ï¿½';
+COMMENT ON COLUMN "BOARD"."BOARD_CATEGORY" IS 'Ä«ï¿½×°ï¿½(1 : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2 : ï¿½ç³»ï¿½Ô½ï¿½ï¿½ï¿½)';
 
--- Àç°í °ü¸® Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "INVENTORY" CASCADE CONSTRAINTS;
 CREATE TABLE "INVENTORY" (
 	"ICE_NO"	NUMBER		NOT NULL,
@@ -75,11 +78,11 @@ CREATE TABLE "INVENTORY" (
 	"INVEN_REMAIN_STOCK"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "INVENTORY"."ICE_NO" IS '¾ÆÀÌ½ºÅ©¸² ¹øÈ£';
-COMMENT ON COLUMN "INVENTORY"."CO_SERIAL_NO" IS 'È¸»ç ÀÏ·Ã ¹øÈ£';
-COMMENT ON COLUMN "INVENTORY"."INVEN_REMAIN_STOCK" IS '´ÔÀº Àç°í·®';
+COMMENT ON COLUMN "INVENTORY"."ICE_NO" IS 'ï¿½ï¿½ï¿½Ì½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "INVENTORY"."CO_SERIAL_NO" IS 'È¸ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "INVENTORY"."INVEN_REMAIN_STOCK" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½';
 
--- °èÁ¤ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
 CREATE TABLE "MEMBER" (
 	"MEMBER_NAME"	VARCHAR2(255)		NOT NULL,
@@ -100,23 +103,23 @@ CREATE TABLE "MEMBER" (
     CONSTRAINT UK_ENT_YN CHECK("ENT_YN" IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN "MEMBER"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "MEMBER"."CO_SERIAL_NO" IS 'È¸»ç ÀÏ·Ã ¹øÈ£';
-COMMENT ON COLUMN "MEMBER"."DEPT_NO" IS 'ºÎ¼­ ¹øÈ£';
-COMMENT ON COLUMN "MEMBER"."RANK_NO" IS 'Á÷±Þ¹øÈ£';
-COMMENT ON COLUMN "MEMBER"."MEMBER_EMP_NO" IS '»ç¹ø';
-COMMENT ON COLUMN "MEMBER"."MEMBER_BIRTH" IS '»ý³â¿ùÀÏ';
-COMMENT ON COLUMN "MEMBER"."MEMBER_PHONE_NO" IS 'ÀüÈ­¹øÈ£';
-COMMENT ON COLUMN "MEMBER"."MEMBER_JOIN_DATE" IS 'ÀÔ»çÀÏ';
-COMMENT ON COLUMN "MEMBER"."MEMBER_QUIT_DATE" IS 'Åð»çÀÏ';
-COMMENT ON COLUMN "MEMBER"."MEMBER_REGULAR_PAY" IS '±âº»±Þ';
-COMMENT ON COLUMN "MEMBER"."MEMBER_BONUS" IS 'º¸³Ê½º';
-COMMENT ON COLUMN "MEMBER"."MEMBER_ANNUAL_INCOME" IS '¿¬ºÀ';
-COMMENT ON COLUMN "MEMBER"."MEMBER_EMAIL" IS 'ÀÌ¸ÞÀÏ';
-COMMENT ON COLUMN "MEMBER".MEMBER_PWD IS 'ºñ¹Ð¹øÈ£';
-COMMENT ON COLUMN "MEMBER".ENT_YN IS 'ÅðÁ÷¿©ºÎ';
+COMMENT ON COLUMN "MEMBER"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."CO_SERIAL_NO" IS 'È¸ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "MEMBER"."DEPT_NO" IS 'ï¿½Î¼ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "MEMBER"."RANK_NO" IS 'ï¿½ï¿½ï¿½Þ¹ï¿½È£';
+COMMENT ON COLUMN "MEMBER"."MEMBER_EMP_NO" IS 'ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_BIRTH" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_PHONE_NO" IS 'ï¿½ï¿½È­ï¿½ï¿½È£';
+COMMENT ON COLUMN "MEMBER"."MEMBER_JOIN_DATE" IS 'ï¿½Ô»ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_QUIT_DATE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_REGULAR_PAY" IS 'ï¿½âº»ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_BONUS" IS 'ï¿½ï¿½ï¿½Ê½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_ANNUAL_INCOME" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER"."MEMBER_EMAIL" IS 'ï¿½Ì¸ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "MEMBER".MEMBER_PWD IS 'ï¿½ï¿½Ð¹ï¿½È£';
+COMMENT ON COLUMN "MEMBER".ENT_YN IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
--- ±ÙÅÂ °ü¸® Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "TNA" CASCADE CONSTRAINTS;
 CREATE TABLE "TNA" (
 	"TNA_DATE"	DATE		NOT NULL,
@@ -125,11 +128,11 @@ CREATE TABLE "TNA" (
     CONSTRAINT UK_TNA_CODE CHECK(TNA_CODE IN ('1', '2', '3', '4'))
 );
 
-COMMENT ON COLUMN "TNA"."TNA_DATE" IS '³¯Â¥';
-COMMENT ON COLUMN "TNA"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "TNA"."TNA_CODE" IS '±ÙÅÂÄÚµå(1 : ¿¬Â÷, 2 : Áö°¢, 3 : Á¶Åð, 4 : °á±Ù)';
+COMMENT ON COLUMN "TNA"."TNA_DATE" IS 'ï¿½ï¿½Â¥';
+COMMENT ON COLUMN "TNA"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "TNA"."TNA_CODE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½(1 : ï¿½ï¿½ï¿½ï¿½, 2 : ï¿½ï¿½ï¿½ï¿½, 3 : ï¿½ï¿½ï¿½ï¿½, 4 : ï¿½ï¿½ï¿½)';
 
--- ÂÊÁö Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "NOTE" CASCADE CONSTRAINTS;
 CREATE TABLE "NOTE" (
 	"NOTE_SERIAL_NO"	NUMBER		NOT NULL,
@@ -141,14 +144,14 @@ CREATE TABLE "NOTE" (
     CONSTRAINT UK_NOTE_RECEPTION CHECK("NOTE_RECEPTION" IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN "NOTE"."NOTE_SERIAL_NO" IS 'ÂÊÁö ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "NOTE"."SENT_MEMBER_NAME" IS '¹ß½ÅÀÚ';
-COMMENT ON COLUMN "NOTE"."RECEIVE_MEMBER_NAME" IS '¼ö½ÅÀÚ';
-COMMENT ON COLUMN "NOTE"."NOTE_SEND_DATE" IS '¹ß½ÅÀÏ';
-COMMENT ON COLUMN "NOTE"."NOTE_RECEPTION" IS '¼ö½Å»óÅÂ';
-COMMENT ON COLUMN "NOTE"."NOTE_CONTENT" IS '³»¿ë';
+COMMENT ON COLUMN "NOTE"."NOTE_SERIAL_NO" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "NOTE"."SENT_MEMBER_NAME" IS 'ï¿½ß½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "NOTE"."RECEIVE_MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "NOTE"."NOTE_SEND_DATE" IS 'ï¿½ß½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "NOTE"."NOTE_RECEPTION" IS 'ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "NOTE"."NOTE_CONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
 
--- ÀüÀÚ °áÀç Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "ELECTRONIC_APPROVAL" CASCADE CONSTRAINTS;
 CREATE TABLE "ELECTRONIC_APPROVAL" (
 	"EA_SERIAL_NO"	NUMBER		NOT NULL,
@@ -160,15 +163,15 @@ CREATE TABLE "ELECTRONIC_APPROVAL" (
 	"EA_SAVENUM"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_SERIAL_NO" IS '±â¾È¼­ ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_DATE" IS 'ÀÛ¼ºÀÏÀÚ';
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_TITLE" IS '±â¾È¼­ Á¦¸ñ';
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_CONTENT" IS '°áÀç ³»¿ë';
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_CATEGORY" IS '°áÀç Ä«Å×°í¸®';
-COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_SAVENUM" IS '°áÀç ÀúÀå »óÅÂ';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_SERIAL_NO" IS 'ï¿½ï¿½È¼ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_TITLE" IS 'ï¿½ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_CONTENT" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_CATEGORY" IS 'ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½×°ï¿½';
+COMMENT ON COLUMN "ELECTRONIC_APPROVAL"."EA_SAVENUM" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
 
--- ÈÞ°¡°è Å×ÀÌºí
+-- ï¿½Þ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "LEAVE_APPLICATION" CASCADE CONSTRAINTS;
 CREATE TABLE "LEAVE_APPLICATION" (
 	"LA_SERIAL_NO"	NUMBER		NOT NULL,
@@ -183,18 +186,18 @@ CREATE TABLE "LEAVE_APPLICATION" (
 	"LA_APPROVAL"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_SERIAL_NO" IS 'ÈÞ°¡°è ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_REPORTING_DATE" IS '½ÅÃ»ÀÏÀÚ';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_DEPT_NAME" IS 'ºÎ¼­¸í';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_TYPE" IS 'ÈÞ°¡ Á¾·ù';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_HOLIDAY" IS 'ÈÞ°¡ ±â°£';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_REASON" IS 'ÈÞ°¡ »çÀ¯';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_PROXY" IS '´ë¸® ¾÷¹«ÀÚ';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_COMMENT" IS 'Ã·¾ð';
-COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_APPROVAL" IS '°áÀç»óÅÂ';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_SERIAL_NO" IS 'ï¿½Þ°ï¿½ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_REPORTING_DATE" IS 'ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_DEPT_NAME" IS 'ï¿½Î¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_TYPE" IS 'ï¿½Þ°ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_HOLIDAY" IS 'ï¿½Þ°ï¿½ ï¿½â°£';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_REASON" IS 'ï¿½Þ°ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_PROXY" IS 'ï¿½ë¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_COMMENT" IS 'Ã·ï¿½ï¿½';
+COMMENT ON COLUMN "LEAVE_APPLICATION"."LA_APPROVAL" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
--- ÅõÇ¥ Å×ÀÌºí
+-- ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "VOTE" CASCADE CONSTRAINTS;
 CREATE TABLE "VOTE" (
 	"VOTE_SERIAL_NO"	NUMBER		NOT NULL,
@@ -203,18 +206,20 @@ CREATE TABLE "VOTE" (
 	"VOTE_CONTENT"	CLOB		NOT NULL,
 	"VOTE_CATEGORY_NO"	NUMBER		NOT NULL,
 	"VOTE_REG_DATE"	DATE		NOT NULL,
-	"VOTE_END_DATE"	DATE		NOT NULL
+	"VOTE_END_DATE"	DATE		NOT NULL,
+	"VOTE_HIT"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "VOTE"."VOTE_SERIAL_NO" IS 'ÅõÇ¥ ¹øÈ£';
-COMMENT ON COLUMN "VOTE"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "VOTE"."VOTE_TITLE" IS 'ÅõÇ¥ Å¸ÀÌÆ²';
-COMMENT ON COLUMN "VOTE"."VOTE_CONTENT" IS 'ÅõÇ¥ ³»¿ë';
-COMMENT ON COLUMN "VOTE"."VOTE_CATEGORY_NO" IS 'ÅõÇ¥ Ä«Å×°í¸® ¹øÈ£';
-COMMENT ON COLUMN "VOTE"."VOTE_REG_DATE" IS 'ÅõÇ¥ µî·ÏÀÏÀÚ';
-COMMENT ON COLUMN "VOTE"."VOTE_END_DATE" IS 'ÅõÇ¥ Á¾·áÀÏÀÚ';
+COMMENT ON COLUMN "VOTE"."VOTE_SERIAL_NO" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½È£';
+COMMENT ON COLUMN "VOTE"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOTE"."VOTE_TITLE" IS 'ï¿½ï¿½Ç¥ Å¸ï¿½ï¿½Æ²';
+COMMENT ON COLUMN "VOTE"."VOTE_CONTENT" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOTE"."VOTE_CATEGORY_NO" IS 'ï¿½ï¿½Ç¥ Ä«ï¿½×°ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "VOTE"."VOTE_REG_DATE" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOTE"."VOTE_END_DATE" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOTE"."VOTE_HIT" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½È¸ï¿½ï¿½';
 
--- ´ñ±Û Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "COMMENTS" CASCADE CONSTRAINTS;
 CREATE TABLE "COMMENTS" (
 	"COMMENTS_NO"	NUMBER		NOT NULL,
@@ -229,27 +234,27 @@ CREATE TABLE "COMMENTS" (
     CONSTRAINT UK_COMMENTS_STATUS CHECK("COMMENTS_STATUS" IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN "COMMENTS"."COMMENTS_NO" IS '´ñ±Û ¹øÈ£';
-COMMENT ON COLUMN "COMMENTS"."REF_COMMENTS_NO" IS '´ë´ñ±Û ¹øÈ£';
-COMMENT ON COLUMN "COMMENTS"."BOARD_NO" IS '°Ô½ÃÆÇ ¹øÈ£';
-COMMENT ON COLUMN "COMMENTS"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "COMMENTS"."COMMENTS_CONTENT" IS '³»¿ë';
-COMMENT ON COLUMN "COMMENTS"."COMMENTS_DATE" IS 'ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN "COMMENTS"."COMMENTS_DEPTH" IS '´ñ±Û ±íÀÌ';
-COMMENT ON COLUMN "COMMENTS"."COMMENTS_LENGTH" IS '´ñ±Û ±æÀÌ';
-COMMENT ON COLUMN "COMMENTS"."COMMENTS_STATUS" IS '´ä±Û »óÅÂ';
+COMMENT ON COLUMN "COMMENTS"."COMMENTS_NO" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "COMMENTS"."REF_COMMENTS_NO" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "COMMENTS"."BOARD_NO" IS 'ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "COMMENTS"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMMENTS"."COMMENTS_CONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMMENTS"."COMMENTS_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMMENTS"."COMMENTS_DEPTH" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMMENTS"."COMMENTS_LENGTH" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMMENTS"."COMMENTS_STATUS" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
 
--- ¾ÆÀÌ½ºÅ©¸² Å×ÀÌºí
+-- ï¿½ï¿½ï¿½Ì½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "ICECREAM" CASCADE CONSTRAINTS;
 CREATE TABLE "ICECREAM" (
 	"ICE_NO"	NUMBER		NOT NULL,
 	"ICE_NAME"	VARCHAR2(255)		NOT NULL
 );
 
-COMMENT ON COLUMN "ICECREAM"."ICE_NO" IS '¾ÆÀÌ½ºÅ©¸² ¹øÈ£';
-COMMENT ON COLUMN "ICECREAM"."ICE_NAME" IS '¾ÆÀÌ½ºÅ©¸² ÀÌ¸§';
+COMMENT ON COLUMN "ICECREAM"."ICE_NO" IS 'ï¿½ï¿½ï¿½Ì½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "ICECREAM"."ICE_NAME" IS 'ï¿½ï¿½ï¿½Ì½ï¿½Å©ï¿½ï¿½ ï¿½Ì¸ï¿½';
 
--- È¸»ç Å×ÀÌºí
+-- È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "COMPANY" CASCADE CONSTRAINTS;
 CREATE TABLE "COMPANY" (
 	"CO_SERIAL_NO"	NUMBER		NOT NULL,
@@ -259,12 +264,12 @@ CREATE TABLE "COMPANY" (
     CONSTRAINT UK_CO_STATUS CHECK("CO_STATUS" IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN "COMPANY"."CO_SERIAL_NO" IS 'È¸»ç ÀÏ·Ã ¹øÈ£';
-COMMENT ON COLUMN "COMPANY"."CO_DIVISION" IS 'È¸»ç ±¸ºÐ';
-COMMENT ON COLUMN "COMPANY"."CO_NAME" IS 'È¸»ç¸í';
-COMMENT ON COLUMN "COMPANY"."CO_STATUS" IS '¿î¿µ »óÅÂ';
+COMMENT ON COLUMN "COMPANY"."CO_SERIAL_NO" IS 'È¸ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "COMPANY"."CO_DIVISION" IS 'È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMPANY"."CO_NAME" IS 'È¸ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "COMPANY"."CO_STATUS" IS 'ï¿½î¿µ ï¿½ï¿½ï¿½ï¿½';
 
--- ÈÞ°¡°è °áÀç¶óÀÎ Å×ÀÌºí
+-- ï¿½Þ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "LA_APPROVAL_PATH" CASCADE CONSTRAINTS;
 CREATE TABLE "LA_APPROVAL_PATH" (
 	"LA_TURN"	NUMBER		NOT NULL,
@@ -273,32 +278,32 @@ CREATE TABLE "LA_APPROVAL_PATH" (
 	"LA_STATUS"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "LA_APPROVAL_PATH"."LA_TURN" IS 'ÈÞ°¡°è ¼ø¹ø';
-COMMENT ON COLUMN "LA_APPROVAL_PATH"."LA_SERIAL_NO" IS 'ÈÞ°¡°è ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "LA_APPROVAL_PATH"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "LA_APPROVAL_PATH"."LA_STATUS" IS '°áÀç»óÅÂ';
+COMMENT ON COLUMN "LA_APPROVAL_PATH"."LA_TURN" IS 'ï¿½Þ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LA_APPROVAL_PATH"."LA_SERIAL_NO" IS 'ï¿½Þ°ï¿½ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "LA_APPROVAL_PATH"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LA_APPROVAL_PATH"."LA_STATUS" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
--- ºÎ¼­ Å×ÀÌºí
+-- ï¿½Î¼ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "DEPT" CASCADE CONSTRAINTS;
 CREATE TABLE "DEPT" (
 	"DEPT_NO"	NUMBER		NOT NULL,
 	"DEPT_NAME"	VARCHAR2(255)		NOT NULL
 );
 
-COMMENT ON COLUMN "DEPT"."DEPT_NO" IS 'ºÎ¼­ ¹øÈ£';
-COMMENT ON COLUMN "DEPT"."DEPT_NAME" IS 'ºÎ¼­¸í';
+COMMENT ON COLUMN "DEPT"."DEPT_NO" IS 'ï¿½Î¼ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "DEPT"."DEPT_NAME" IS 'ï¿½Î¼ï¿½ï¿½ï¿½';
 
--- Á÷±Þ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "RANK" CASCADE CONSTRAINTS;
 CREATE TABLE "RANK" (
 	"RANK_NO"	NUMBER		NOT NULL,
 	"RANK_NAME"	VARCHAR2(255)		NOT NULL
 );
 
-COMMENT ON COLUMN "RANK"."RANK_NO" IS 'Á÷±Þ¹øÈ£';
-COMMENT ON COLUMN "RANK"."RANK_NAME" IS 'Á÷±Þ¸í';
+COMMENT ON COLUMN "RANK"."RANK_NO" IS 'ï¿½ï¿½ï¿½Þ¹ï¿½È£';
+COMMENT ON COLUMN "RANK"."RANK_NAME" IS 'ï¿½ï¿½ï¿½Þ¸ï¿½';
 
--- ÀüÀÚ °áÀç Ã·¾ð Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã·ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "ADDENDUM" CASCADE CONSTRAINTS;
 CREATE TABLE "ADDENDUM" (
 	"COMMENT_NO"	NUMBER		NOT NULL,
@@ -313,17 +318,17 @@ CREATE TABLE "ADDENDUM" (
     CONSTRAINT UK_COMMENT_YN CHECK("COMMENT_YN" IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN "ADDENDUM"."COMMENT_NO" IS 'Ã·¾ð ¹øÈ£';
-COMMENT ON COLUMN "ADDENDUM"."REF_COMMENT_NO" IS '»óÀ§ Ã·¾ð ¹øÈ£';
-COMMENT ON COLUMN "ADDENDUM"."EA_SERIAL_NO" IS '±â¾È¼­ ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "ADDENDUM"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "ADDENDUM"."COMMENT_CONTENT" IS '³»¿ë';
-COMMENT ON COLUMN "ADDENDUM"."COMMENT_DATE" IS 'ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN "ADDENDUM"."COMMENT_DEPTH" IS 'Ã·¾ð ±íÀÌ';
-COMMENT ON COLUMN "ADDENDUM"."COMMENT_LENGTH" IS 'Ã·¾ð ±æÀÌ';
-COMMENT ON COLUMN "ADDENDUM"."COMMENT_YN" IS '´ä±Û »óÅÂ';
+COMMENT ON COLUMN "ADDENDUM"."COMMENT_NO" IS 'Ã·ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "ADDENDUM"."REF_COMMENT_NO" IS 'ï¿½ï¿½ï¿½ï¿½ Ã·ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "ADDENDUM"."EA_SERIAL_NO" IS 'ï¿½ï¿½È¼ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "ADDENDUM"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ADDENDUM"."COMMENT_CONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ADDENDUM"."COMMENT_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ADDENDUM"."COMMENT_DEPTH" IS 'Ã·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ADDENDUM"."COMMENT_LENGTH" IS 'Ã·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "ADDENDUM"."COMMENT_YN" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
 
--- ÀüÀÚ °áÀç ÂüÁ¶ÀÚ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "EA_CARBON" CASCADE CONSTRAINTS;
 CREATE TABLE "EA_CARBON" (
 	"EA_SERIAL_NO"	NUMBER		NOT NULL,
@@ -331,11 +336,11 @@ CREATE TABLE "EA_CARBON" (
 	"EA_CC_REFERENCE_STATE"	NUMBER	NOT NULL
 );
 
-COMMENT ON COLUMN "EA_CARBON"."EA_SERIAL_NO" IS '±â¾È¼­ ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "EA_CARBON"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "EA_CARBON"."EA_CC_REFERENCE_STATE" IS 'ÂüÁ¶»óÅÂ';
+COMMENT ON COLUMN "EA_CARBON"."EA_SERIAL_NO" IS 'ï¿½ï¿½È¼ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "EA_CARBON"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "EA_CARBON"."EA_CC_REFERENCE_STATE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
--- ÈÞ°¡°è Ã·¾ð Å×ÀÌºí
+-- ï¿½Þ°ï¿½ï¿½ï¿½ Ã·ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "LA_ADDENDUM" CASCADE CONSTRAINTS;
 CREATE TABLE "LA_ADDENDUM" (
 	"COMMENT_NO"	NUMBER		NOT NULL,
@@ -348,26 +353,26 @@ CREATE TABLE "LA_ADDENDUM" (
 	"COMMENT_LENGTH"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_NO" IS '´ñ±Û ¹øÈ£';
-COMMENT ON COLUMN "LA_ADDENDUM"."REF_COMMENT_NO" IS '´ñ±Û ¹øÈ£';
-COMMENT ON COLUMN "LA_ADDENDUM"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "LA_ADDENDUM"."LA_SERIAL_NO" IS 'ÈÞ°¡°è ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_CONTENT" IS '³»¿ë';
-COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_DATE" IS 'ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_DEPTH" IS '´ñ±Û ±íÀÌ';
-COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_LENGTH" IS '´ñ±Û ±æÀÌ';
+COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_NO" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "LA_ADDENDUM"."REF_COMMENT_NO" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "LA_ADDENDUM"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LA_ADDENDUM"."LA_SERIAL_NO" IS 'ï¿½Þ°ï¿½ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_CONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_DEPTH" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_LENGTH" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
 
--- ¹®¼­ ¾ç½Ä Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "DOCUMENT_FORM" CASCADE CONSTRAINTS;
 CREATE TABLE "DOCUMENT_FORM" (
 	"DF_NO"	NUMBER		NOT NULL,
 	"DF_FORM"	CLOB		NOT NULL
 );
 
-COMMENT ON COLUMN "DOCUMENT_FORM"."DF_NO" IS '¾ç½Ä ¹øÈ£';
-COMMENT ON COLUMN "DOCUMENT_FORM"."DF_FORM" IS '¼­½Ä';
+COMMENT ON COLUMN "DOCUMENT_FORM"."DF_NO" IS 'ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "DOCUMENT_FORM"."DF_FORM" IS 'ï¿½ï¿½ï¿½ï¿½';
 
--- ÅõÇ¥ ¼±ÅÃÁö Å×ÀÌºí
+-- ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "VOTE_OPTION" CASCADE CONSTRAINTS;
 CREATE TABLE "VOTE_OPTION" (
 	"VOTE_SERIAL_NO"	NUMBER		NOT NULL,
@@ -376,12 +381,12 @@ CREATE TABLE "VOTE_OPTION" (
 	"NUMBER_VOTE"	NUMBER		NULL
 );
 
-COMMENT ON COLUMN "VOTE_OPTION"."VOTE_SERIAL_NO" IS 'ÅõÇ¥ ¹øÈ£';
-COMMENT ON COLUMN "VOTE_OPTION"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "VOTE_OPTION"."VOTE_DESC" IS '¼±ÅÃÁö ³»¿ë';
-COMMENT ON COLUMN "VOTE_OPTION"."NUMBER_VOTE" IS 'µæÇ¥¼ö';
+COMMENT ON COLUMN "VOTE_OPTION"."VOTE_SERIAL_NO" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½È£';
+COMMENT ON COLUMN "VOTE_OPTION"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOTE_OPTION"."VOTE_DESC" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOTE_OPTION"."NUMBER_VOTE" IS 'ï¿½ï¿½Ç¥ï¿½ï¿½';
 
--- ÀÔÃâ°í °ü¸® Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "IN_OUT" CASCADE CONSTRAINTS;
 CREATE TABLE "IN_OUT" (
 	"IN_OUT_NO"	NUMBER		NOT NULL,
@@ -393,24 +398,24 @@ CREATE TABLE "IN_OUT" (
     CONSTRAINT UK_IN_OUT_DIVISION CHECK(IN_OUT_DIVISION IN ('1', '2', '3'))
 );
 
-COMMENT ON COLUMN "IN_OUT"."IN_OUT_NO" IS 'ÀÔÃâ°í ³»¿ª¹øÈ£';
-COMMENT ON COLUMN "IN_OUT"."ICE_NO" IS '¾ÆÀÌ½ºÅ©¸² ¹øÈ£';
-COMMENT ON COLUMN "IN_OUT"."CO_SERIAL_NO" IS 'È¸»ç ÀÏ·Ã ¹øÈ£';
-COMMENT ON COLUMN "IN_OUT"."IN_OUT_DATE" IS 'ÀÔÃâ°í ÀÏÀÚ';
-COMMENT ON COLUMN "IN_OUT"."IN_OUT_DIVISION" IS 'ÀÔÃâ°í ±¸ºÐ(1 : ÀÔ°í, 2 : Ãâ°í, 3 : ÆÇ¸Å)';
-COMMENT ON COLUMN "IN_OUT"."IN_OUT_AMOUNT" IS '¼ö·®';
+COMMENT ON COLUMN "IN_OUT"."IN_OUT_NO" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£';
+COMMENT ON COLUMN "IN_OUT"."ICE_NO" IS 'ï¿½ï¿½ï¿½Ì½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "IN_OUT"."CO_SERIAL_NO" IS 'È¸ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½È£';
+COMMENT ON COLUMN "IN_OUT"."IN_OUT_DATE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "IN_OUT"."IN_OUT_DIVISION" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(1 : ï¿½Ô°ï¿½, 2 : ï¿½ï¿½ï¿½, 3 : ï¿½Ç¸ï¿½)';
+COMMENT ON COLUMN "IN_OUT"."IN_OUT_AMOUNT" IS 'ï¿½ï¿½ï¿½ï¿½';
 
--- È¸¿øº° ±ÇÇÑ Å×ÀÌºí
+-- È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "MEMBER_ROLE" CASCADE CONSTRAINTS;
 CREATE TABLE "MEMBER_ROLE" (
 	"AUTHORITY_CODE"	NUMBER		NOT NULL,
 	"MEMBER_NAME"	VARCHAR2(255)		NOT NULL
 );
 
-COMMENT ON COLUMN "MEMBER_ROLE"."AUTHORITY_CODE" IS '±ÇÇÑÄÚµå';
-COMMENT ON COLUMN "MEMBER_ROLE"."MEMBER_NAME" IS '»ç¿ø¸í';
+COMMENT ON COLUMN "MEMBER_ROLE"."AUTHORITY_CODE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½';
+COMMENT ON COLUMN "MEMBER_ROLE"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
 
--- ±ÇÇÑ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "AUTHORITY" CASCADE CONSTRAINTS;
 CREATE TABLE "AUTHORITY" (
 	"AUTHORITY_CODE"	NUMBER		NOT NULL,
@@ -418,21 +423,21 @@ CREATE TABLE "AUTHORITY" (
 	"AUTHORITY_DESC"	VARCHAR2(4000)		NOT NULL
 );
 
-COMMENT ON COLUMN "AUTHORITY"."AUTHORITY_CODE" IS '±ÇÇÑÄÚµå';
-COMMENT ON COLUMN "AUTHORITY"."AUTHORITY_NAME" IS '±ÇÇÑ¸í';
-COMMENT ON COLUMN "AUTHORITY"."AUTHORITY_DESC" IS '±ÇÇÑ¼³¸í';
+COMMENT ON COLUMN "AUTHORITY"."AUTHORITY_CODE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½';
+COMMENT ON COLUMN "AUTHORITY"."AUTHORITY_NAME" IS 'ï¿½ï¿½ï¿½Ñ¸ï¿½';
+COMMENT ON COLUMN "AUTHORITY"."AUTHORITY_DESC" IS 'ï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½';
 
--- ±ÇÇÑº°Á¢±Ù°¡´É¸Þ´º Å×ÀÌºí
+-- ï¿½ï¿½ï¿½Ñºï¿½ï¿½ï¿½ï¿½Ù°ï¿½ï¿½É¸Þ´ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "AUTHENTICATED_MENU" CASCADE CONSTRAINTS;
 CREATE TABLE "AUTHENTICATED_MENU" (
 	"AUTHORITY_CODE"	NUMBER		NOT NULL,
 	"MENU_CODE"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "AUTHENTICATED_MENU"."AUTHORITY_CODE" IS '±ÇÇÑÄÚµå';
-COMMENT ON COLUMN "AUTHENTICATED_MENU"."MENU_CODE" IS '¸Þ´ºÄÚµå';
+COMMENT ON COLUMN "AUTHENTICATED_MENU"."AUTHORITY_CODE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½';
+COMMENT ON COLUMN "AUTHENTICATED_MENU"."MENU_CODE" IS 'ï¿½Þ´ï¿½ï¿½Úµï¿½';
 
--- °øÅë¸Þ´º Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "GLOBAL_MENU" CASCADE CONSTRAINTS;
 CREATE TABLE "GLOBAL_MENU" (
 	"MENU_CODE"	NUMBER		NOT NULL,
@@ -446,16 +451,16 @@ CREATE TABLE "GLOBAL_MENU" (
     CONSTRAINT UK_REMOVED_YN CHECK(REMOVED_YN IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN "GLOBAL_MENU"."MENU_CODE" IS '¸Þ´ºÄÚµå';
-COMMENT ON COLUMN "GLOBAL_MENU"."REF_MENU_CODE" IS '»óÀ§¸Þ´ºÄÚµå';
-COMMENT ON COLUMN "GLOBAL_MENU"."MENU_NAME" IS '¸Þ´º¸í';
-COMMENT ON COLUMN "GLOBAL_MENU"."MENU_URL" IS '¸Þ´ºURL';
-COMMENT ON COLUMN "GLOBAL_MENU"."MENU_DESC" IS '¸Þ´º¼³¸í';
-COMMENT ON COLUMN "GLOBAL_MENU"."MENU_ORDER" IS 'Ãâ·Â¼ø¼­';
-COMMENT ON COLUMN "GLOBAL_MENU"."REMOVED_YN" IS '»èÁ¦¿©ºÎ';
-COMMENT ON COLUMN "GLOBAL_MENU"."MENU_TYPE" IS '±¸ºÐ';
+COMMENT ON COLUMN "GLOBAL_MENU"."MENU_CODE" IS 'ï¿½Þ´ï¿½ï¿½Úµï¿½';
+COMMENT ON COLUMN "GLOBAL_MENU"."REF_MENU_CODE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Þ´ï¿½ï¿½Úµï¿½';
+COMMENT ON COLUMN "GLOBAL_MENU"."MENU_NAME" IS 'ï¿½Þ´ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "GLOBAL_MENU"."MENU_URL" IS 'ï¿½Þ´ï¿½URL';
+COMMENT ON COLUMN "GLOBAL_MENU"."MENU_DESC" IS 'ï¿½Þ´ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "GLOBAL_MENU"."MENU_ORDER" IS 'ï¿½ï¿½Â¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "GLOBAL_MENU"."REMOVED_YN" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "GLOBAL_MENU"."MENU_TYPE" IS 'ï¿½ï¿½ï¿½ï¿½';
 
--- ÀüÀÚ °áÀç °áÀç ¶óÀÎ Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "EA_APPROVAL_PATH" CASCADE CONSTRAINTS;
 CREATE TABLE "EA_APPROVAL_PATH" (
 	"EA_NO"	NUMBER		NOT NULL,
@@ -465,22 +470,22 @@ CREATE TABLE "EA_APPROVAL_PATH" (
     CONSTRAINT UK_EA_STATUS CHECK(EA_STATUS IN ('1', '2', '3', '4'))
 );
 
-COMMENT ON COLUMN "EA_APPROVAL_PATH"."EA_NO" IS 'ÀüÀÚ °áÀç ¼ø¹ø';
-COMMENT ON COLUMN "EA_APPROVAL_PATH"."EA_SERIAL_NO" IS '±â¾È¼­ ÀÏ·Ã¹øÈ£';
-COMMENT ON COLUMN "EA_APPROVAL_PATH"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "EA_APPROVAL_PATH"."EA_STATUS" IS '°áÀç »óÅÂ(1 : °áÀç´ë±â, 2 : °áÀç¹Ý·Á, 3: °áÀç, 4 : °áÀçÃë¼Ò)';
+COMMENT ON COLUMN "EA_APPROVAL_PATH"."EA_NO" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "EA_APPROVAL_PATH"."EA_SERIAL_NO" IS 'ï¿½ï¿½È¼ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "EA_APPROVAL_PATH"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "EA_APPROVAL_PATH"."EA_STATUS" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(1 : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2 : ï¿½ï¿½ï¿½ï¿½Ý·ï¿½, 3: ï¿½ï¿½ï¿½ï¿½, 4 : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)';
 
--- ÅõÇ¥ Âü¿© Å×ÀÌºí
+-- ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "VOTE_PARTICIPATION" CASCADE CONSTRAINTS;
 CREATE TABLE "VOTE_PARTICIPATION" (
 	"VOTE_SERIAL_NO"	NUMBER		NOT NULL,
 	"MEMBER_NAME"	VARCHAR2(255)		NOT NULL
 );
 
-COMMENT ON COLUMN "VOTE_PARTICIPATION"."VOTE_SERIAL_NO" IS 'ÅõÇ¥ ¹øÈ£';
-COMMENT ON COLUMN "VOTE_PARTICIPATION"."MEMBER_NAME" IS '»ç¿ø¸í';
+COMMENT ON COLUMN "VOTE_PARTICIPATION"."VOTE_SERIAL_NO" IS 'ï¿½ï¿½Ç¥ ï¿½ï¿½È£';
+COMMENT ON COLUMN "VOTE_PARTICIPATION"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
 
--- ÅðÁ÷±Ý °ü¸® Å×ÀÌºí
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 DROP TABLE "SP_MANAGEMENT" CASCADE CONSTRAINTS;
 CREATE TABLE "SP_MANAGEMENT" (
     SP_NO   NUMBER NOT NULL,
@@ -489,10 +494,26 @@ CREATE TABLE "SP_MANAGEMENT" (
 	"EMP_YEAR"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "SP_MANAGEMENT".SP_NO IS 'ÅðÁ÷±Ý¹øÈ£';
-COMMENT ON COLUMN "SP_MANAGEMENT"."MEMBER_NAME" IS '»ç¿ø¸í';
-COMMENT ON COLUMN "SP_MANAGEMENT"."SERVERANCE_PAY" IS 'ÅðÁ÷±Ý';
-COMMENT ON COLUMN "SP_MANAGEMENT"."EMP_YEAR" IS 'ÀçÁ÷³â¼ö';
+COMMENT ON COLUMN "SP_MANAGEMENT".SP_NO IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ý¹ï¿½È£';
+COMMENT ON COLUMN "SP_MANAGEMENT"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "SP_MANAGEMENT"."SERVERANCE_PAY" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "SP_MANAGEMENT"."EMP_YEAR" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+
+-- ï¿½Þ¿ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
+DROP TABLE "SALARY" CASCADE CONSTRAINTS;
+CREATE TABLE "SALARY" (
+	"SAL_SERIAL_NO"	NUMBER		NOT NULL,
+	"MEMBER_NAME"	VARCHAR2(255)		NOT NULL,
+	"SAL_DATE"	DATE		NOT NULL,
+	"SAL_REGULAR_PAY"	NUMBER		NULL,
+	"SAL_BONUS"	NUMBER		NULL
+);
+
+COMMENT ON COLUMN "SALARY"."SAL_SERIAL_NO" IS 'ï¿½Þ¿ï¿½ ï¿½Ï·Ã¹ï¿½È£';
+COMMENT ON COLUMN "SALARY"."MEMBER_NAME" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "SALARY"."SAL_DATE" IS 'ï¿½Í¼Ó¿ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "SALARY"."SAL_REGULAR_PAY" IS 'ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¾ï¿½';
+COMMENT ON COLUMN "SALARY"."SAL_BONUS" IS 'ï¿½ï¿½ï¿½Ê½ï¿½ ï¿½Ý¾ï¿½';
 
 ALTER TABLE "BOARD" ADD CONSTRAINT "PK_BOARD" PRIMARY KEY (
 	"BOARD_NO"
@@ -609,6 +630,10 @@ ALTER TABLE "VOTE_PARTICIPATION" ADD CONSTRAINT "PK_VOTE_PARTICIPATION" PRIMARY 
 
 ALTER TABLE "SP_MANAGEMENT" ADD CONSTRAINT "PK_SP_MANAGEMENT1" PRIMARY KEY (
 	SP_NO
+);
+
+ALTER TABLE "SALARY" ADD CONSTRAINT "PK_SAL_SERIAL_NO" PRIMARY KEY (
+	"SAL_SERIAL_NO"
 );
 
 ALTER TABLE "BOARD" ADD CONSTRAINT "FK_MEMBER_TO_BOARD_1" FOREIGN KEY (
@@ -879,7 +904,14 @@ REFERENCES "MEMBER" (
 	"MEMBER_NAME"
 );
 
--- È¸»ç Å×ÀÌºí INSERT
+ALTER TABLE "SALARY" ADD CONSTRAINT "FK_MEMBER_TO_SALARY" FOREIGN KEY (
+	"MEMBER_NAME"
+)
+REFERENCES "MEMBER" (
+	"MEMBER_NAME"
+);
+
+-- È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO COMPANY
   (
@@ -891,8 +923,8 @@ INSERT
   VALUES
   (
     SEQ_COMPANY_CODE.NEXTVAL
-  , 'º»»ç'
-  , 'º»»ç'
+  , 'ï¿½ï¿½ï¿½ï¿½'
+  , 'ï¿½ï¿½ï¿½ï¿½'
   , DEFAULT
   );
 INSERT
@@ -906,12 +938,15 @@ INSERT
   VALUES
   (
     SEQ_COMPANY_CODE.NEXTVAL
-  , '°¡¸ÍÁ¡'
-  , '°­³²¿ªÁ¡'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   , DEFAULT
   );
+INSERT INTO COMPANY VALUES (SEQ_COMPANY_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½Ä¡ï¿½ê¿ªï¿½ï¿½', DEFAULT);
+INSERT INTO COMPANY VALUES (SEQ_COMPANY_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½', DEFAULT);
+INSERT INTO COMPANY VALUES (SEQ_COMPANY_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ê¿ªï¿½ï¿½', DEFAULT);
 
--- Á÷±Þ Å×ÀÌºí INSERT
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO RANK
   (
@@ -921,7 +956,7 @@ INSERT
   VALUES
   (
     SEQ_RANK_CODE.NEXTVAL
-  , '°úÀå'
+  , 'ï¿½ï¿½ï¿½ï¿½'
   );
 INSERT
   INTO RANK
@@ -932,10 +967,43 @@ INSERT
   VALUES
   (
     SEQ_RANK_CODE.NEXTVAL
-  , '´ë¸®'
+  , 'ï¿½ï¿½ï¿½ï¿½'
+  );
+INSERT
+  INTO RANK
+  (
+    RANK_NO
+  , RANK_NAME
+  )
+  VALUES
+  (
+    SEQ_RANK_CODE.NEXTVAL
+  , 'ï¿½ï¿½ï¿½ï¿½'
+  );
+INSERT
+  INTO RANK
+  (
+    RANK_NO
+  , RANK_NAME
+  )
+  VALUES
+  (
+    SEQ_RANK_CODE.NEXTVAL
+  , 'ï¿½ë¸®'
+  );
+INSERT
+  INTO RANK
+  (
+    RANK_NO
+  , RANK_NAME
+  )
+  VALUES
+  (
+    SEQ_RANK_CODE.NEXTVAL
+  , 'ï¿½ï¿½ï¿½'
   );
 
--- ºÎ¼­ Å×ÀÌºí INSERT
+-- ï¿½Î¼ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO DEPT
   (
@@ -945,7 +1013,7 @@ INSERT
   VALUES
   (
     SEQ_DEPT_CODE.NEXTVAL
-  , '¿µ¾÷ºÎ'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   );
 INSERT
   INTO DEPT
@@ -956,26 +1024,47 @@ INSERT
   VALUES
   (
     SEQ_DEPT_CODE.NEXTVAL
-  , '¸¶ÄÉÆÃºÎ'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½Ãºï¿½'
   );
 
--- °èÁ¤ Å×ÀÌºí INSERT
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO MEMBER
   VALUES
   (
-    '±èÁ¾Çö', 1, 1, 1, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi', 1676037393, 960420, '010-8905-7678', SYSDATE, SYSDATE, 3000000,
+    'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 1, 1, 1, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi', 1676037393, 960420, '010-8905-7678', SYSDATE, SYSDATE, 3000000,
     600000, 42000000, 'grape420@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '±èÁöÇõ', 2, 2, 2, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 2, 2, 2, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    500, 30000, 'jihyeakKing@naver.com', DEFAULT
+  );
+INSERT
+  INTO MEMBER
+  VALUES
+  (
+    'ï¿½è°¡ï¿½ï¿½', 2, 2, 3, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1543215678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    500, 30000, 'jihyeakKing@naver.com', DEFAULT
+  );
+INSERT
+  INTO MEMBER
+  VALUES
+  (
+    'ï¿½ï¿½È£ï¿½ï¿½', 2, 2, 4, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345228, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    500, 30000, 'jihyeakKing@naver.com', DEFAULT
+  );
+INSERT
+  INTO MEMBER
+  VALUES
+  (
+    'ï¿½è¼ºï¿½ï¿½', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1812125678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
   
--- ±ÇÇÑ Å×ÀÌºí INSERT
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO AUTHORITY
   (
@@ -987,7 +1076,7 @@ INSERT
   (
     1
   , 'ROLE_MEMBER'
-  , 'ÀÏ¹ÝÈ¸¿ø'
+  , 'ï¿½Ï¹ï¿½È¸ï¿½ï¿½'
   );
 INSERT
   INTO AUTHORITY
@@ -1000,10 +1089,10 @@ INSERT
   (
     2
   , 'ROLE_ADMIN'
-  , '°ü¸®ÀÚ'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   );
   
--- È¸¿øº°±ÇÇÑ Å×ÀÌºí INSERT
+-- È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO MEMBER_ROLE
   (
@@ -1013,7 +1102,7 @@ INSERT
   VALUES
   (
     1
-  , '±èÁöÇõ'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   );
 INSERT
   INTO MEMBER_ROLE
@@ -1024,7 +1113,7 @@ INSERT
   VALUES
   (
     1
-  , '±èÁ¾Çö'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   );
 INSERT
   INTO MEMBER_ROLE
@@ -1035,10 +1124,10 @@ INSERT
   VALUES
   (
     2
-  , '±èÁ¾Çö'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   );
   
--- ¾ÆÀÌ½ºÅ©¸² Å×ÀÌºí INSERT
+-- ï¿½ï¿½ï¿½Ì½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
 INSERT
   INTO "ICECREAM"
   (
@@ -1048,7 +1137,7 @@ INSERT
   VALUES
   (
     SEQ_ICECREAM_CODE.NEXTVAL
-  , 'º£¸®º£¸® ½ºÆ®·Îº£¸®'
+  , 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Îºï¿½ï¿½ï¿½'
   );
 INSERT
   INTO "ICECREAM"
@@ -1059,7 +1148,7 @@ INSERT
   VALUES
   (
     SEQ_ICECREAM_CODE.NEXTVAL
-  , '´Ò¶ó´Ò¶ó ¹Ù´Ò¶ó'
+  , 'ï¿½Ò¶ï¿½Ò¶ï¿½ ï¿½Ù´Ò¶ï¿½'
   );
 INSERT
   INTO "ICECREAM"
@@ -1070,77 +1159,109 @@ INSERT
   VALUES
   (
     SEQ_ICECREAM_CODE.NEXTVAL
-  , '¾Æºüµµ ¿Ü°èÀÎ'
+  , 'ï¿½Æºï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½ï¿½'
+  );
+INSERT
+  INTO "ICECREAM"
+  (
+    ICE_NO
+  , ICE_NAME
+  )
+  VALUES
+  (
+    SEQ_ICECREAM_CODE.NEXTVAL
+  , 'ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
+  );
+INSERT
+  INTO "ICECREAM"
+  (
+    ICE_NO
+  , ICE_NAME
+  )
+  VALUES
+  (
+    SEQ_ICECREAM_CODE.NEXTVAL
+  , 'ï¿½ï¿½çº£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
   );
   
--- °Ô½ÃÆÇ Å×ÀÌºí INSERT
-INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, '±èÁ¾Çö', '³»¿ä¿À¿À¿À¿À¿À¿Ë¿Ë', SYSDATE,
-                         'Á¦¸ð¿À¿À¿À¿Á', 0, 1);
-INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, '±èÁöÇõ', '³»¿ä¿À¿À¿À¿À¿À¿Ë¿Ë¿Ë', SYSDATE,
-                         'Á¦¸ð¿À¿À¿À¿À¿Á', 0, 2);
+-- ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½', SYSDATE,
+                         'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 0, 1);
+INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿Ë¿ï¿½', SYSDATE,
+                         'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 0, 2);
                          
--- ÂÊÁö Å×ÀÌºí INSERT
-INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, '±èÁ¾Çö', '±èÁöÇõ', SYSDATE,
-                         'Y', '³»¿ä¿À¿À¿À¿À¿À¿À¿Ë');
-INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, '±èÁöÇõ', '±èÁ¾Çö', SYSDATE,
-                         'Y', '³»¿ä¿À¿À¿À¿À¿À¿À¿À¿À¿À¿Ë');   
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE,
+                         'Y', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE,
+                         'Y', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');   
                          
--- ´ñ±Û Å×ÀÌºí INSERT
-INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 1, '±èÁ¾Çö',
-                         '³»¿ä¿À¿À¿À¿À¿À¿Ë', SYSDATE, 1, 1, 'Y');
-INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 2, '±èÁöÇõ',
-                         '³»¿ä¿À¿À¿À¿À¿À¿À¿À¿À¿Ë', SYSDATE, 2, 1, 'Y');
+-- ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 1, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+                         'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, 1, 1, 'Y');
+INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 2, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+                         'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, 2, 1, 'Y');
 
--- ÅõÇ¥ Å×ÀÌºí INSERT
-INSERT INTO VOTE VALUES(SEQ_VOTE_CODE.NEXTVAL, '±èÁ¾Çö', 'Á¦¸ð¿À¿À¿À¿À¿Á', '³»¿ä¿À¿À¿À¿À¿Ë',
-                         1, SYSDATE, SYSDATE);
-INSERT INTO VOTE VALUES(SEQ_VOTE_CODE.NEXTVAL, '±èÁöÇõ', 'Á¦¸ð¿À¿À¿À¿À¿À¿Á', '³»¿ä¿À¿À¿À¿À¿À¿Ë',
-                         2, SYSDATE, SYSDATE);
+-- ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO VOTE VALUES(SEQ_VOTE_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+                         1, SYSDATE, SYSDATE, 0);
+INSERT INTO VOTE VALUES(SEQ_VOTE_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+                         2, SYSDATE, SYSDATE, 0);
                          
--- ÅõÇ¥ ¼±ÅÃÁö Å×ÀÌºí INSERT
-INSERT INTO VOTE_OPTION VALUES(SEQ_VOTE_CODE.CURRVAL, '±èÁ¾Çö', '³»¿ä¿À¿À¿À¿À¿Ë', 12);
-INSERT INTO VOTE_OPTION VALUES(SEQ_VOTE_CODE.CURRVAL, '±èÁöÇõ', '³»¿ä¿À¿À¿À¿À¿Ë', 25);
+-- ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO VOTE_OPTION VALUES(SEQ_VOTE_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 12);
+INSERT INTO VOTE_OPTION VALUES(SEQ_VOTE_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 25);
 
--- ÅõÇ¥ Âü¿© Å×ÀÌºí INSERT
-INSERT INTO VOTE_PARTICIPATION VALUES(SEQ_VOTE_CODE.CURRVAL, '±èÁ¾Çö');
-INSERT INTO VOTE_PARTICIPATION VALUES(SEQ_VOTE_CODE.CURRVAL, '±èÁöÇõ');
+-- ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO VOTE_PARTICIPATION VALUES(SEQ_VOTE_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+INSERT INTO VOTE_PARTICIPATION VALUES(SEQ_VOTE_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
--- ±ÙÅÂ°ü¸® Å×ÀÌºí INSERT
-INSERT INTO TNA VALUES(SYSDATE, '±èÁ¾Çö', NULL);
-INSERT INTO TNA VALUES(SYSDATE, '±èÁöÇõ', NULL);
+-- ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO TNA VALUES(SYSDATE, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', NULL);
+INSERT INTO TNA VALUES(SYSDATE, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', NULL);
 
--- ¹®¼­ ¾ç½Ä Å×ÀÌºí INSERT
-INSERT INTO DOCUMENT_FORM VALUES(SEQ_DOCUMENT_CODE.NEXTVAL, '±â¾È¼­');
-INSERT INTO DOCUMENT_FORM VALUES(SEQ_DOCUMENT_CODE.NEXTVAL, 'ÈÞ°¡°è');
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO DOCUMENT_FORM VALUES(SEQ_DOCUMENT_CODE.NEXTVAL, 'ï¿½ï¿½È¼ï¿½');
+INSERT INTO DOCUMENT_FORM VALUES(SEQ_DOCUMENT_CODE.NEXTVAL, 'ï¿½Þ°ï¿½ï¿½ï¿½');
 
--- Àç°í Å×ÀÌºí INSERT
-INSERT INTO INVENTORY VALUES(1, 2, 100);
-INSERT INTO INVENTORY VALUES(2, 2, 100);
+-- ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO INVENTORY VALUES(1, 1, 100);
+INSERT INTO INVENTORY VALUES(2, 2, 200);
+INSERT INTO INVENTORY VALUES(3, 3, 300);
+INSERT INTO INVENTORY VALUES(4, 4, 400);
+INSERT INTO INVENTORY VALUES(5, 5, 500);
 
--- ÀÔÃâ°í ³»¿ª Å×ÀÌºí INSERT
-INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 1, 2, SYSDATE, 1, 100);
-INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 2, 2, SYSDATE, 2, 100);
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ INSERT
+INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 1, 1, SYSDATE, 1, 100);
+INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 2, 2, SYSDATE, 2, 200);
+INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 3, 3, SYSDATE, 3, 300);
+INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 4, 4, SYSDATE, 1, 400);
+INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 5, 5, SYSDATE, 2, 500);
 
--- ÀüÀÚ °áÀç (ELECTRONIC_APPROVAL) INSERT
-INSERT INTO "ELECTRONIC_APPROVAL" VALUES(SEQ_EA_CODE.NEXTVAL, '±èÁ¾Çö', SYSDATE, '±â¾È¼­ Á¦¸ñ1',
-                         '°áÀç ³»¿ë 1', 1, 1);
-INSERT INTO "ELECTRONIC_APPROVAL" VALUES(SEQ_EA_CODE.NEXTVAL, '±èÁ¾Çö', SYSDATE, '±â¾È¼­ Á¦¸ñ2',
-                         '°áÀç ³»¿ë 2', 2, 2);
-INSERT INTO "ELECTRONIC_APPROVAL" VALUES(SEQ_EA_CODE.NEXTVAL, '±èÁöÇõ', SYSDATE, '±â¾È¼­ Á¦¸ñ3',
-                         '°áÀç ³»¿ë 3', 1, 3);      
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ELECTRONIC_APPROVAL) INSERT
+INSERT INTO "ELECTRONIC_APPROVAL" VALUES(SEQ_EA_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, 'ï¿½ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½1',
+                         'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1', 1, 1);
+INSERT INTO "ELECTRONIC_APPROVAL" VALUES(SEQ_EA_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, 'ï¿½ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½2',
+                         'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 2', 2, 2);
+INSERT INTO "ELECTRONIC_APPROVAL" VALUES(SEQ_EA_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, 'ï¿½ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½3',
+                         'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3', 1, 3);      
                          
                          
--- ÀüÀÚ °áÀç ÂüÁ¶ÀÚ (EA_CARBON) INSERT
-INSERT INTO "EA_CARBON" VALUES(SEQ_EA_CODE.CURRVAL, '±èÁ¾Çö', 1);
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (EA_CARBON) INSERT
+INSERT INTO "EA_CARBON" VALUES(SEQ_EA_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 1);
                          
--- ÀüÀÚ °áÀç Ã·¾ð (ADDENDUM) INSERT
-INSERT INTO "ADDENDUM" VALUES(SEQ_ADDENDUM_CODE.NEXTVAL, SEQ_ADDENDUM_CODE.CURRVAL, SEQ_EA_CODE.CURRVAL, '±èÁ¾Çö', 'Ã·¾ð ³»¿ë 1', SYSDATE, 1, 1, 'Y');
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã·ï¿½ï¿½ (ADDENDUM) INSERT
+INSERT INTO "ADDENDUM" VALUES(SEQ_ADDENDUM_CODE.NEXTVAL, SEQ_ADDENDUM_CODE.CURRVAL, SEQ_EA_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1', SYSDATE, 1, 1, 'Y');
 
--- ÀüÀÚ °áÀç °áÀç¶óÀÎ INSERT
-INSERT INTO "EA_APPROVAL_PATH" VALUES(SEQ_EA_PATH_CODE.NEXTVAL, SEQ_EA_CODE.CURRVAL, '±èÁ¾Çö', 1);
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ INSERT
+INSERT INTO "EA_APPROVAL_PATH" VALUES(SEQ_EA_PATH_CODE.NEXTVAL, SEQ_EA_CODE.CURRVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 1);
 
--- ÅðÁ÷±Ý °ü¸® INSERT
-INSERT INTO "SP_MANAGEMENT" VALUES (SEQ_SP_CODE.NEXTVAL,'±èÁ¾Çö', 1000000000, 18);
-INSERT INTO "SP_MANAGEMENT" VALUES (SEQ_SP_CODE.NEXTVAL,'±èÁöÇõ', 5000, 18);
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ INSERT
+INSERT INTO "SP_MANAGEMENT" VALUES (SEQ_SP_CODE.NEXTVAL,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 1000000000, 18);
+INSERT INTO "SP_MANAGEMENT" VALUES (SEQ_SP_CODE.NEXTVAL,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 5000, 18);
+
+-- ï¿½Þ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ INSERT
+INSERT INTO "SALARY" VALUES(SEQ_SALARY_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, '5000000', 2.0);
+INSERT INTO "SALARY" VALUES(SEQ_SALARY_CODE.NEXTVAL, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', SYSDATE, '50000', 0.5);
 
 COMMIT;

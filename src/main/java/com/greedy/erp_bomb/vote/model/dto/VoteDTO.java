@@ -52,6 +52,9 @@ public class VoteDTO implements Serializable {
 	@Column(name = "VOTE_END_DATE")
 	private java.sql.Date endDate;
 	
+	@Column(name = "VOTE_HIT")
+	private int hit;
+	
 	@OneToMany(mappedBy = "vote")
 	private List<VoteParticipationDTO> voteParticipationList = new ArrayList<>();
 	
@@ -61,7 +64,8 @@ public class VoteDTO implements Serializable {
 	public VoteDTO() {
 	}
 	public VoteDTO(int serialNo, MemberDTO member, String title, String content, int categoryNo, Date regDate,
-			Date endDate, List<VoteParticipationDTO> voteParticipationList, List<VoteOptionDTO> voteOptionList) {
+			Date endDate, int hit, List<VoteParticipationDTO> voteParticipationList,
+			List<VoteOptionDTO> voteOptionList) {
 		this.serialNo = serialNo;
 		this.member = member;
 		this.title = title;
@@ -69,6 +73,7 @@ public class VoteDTO implements Serializable {
 		this.categoryNo = categoryNo;
 		this.regDate = regDate;
 		this.endDate = endDate;
+		this.hit = hit;
 		this.voteParticipationList = voteParticipationList;
 		this.voteOptionList = voteOptionList;
 	}
@@ -115,6 +120,12 @@ public class VoteDTO implements Serializable {
 	public void setEndDate(java.sql.Date endDate) {
 		this.endDate = endDate;
 	}
+	public int getHit() {
+		return hit;
+	}
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
 	public List<VoteParticipationDTO> getVoteParticipationList() {
 		return voteParticipationList;
 	}
@@ -130,10 +141,10 @@ public class VoteDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "VoteDTO [serialNo=" + serialNo + ", member=" + member.getName() + ", title=" + title + ", content=" + content
-				+ ", categoryNo=" + categoryNo + ", regDate=" + regDate + ", endDate=" + endDate + "]";
+				+ ", categoryNo=" + categoryNo + ", regDate=" + regDate + ", endDate=" + endDate + ", hit=" + hit + "]";
 	}
 }
