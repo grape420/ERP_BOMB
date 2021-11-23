@@ -1,7 +1,6 @@
 package com.greedy.erp_bomb.salary.model.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,96 +14,80 @@ import javax.persistence.Table;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
-
 @Entity
-@Table(name = "SALARY")
 @SequenceGenerator(
 		name = "SALARY_SEQ_GENERATOR",
 		sequenceName = "SEQ_SALARY_CODE",
 		initialValue = 1, allocationSize = 1)
-public class SalaryDTO implements Serializable{
-	private static final long serialVersionUID = 6716142428275347252L;
-
+@Table(name = "SALARY")
+public class SalaryDTO implements Serializable {
+	private static final long serialVersionUID = -9064078892790962749L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 	generator = "SALARY_SEQ_GENERATOR")
-	@Column(name = "SEQ_SALARY_CODE")
-	private int salSerialNo;	
+	@Column(name = "SAL_SERIAL_NO")
+	private int serialNo;
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_NAME")
-	private MemberDTO member;	
+	private MemberDTO member;
 	
 	@Column(name = "SAL_DATE")
-	private java.sql.Date salDate;
+	private java.sql.Date Date;
 	
 	@Column(name = "SAL_REGULAR_PAY")
-	private int salReularPay;
+	private int reularPay;
 	
 	@Column(name = "SAL_BONUS")
-	private int salBonus;
+	private int bonus;
 
 	public SalaryDTO() {
 	}
-
-	public SalaryDTO(int salSerialNo, MemberDTO member, Date salDate, int salReularPay, int salBonus) {
-		this.salSerialNo = salSerialNo;
+	public SalaryDTO(int serialNo, MemberDTO member, java.sql.Date date, int reularPay, int bonus) {
+		this.serialNo = serialNo;
 		this.member = member;
-		this.salDate = salDate;
-		this.salReularPay = salReularPay;
-		this.salBonus = salBonus;
+		Date = date;
+		this.reularPay = reularPay;
+		this.bonus = bonus;
 	}
-
-	public int getSalSerialNo() {
-		return salSerialNo;
+	public int getSerialNo() {
+		return serialNo;
 	}
-
-	public void setSalSerialNo(int salSerialNo) {
-		this.salSerialNo = salSerialNo;
+	public void setSerialNo(int serialNo) {
+		this.serialNo = serialNo;
 	}
-
 	public MemberDTO getMember() {
 		return member;
 	}
-
 	public void setMember(MemberDTO member) {
 		this.member = member;
 	}
-
-	public java.sql.Date getSalDate() {
-		return salDate;
+	public java.sql.Date getDate() {
+		return Date;
 	}
-
-	public void setSalDate(java.sql.Date salDate) {
-		this.salDate = salDate;
+	public void setDate(java.sql.Date date) {
+		Date = date;
 	}
-
-	public int getSalReularPay() {
-		return salReularPay;
+	public int getReularPay() {
+		return reularPay;
 	}
-
-	public void setSalReularPay(int salReularPay) {
-		this.salReularPay = salReularPay;
+	public void setReularPay(int reularPay) {
+		this.reularPay = reularPay;
 	}
-
-	public int getSalBonus() {
-		return salBonus;
+	public int getBonus() {
+		return bonus;
 	}
-
-	public void setSalBonus(int salBonus) {
-		this.salBonus = salBonus;
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
 	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "SalaryDTO [salSerialNo=" + salSerialNo + ", member=" + member + ", salDate=" + salDate
-				+ ", salReularPay=" + salReularPay + ", salBonus=" + salBonus + "]";
+		return "SalaryDTO [serialNo=" + serialNo + ", member=" + member + ", Date=" + Date + ", reularPay=" + reularPay
+				+ ", bonus=" + bonus + "]";
 	}
-	
-	
-	
 }
