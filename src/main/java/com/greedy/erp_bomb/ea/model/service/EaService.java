@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.erp_bomb.ea.model.dao.EaDAO;
+import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
@@ -43,5 +44,14 @@ public class EaService {
 	@Transactional
 	public void insertEa(EADTO ea) {
 		eaDAO.insertEa(ea);
+	}
+
+	@Transactional
+	public void deleteAddendum(int no) {
+		eaDAO.deleteAddendum(no);
+	}
+
+	public void replyAddendum(AddendumDTO replyAd) {
+		eaDAO.replyAddendum(replyAd);
 	}
 }

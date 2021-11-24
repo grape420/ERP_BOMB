@@ -1,6 +1,7 @@
 package com.greedy.erp_bomb.ea.contorller;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
@@ -105,13 +108,9 @@ public class EaContorller {
 		List<EADTO> myEaPathList = eaService.findMyEaPathList(userName);
 		List<EADTO> myEaCarbonList = eaService.findMyEaCarbonList(userName);
 		
-		for(EADTO ea : myEaList) {
-			Collections.sort(ea.getEaApprovalPathList());
-			Collections.sort(ea.getAddendumList());
-			for(AddendumDTO eaPath : ea.getAddendumList()) {
-				System.out.println(eaPath);
-			}
-		}
+		myEaList = eaSort(myEaList);
+		myEaPathList = eaSort(myEaPathList);
+		myEaCarbonList = eaSort(myEaCarbonList);
 		
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
@@ -119,4 +118,39 @@ public class EaContorller {
 		model.addAttribute("memberList", memberList);
 	}
 	
+	@GetMapping(value = "/deleteAddendum", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String deleteAddendum(@RequestParam int no, Model model) {
+		eaService.deleteAddendum(no);
+		return "Success";
+	}
+	
+	@GetMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String replyAddendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+		AddendumDTO replyAd = new AddendumDTO();
+		AddendumDTO refAd = new AddendumDTO();
+		MemberDTO drafter = new MemberDTO();
+		
+		refAd.setNo(no);
+		
+		replyAd.setRefNo(refAd);
+		replyAd.setContent(content);
+		replyAd.setDate(new java.sql.Date(System.currentTimeMillis()));
+		replyAd.setRequestYn("N");
+		
+		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		replyAd.setMember(drafter);
+		
+		eaService.replyAddendum(replyAd);
+		return "Success";
+	}
+	
+	private List<EADTO> eaSort(List<EADTO> eaList) {
+		for(EADTO ea : eaList) {
+			Collections.sort(ea.getEaApprovalPathList());
+			Collections.sort(ea.getAddendumList());
+		}
+		return eaList;
+	}
 }
