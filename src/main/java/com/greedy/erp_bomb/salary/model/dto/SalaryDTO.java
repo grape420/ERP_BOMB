@@ -102,4 +102,5 @@ public class SalaryDTO implements Serializable {
 		return "SalaryDTO [serialNo=" + serialNo + ", member=" + member + ", Date=" + Date + ", regularPay="
 				+ regularPay + ", bonus=" + bonus + "]";
 	}
+
 }

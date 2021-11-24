@@ -23,7 +23,13 @@ public class SalaryService {
 	@Transactional
 	public List<SalaryDTO> findAllMySalary(String userName) {
 		System.out.println("==========salaryService===========");
+		System.out.println(userName);
 		return salaryDAO.findAllMySalary(userName);
+	}
+
+	@Transactional
+	public List<SalaryDTO> findAllSalary() {
+		return salaryDAO.findAllSalary();
 	}
 	
 }
