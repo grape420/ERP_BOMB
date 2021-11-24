@@ -24,7 +24,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 		sequenceName = "SEQ_ADDENDUM_CODE",
 		initialValue = 1, allocationSize = 1)
 @Table(name ="ADDENDUM")
-public class AddendumDTO implements Serializable {
+public class AddendumDTO implements Serializable,Comparable<AddendumDTO> {
 	private static final long serialVersionUID = -2785740755032023520L;
 	
 	@Id
@@ -146,5 +146,13 @@ public class AddendumDTO implements Serializable {
 	public String toString() {
 		return "AddendumDTO [no=" + no + ", refNo=" + refNo.getNo() + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", content="
 				+ content + ", date=" + date + ", dept=" + depth + ", length=" + length + ", requestYn=" + requestYn + "]";
+	}
+	@Override
+	public int compareTo(AddendumDTO o) {
+		if (o.getLength() < this.length) {
+			return 1;
+		} else  {
+			return -1;
+		}
 	}
 }

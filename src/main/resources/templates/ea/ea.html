@@ -364,17 +364,22 @@
 						<h2 class="approval_title mt-3" th:text="${ list.title }"></h2>
 						<table class="approval_line" border="1">
 							<tr>
-								<td rowspan="4">결재</td>
-								<td th:utext="${list.member.rank.name}+'<br>'+${list.member.name}"><td>
+								<td rowspan="3">결재</td>
+								<td th:utext="${list.member.rank.name}+'<br>'+${list.member.name}" class="approval_person"></td>
 								<td th:each="eaPath : ${list.eaApprovalPathList}" th:utext="${eaPath.member.rank.name}+'<br>'+${eaPath.member.name}" class="approval_person"></td>
 							</tr>
 							<tr class="approval_status">
-								<td th:utext="${list.member.rank.name}+'<br>'+${list.member.name}"><td>
-								<td th:each="eaPath : ${list.eaApprovalPathList}" th:utext="${eaPath.member.rank.name}+'<br>'+${eaPath.member.name}" class="approval_person"></td>
+								<td th:text="결재"></td>
+								<th:block th:each="eaPath : ${list.eaApprovalPathList}" th:switch="${ eaPath.status }">
+										<td th:case="1" class="approval_person"></td>
+										<td th:case="2" class="approval_person">반려</td>
+										<td th:case="3" class="approval_person">결재</td>
+										<td th:case="*" class="approval_person"></td>
+								</th:block>
 							</tr>
 							<tr>
-								<td th:utext="${list.member.rank.name}+'<br>'+${list.member.name}"><td>
-								<td th:each="eaPath : ${list.eaApprovalPathList}" th:utext="${eaPath.member.rank.name}+'<br>'+${eaPath.member.name}" class="approval_person"></td>
+								<td th:text="${ #dates.format(list.date, 'yyyy/MM/dd') }" class="approval_person"></td>
+								<td th:each="eaPath : ${list.eaApprovalPathList}" th:text="${ #dates.format(eaPath.date, 'yyyy/MM/dd') }">2021/22/22</td>
 							</tr>
 						</table>
 						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
@@ -384,7 +389,7 @@
 							<div style="display: inline-block;">
 								<span style="color: black;">
 									<th:block th:each="carbon : ${ list.eaCarbonList }">
-										<th:block th:text="${carbonStat.first}?${carbon.member.name}:', '+${carbon.member.name}"><th:block>
+										<th:block th:utext="${carbonStat.first}?${carbon.member.name}:', '+${carbon.member.name}"><th:block>
 									</th:block>
 								</span>
 							</div>
@@ -393,7 +398,7 @@
 							<div class="detail_note">
 								<div class="top">
 									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
+									<p th:utext="${ #dates.format(list.date, 'yyyy/MM/dd') } + '&nbsp;&nbsp' + ${ #dates.format(list.date, 'hh:mm:ss') }" class="date">2021/11/07 11:17:01</p>
 								</div>
 
 								<div class="approval_content">

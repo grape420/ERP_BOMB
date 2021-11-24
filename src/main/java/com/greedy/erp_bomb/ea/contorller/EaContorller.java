@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
 import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
@@ -106,11 +107,12 @@ public class EaContorller {
 		
 		for(EADTO ea : myEaList) {
 			Collections.sort(ea.getEaApprovalPathList());
-			for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
-				System.out.println(eaPath.getMember().getRank().getName());
+			Collections.sort(ea.getAddendumList());
+			System.out.println("결재 라인 사이즈 : " + ea.getEaApprovalPathList().size());
+			for(AddendumDTO eaPath : ea.getAddendumList()) {
+				System.out.println(eaPath.getLength());
 			}
 		}
-		
 		
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
