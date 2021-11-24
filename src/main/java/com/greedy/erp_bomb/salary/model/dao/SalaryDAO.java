@@ -54,6 +54,14 @@ public class SalaryDAO {
 		return allSalaryList;		
 		}
 
+	/* 신규 급여 내역 추가하기 */
+	public void registNewSalary(SalaryDTO newSalary) {
+		System.out.println("=====================newsalaryDAO======================");
+		System.out.println(newSalary);
+		
+//		em.persist(newSalary);
+	}
+
 	/* 급여 상세 수정하기 */
 	
 	/* 급여 상세 추가하기 */

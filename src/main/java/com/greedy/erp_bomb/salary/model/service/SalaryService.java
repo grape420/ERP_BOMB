@@ -31,5 +31,13 @@ public class SalaryService {
 	public List<SalaryDTO> findAllSalary() {
 		return salaryDAO.findAllSalary();
 	}
+
+	@Transactional
+	public void registNewSalary(SalaryDTO newSalary) {
+		System.out.println("==========newsalaryService===========");
+		System.out.println(newSalary);
+		
+		salaryDAO.registNewSalary(newSalary);
+	}
 	
 }

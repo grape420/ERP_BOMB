@@ -49,26 +49,18 @@ public class SalaryController {
 	}
 
 	/* 신규 급여 내역 추가 */
-	@GetMapping("regist")
-	public void registPage() {}
-	
-//	@GetMapping(value="category", produces = "application/json; charset=UTF-8")
-//	@ResponseBody
-//	public List<CategoryDTO> findCategoryList(){
-//		return menuService.findAllCategory();
-//	}
-	
-//	@PostMapping("regist")
-//	public ModelAndView registMenu(ModelAndView mv, SalaryDTO newSalary, RedirectAttributes rttr, Locale locale) {
-//		
-//		salaryService.registNewSalary(newSalary);
-//
-//		rttr.addFlashAttribute("registSuccessMessage", "메뉴 등록에 성공하셨습니다");
-////		mv.setViewName("redirect:/menu/list");
-//		mv.setViewName("/salary/salary");
-//		
-//		return mv;
-//	}
+	@PostMapping("regist")
+	public ModelAndView registMenu(ModelAndView mv, SalaryDTO newSalary, RedirectAttributes rttr, Locale locale) {
+		
+		salaryService.registNewSalary(newSalary);
+
+		System.out.println("new " + newSalary);
+		
+		rttr.addFlashAttribute("registSuccessMessage", "급여 등록에 성공하셨습니다");
+		mv.setViewName("redirect:/salary/salary");
+		
+		return mv;
+	}
 
 }
 

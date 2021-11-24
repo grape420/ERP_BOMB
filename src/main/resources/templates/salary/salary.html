@@ -149,7 +149,7 @@
 									<tbody>
 									<tr th:each="salary : ${ allSalaryList }">
 										<td th:text="${ salary.serialNo }"></td>
-										<td th:with="date=${#dates.format(salary.Date, 'yyyy-MM')}" th:text="${ #dates.format(salary.Date, 'yyyy-MM') }"></td>
+										<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }"></td>
 										<td th:text="${ salary.member.name }"></td>
 										<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
 										<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
@@ -234,24 +234,25 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input type="text" value="" style="text-align: center;"></td>
-												<td><input type="text" value="" style="text-align: center;"></td>
-												<td><input type="text" value="1,000,000" style="text-align: center;"></td>
-												<td><input type="text" value="210,000" style="text-align: center;"></td>
-												<td><input type="text" value="21,500,000" style="text-align: center;"></td>
+<!-- 												<td><input type="text" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}" style="text-align: center;">귀속연월</td>
+ -->											<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
+												<td><input type="text" id="name" style="text-align: center;" required="required"></td>
+												<td><input type="text" id="regularPay" style="text-align: center;" required="required"></td>
+												<td><input type="text" id="bonus" style="text-align: center;"></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<div class="btn_area">
-									<a href="#n" class="blue_btn">등록</a>
-									<button type="submit" class="blue_btn" id="registBtn">삭제</button>
+									<!-- <a href="#n" class="blue_btn">등록</a> -->
+									<button type="submit" class="blue_btn" id="registBtn">등록</button>
 									<a href="#n" class="gray_btn pop_close" data-button="new_payroll_pop">닫기</a>
 								</div>
 							</div>
 						</form>
 					</div>
-             <!-- 상세보기 --> 
+					
+          	   <!-- 상세보기 --> 
                <!-- 관리자 아닌 경우 : 본인의 내역 조회만 가능 (수정 및 추가 불가) -->
                <div id="payroll_detail_pop1" class="payroll_pop_layer">
                   <div class="top_area">
