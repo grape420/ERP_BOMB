@@ -408,31 +408,21 @@
 							</div>
 						</div>
 						<div class="comment_area" style="margin: 0px 10px; margin-bottom: 10px;">
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+							<div th:each="ad : ${ list.addendumList }" class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+								<th:block th:if="${ ad.depth != 0 }">
+									<th:block th:each="num : ${#numbers.sequence(1, ad.depth)}">
+										<div th:if="${ numStat.last == false }" class="col-1"></div>
+										<div th:unless="${ numStat.last == false }" style="display: flex; align-items: center;" class="col-1 p-0"><img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+									</th:block>
+								</th:block>
 								<div style="height: auto;" class="col">
-									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px; clear: both;" class="m-0">이게 첨언인가 뭔가 하는 거임<br>이런거 처음 보지?</p>
-								</div>
-							</div>
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div style="display: flex; align-items: center;" class="col-1 p-0"><img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
-								<div style="height: auto;" class="col">
-									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px;" class="m-0">이게 답글인가 하는 그거야<br>이런거 처음 보지?</p>
-								</div>
-							</div>
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div class="col-1"></div>
-								<div style="display: flex; align-items: center;" class="col-1 p-0"><img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
-								<div style="height: auto;" class="col">
-									<span style="color: black;">황성연&nbsp;(기안자)</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px;" class="m-0">이건 대댓글이야<br>이런거 처음 보지?</p>
-								</div>
-							</div>
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div style="height: auto;" class="col">
-									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px;" class="m-0">이게 첨언인가 뭔가 하는 거임<br>이런거 처음 보지?</p>
+									<span th:if="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name } + '&nbsp;(기안자)'" style="color: black;"></span>
+									<span th:unless="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name }" style="color: black;"></span>
+									<button class="ml-3 reply_btn" style="font-size: 13px;">답글</button>
+									<button th:if="${ ad.requestYn == 'N' }" class="ml-3 delete_btn" style="font-size: 13px;">삭제</button>
+									<b th:text="${ ad.date }" style="color: black; float: right;"></b>
+									<p  style="font-size: 13px;" class="m-0" th:utext="${#strings.replace(ad.content,'
+','<br>')} "></p>
 								</div>
 							</div>
 						</div>

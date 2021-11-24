@@ -108,9 +108,8 @@ public class EaContorller {
 		for(EADTO ea : myEaList) {
 			Collections.sort(ea.getEaApprovalPathList());
 			Collections.sort(ea.getAddendumList());
-			System.out.println("결재 라인 사이즈 : " + ea.getEaApprovalPathList().size());
 			for(AddendumDTO eaPath : ea.getAddendumList()) {
-				System.out.println(eaPath.getLength());
+				System.out.println(eaPath);
 			}
 		}
 		

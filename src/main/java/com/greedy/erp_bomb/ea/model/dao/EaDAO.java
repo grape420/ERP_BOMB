@@ -28,10 +28,6 @@ public class EaDAO {
 			ea.getAddendumList().size();
 			ea.getEaApprovalPathList().size();
 			ea.getEaCarbonList().size();
-			ea.getMember().getName();
-			for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
-				eaPath.getMember().getRank();
-			}
 		}
 		
 		return myEaList;
