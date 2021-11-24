@@ -4,19 +4,28 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Entity
+@SequenceGenerator(
+		name = "SP_SEQ_GENERATOR",
+		sequenceName = "SEQ_SP_CODE",
+		initialValue = 1, allocationSize = 1)
 @Table(name = "SP_MANAGEMENT")
 public class SPDTO implements Serializable {
 	private static final long serialVersionUID = 904924266611487226L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+	generator = "SP_SEQ_GENERATOR")
 	@Column(name = "SP_NO")
 	private int spNo;
 	
@@ -32,12 +41,19 @@ public class SPDTO implements Serializable {
 
 	public SPDTO() {
 	}
-	public SPDTO(MemberDTO member, int serverancePay, int empYear) {
+	public SPDTO(int spNo, MemberDTO member, int serverancePay, int empYear) {
+		this.spNo = spNo;
 		this.member = member;
 		this.serverancePay = serverancePay;
 		this.empYear = empYear;
 	}
 	
+	public int getSpNo() {
+		return spNo;
+	}
+	public void setSpNo(int spNo) {
+		this.spNo = spNo;
+	}
 	public MemberDTO getMember() {
 		return member;
 	}
@@ -62,6 +78,7 @@ public class SPDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "SPDTO [member=" + member.getName() + ", serverancePay=" + serverancePay + ", empYear=" + empYear + "]";
+		return "SPDTO [spNo=" + spNo + ", member=" + member.getName() + ", serverancePay=" + serverancePay + ", empYear="
+				+ empYear + "]";
 	}
 }
