@@ -99,28 +99,21 @@
 
 			<div id="boardDetail" class="container" style="width: 80%;">
 				<h3 style="font-weight: 900; display: inline;">사내게시판</h3>
-				<button type="button" class="btn btn-outline-secondary" id="listBtn"
-					onclick="location.href='houseboard.html'" style="float: right;">목록보기</button>
+				<div class="btn btn-outline-secondary" id="listBtn" style="float: right;" >
+				<a type="button" style="color: black" href="/board/list" >목록보기</a></div>
+					
 				<hr style="clear: both;">
-				<div class="bonmun">
-					2021.11.11
-					<h3>[신규매장] 세계최초 남극1호점 개점😋</h3>
+				<div class="bonmun" th:each="detail:${ detail }">
+					<h6 th:text="${ detail.regDate }"></h6>
+					<h5 th:if="${ detail.no } == 1" th:text="[공지]" ></h5>
+					<h5 th:if="${ detail.no } == 2" th:text="[사내게시판]" ></h5>
+					<h2 th:text="${ detail.title }"></h2>
 					<br>
-					<div class="realBonmun">
-						안녕하세요. 온세상이 아이스크림과 함께 EPR BOOM 입니다.<br> <br> 아이스크림 판매점
-						최초로 남극에 우리 ERP BOOM 매장이 생겼습니다. <br> <br> 다들 처음 매장 오픈하셨을때
-						고생 많으셨던거 아시죠오??? <br> <br> 새로운 가족이 생겼으니 다들 응원 부탁드리며
-						남극1호점 오픈 기념 본사에서 전 매장 <br> <br> 일주일간 점주님 비용없이 발주지원
-						들어가겠습니다. 👏👏👏<br> <br>
-
-						<h5>기간 | 12월 09일 (금) ~ 12월 16일 (목)</h5>
-						<h5>발주 마감일 | 12월 01일 (금)</h5>
-						<br> 발주 마감전, 기존 매장재고 꼭 확인하시어 발주 부탁드립니다.<br> <br>
-						감사합니다.<br> <br>
-					</div>
-				</div>
+					<div class="realBonmun" th:text="${ detail.content }">
+					 </div>
+				 </div>
+				
 				<hr style="clear: both;">
-
 				<h5 class="comment_title" style="font-weight: bold">댓글</h5>
 
 				<div class="comments" style="background-color: #b6e8fd;">
