@@ -1,6 +1,7 @@
 package com.greedy.erp_bomb.ea.model.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 @Entity
 @Table(name = "EA_APPROVAL_PATH")
 @IdClass(EAPathPk.class)
-public class EAPathDTO implements Serializable {
+public class EAPathDTO implements Serializable, Comparable<EAPathDTO> {
 	private static final long serialVersionUID = -2378864764927376862L;
 	
 	@Id
@@ -33,14 +34,18 @@ public class EAPathDTO implements Serializable {
 	
 	@Column(name = "EA_STATUS")
 	private int status;
+	
+	@Column(name = "EA_DATE")
+	private java.sql.Date date;
 
 	public EAPathDTO() {
 	}
-	public EAPathDTO(int no, EADTO ea, MemberDTO member, int status) {
+	public EAPathDTO(int no, EADTO ea, MemberDTO member, int status, Date date) {
 		this.no = no;
 		this.ea = ea;
 		this.member = member;
 		this.status = status;
+		this.date = date;
 	}
 	
 	public int getNo() {
@@ -67,12 +72,27 @@ public class EAPathDTO implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	public java.sql.Date getDate() {
+		return date;
+	}
+	public void setDate(java.sql.Date date) {
+		this.date = date;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "EAPathDTO [no=" + no + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", status=" + status + "]";
+		return "EAPathDTO [no=" + no + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", status=" + status + ", date=" + date + "]";
+	}
+	
+	@Override
+	public int compareTo(EAPathDTO o) {
+		if (o.getNo() < this.no) {
+			return 1;
+		} else  {
+			return -1;
+		}
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Repository
 public class EaDAO {
@@ -26,7 +27,11 @@ public class EaDAO {
 		for(EADTO ea : myEaList) {
 			ea.getAddendumList().size();
 			ea.getEaApprovalPathList().size();
-			ea.getEaApprovalPathList().size();
+			ea.getEaCarbonList().size();
+			ea.getMember().getName();
+			for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
+				eaPath.getMember().getRank();
+			}
 		}
 		
 		return myEaList;
@@ -42,7 +47,7 @@ public class EaDAO {
 		for(EAPathDTO eaPath : myEaPathList) {
 			eaPath.getEa().getAddendumList().size();
 			eaPath.getEa().getEaApprovalPathList().size();
-			eaPath.getEa().getEaApprovalPathList().size();
+			eaPath.getEa().getEaCarbonList().size();
 			eaPathList.add(eaPath.getEa());
 		}
 		
@@ -59,11 +64,30 @@ public class EaDAO {
 		for(EACarbonDTO eaCarbon : myEaPathList) {
 			eaCarbon.getEa().getAddendumList().size();
 			eaCarbon.getEa().getEaApprovalPathList().size();
-			eaCarbon.getEa().getEaApprovalPathList().size();
+			eaCarbon.getEa().getEaCarbonList().size();
 			eaCarbonList.add(eaCarbon.getEa());
 		}
 		
 		return eaCarbonList;
+	}
+
+	public List<MemberDTO> findMemberList() {
+		String jpql = "SELECT a FROM MemberDTO as a ORDER BY a.rank.no DESC";
+		return em.createQuery(jpql, MemberDTO.class).getResultList();
+	}
+
+	public void insertEa(EADTO ea) {
+		ea.setMember(em.find(MemberDTO.class, ea.getMember().getName()));
+		
+		for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
+			eaPath.setMember(em.find(MemberDTO.class, eaPath.getMember().getName()));
+		}
+		
+		for(EACarbonDTO eaCarbon : ea.getEaCarbonList()) {
+			eaCarbon.setMember(em.find(MemberDTO.class, eaCarbon.getMember().getName()));
+		}
+		
+		em.persist(ea);
 	}
 
 }
