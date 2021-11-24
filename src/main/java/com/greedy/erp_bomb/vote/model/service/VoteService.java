@@ -27,10 +27,6 @@ public class VoteService {
 		return voteDAO.selectALLVote();
 	}
 
-	@Transactional
-	public MemberDTO selectMember(UserImpl user) {
-		return voteDAO.selectMember(user);
-	}
 	
 	@Transactional
 	public void insertVote(VoteDTO vote) {
@@ -42,5 +38,10 @@ public class VoteService {
 		
 		voteDAO.insertVote(voteOption);
 		
+	}
+
+	@Transactional
+	public VoteDTO selectVoteDetail(int detailnum) {
+		return voteDAO.selectVoteDetail(detailnum);
 	}
 }

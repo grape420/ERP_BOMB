@@ -145,14 +145,15 @@
 												<tr th:each="vote : ${ voteList }">
 													<td th:text="${ vote.serialNo }"></td>
 													<td th:text="${ vote.member.name }"></td>
-													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail"></td>
+													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${vote.serialNo}')|"></td>
 													<td th:text="${ vote.regDate }"></td>
 													<td th:text="${ vote.endDate }"></td>
 													<td>14</td>
 												</tr>
 											</tbody>
 										</table>
-
+											
+											
 									</div>
 								</div>
 								
@@ -241,7 +242,7 @@
 								</div>
 
 								<div class="btn_area">
-									<a href="#n" class="blue_btn pop_btn" data-button="new-vote">신규</a>								
+									<button type="button" class="blue_btn pop_btn" data-button="new-vote">신규</button>							
 								</div>
 							</div>
 						</div>
@@ -258,17 +259,14 @@
 			</div>
 			<div class="pop_inner">
 				<div id="accordion">
-
 					<div class="top">
-						<form action="/vote/insertVote" method="post">
-							<p>제목 : &nbsp;<input type="text" placeholder="제목을 쓰세요" style="width: 80%;" name="title"></p>
+						<form action="/vote/insertVote" method="post" id="voteForm">
+							<p>제목 : &nbsp;<input type="text" placeholder="제목을 쓰세요" style="width: 80%;" name="title" id="titleName"></p>
 							<div id="collspse2" data-parent="#accordion" class="collapse">
 								<p>후보 : &nbsp;<input type="text" style="width: 80%;" placeholder="후보는 1명당 1개만 가능합니다." name="insertMember"></p>
 							</div>
-							<p>시작 ~ 종료일 : <input type="date" name="regDate"> ~ <input type="date" name="endDate"> </p>
-							<textarea cols="80" rows="6" style="width: 100%; resize: none;" placeholder="내용을 입력하세요" name="content"></textarea>
-							
-							<button type="submit" style="display: none;" id="newVote"></button>
+							<p>종료일 : <input type="date" name="endDate" id="endDate"> </p>
+							<textarea cols="80" rows="6" style="width: 100%; resize: none;" placeholder="내용을 입력하세요" name="content" id="textcon"></textarea>
 						</form>
 					</div>
 					
@@ -284,11 +282,81 @@
 		
 		<script>
 			function insertVote(){
-				$("#newVote").trigger("click");
-			}
+				var titleFlag = false;
+				var dateFlag = false;
+				var textFlag = false;
+				const titleArea = $("#titleName").val();
+				const textArea = $("#textcon").val();
+				const dateCheck = $("#endDate").val();
+
+				if(dateCheck != ""){
+					dateFlag = true;
+				}
+				if(titleArea != ""){
+					titleFlag = true;
+				}
+				if(textArea != ""){
+					textFlag = true;
+				}
+				if(!titleFlag){
+					alert("제목을 입력하세요!");
+				} else if(!dateFlag){
+					alert("종료일을 선택하세요!");
+				} else if(!textFlag){
+					alert("내용을 입력하세요!");
+				} else {
+					$("#voteForm").submit();
+				}
+			};
+			
 		</script>
 		
 		<!-- /새로운 투표-->
+
+	<script>
+		function voteDetail(num){
+			var detailnum = num;
+			const title = $("#titleVo");
+			const content = $("#contentVo");
+			const voteList = $("#voteList");
+			title.html("");
+			content.html("");
+			voteList.html("");
+			
+			$.ajax({
+			url: "/vote/detail",
+			type: "get",
+			data: {
+				detailnum : detailnum
+			},
+			success: function(data){
+				console.table(data.voteOptionList);
+				title.text("제목 : " + data.title);								
+				content.text("내용 : " + data.content);
+				
+				if(data.voteOptionList != ""){
+					
+					for(var index in data.voteOptionList){
+						$index = "vote" + index;
+						
+						console.log($index);
+						console.log(data.voteOptionList[index].desc);
+						
+						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "></li>")
+					
+					}
+				} else {
+					voteList.text("후보가 없습니다.");
+				}
+			
+			},
+			error: function(xhr){
+				console.log("에러임");
+				console.log(xhr);
+				 }
+			});
+		}
+	</script>
 
 		<!-- 투표 게시판 디테일 -->
 		<div id="vote-detail" class="pop_layer">
@@ -297,16 +365,13 @@
 				<button type="button" class="pop_close" data-button="vote-detail">닫기</button>
 			</div>
 			<div class="pop_inner">
-				<a href="#n" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;">결과보기</a>
-				<p>제목 : 제목 공모전입니다 </p>
+				<button type="button" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;">결과보기</button>
+				<p id="titleVo"></p>
 				<hr>
-				<p>내용 : 신상품의 이름을 정해주세요</p> 
+				<p id="contentVo"></p> 
 				<hr>
 				<form action="#" method="POST">
 					<ol id="voteList">
-						<li><label for="test1">민트초코초코초코 아이스크림</label><input type="radio" id="test1" name="votes" class="vote"></li>
-						<li><label for="test2">초고추장맛 아이스크림</label><input type="radio" id="test2" name="votes" class="vote"></li>
-						<li><label for="test3">허니라떼는 말이야</label><input type="radio" id="test3" name="votes" class="vote"></li>
 					</ol>
 				</form>
 			

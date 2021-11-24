@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
@@ -57,9 +58,10 @@ public class VoteController {
 	
 	@PostMapping("insertVote")
 	public ModelAndView insertVote(ModelAndView mv, @RequestParam String title, @RequestParam String insertMember,
-			@RequestParam java.sql.Date regDate, @RequestParam java.sql.Date endDate, @RequestParam String content
+			@RequestParam java.sql.Date endDate, @RequestParam String content
 			, Principal principal) {
 		
+		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
 		System.out.println(user.getName());
@@ -70,7 +72,7 @@ public class VoteController {
 		VoteDTO vote = new VoteDTO();
 		vote.setMember(member);
 		vote.setTitle(title);
-		vote.setRegDate(regDate);
+		vote.setRegDate(date);
 		vote.setEndDate(endDate);
 		vote.setContent(content);
 		
@@ -93,6 +95,36 @@ public class VoteController {
 		mv.setViewName("redirect:/vote/vote");
 		
 		return mv;
+	}
+	
+	@GetMapping(value = "detail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public VoteDTO voteDetail(@RequestParam int detailnum) {
+		
+		
+		System.out.println(detailnum);
+		VoteDTO voteDetail = voteService.selectVoteDetail(detailnum);
+		
+		for (VoteOptionDTO vote : voteDetail.getVoteOptionList()) {
+			vote.setMember(null);
+			vote.setVote(null);
+		}
+		
+		voteDetail.setMember(null);
+		
+//		for (VoteDTO voteOptionDTO : votedetail) {
+//			System.out.println(voteOptionDTO.getVote());
+//			voteOptionDTO.getVote().setVoteOptionList(null);
+//			voteOptionDTO.getVote().setVoteParticipationList(null);
+//			voteOptionDTO.getVote().setMember(null);
+//			voteOptionDTO.setMember(null);
+			
+//			voteOptionDTO.getVote().
+//		}
+		
+//		System.out.println("가져온놈" + votedetail);
+		
+		return voteDetail;
 	}
 	
 }

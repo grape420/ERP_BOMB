@@ -31,10 +31,6 @@ public class VoteDAO {
 		return voteList;
 	}
 
-	public MemberDTO selectMember(UserImpl user) {
-		return em.find(MemberDTO.class, user.getName());
-	}
-
 	public void insertVote(VoteDTO vote) {
 		em.persist(vote);
 		
@@ -46,5 +42,31 @@ public class VoteDAO {
 		
 		em.persist(voteOption);
 		System.out.println(voteOption);
+	}
+
+	public VoteDTO selectVoteDetail(int detailnum) {
+		
+//		String jpql = "SELECT a FROM VoteOptionDTO as a WHERE a.vote.serialNo = :detailnum";
+//		
+//		TypedQuery<VoteOptionDTO> query = em.createQuery(jpql, VoteOptionDTO.class);
+//		
+//		query.setParameter("detailnum", detailnum);
+		
+		VoteDTO voteDetail = em.find(VoteDTO.class, detailnum);
+		
+		voteDetail.getVoteOptionList().size();
+		
+		
+		voteDetail.setVoteParticipationList(null);
+		
+//		List<VoteOptionDTO> voteDetail = query.getResultList();
+		
+//		for (VoteOptionDTO voteOptionDTO : voteDetail) {
+//			voteOptionDTO.getVote().getVoteOptionList().add(voteOptionDTO);
+//		}
+//		System.out.println("갓다옴" + voteDetail);
+		
+		
+		return voteDetail;
 	}
 }
