@@ -111,6 +111,7 @@
 						<div>
 							<div class="">
 								<div class="search_form">
+									<button sec:authentication="name" id="bob" style="display:none;"></button>
 									<input type="text" placeholder="검색어 입력" />
 									<button type="button" class="blue_btn">Search</button>
 								</div>
@@ -148,7 +149,7 @@
 													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${vote.serialNo}')|"></td>
 													<td th:text="${ vote.regDate }"></td>
 													<td th:text="${ vote.endDate }"></td>
-													<td>14</td>
+													<td th:text="${ vote.hit }"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -184,10 +185,10 @@
 												<tr th:each="regvote : ${ regVoteList }">
 													<td th:text="${ regvote.serialNo }"></td>
 													<td th:text="${ regvote.member.name }"></td>
-													<td th:text="${ regvote.title }" class="t_left pop_btn" data-button="vote-detail"></td>
+													<td th:text="${ regvote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${regvote.serialNo}')|"></td>
 													<td th:text="${ regvote.regDate }"></td>
 													<td th:text="${ regvote.endDate }"></td>
-													<td>14</td>
+													<td th:text="${ regvote.hit }"></td>
 												</tr>													
 											</tbody>
 										</table>
@@ -221,10 +222,10 @@
 												<tr th:each="endvote : ${ endVoteList }">
 													<td th:text="${ endvote.serialNo }"></td>
 													<td th:text="${ endvote.member.name }"></td>
-													<td th:text="${ endvote.title }" class="t_left pop_btn" data-button="vote-detail"></td>
+													<td th:text="${ endvote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${endvote.serialNo}')|"></td>
 													<td th:text="${ endvote.regDate }"></td>
 													<td th:text="${ endvote.endDate }"></td>
-													<td>14</td>
+													<td th:text="${ endvote.hit }"></td>
 												</tr>													
 											</tbody>
 										</table>
@@ -322,6 +323,8 @@
 			title.html("");
 			content.html("");
 			voteList.html("");
+			var bob = $("#bob").text();
+			
 			
 			$.ajax({
 			url: "/vote/detail",
@@ -331,20 +334,24 @@
 			},
 			success: function(data){
 				console.table(data.voteOptionList);
+				console.table(data.voteParticipationList);
 				title.text("제목 : " + data.title);								
 				content.text("내용 : " + data.content);
 				
+				console.log(bob);
 				if(data.voteOptionList != ""){
 					
 					for(var index in data.voteOptionList){
 						$index = "vote" + index;
 						
+						
 						console.log($index);
 						console.log(data.voteOptionList[index].desc);
 						
-						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "></li>")
-					
+						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
+						
 					}
+					voteList.append("<input type='text' name='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
 				} else {
 					voteList.text("후보가 없습니다.");
 				}
@@ -370,22 +377,28 @@
 				<hr>
 				<p id="contentVo"></p> 
 				<hr>
-				<form action="#" method="POST">
+				<form action="/vote/vvote" method="POST" id="vvote">
 					<ol id="voteList">
 					</ol>
 				</form>
-			
 			</div>
-			<div class="btn_area">
+			
+			<div class="btn_area" id="buttonArea">
 				<a href="#n" class="blue_btn pop_btn" data-button="insertVote">후보 등록</a>
-				<a href="#n" class="blue_btn pop_close" data-button="vote-detail">투표하기</a>
-				<button class="gray_btn" style="margin-right: 5px;" onclick="deleteVote()">삭제하기</button>
-				<a href="#n" class="gray_btn pop_close" data-button="vote-detail">닫기</a>
+				<button type="button" class="blue_btn pop_close" onclick="vVote()">투표하기</button>
+				<button class="gray_btn" style="margin-right: 5px; margin-left: 5px;" onclick="deleteVote()">삭제하기</button>
+				<a class="gray_btn pop_close" data-button="vote-detail">닫기</a>
 			</div>
 		</div>
-	</div>
 	<!-- /투표 게시판 디테일-->
-
+	
+	<script>
+		function vVote(){
+			$("#vvote").submit();
+		}
+	</script>
+	
+	
 	<!-- 후보 등록 -->
 	<div id="insertVote" class="pop_layer">
 		<div class="top_area">

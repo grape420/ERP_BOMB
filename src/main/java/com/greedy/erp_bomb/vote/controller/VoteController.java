@@ -18,6 +18,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
+import com.greedy.erp_bomb.vote.model.dto.VoteParticipationDTO;
 import com.greedy.erp_bomb.vote.model.service.VoteService;
 
 @Controller
@@ -101,8 +102,6 @@ public class VoteController {
 	@ResponseBody
 	public VoteDTO voteDetail(@RequestParam int detailnum) {
 		
-		
-		System.out.println(detailnum);
 		VoteDTO voteDetail = voteService.selectVoteDetail(detailnum);
 		
 		for (VoteOptionDTO vote : voteDetail.getVoteOptionList()) {
@@ -110,21 +109,50 @@ public class VoteController {
 			vote.setVote(null);
 		}
 		
+		for (VoteParticipationDTO votePa : voteDetail.getVoteParticipationList()) {
+			String member = votePa.getMember().getName();
+			int voteNum = votePa.getVote().getSerialNo();
+			
+			votePa.setMember(null);
+			votePa.setVote(null);
+			
+			MemberDTO mem = new MemberDTO();
+			mem.setName(member);
+			
+			VoteDTO vote = new VoteDTO();
+			vote.setSerialNo(voteNum);
+			
+			votePa.setMember(mem);
+			votePa.setVote(vote);
+		}
+		System.out.println(voteDetail.getVoteParticipationList());
 		voteDetail.setMember(null);
 		
-//		for (VoteDTO voteOptionDTO : votedetail) {
-//			System.out.println(voteOptionDTO.getVote());
-//			voteOptionDTO.getVote().setVoteOptionList(null);
-//			voteOptionDTO.getVote().setVoteParticipationList(null);
-//			voteOptionDTO.getVote().setMember(null);
-//			voteOptionDTO.setMember(null);
-			
-//			voteOptionDTO.getVote().
-//		}
-		
-//		System.out.println("가져온놈" + votedetail);
-		
 		return voteDetail;
+	}
+	
+	@PostMapping("/vvote")
+	public ModelAndView vvote(ModelAndView mv, @RequestParam int serialNo, @RequestParam String votes,
+			Principal principal) {
+		
+		System.out.println("넘버다" + serialNo);
+		
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		
+		System.out.println(user.getName());
+		
+		MemberDTO member = new MemberDTO();
+		member.setName(user.getName());
+		
+		VoteParticipationDTO vote = new VoteParticipationDTO();
+		
+		vote.setMember(member);
+		
+		voteService.insertVvote(vote, votes, serialNo);
+		
+		mv.setViewName("redirect:/vote/vote");
+		
+		return mv;
 	}
 	
 }

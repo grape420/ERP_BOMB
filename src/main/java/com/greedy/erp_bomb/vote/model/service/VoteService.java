@@ -11,6 +11,7 @@ import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dao.VoteDAO;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
+import com.greedy.erp_bomb.vote.model.dto.VoteParticipationDTO;
 
 @Service
 public class VoteService {
@@ -43,5 +44,10 @@ public class VoteService {
 	@Transactional
 	public VoteDTO selectVoteDetail(int detailnum) {
 		return voteDAO.selectVoteDetail(detailnum);
+	}
+
+	@Transactional
+	public void insertVvote(VoteParticipationDTO vote, String votes, int serialNo) {
+		voteDAO.insertVvote(vote, votes, serialNo);
 	}
 }

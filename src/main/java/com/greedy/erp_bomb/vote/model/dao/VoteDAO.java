@@ -12,6 +12,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
+import com.greedy.erp_bomb.vote.model.dto.VoteParticipationDTO;
 
 @Repository
 public class VoteDAO {
@@ -46,27 +47,44 @@ public class VoteDAO {
 
 	public VoteDTO selectVoteDetail(int detailnum) {
 		
-//		String jpql = "SELECT a FROM VoteOptionDTO as a WHERE a.vote.serialNo = :detailnum";
-//		
-//		TypedQuery<VoteOptionDTO> query = em.createQuery(jpql, VoteOptionDTO.class);
-//		
-//		query.setParameter("detailnum", detailnum);
 		
 		VoteDTO voteDetail = em.find(VoteDTO.class, detailnum);
 		
+		int hit = voteDetail.getHit();
+		voteDetail.setHit(hit+1);
+		
+		em.persist(voteDetail);
+		
 		voteDetail.getVoteOptionList().size();
 		
-		
-		voteDetail.setVoteParticipationList(null);
-		
-//		List<VoteOptionDTO> voteDetail = query.getResultList();
-		
-//		for (VoteOptionDTO voteOptionDTO : voteDetail) {
-//			voteOptionDTO.getVote().getVoteOptionList().add(voteOptionDTO);
-//		}
-//		System.out.println("갓다옴" + voteDetail);
-		
+//		voteDetail.setVoteParticipationList(null);
+		voteDetail.getVoteParticipationList().size();
 		
 		return voteDetail;
+	}
+
+	public void insertVvote(VoteParticipationDTO vote, String votes, int serialNo) {
+		
+		vote.setVote(em.find(VoteDTO.class, serialNo));
+		vote.setMember(em.find(MemberDTO.class, vote.getMember().getName()));
+		
+		System.out.println(vote.getMember().getName());
+		System.out.println(vote.getVote());
+		
+		vote.getVote().setVoteOptionList(null);
+		vote.getVote().setVoteParticipationList(null);
+		
+		TypedQuery<VoteOptionDTO> query = em.createQuery("SELECT a FROM VoteOptionDTO as a WHERE a.desc = :desc", VoteOptionDTO.class);
+		
+		query.setParameter("desc", votes);
+		
+		VoteOptionDTO voteOption = query.getSingleResult();
+		
+		int num = voteOption.getVoteCount();
+		
+		voteOption.setVoteCount(num + 1);
+		
+		em.persist(vote);
+		em.persist(voteOption);
 	}
 }
