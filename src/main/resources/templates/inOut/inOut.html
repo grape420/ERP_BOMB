@@ -51,13 +51,13 @@
 						<a class="nav-link font-weight-bold" href="">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inventory">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="/inOut">입출고</a>
+						<a class="nav-link font-weight-bold" href="inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -136,7 +136,6 @@
 									<tr th:each="inOut : ${ inOutList }">
 										<td th:text="${ inOut.no }">
 											<input type="checkbox" id="total_01" class="check_box" /> 
-											<label for="total_01" data-num="1"/>
 										</td>
 										<td class="t_center pop_btn" th:text="${ inOut.inventory.company.name }"></td>
 										<td class="t_center pop_btn" th:text="${ inOut.inventory.iceCream.name }"></td>
@@ -166,8 +165,7 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th><input type="checkbox" class="check_box"
-											id="total_num2" /> <label for="total_num2"></label></th>
+										<th>번호</th>
 										<th>회사 구분</th>
 										<th>아이스크림</th>
 										<th>입출고 일자</th>
@@ -176,15 +174,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><input type="checkbox" id="in_01" class="check_box" />
-											<label for="in_01" data-num="1"></label></td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">본사</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">엄마는
-											외계인</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">2021/11/07</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">입고</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">100</td>
+									<tr th:each="inOut : ${ inOutList }" th:if="${inOut.division} == 1">
+										<td th:text="${ inOut.no }">
+											<input type="checkbox" id="total_01" class="check_box" /> 
+										</td>
+										<td class="t_center pop_btn" th:text="${ inOut.inventory.company.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.inventory.iceCream.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.date }"></td>
+										<td class="t_center pop_btn" th:if="${inOut.division} == 1" th:text="입고"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.amount }"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -206,8 +204,7 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th><input type="checkbox" class="check_box"
-											id="total_num2" /> <label for="total_num2"></label></th>
+										<th>번호</th>
 										<th>회사 구분</th>
 										<th>아이스크림</th>
 										<th>입출고 일자</th>
@@ -216,15 +213,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><input type="checkbox" id="out_02" class="check_box" />
-											<label for="out_02" data-num="2"></label></td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">강남역점</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">닐라닐라
-											바닐라</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">2021/11/07</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">출고</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">100</td>
+									<tr th:each="inOut : ${ inOutList }" th:if="${inOut.division} == 2">
+										<td th:text="${ inOut.no }">
+											<input type="checkbox" id="total_01" class="check_box" /> 
+										</td>
+										<td class="t_center pop_btn" th:text="${ inOut.inventory.company.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.inventory.iceCream.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.date }"></td>
+										<td class="t_center pop_btn" th:if="${inOut.division} == 2" th:text="출고"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.amount }"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -246,8 +243,7 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th><input type="checkbox" class="check_box"
-											id="total_num4" /> <label for="total_num4"></label></th>
+										<th>번호</th>
 										<th>회사 구분</th>
 										<th>아이스크림</th>
 										<th>입출고 일자</th>
@@ -256,99 +252,38 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><input type="checkbox" id="total_02"
-											class="check_box" /> <label for="total_02" data-num="2"></label>
+									<tr th:each="inOut : ${ inOutList }" th:if="${inOut.division} == 3">
+										<td th:text="${ inOut.no }">
+											<input type="checkbox" id="total_01" class="check_box" /> 
 										</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">잠실역점</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">베리베리
-											스트로베리</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">2021/11/09</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">판매</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">100</td>
+										<td class="t_center pop_btn" th:text="${ inOut.inventory.company.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.inventory.iceCream.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.date }"></td>
+										<td class="t_center pop_btn" th:if="${inOut.division} == 3" th:text="판매"></td>
+										<td class="t_center pop_btn" th:text="${ inOut.amount }"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<!-- 판매 테이블 -->
-
-					<!-- 디테일 페이지 -->
-					<!-- 전체 디테일 페이지 -->
-					<div id="note_detail_pop2" class="pop_layer">
-						<div class="top_area">
-							<h2>입출고 관리</h2>
-							<button type="button" class="pop_close"
-								data-button="note_detail_pop2">닫기</button>
-						</div>
-						<div class="pop_inner">
-							<div class="tableArea">
-								<table>
-									<colgroup>
-										<col style="width: 20%" />
-										<col style="width: 30%" />
-										<col style="width: 20%" />
-										<col style="width: 15%" />
-										<col style="width: 15%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>회사 구분</th>
-											<th>아이스크림</th>
-											<th>입출고 일자</th>
-											<th>입출고 구분</th>
-											<th>수량</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><select>
-													<option value="">본사</option>
-													<option value="">강남역점</option>
-											</select></td>
-											<td><select>
-													<option value="">엄마는 외계인</option>
-													<option value="">닐라닐라 바닐라</option>
-											</select></td>
-											<td><input type="date"></td>
-											<td><select>
-													<option value="">입고</option>
-													<option value="">출고</option>
-													<option value="">판매</option>
-											</select></td>
-											<td><input type="number"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="btm_area" style="text-align: center;">
-							<a href="#n" class="blue_btn pop_btn"
-								data-button="new_product_pop">수정</a>
-						</div>
-					</div>
-					<!-- 디테일 페이지 -->
 					<!-- 입출고 추가 -->
 					<div id="new_product_pop" class="pop_layer">
 						<div class="top_area">
 							<h2>입출고관리</h2>
-							<button type="button" class="pop_close"
-								data-button="new_product_pop">닫기</button>
+							<button type="button" class="pop_close" data-button="new_product_pop">닫기</button>
 						</div>
 						<div class="tableArea">
+						<form action="/inOut/regist" method="post">
 							<table>
 								<colgroup>
-									<col style="width: 20%" />
-									<col style="width: 30%" />
-									<col style="width: 20%" />
-									<col style="width: 15%" />
-									<col style="width: 15%" />
+									<col style="width: 40%" />
+									<col style="width: 35%" />
+									<col style="width: 25%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>회사 구분</th>
 										<th>아이스크림</th>
-										<th>입출고 일자</th>
 										<th>입출고 구분</th>
 										<th>수량</th>
 									</tr>
@@ -356,47 +291,51 @@
 								<tbody>
 									<tr>
 										<td>
-											<select id="companyCode" name="companyCode">
-											<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
 											<select id="icecreamCode" name="icecreamCode">
 											<!-- ajax로 처리 -->
 											</select>
 										</td>
-										<td><input type="date"></td>
 										<td>
-											<select>
-											<option value="1">입고</option>
-											<option value="2">출고</option>
-											<option value="3">판매</option>
+											<select name="division">
+												<option value="1">입고</option>
+												<option value="2">출고</option>
+												<option value="3">판매</option>
 											</select>
 										</td>
-										<td><input type="number"></td>
+										<td>
+											<input type="number" name="amount" min="1">
+										</td>
+										<td>
+											<select id="headCode">
+												
+											</select>
+										</td>
 									</tr>
 								</tbody>
 							</table>
+						
+						<div class="btm_area mt-2" style="text-align: center;">
+							<button type="submit" class="blue_btn pop_close" data-button="new_product_pop" id="submitBtn">추가</button> 
+							<a class="gray_btn pop_close" data-button="new_product_pop" style="cursor: pointer;">닫기</a>
 						</div>
-						<div class="btm_area" style="text-align: center;">
-							<a class="blue_btn pop_close" data-button="new_product_pop">추가</a> 
-							<a class="gray_btn pop_close" data-button="new_product_pop">닫기</a>
+						</form>
 						</div>
 					</div>
 					<!-- 입출고 추가 -->
 					<div class="btm_area" style="margin-left: 10px;">
-						<a class="blue_btn pop_btn" data-button="new_product_pop" id="plusBtn">추가</a> 
-						<a class="gray_btn">선택삭제</a>
+						<a class="blue_btn pop_btn" data-button="new_product_pop" id="plusBtn" style="cursor: pointer;">추가</a> 
 					</div>
+					
 					<div class="paging">
 						<button type="button" class="first_btn">처음페이지</button>
 						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a> <a
-							href="#n" class="num">3</a> <a href="#n" class="num">4</a>
+						<a href="#n" class="num on">1</a> 
+						<a href="#n" class="num">2</a> 
+						<a href="#n" class="num">3</a> 
+						<a href="#n" class="num">4</a>
 						<button type="button" class="next_btn">다음페이지</button>
 						<button type="button" class="last_btn">마지막페이지</button>
 					</div>
-
 					<!-- 여기에 적으셈 -->
 				</div>
 			</div>
@@ -405,22 +344,41 @@
 	
 	<script>
 		$.ajax({
-			url: "/inOut/company",
+			url: "/inOut/icecream",
 			success: function(data){
-				console.log("여기옴?");
-				const $companyCode = $("#companyCode");
-				$companyCode.html("");
+				const $icecreamCode = $("#icecreamCode");
+				$icecreamCode.html("");
 				
 				for (let i in data){
-					$companyCode.append($("<option>").val(data[i].serialNo).text(data[i].name));
-					console.table(data[i]);
+					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
 				}
 			},
 			error: function(xhr){
-				console.log("에러임");
 				console.log(xhr);
 			}
 		});
+		
+		$("#submitBtn").click(function() {
+			if($("input[type=number]").val() < 1) {
+				alert("1보다 큰 숫자를 입력하세요");
+				$("button[type=submit]").removeAttr('class');
+			}
+		});
+		
+/* 		$.ajax({
+			url: "/inOut/head",
+			success: function(data){
+				const $headCode = $("#headCode");
+				$headCode.html("");
+				
+				for (let i in data){
+					$headCode.append($("<option>").val(data[i].no).text(data[i].name));
+				}
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		}); */
 	</script>
 </body>
 </html>

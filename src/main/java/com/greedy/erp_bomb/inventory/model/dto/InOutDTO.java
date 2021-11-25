@@ -3,6 +3,7 @@ package com.greedy.erp_bomb.inventory.model.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

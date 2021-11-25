@@ -8,7 +8,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
+import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InOutDTO;
+import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
+import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;
 
 @Repository
 public class InOutDAO {
@@ -24,17 +27,36 @@ public class InOutDAO {
 		return inOutList;
 	}
 
-	public List<CompanyDTO> findCompanyList() {
-		String jpql = "SELECT m FROM CompanyDTO as m ORDER BY m.serialNo";
+	public List<IceCreamDTO> findIcecreamList() {
+		String jpql = "SELECT m FROM IceCreamDTO as m";
 		
-		List<CompanyDTO> companyList = em.createQuery(jpql, CompanyDTO.class).getResultList();
+		List<IceCreamDTO> icecreamList = em.createQuery(jpql, IceCreamDTO.class).getResultList();
 		
-		for(CompanyDTO com : companyList) {
-			com.setInventoryList(null);
-			com.setMemberList(null);
+		for (IceCreamDTO ice : icecreamList) {
+			ice.setInventoryList(null);
 		}
 		
-		return companyList;
+		return icecreamList;
+	}
+
+	public void registInOut(InOutDTO inOut) {
+		inOut.getInventory().setCompany(em.find(CompanyDTO.class, inOut.getInventory().getCompany().getSerialNo()));
+		inOut.getInventory().setIceCream(em.find(IceCreamDTO.class, inOut.getInventory().getIceCream().getNo()));
+		
+		em.persist(inOut);
+	}
+
+	public void updateInventory(InventoryDTO inven) {
+		InventoryPk pk = new InventoryPk();
+		pk.setCompany(inven.getCompany().getSerialNo());
+		pk.setIceCream(inven.getIceCream().getNo());
+		
+		InventoryDTO selectedInven = em.find(InventoryDTO.class, pk);
+		selectedInven.setInvenRemainStock(inven.getInvenRemainStock());
+	}
+
+	public InventoryDTO findInven(InventoryPk inventoryPk) {
+		return em.find(InventoryDTO.class, inventoryPk);
 	}
 
 }

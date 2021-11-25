@@ -9,6 +9,11 @@ public class MainController {
 	
 	@GetMapping(value = {"/", "main"})
 	public String main() {
+		return "member/login";
+	}
+	
+	@PostMapping(value = "/main/main")
+	public String mainMain() {
 		return "main/main";
 	}
 	

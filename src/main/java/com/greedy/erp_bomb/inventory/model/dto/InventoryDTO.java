@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class InventoryDTO implements Serializable {
 	@Column(name = "INVEN_REMAIN_STOCK")
 	private int invenRemainStock;
 	
-	@OneToMany(mappedBy = "inventory")
+	@OneToMany(mappedBy = "inventory", cascade=CascadeType.ALL)
 	private List<InOutDTO> inOutList = new ArrayList<>();
 
 	public InventoryDTO() {

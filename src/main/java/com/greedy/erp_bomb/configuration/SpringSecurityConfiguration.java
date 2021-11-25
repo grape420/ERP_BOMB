@@ -51,7 +51,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.and()
 			    .formLogin()												// 로그인 form을 따로 이용해 로그인 처리를 할 것이다.
 			    .loginPage("/member/login")									// 기본적으로 스프링 시큐리티에서 제공하는 로그인 화면 외에 로그인 화면을 따로 적용할 것이다.(권한이 획득되지 않아 로그인이 필요한 상황에도 사용할 수 있게 함)
-			    .successForwardUrl("/")
+			    .successForwardUrl("/main/main")
 			    .failureUrl("/member/login?error=fail")
 			.and()
 			    .logout()													// 로그아웃 설정
