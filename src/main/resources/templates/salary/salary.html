@@ -234,11 +234,16 @@
 										</thead>
 										<tbody>
 											<tr>
-<!-- 												<td><input type="text" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}" style="text-align: center;">귀속연월</td>
- -->											<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
-												<td><input type="text" id="name" style="text-align: center;" required="required"></td>
-												<td><input type="text" id="regularPay" style="text-align: center;" required="required"></td>
-												<td><input type="text" id="bonus" style="text-align: center;"></td>
+												<!-- <td><input type="text" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}" style="text-align: center;">귀속연월</td> -->
+												<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" name="Date" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
+												<!-- <td><input type="text" name="name" id="name" style="text-align: center;" required="required"></td> -->
+												<td>
+													<select name="name" id="name" style="width: 10%;" class="form-control select2">
+														<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+													</select>
+												</td>
+												<td><input type="text" name="regularPay" id="regularPay" style="text-align: center;" required="required"></td>
+												<td><input type="text" name="bonus" id="bonus" style="text-align: center;"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -282,7 +287,7 @@
                         </table>
                      </div>
                   <div class="btn_area">
-                     <a href="#n" class="gray_btn pop_close" data-button="payroll_detail_pop1">닫기</a>
+               ㅏ     <a href="#n" class="gray_btn pop_close" data-button="payroll_detail_pop1">닫기</a>
                   </div>
                </div>
             </div>
@@ -396,7 +401,11 @@
 	</section>
 	
 	<script>
-		
+		$(document).ready(function(){
+			$('.select2').select2({
+				placeholder: "선택해주세요",
+			});
+		});
 	</script>
 </body>
 </html>
