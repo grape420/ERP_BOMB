@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.salary.model.dto.SalaryDTO;
 
 @Repository
@@ -18,9 +19,6 @@ public class SalaryDAO {
 
 	/* 본인의 급여 목록 불러오기 */
 	public List<SalaryDTO> findAllMySalary(String userName) {
-		System.out.println("=====================salaryDAO======================");
-		System.out.println(userName);
-		
 		String jpql = "SELECT s FROM SalaryDTO as s WHERE s.member.name = :name ORDER BY s.serialNo DESC";
 		
 		TypedQuery<SalaryDTO> query = em.createQuery(jpql, SalaryDTO.class)
@@ -35,12 +33,8 @@ public class SalaryDAO {
 		return salaryList;	
 		}
 
-	
-	/* 관리자만 */
 	/* 모든 급여 목록 불러오기 */
 	public List<SalaryDTO> findAllSalary() {
-		System.out.println("=====================salaryDAO======================");
-		
 		String jpql = "SELECT s FROM SalaryDTO as s ORDER BY s.serialNo DESC";
 		
 		TypedQuery<SalaryDTO> query = em.createQuery(jpql, SalaryDTO.class);
@@ -54,16 +48,28 @@ public class SalaryDAO {
 		return allSalaryList;		
 		}
 
-	/* 신규 급여 내역 추가하기 */
+	/* member 전체 조회하기 */
+	public List<MemberDTO> findMemberList() {
+		String jpql = "SELECT a FROM MemberDTO as a ORDER BY a.rank.no DESC";
+		return em.createQuery(jpql, MemberDTO.class).getResultList();
+	}
+	
+	/* name을 전달 받아 member 조회하기 */
+	public MemberDTO findMemberInfo(String name) {
+		System.out.println("====================newsalaryDAO======================");
+		System.out.println("name : " + name);
+		return em.find(MemberDTO.class, name);
+	}
+	
+	/* 급여 상세 추가하기 */
 	public void registNewSalary(SalaryDTO newSalary) {
-		System.out.println("=====================newsalaryDAO======================");
-		System.out.println(newSalary);
+//		System.out.println("=====================newsalaryDAO======================");
+//		System.out.println(newSalary);
 		
-//		em.persist(newSalary);
+		em.persist(newSalary);
 	}
 
 	/* 급여 상세 수정하기 */
 	
-	/* 급여 상세 추가하기 */
 
 }

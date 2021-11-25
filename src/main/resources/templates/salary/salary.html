@@ -238,8 +238,8 @@
 												<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" name="Date" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
 												<!-- <td><input type="text" name="name" id="name" style="text-align: center;" required="required"></td> -->
 												<td>
-													<select name="name" id="name" style="width: 10%;" class="form-control select2">
-														<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+													<select th:name="name" id="name" style="width: 80%;" class="form-control select2">
+														<option th:each="member : ${ memberList }" th:text="${ member.name }" th:value="${ member.name }"></option>
 													</select>
 												</td>
 												<td><input type="text" name="regularPay" id="regularPay" style="text-align: center;" required="required"></td>

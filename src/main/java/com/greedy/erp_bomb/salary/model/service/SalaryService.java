@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.salary.model.dao.SalaryDAO;
 import com.greedy.erp_bomb.salary.model.dto.SalaryDTO;
 
@@ -22,8 +23,6 @@ public class SalaryService {
 	
 	@Transactional
 	public List<SalaryDTO> findAllMySalary(String userName) {
-		System.out.println("==========salaryService===========");
-		System.out.println(userName);
 		return salaryDAO.findAllMySalary(userName);
 	}
 
@@ -33,11 +32,22 @@ public class SalaryService {
 	}
 
 	@Transactional
+	public List<MemberDTO> findMemberList() {
+		return salaryDAO.findMemberList();
+	}
+	
+	@Transactional
 	public void registNewSalary(SalaryDTO newSalary) {
-		System.out.println("==========newsalaryService===========");
-		System.out.println(newSalary);
-		
 		salaryDAO.registNewSalary(newSalary);
 	}
+
+	@Transactional
+	public MemberDTO findMemberInfo(String name) {
+		
+		System.out.println("============Service==============");
+		System.out.println("DTO : " + salaryDAO.findMemberInfo(name));
+		return salaryDAO.findMemberInfo(name);
+	}
+
 	
 }

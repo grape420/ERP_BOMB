@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,8 +29,7 @@ public class EADTO implements Serializable {
 	private static final long serialVersionUID = -2118009690203268689L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,
-	generator = "EA_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EA_SEQ_GENERATOR")
 	@Column(name = "EA_SERIAL_NO")
 	private int serialNo;
 	
@@ -55,10 +55,10 @@ public class EADTO implements Serializable {
 	@OneToMany(mappedBy = "ea")
 	private List<AddendumDTO> addendumList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "ea")
+	@OneToMany(mappedBy = "ea", cascade = CascadeType.PERSIST)
 	private List<EACarbonDTO> eaCarbonList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "ea")
+	@OneToMany(mappedBy = "ea", cascade = CascadeType.PERSIST)
 	private List<EAPathDTO> eaApprovalPathList = new ArrayList<>();
 
 	public EADTO() {

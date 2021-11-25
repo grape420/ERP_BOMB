@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
-import com.greedy.erp_bomb.member.model.service.MemberService;
 import com.greedy.erp_bomb.salary.model.dto.SalaryDTO;
 import com.greedy.erp_bomb.salary.model.service.SalaryService;
 
@@ -25,16 +23,10 @@ import com.greedy.erp_bomb.salary.model.service.SalaryService;
 public class SalaryController {
 		
 	private SalaryService salaryService;
-	private MemberService memberService;
 	
 	@Autowired
 	public SalaryController(SalaryService salaryService) {
 		this.salaryService = salaryService;
-	}	
-	
-	@Autowired
-	public SalaryController(MemberService memberService) {
-		this.memberService = memberService;
 	}	
 	
 	/* 본인 및 모든 급여 목록 조회 */
@@ -42,15 +34,20 @@ public class SalaryController {
 	public ModelAndView findAllMySalary(Principal principal, ModelAndView mv) {
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
-		System.out.println("==========SalaryController===========");
 		List<SalaryDTO> salaryList = salaryService.findAllMySalary(user.getName());
 		List<SalaryDTO> allSalaryList = salaryService.findAllSalary();
-
+		List<MemberDTO> memberList = salaryService.findMemberList();
+		
 		mv.addObject("salaryList", salaryList);
-
+		mv.addObject("allSalaryList", allSalaryList);
+		mv.addObject("memberList", memberList);
+		
+		for (MemberDTO memberDTO : memberList) {
+			System.out.println(memberDTO.getName());
+		}
+		
 //		? 로그인 한 사람의 권한 정보 받아오는 법 ? 
 //		mv.addObject("user", user);
-		mv.addObject("allSalaryList", allSalaryList);
 		
 		mv.setViewName("/salary/salary");
 		
@@ -71,15 +68,15 @@ public class SalaryController {
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
 		/* member 이름으로 정보 찾아오기 */
-		MemberDTO member = (MemberDTO) memberService.loadUserByUsername(name);
+		MemberDTO member = salaryService.findMemberInfo(name);
 		
-		System.out.println("controller : " + member);
-		
+		salary.setMember(member);
 		salary.setDate(sqlDate);
 		salary.setBonus(bonus);
 		salary.setRegularPay(regularPay);
-//		salary.setMember(member);
 
+		salaryService.registNewSalary(salary);
+		
 		System.out.println("controller salary : " + salary);
 		
 		mv.setViewName("redirect:/salary/salary");
