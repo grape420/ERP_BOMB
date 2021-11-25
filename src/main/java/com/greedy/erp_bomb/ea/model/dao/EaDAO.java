@@ -122,4 +122,22 @@ public class EaDAO {
 		return replyAd;
 	}
 
+	public AddendumDTO addAddendum(AddendumDTO addAd) {
+		addAd.setEa(em.find(EADTO.class, addAd.getEa().getSerialNo()));
+		addAd.setMember(em.find(MemberDTO.class, addAd.getMember().getName()));
+		
+		String jpql = "SELECT a FROM AddendumDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
+		List<AddendumDTO> adList = em.createQuery(jpql, AddendumDTO.class).setParameter("no", addAd.getEa().getSerialNo()).getResultList();
+		
+		addAd.setLength(adList.size() + 1);
+		
+		addAd.getEa().getMember().getName();
+		addAd.getMember().getName();
+		
+		System.out.println(addAd);
+		
+		em.persist(addAd);
+		return addAd;
+	}
+
 }

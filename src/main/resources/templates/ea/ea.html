@@ -177,15 +177,21 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>3</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop3">기안 중 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td></td>
-											<td>기안 중</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop3">복사</td>
+										<tr th:each="list : ${ myEaPathList }">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+												<td th:text="${ path.member.name }"></td>
+											</th:block>
+											<th:block th:switch="${ list.category }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
+											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
@@ -217,100 +223,27 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop1">결재 중 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td>황성연</td>
-											<td>결재 중</td>
+										<tr th:each="list : ${ myEaCarbonList }" th:if="${ list.category  } == 4 and ${ #authentication.name } != ${ list.member.name }">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+												<td th:text="${ path.member.name }"></td>
+											</th:block>
+											<th:block th:switch="${ list.category }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
 											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-
-						<div id="confirm_approval" class="tab_contents electronic_approval">
-							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
-									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>번호</th>
-											<th>기안일자</th>
-											<th>제목</th>
-											<th>기안자</th>
-											<th>결재자</th>
-											<th>결재 상태</th>
-											<th>기안서 복사</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>2</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop2">결재 완료 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td>김가희</td>
-											<td>결재 완료</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop2">복사</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-						<div id="return_approval" class="tab_contents electronic_approval">
-							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
-									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>번호</th>
-											<th>기안일자</th>
-											<th>제목</th>
-											<th>기안자</th>
-											<th>결재자</th>
-											<th>결재 상태</th>
-											<th>기안서 복사</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>4</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop4">반려 기안입니다.</td>
-											<td>황성연</td>
-											<td>김성민</td>
-											<td>반려</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop4">복사</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
+						
 						<div class="btn_area">
 							<a  class="blue_btn pop_btn" data-button="new_approval_pop">신규</a>
 						</div>
@@ -356,7 +289,7 @@
 					<!-- 여기까지 신규 전자 결재 팝업 -->
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ myEaList }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
+					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 and #authentication.name != list.member.name}" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
 						<div class="top_area">
 							<h2>전자 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -371,10 +304,10 @@
 							<tr class="approval_status">
 								<td th:text="결재"></td>
 								<th:block th:each="eaPath : ${list.eaApprovalPathList}" th:switch="${ eaPath.status }">
-										<td th:case="1" class="approval_person"></td>
-										<td th:case="2" class="approval_person">반려</td>
-										<td th:case="3" class="approval_person">결재</td>
-										<td th:case="*" class="approval_person"></td>
+									<td th:case="1" class="approval_person"></td>
+									<td th:case="2" class="approval_person">반려</td>
+									<td th:case="3" class="approval_person">결재</td>
+									<td th:case="*" class="approval_person"></td>
 								</th:block>
 							</tr>
 							<tr>
@@ -419,7 +352,7 @@
 									<span th:if="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name } + '&nbsp;(기안자)'" style="color: black;"></span>
 									<span th:unless="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name }" style="color: black;"></span>
 									<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" data-button="reply_comment_pop" th:attr="name=${ ad.no }">답글</button>
-									<button class="ml-3 delete_btn" style="font-size: 13px;" th:attr="id=${'commentDelete' + ad.no}">삭제</button>
+									<button th:if="${#authentication.name} == ${ad.member.name}" class="ml-3 delete_btn" style="font-size: 13px;" th:attr="id=${'commentDelete' + ad.no}">삭제</button>
 									<b th:text="${ ad.date }" style="color: black; float: right;"></b>
 									<p  style="font-size: 13px;" class="m-0" th:utext="${#strings.replace(ad.content,'
 ','<br>')} "></p>
@@ -428,7 +361,7 @@
 						</div>
 						<div class="btn_area">
 							<a class="blue_btn">결재 취소</a>
-							<a class="gray_btn pop_btn" data-button="new_comment_pop">첨언</a>
+							<a class="gray_btn pop_btn new_ad" data-button="new_comment_pop" th:attr="name=${ list.serialNo }">첨언</a>
 							<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 						</div>
 						
@@ -621,10 +554,10 @@
 				<button type="button" class="pop_close" data-button="new_comment_pop">닫기</button>
 			</div>
 			<div class="pop_inner">
-				<textarea class="commnet_content_text"></textarea>
+				<textarea id="add_ad_content" class="commnet_content_text"></textarea>
 			</div>
 			<div class="btn_area">
-				<a class="blue_btn add_comment" data-button="new_comment_pop">작성</a>
+				<a style="cursor: pointer;" class="blue_btn pop_close add_comment" data-button="new_comment_pop">작성</a>
 				<a class="gray_btn pop_close close_comment" data-button="new_comment_pop">닫기</a>
 			</div>
 		</div>
@@ -650,6 +583,11 @@
 		$(document).ready(function () {
 			var $reply;
 			var $eaNo;
+			
+			$(".new_ad").click(function() {
+				$eaNo = $(this).attr("name");
+			});
+			
 			$(".reply_btn").click(function() {
 				$reply = $(this).attr("name");
 			});
@@ -773,20 +711,77 @@
 			$(".close_comment").click(function() {
 				$(this).parent().prev().children().val("");
 			});
-	
+			
 			$(".add_comment").click(function() {
-				let nowDate = new Date();
-				let $writer = "작성자";
-				let $content = $(this).parent().prev().children().val();
-				let newDate = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) + "-" + nowDate.getDate();
-				let $div = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;"><div style="height: auto;" class="col"><span style="color: black;">' + $writer + '</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">' + newDate + '</b><p style="font-size: 13px;" class="m-0">' + $content + '</p></div></div>'
-	
-				$(this).parent().prev().children().val("");
-	
-				$(this).parent().parent().prevAll(".comment_area").last().append($div);
-				
-				$(".delete_btn").click(function() {
-					$(this).parent().parent(".comment").remove();
+				let eaNo = $eaNo;
+				let $content = $("#add_ad_content").val();
+				console.log($content);
+				$.ajax({
+					url: "/ea/addAddendum",
+					data: {no : eaNo,
+						   content : $content},
+					success:function(data) {
+						let $ea = $("#approval_detail_pop" + data.ea.serialNo);
+						data.content = data.content.replace(/(?:\r\n|\r|\n)/g, "<br>");
+						
+						let $text = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;" id=addendum' + data.no + '>';
+						for(let i = 1 ; i <= data.depth ; i++) {
+							if(i == data.depth) {
+								$text += '<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="/uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>';
+							} else {
+								$text += '<div class="col-1"></div>';
+							}
+						}
+						$text += '<div style="height: auto;" class="col">';
+						if(data.ea.member.name == data.member.name) {
+							$text += '<span style="color: black;">' + data.member.name + '&nbsp;(기안자)' + '</span>';
+						} else {
+							$text += '<span style="color: black;">' + data.member.name + '</span>';
+						}
+						$text += '<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" id="adReplyBtn' + data.no + '" data-button="reply_comment_pop" name="' + data.no + '">답글</button>';
+						$text += '<button class="ml-3 delete_btn" style="font-size: 13px;" id="commentDelete' + data.no + '">삭제</button>';
+						$text += '<b style="color: black; float: right;">' + data.date + '</b>';
+						$text += '<p  style="font-size: 13px;" class="m-0">' + data.content + '</p>';
+						$text += '</div>';
+						
+						$ea.children(".comment_area").append($text);
+						$("#commentDelete" + data.no).click( deleteAd );
+						$("#adReplyBtn" + data.no).click(function() {
+							var pop_name = $(this).data('button');
+							
+							$reply = $(this).attr("name");
+
+							$('#' + pop_name).stop().toggle();
+							var window_w = $(window).width();
+							$('.pop_layer').each(function (index, item) {
+								$(item).addClass('pop_0' + index);
+
+								var pop_width = $('.pop_0' + index).width();
+								var pop_height = $('.pop_0' + index).height();
+
+								$('.pop_0' + index).css({
+									'margin-left': -(pop_width / '2'),
+									'margin-top': -(pop_height / '2')
+								});
+							});
+							
+							$('.payroll_pop_layer').each(function (index, item) {
+								$(item).addClass('pop_0' + index);
+
+								var pop_width = $('.pop_0' + index).width();
+								var pop_height = $('.pop_0' + index).height();
+
+								$('.pop_0' + index).css({
+									'margin-left': -(pop_width / '2'),
+									'margin-top': -(pop_height / '2')
+								});
+							});
+						});
+						$("#add_ad_content").val('');
+					},
+					error:function(error){
+						alert("첨언에 실패하였습니다.");
+					}
 				});
 			});
 		});

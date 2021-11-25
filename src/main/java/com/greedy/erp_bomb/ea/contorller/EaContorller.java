@@ -111,9 +111,15 @@ public class EaContorller {
 		myEaPathList = eaSort(myEaPathList);
 		myEaCarbonList = eaSort(myEaCarbonList);
 		
+		List<EADTO> allEaList = new ArrayList<>();
+		allEaList.addAll(myEaList);
+		allEaList.addAll(myEaPathList);
+		allEaList.addAll(myEaCarbonList);
+		
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
+		model.addAttribute("allEaList", allEaList);
 		model.addAttribute("memberList", memberList);
 	}
 	
@@ -158,6 +164,41 @@ public class EaContorller {
 		replyAd.setRefNo(refAd);
 		
 		return replyAd;
+	}
+	
+	@GetMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+		AddendumDTO addAd = new AddendumDTO();
+		EADTO ea = new EADTO();
+		MemberDTO drafter = new MemberDTO();
+		ea.setSerialNo(no);
+		
+		addAd.setRefNo(null);
+		addAd.setEa(ea);
+		addAd.setDepth(0);
+		addAd.setContent(content);
+		addAd.setDate(new java.sql.Date(System.currentTimeMillis()));
+		addAd.setRequestYn("N");
+		
+		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		addAd.setMember(drafter);
+		
+		addAd = eaService.addAddendum(addAd);
+		
+		MemberDTO eaMember = new MemberDTO();
+		eaMember.setName(addAd.getEa().getMember().getName());
+		ea.setMember(eaMember);
+		
+		MemberDTO adMember = new MemberDTO();
+		adMember.setName(addAd.getMember().getName());
+		
+		addAd.setAddendumList(null);
+		addAd.setEa(ea);
+		addAd.setMember(adMember);
+		addAd.setRefNo(null);
+		
+		return addAd;
 	}
 	
 	private List<EADTO> eaSort(List<EADTO> eaList) {

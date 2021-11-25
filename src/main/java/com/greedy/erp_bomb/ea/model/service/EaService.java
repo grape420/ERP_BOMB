@@ -55,4 +55,9 @@ public class EaService {
 	public AddendumDTO replyAddendum(AddendumDTO replyAd) {
 		return eaDAO.replyAddendum(replyAd);
 	}
+
+	@Transactional
+	public AddendumDTO addAddendum(AddendumDTO addAd) {
+		return eaDAO.addAddendum(addAd);
+	}
 }
