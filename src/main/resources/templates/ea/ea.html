@@ -634,104 +634,160 @@
 		<div id="reply_comment_pop" class="pop_layer new_comment_pop">
 			<div class="top_area">
 				<h2>답글 첨언</h2>
-				<button type="button" class="pop_close" data-button="new_comment_pop">닫기</button>
+				<button type="button" class="pop_close close_reply" data-button="new_comment_pop">닫기</button>
 			</div>
 			<div class="pop_inner">
 				<textarea id="reply_content" class="commnet_content_text"></textarea>
 			</div>
 			<div class="btn_area">
-				<a class="blue_btn reply_comment" data-button="reply_comment_pop">작성</a>
+				<a class="blue_btn pop_close reply_comment" data-button="reply_comment_pop">작성</a>
 				<a class="gray_btn pop_close close_reply" data-button="reply_comment_pop">닫기</a>
 			</div>
 		</div>
 		<!-- 여기까지 답글 첨언 팝업 -->
 	</section>
 	<script>
-		var $reply;
-		var $eaNo;
+		$(document).ready(function () {
+			var $reply;
+			var $eaNo;
+			$(".reply_btn").click(function() {
+				$reply = $(this).attr("name");
+			});
 		
-		$(".reply_btn").click(function() {
-			$reply = $(this).attr("name");
-		});
-	
-		$("#new_approval").click(function() {
-			$("#new_approval_form").submit();
-		});
-		
-		$('.select2').select2({
-			placeholder: "선택 해주세요",
-		});
-		
-		$(".select2").on("select2:select", function (evt) {
-			var element = evt.params.data.element;
-			var $element = $(element);
+			$("#new_approval").click(function() {
+				$("#new_approval_form").submit();
+			});
 			
-			if ($(this).find(":selected").length > 1) {
-			  var $second = $(this).find(":selected").eq(-1);
-			  $second.after($element);
-			} else {
-			  $element.detach();
-			  $(this).prepend($element);
-			}
+			$('.select2').select2({
+				placeholder: "선택 해주세요",
+			});
 			
-			$(this).trigger("change");
-        });
-		
-		$(".reply_comment").click(function() {
-			let $reply_content = $("#reply_content").val();
-			$.ajax({
-				url: "/ea/replyAddendum",
-				data: {no : $reply,
-					   content : $reply_content},
-				success:function(data) {
-					if(data == "Success") {
+			$(".select2").on("select2:select", function (evt) {
+				var element = evt.params.data.element;
+				var $element = $(element);
+				
+				if ($(this).find(":selected").length > 1) {
+				  var $second = $(this).find(":selected").eq(-1);
+				  $second.after($element);
+				} else {
+				  $element.detach();
+				  $(this).prepend($element);
+				}
+				
+				$(this).trigger("change");
+	        });
+			
+			var replyAd = function() {
+				let $reply_content = $("#reply_content").val();
+				$.ajax({
+					url: "/ea/replyAddendum",
+					data: {no : $reply,
+						   content : $reply_content},
+					success:function(data) {
+						let $refAd = $("#addendum" + data.refNo.no);
+						data.content = data.content.replace(/(?:\r\n|\r|\n)/g, "<br>");
 						
+						let $text = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;" id=addendum' + data.no + '>';
+						for(let i = 1 ; i <= data.depth ; i++) {
+							if(i == data.depth) {
+								$text += '<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="/uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>';
+							} else {
+								$text += '<div class="col-1"></div>';
+							}
+						}
+						$text += '<div style="height: auto;" class="col">';
+						if(data.ea.member.name == data.member.name) {
+							$text += '<span style="color: black;">' + data.member.name + '&nbsp;(기안자)' + '</span>';
+						} else {
+							$text += '<span style="color: black;">' + data.member.name + '</span>';
+						}
+						$text += '<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" id="adReplyBtn' + data.no + '" data-button="reply_comment_pop" name="' + data.no + '">답글</button>';
+						$text += '<button class="ml-3 delete_btn" style="font-size: 13px;" id="commentDelete' + data.no + '">삭제</button>';
+						$text += '<b style="color: black; float: right;">' + data.date + '</b>';
+						$text += '<p  style="font-size: 13px;" class="m-0">' + data.content + '</p>';
+						$text += '</div>';
+						
+						$refAd.after($text);
+						$("#commentDelete" + data.no).click( deleteAd );
+						$("#adReplyBtn" + data.no).click(function() {
+							var pop_name = $(this).data('button');
+							
+							$reply = $(this).attr("name");
+
+							$('#' + pop_name).stop().toggle();
+							var window_w = $(window).width();
+							$('.pop_layer').each(function (index, item) {
+								$(item).addClass('pop_0' + index);
+
+								var pop_width = $('.pop_0' + index).width();
+								var pop_height = $('.pop_0' + index).height();
+
+								$('.pop_0' + index).css({
+									'margin-left': -(pop_width / '2'),
+									'margin-top': -(pop_height / '2')
+								});
+							});
+							
+							$('.payroll_pop_layer').each(function (index, item) {
+								$(item).addClass('pop_0' + index);
+
+								var pop_width = $('.pop_0' + index).width();
+								var pop_height = $('.pop_0' + index).height();
+
+								$('.pop_0' + index).css({
+									'margin-left': -(pop_width / '2'),
+									'margin-top': -(pop_height / '2')
+								});
+							});
+						});
+						$("#reply_content").val('');
+					},
+					error:function(error){
+						alert('답글 작성에 실패하셨습니다.');
 					}
-				},
-				error:function(error){
-					alert('답글이 달린 첨언은 삭제할 수 없습니다.');
-				}
-			});
-		});
-		
-		$(".delete_btn").click(function() {
-			let data = $(this).attr('id').replace('commentDelete', '');
-			$.ajax({
-				url: "/ea/deleteAddendum",
-				data: {no : data},
-				success:function(data) {
-					if(data == "Success") {
-						$(this).parent().parent(".comment").remove('');
-					}
-				},
-				error:function(error){
-					alert('답글이 달린 첨언은 삭제할 수 없습니다.');
-				}
-			});
-		});
-		
-		$(".close_reply").click(function(){
-			$(this).parent().prev().children().val("");
-		});
-
-		$(".close_comment").click(function() {
-			$(this).parent().prev().children().val("");
-		});
-
-		$(".add_comment").click(function() {
-			let nowDate = new Date();
-			let $writer = "작성자";
-			let $content = $(this).parent().prev().children().val();
-			let newDate = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) + "-" + nowDate.getDate();
-			let $div = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;"><div style="height: auto;" class="col"><span style="color: black;">' + $writer + '</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">' + newDate + '</b><p style="font-size: 13px;" class="m-0">' + $content + '</p></div></div>'
-
-			$(this).parent().prev().children().val("");
-
-			$(this).parent().parent().prevAll(".comment_area").last().append($div);
-			console.log($(this).parent().parent(".comment_area").after(".comment"));
+				});
+			}
+			$(".reply_comment").click(replyAd);
 			
-			$(".delete_btn").click(function() {
-				$(this).parent().parent(".comment").remove();
+			var deleteAd = function() {
+				let $this = $(this);
+				console.log($this);
+				let data = $this.attr('id').replace('commentDelete', '');
+				$.ajax({
+					url: "/ea/deleteAddendum",
+					data: {no : data},
+					success:function(data) {
+						$this.parent().parent(".comment").remove('');
+					},
+					error:function(error){
+						alert("답글이 달런 첨언은 삭제할 수 없습니다.");
+					}
+				});
+			}
+			$(".delete_btn").click( deleteAd );
+			
+			$(".close_reply").click(function(){
+				$(this).parent().prev().children().val("");
+			});
+	
+			$(".close_comment").click(function() {
+				$(this).parent().prev().children().val("");
+			});
+	
+			$(".add_comment").click(function() {
+				let nowDate = new Date();
+				let $writer = "작성자";
+				let $content = $(this).parent().prev().children().val();
+				let newDate = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) + "-" + nowDate.getDate();
+				let $div = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;"><div style="height: auto;" class="col"><span style="color: black;">' + $writer + '</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">' + newDate + '</b><p style="font-size: 13px;" class="m-0">' + $content + '</p></div></div>'
+	
+				$(this).parent().prev().children().val("");
+	
+				$(this).parent().parent().prevAll(".comment_area").last().append($div);
+				
+				$(".delete_btn").click(function() {
+					$(this).parent().parent(".comment").remove();
+				});
 			});
 		});
 	</script>

@@ -1,7 +1,6 @@
 package com.greedy.erp_bomb.ea.contorller;
 
 import java.security.Principal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -120,14 +119,13 @@ public class EaContorller {
 	
 	@GetMapping(value = "/deleteAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String deleteAddendum(@RequestParam int no, Model model) {
+	public void deleteAddendum(@RequestParam int no, Model model) {
 		eaService.deleteAddendum(no);
-		return "Success";
 	}
 	
 	@GetMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String replyAddendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
 		AddendumDTO replyAd = new AddendumDTO();
 		AddendumDTO refAd = new AddendumDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -142,8 +140,24 @@ public class EaContorller {
 		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
 		replyAd.setMember(drafter);
 		
-		eaService.replyAddendum(replyAd);
-		return "Success";
+		replyAd = eaService.replyAddendum(replyAd);
+		
+		EADTO ea = new EADTO();
+		MemberDTO eaMember = new MemberDTO();
+		eaMember.setName(replyAd.getEa().getMember().getName());
+		ea.setMember(eaMember);
+		
+		MemberDTO adMember = new MemberDTO();
+		adMember.setName(replyAd.getMember().getName());
+		
+		replyAd.setAddendumList(null);
+		replyAd.setEa(ea);
+		replyAd.setMember(adMember);
+		
+		refAd.setNo(replyAd.getRefNo().getNo());
+		replyAd.setRefNo(refAd);
+		
+		return replyAd;
 	}
 	
 	private List<EADTO> eaSort(List<EADTO> eaList) {

@@ -51,7 +51,8 @@ public class EaService {
 		eaDAO.deleteAddendum(no);
 	}
 
-	public void replyAddendum(AddendumDTO replyAd) {
-		eaDAO.replyAddendum(replyAd);
+	@Transactional
+	public AddendumDTO replyAddendum(AddendumDTO replyAd) {
+		return eaDAO.replyAddendum(replyAd);
 	}
 }

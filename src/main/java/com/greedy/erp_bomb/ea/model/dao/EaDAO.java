@@ -96,8 +96,30 @@ public class EaDAO {
 		em.remove(ad);
 	}
 
-	public void replyAddendum(AddendumDTO replyAd) {
+	public AddendumDTO replyAddendum(AddendumDTO replyAd) {
+		AddendumDTO refAd = em.find(AddendumDTO.class, replyAd.getRefNo().getNo());
 		
+		replyAd.setRefNo(refAd);
+		replyAd.setEa(refAd.getEa());
+		replyAd.setMember(em.find(MemberDTO.class, replyAd.getMember().getName()));
+		replyAd.setDepth(refAd.getDepth() + 1);
+		replyAd.setLength(refAd.getLength() + 1);
+		
+		String jpql = "SELECT a FROM AddendumDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
+		List<AddendumDTO> adList = em.createQuery(jpql, AddendumDTO.class).setParameter("no", refAd.getEa().getSerialNo()).getResultList();
+		
+		replyAd.getEa().getMember().getName();
+		replyAd.getMember().getName();
+		
+		for(AddendumDTO ad : adList) {
+			if(refAd.getLength() < ad.getLength()) {
+				ad.setLength(ad.getLength() + 1);
+			}
+		}
+		
+		em.persist(replyAd);
+		
+		return replyAd;
 	}
 
 }
