@@ -274,7 +274,7 @@
 							<button type="button" class="pop_close" data-button="new_product_pop">닫기</button>
 						</div>
 						<div class="tableArea">
-						<form action="/inOut/regist" method="post">
+						<form action="/inOut/regist" method="post" id="inOutForm">
 							<table>
 								<colgroup>
 									<col style="width: 40%" />
@@ -296,26 +296,21 @@
 											</select>
 										</td>
 										<td>
-											<select name="division">
+											<select name="division" id="division">
 												<option value="1">입고</option>
 												<option value="2">출고</option>
 												<option value="3">판매</option>
 											</select>
 										</td>
 										<td>
-											<input type="number" name="amount" min="1">
-										</td>
-										<td>
-											<select id="headCode">
-												
-											</select>
+											<input type="number" name="amount" id="amount" min="1" required="required">
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						
 						<div class="btm_area mt-2" style="text-align: center;">
-							<button type="submit" class="blue_btn pop_close" data-button="new_product_pop" id="submitBtn">추가</button> 
+							<button type="button" class="blue_btn" data-button="new_product_pop" id="submitBtn">추가</button> 
 							<a class="gray_btn pop_close" data-button="new_product_pop" style="cursor: pointer;">닫기</a>
 						</div>
 						</form>
@@ -361,24 +356,54 @@
 		$("#submitBtn").click(function() {
 			if($("input[type=number]").val() < 1) {
 				alert("1보다 큰 숫자를 입력하세요");
-				$("button[type=submit]").removeAttr('class');
+			} else {
+				const icecreamCode = $("#icecreamCode").val();
+				const division = $("#division").val();
+				const amount = $("#amount").val();
+				
+				$.ajax({
+					url : "/inOut/comparison",
+					type : "post",
+					data : {
+						icecreamCode : icecreamCode,
+						division : division,
+						amount : amount
+					},
+					success : function(data) {
+						console.log(data);
+						
+						if(data==1) {
+							alert("본사에 수량이 부족해 입고할 수 없습니다");
+							
+						} else if(data==2) {
+							alert("재고가 부족해 출고할 수 없습니다");
+							
+						} else if(data==3) {
+							alert("재고가 부족해 판매할 수 없습니다");
+						} else {
+							$("#inOutForm").submit();
+						}
+					},
+					error: function(request, status, error) {
+						console.log("에러임");
+						alert("code:" + request.responseText + "\n"
+							+ "message:" + request.responseText + "\n"
+							+ "error:" + error);
+					}
+				});
+				
 			}
+			
+			
 		});
 		
-/* 		$.ajax({
-			url: "/inOut/head",
-			success: function(data){
-				const $headCode = $("#headCode");
-				$headCode.html("");
-				
-				for (let i in data){
-					$headCode.append($("<option>").val(data[i].no).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		}); */
+		const errorMessage = "[[${ errorMessage }]]";	
+ 		if (errorMessage) {
+			alert(errorMessage);
+			
+ 		}		
+		
+ 		
 	</script>
 </body>
 </html>

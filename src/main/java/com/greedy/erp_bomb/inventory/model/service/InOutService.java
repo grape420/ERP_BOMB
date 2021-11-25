@@ -25,8 +25,8 @@ public class InOutService {
 	}
 
 	@Transactional
-	public List<InOutDTO> findInOutList() {
-		return inOutDAO.findInOutList();
+	public List<InOutDTO> findInOutList(String name) {
+		return inOutDAO.findInOutList(name);
 	}
 
 	@Transactional
@@ -47,6 +47,16 @@ public class InOutService {
 	@Transactional
 	public InventoryDTO findInven(InventoryPk inventoryPk) {
 		return inOutDAO.findInven(inventoryPk);
+	}
+
+	@Transactional
+	public InventoryDTO findHeadInven(InventoryPk pk2) {
+		return inOutDAO.findHeadInven(pk2);
+	}
+
+	@Transactional
+	public void updateHeadInven(InventoryDTO headInven) {
+		inOutDAO.updateHeadInven(headInven);
 	}
 
 

@@ -12,6 +12,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
+import com.greedy.erp_bomb.vote.model.dto.VoteParticipationDTO;
 
 @Repository
 public class VoteDAO {
@@ -31,10 +32,6 @@ public class VoteDAO {
 		return voteList;
 	}
 
-	public MemberDTO selectMember(UserImpl user) {
-		return em.find(MemberDTO.class, user.getName());
-	}
-
 	public void insertVote(VoteDTO vote) {
 		em.persist(vote);
 		
@@ -46,5 +43,48 @@ public class VoteDAO {
 		
 		em.persist(voteOption);
 		System.out.println(voteOption);
+	}
+
+	public VoteDTO selectVoteDetail(int detailnum) {
+		
+		
+		VoteDTO voteDetail = em.find(VoteDTO.class, detailnum);
+		
+		int hit = voteDetail.getHit();
+		voteDetail.setHit(hit+1);
+		
+		em.persist(voteDetail);
+		
+		voteDetail.getVoteOptionList().size();
+		
+//		voteDetail.setVoteParticipationList(null);
+		voteDetail.getVoteParticipationList().size();
+		
+		return voteDetail;
+	}
+
+	public void insertVvote(VoteParticipationDTO vote, String votes, int serialNo) {
+		
+		vote.setVote(em.find(VoteDTO.class, serialNo));
+		vote.setMember(em.find(MemberDTO.class, vote.getMember().getName()));
+		
+		System.out.println(vote.getMember().getName());
+		System.out.println(vote.getVote());
+		
+		vote.getVote().setVoteOptionList(null);
+		vote.getVote().setVoteParticipationList(null);
+		
+		TypedQuery<VoteOptionDTO> query = em.createQuery("SELECT a FROM VoteOptionDTO as a WHERE a.desc = :desc", VoteOptionDTO.class);
+		
+		query.setParameter("desc", votes);
+		
+		VoteOptionDTO voteOption = query.getSingleResult();
+		
+		int num = voteOption.getVoteCount();
+		
+		voteOption.setVoteCount(num + 1);
+		
+		em.persist(vote);
+		em.persist(voteOption);
 	}
 }
