@@ -58,7 +58,7 @@ public class AddendumDTO implements Serializable {
 	private int length;
 	
 	@Column(name = "COMMENT_YN")
-	private int requestYn;
+	private String requestYn;
 	
 	@OneToMany(mappedBy = "refNo")
 	private List<AddendumDTO> addendumList = new ArrayList<>();
@@ -66,7 +66,7 @@ public class AddendumDTO implements Serializable {
 	public AddendumDTO() {
 	}
 	public AddendumDTO(int no, AddendumDTO refNo, EADTO ea, MemberDTO member, String content, Date date, int depth,
-			int length, int requestYn, List<AddendumDTO> addendumList) {
+			int length, String requestYn, List<AddendumDTO> addendumList) {
 		this.no = no;
 		this.refNo = refNo;
 		this.ea = ea;
@@ -78,7 +78,6 @@ public class AddendumDTO implements Serializable {
 		this.requestYn = requestYn;
 		this.addendumList = addendumList;
 	}
-	
 	public int getNo() {
 		return no;
 	}
@@ -127,10 +126,10 @@ public class AddendumDTO implements Serializable {
 	public void setLength(int length) {
 		this.length = length;
 	}
-	public int getRequestYn() {
+	public String getRequestYn() {
 		return requestYn;
 	}
-	public void setRequestYn(int requestYn) {
+	public void setRequestYn(String requestYn) {
 		this.requestYn = requestYn;
 	}
 	public List<AddendumDTO> getAddendumList() {
@@ -142,7 +141,7 @@ public class AddendumDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "AddendumDTO [no=" + no + ", refNo=" + refNo.getNo() + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", content="
