@@ -36,28 +36,28 @@
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+						<a class="nav-link font-weight-bold" href="main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+						<a class="nav-link font-weight-bold" href="">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+						<a class="nav-link font-weight-bold" href="">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+						<a class="nav-link font-weight-bold" href="">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+						<a class="nav-link font-weight-bold" href="">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -71,8 +71,7 @@
 				id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
-				<a class="sidebar-brand"
-					href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+				<a class="sidebar-brand" href="inventory/inventory">
 					<div class="sidebar-brand-icon rotate-n-15"></div>
 					<div class="sidebar-brand-text mx-3">재고 관리</div>
 				</a>
@@ -84,11 +83,11 @@
 				<hr class="sidebar-divider">
 
 				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item"><a class="nav-link collapsed" href="#"
-					data-toggle="collapse" data-target="#collapseUtilities"
-					aria-expanded="true" aria-controls="collapseUtilities"> <span>재고
-							관리</span>
-				</a></li>
+				<li class="nav-item">
+					<a class="nav-link" href="inventory/inventory">
+					<span>재고 관리</span>
+					</a>
+				</li>
 
 
 				<hr class="sidebar-divider">
@@ -107,111 +106,39 @@
 					</div>
 
 					<!-- 테이블 -->
-					<ul class="tab ul-tab">
-						<li class="li-tab inventory on" data-tab="all_product"><span>전체</span></li>
-					</ul>
 					<div id="all_product" class="tab_contents inventory current">
 						<div class="tableArea">
 							<table>
 								<colgroup>
-									<col style="width: 5%" />
 									<col style="width: 30%" />
 									<col style="width: 40%" />
 									<col style="width: 25%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th><input type="checkbox" class="check_box"
-											id="total_num1" /> <label for="total_num1"></label></th>
 										<th>회사 구분</th>
 										<th>아이스크림</th>
 										<th>수량</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><input type="checkbox" id="total_01"
-											class="check_box" /> <label for="total_01" data-num="1"></label>
-										</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">본사</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">엄마는
-											외계인</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">100</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" id="total_02"
-											class="check_box" /> <label for="total_02" data-num="2"></label>
-										</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">강남역점</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">닐라닐라
-											바닐라</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">100</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" id="total_03"
-											class="check_box" /> <label for="total_03" data-num="3"></label>
-										</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">잠실역점</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">베리베리
-											스트로베리</td>
-										<td class="t_center pop_btn" data-button="note_detail_pop2">100</td>
+									<tr th:each="inventory : ${ inventoryList }">
+										<td class="t_center pop_btn" th:text="${ inventory.company.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inventory.iceCream.name }"></td>
+										<td class="t_center pop_btn" th:text="${ inventory.invenRemainStock }"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- 디테일 페이지 -->
-					<div id="note_detail_pop2" class="pop_layer">
-						<div class="top_area">
-							<h2>재고 관리</h2>
-							<button type="button" class="pop_close"
-								data-button="note_detail_pop2">닫기</button>
-						</div>
-						<div class="pop_inner">
-							<div class="tableArea">
-								<table>
-									<colgroup>
-										<col style="width: 33%" />
-										<col style="width: 33%" />
-										<col style="width: 33%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>회사 구분</th>
-											<th>아이스크림</th>
-											<th>수량</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><select>
-													<option value="">본사</option>
-													<option value="">강남역점</option>
-											</select></td>
-											<td><select>
-													<option value="">엄마는 외계인</option>
-													<option value="">닐라닐라 바닐라</option>
-											</select></td>
-											<td><input type="number"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="btm_area" style="text-align: center;">
-							<a href="#n" class="blue_btn pop_btn"
-								data-button="new_inventory_pop">수정</a>
-						</div>
-					</div>
-					<!-- 디테일 페이지 -->
 					<!-- 입출고 추가 -->
 					<div id="new_inventory_pop" class="pop_layer">
 						<div class="top_area">
 							<h2>재고관리</h2>
-							<button type="button" class="pop_close"
-								data-button="new_inventory_pop">닫기</button>
+							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
 						</div>
 						<div class="tableArea">
+						<form action="/inventory/regist" method="post">
 							<table>
 								<colgroup>
 									<col style="width: 33%" />
@@ -222,37 +149,71 @@
 									<tr>
 										<th>회사 구분</th>
 										<th>아이스크림</th>
-										<th>수량</th>
+										<th>수량</th> 
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td><select>
-												<option value="">본사</option>
-												<option value="">강남역점</option>
-												<option value="">잠실역점</option>
-										</select></td>
-										<td><select>
-												<option value="">엄마는 외계인</option>
-												<option value="">닐라닐라 바닐라</option>
-												<option value="">베리베리 스트로베리</option>
-										</select></td>
-										<td><input type="number"></td>
+										<td>
+											<select id="companyCode" name="companyCode">
+												<!-- ajax로 처리 -->
+											</select>
+										</td>
+										<td>
+											<select id="icecreamCode" name="icecreamCode">
+												<!-- ajax로 처리 -->
+											</select>
+										</td>
+										<td>
+											<input type="number" name="invenRemainStock">
+										</td> 
 									</tr>
 								</tbody>
 							</table>
-						</div>
-						<div class="btm_area" style="text-align: center;">
-							<a href="#n" class="blue_btn pop_close"
-								data-button="new_inventory_pop">추가</a> <a href="#n"
-								class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
+							<div class="btm_area mt-2" style="text-align: center;">
+								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
+								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
+							</div>
+						</form>
 						</div>
 					</div>
 					<!-- 입출고 추가 -->
+					<!-- 아이스크림 추가 -->
+					<div id="new_icecream_pop" class="pop_layer">
+						<div class="top_area">
+							<h2>신규 아이스크림 추가</h2>
+							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
+						</div>
+						<div class="tableArea">
+						<form action="/inventory/newIce" method="post">
+							<table>
+								<colgroup>
+									<col style="width: 50%" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th>아이스크림 이름</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<input type="text" name="name">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="btm_area mt-2" style="text-align: center;">
+								<button type="submit" class="blue_btn pop_close" data-button="new_icecream_pop">추가</button> 
+								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_icecream_pop">닫기</a>
+							</div>
+						</form>
+						</div>
+					</div>
+					<!-- 아이스크림 추가 -->
 					<div class="btm_area" style="margin-left: 10px;">
-						<a href="#n" class="blue_btn pop_btn"
-							data-button="new_inventory_pop">추가</a> <a href="#n"
-							class="gray_btn">선택삭제</a>
+						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a> 
+						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_icecream_pop">신규 아이스크림</a>
 					</div>
 					<div class="paging">
 						<button type="button" class="first_btn">처음페이지</button>
@@ -262,12 +223,42 @@
 						<button type="button" class="next_btn">다음페이지</button>
 						<button type="button" class="last_btn">마지막페이지</button>
 					</div>
-
-
 					<!-- 여기에 적으셈 -->
 				</div>
 			</div>
 		</div>
 	</section>
+	
+	<script>
+		$.ajax({
+			url: "/inventory/company",
+			success: function(data){
+				const $companyCode = $("#companyCode");
+				$companyCode.html("");
+				
+				for (let i in data){
+					$companyCode.append($("<option>").val(data[i].serialNo).text(data[i].name));
+				}
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		});
+		
+		$.ajax({
+			url: "/inventory/icecream",
+			success: function(data){
+				const $icecreamCode = $("#icecreamCode");
+				$icecreamCode.html("");
+				
+				for (let i in data){
+					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
+				}
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		});
+	</script>
 </body>
 </html>
