@@ -274,27 +274,27 @@
 							<div class="pop_inner">
 								<div class="line-div">
 									제&nbsp; 목&nbsp;&nbsp;&nbsp;
-									<input name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text">
+									<input name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required">
 									<br>
 								</div>
 								<div class="mt-2 line-div">
 									결재자&nbsp;
-									<select name="approvaler" id="new_approvaler" style="width: 91.5%;" class="form-control select2" multiple="multiple">
+									<select name="approvaler" id="new_approvaler" style="width: 91.5%;" class="form-control select2" multiple="multiple" required="required">
 										<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
 									</select>
 									<br>
 								</div>
 								<div class="mt-2 line-div">
 									참조자&nbsp;
-									<select name="carboner" id="new_carboner" style="width: 91.5%;" class="form-control select2" multiple="multiple">
+									<select name="carboner" id="new_carboner" style="width: 91.5%;" class="form-control select2" multiple="multiple" >
 										<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
 									</select>
 									<br>
 								</div>
-								<textarea name="content" class="approval_content_text"></textarea>
+								<textarea name="content" class="approval_content_text" required="required"></textarea>
 							</div>
 							<div class="btn_area">
-								<a id="new_approval" class="blue_btn pop_close">결재</a>
+								<button type="submit" class="blue_btn pop_close mr-1">결재</button>
 								<a id="temp_approval" class="blue_btn pop_close">임시 저장</a>
 								<a class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
 							</div>
@@ -389,47 +389,39 @@
 							<h2>전자 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
 						</div>
-						<h2 class="approval_title mt-3" th:text="${ list.title }"></h2>
-						<div class="line-div ml-2">
-							결재자&nbsp;
-							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-								<th:block th:each="member2 : ${ memberList }" th:with="data = 1">
-									<th:block th:each="path : ${ list.eaApprovalPathList }">
-										<th:block th:if="${ member2.name.equals(path.member.name) }">
-											<th:block th:with="data = 2"/>
-										</th:block>
-									</th:block>
-									<option th:if="${ data == 2 }" th:text="${ member2.name + data }" th:attr="selected"></option>
-									<option th:unless="${ data == 2 }" th:text="${ member2.name + data }" ></option>
-								</th:block>
-							</select>
-							<br>
-						</div>
-						<div class="mt-2 line-div ml-2">
-							참조자&nbsp;
-							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-								<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
-							</select>
-							<br>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date"></p>
-								</div>
-								<div class="approval_content">
-									<textarea></textarea>
+						<form id="new_approval_form" method="post" action="/ea/reApproval">
+							<h2 class="approval_title mt-3" th:text="${ list.title }"></h2>
+							<div class="line-div ml-2">
+								결재자&nbsp;
+								<select style="width: 91.5%;" class="form-control select2 test" multiple="multiple" required="required">
+									<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+								</select>
+								<br>
+							</div>
+							<div class="mt-2 line-div ml-2">
+								참조자&nbsp;
+								<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+									<option class="testop" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+								</select>
+								<br>
+							</div>
+							<div class="pop_inner">
+								<div class="detail_note">
+									<div class="top">
+										<p class="name">기안 일자</p>
+										<p class="date"></p>
+									</div>
+									<div class="approval_content">
+										<textarea th:utext="${ list.content }" required="required"></textarea>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn">결재</a>
-							<a href="#n" class="blue_btn">수정</a>
-							<a href="#n" class="blue_btn">삭제</a>
-							<a href="#n" class="gray_btn">첨언</a>
-							<a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
-						</div>
+							<div class="btn_area">
+								<button type="submit" class="blue_btn pop_close mr-1">결재</button>
+								<a class="gray_btn pop_btn new_ad" data-button="new_comment_pop" th:attr="name=${ list.serialNo }">첨언</a>
+								<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
+							</div>
+						</form>
 					</div>
 					<!-- 여기까지 임시저장 전자 결재 디테일 팝업 -->
 				</div>
@@ -485,10 +477,6 @@
 				$("#new_approval_form").submit();
 			});
 			
-			$('.select2').select2({
-				placeholder: "선택 해주세요",
-			});
-			
 			$(".select2").on("select2:select", function (evt) {
 				var element = evt.params.data.element;
 				var $element = $(element);
@@ -503,6 +491,10 @@
 				
 				$(this).trigger("change");
 	        });
+			
+			$('.select2').select2({
+				placeholder: "선택 해주세요",
+			});
 			
 			var replyAd = function() {
 				let $reply_content = $("#reply_content").val();
