@@ -185,4 +185,15 @@ public class InOutController {
 		return mv;
 	}
 	
+	@PostMapping("/search")
+	public String searchInOut(Model model, @RequestParam String keyword, Principal principal) {
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		
+		List<InOutDTO> inOutList = inOutService.searchInOutList(keyword, user.getName());
+		
+		model.addAttribute("inOutList", inOutList);
+		
+		return "/inOut/inOut";
+	}
+	
 }

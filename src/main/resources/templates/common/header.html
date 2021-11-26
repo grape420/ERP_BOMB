@@ -9,7 +9,9 @@
 			<div class="collapse navbar-collapse justify-content-end">
 				<ul class="navbar-nav mr-3">
 					<li class="nav-item mr-2 ml-2">
-						<a style="cursor: text;">고객님 님 환영합니다.</a>
+						<a style="cursor: text;">
+							<span th:text="${#authentication.name}"></span>님 환영합니다.
+						</a>
 					</li>
 					<li class="nav-item mr-2 ml-2 customer">
 						<a  href="board/list">고객센터</a>
@@ -23,7 +25,7 @@
 					</li>
 					<!--1107 쪽지 추가-->
 					<li class="nav-item mr-2 ml-2 mypage">
-						<a href="myPage/drawHistory">마이페이지</a>
+						<a href="/admin/authority">마이페이지</a>
 					</li>
 				</ul>
 			</div>

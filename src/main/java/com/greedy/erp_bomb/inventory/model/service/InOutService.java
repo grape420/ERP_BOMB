@@ -59,4 +59,9 @@ public class InOutService {
 		inOutDAO.updateHeadInven(headInven);
 	}
 
+	@Transactional
+	public List<InOutDTO> searchInOutList(String keyword, String name) {
+		return inOutDAO.searchInOutList(keyword, name);
+	}
+
 }

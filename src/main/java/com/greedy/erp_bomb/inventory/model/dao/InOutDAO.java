@@ -33,7 +33,7 @@ public class InOutDAO {
 		for(int i = 0 ; i < inOutList.size() ; i++) {
 			if(inOutList.get(i).getInventory().getCompany().getSerialNo() != member.getCompany().getSerialNo()) {
 				removeList.add(i);
-			}
+			} 
 		}
 		
 		Collections.sort(removeList, Collections.reverseOrder());
@@ -94,6 +94,32 @@ public class InOutDAO {
 		InventoryDTO selectedInven = em.find(InventoryDTO.class, pk2);
 		selectedInven.setInvenRemainStock(headInven.getInvenRemainStock());
 	}
+
+	public List<InOutDTO> searchInOutList(String keyword, String name) {
+		MemberDTO member = em.find(MemberDTO.class, name);
+		
+		String jpql = "SELECT a FROM InOutDTO as a ORDER BY a.no DESC";
+		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).getResultList();
+		
+		List<Integer> removeList = new ArrayList<>();
+		
+		for(int i = 0 ; i < inOutList.size() ; i++) {
+	         if(inOutList.get(i).getInventory().getCompany().getSerialNo() != member.getCompany().getSerialNo()) {
+	            removeList.add(i);
+	         } else {
+	            if(!inOutList.get(i).getInventory().getIceCream().getName().contains(keyword)) {
+	               removeList.add(i);
+	            }
+	         }
+	      }
+		
+		Collections.sort(removeList, Collections.reverseOrder());
+		for(Integer remove : removeList) {
+			inOutList.remove(remove + 1 -1);
+		}
+		return inOutList;
+	}
+
 
 
 }
