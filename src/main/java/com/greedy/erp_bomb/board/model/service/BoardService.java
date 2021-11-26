@@ -27,14 +27,30 @@ public class BoardService {
 	
 	/* 사내게시판 디테일 */ 
 	@Transactional
-	public BoardDTO findBoardByCode(int detail) {
-		return boardDAO.findBoardByCode(detail);
+	public BoardDTO selectBoardDetail(int no) {
+		return boardDAO.selectBoardDetail(no);
 	}
+
+	
 
 	/*공지사항 리스트 */ 
 	@Transactional
 	public List<BoardDTO> findNoticeList() {
 		return boardDAO.findNoticeList();
 	}
+
+	/*공지사항 디테일 */
+	@Transactional
+	public BoardDTO selectNoticeDetail(int no) {
+		return boardDAO.selectNoticeDetail(no);
+	}
+	@Transactional
+	public void insertBoard(BoardDTO board) {
+		boardDAO.insertBoard(board);
+		
+	}
+
+
+
 	
 }

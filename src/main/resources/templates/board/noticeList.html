@@ -69,7 +69,7 @@
 			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
-				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+				<a class="sidebar-brand" href="/board/nolist">
 					<div class="sidebar-brand-icon rotate-n-15">
 					</div>
 					<div class="sidebar-brand-text mx-3">게시판</div>
@@ -82,15 +82,15 @@
 				<hr class="sidebar-divider">
 
 				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+			    <li class="nav-item">
+					<a class="nav-link collapsed" href="/board/nolist" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>공지사항</span>
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+					<a class="nav-link collapsed" href="/board/list" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사내게시판</span>
 					</a>
@@ -107,7 +107,7 @@
 						  <tr th:each="notice : ${ noticeList }" >
 							<td colspan="3" th:if="${ notice.no } == 1" th:text="[공지]" style="color: black"></td>
 							<td colspan="3" th:if="${ notice.no } == 2" th:text="[사내게시판]" style="color: black"></td>
-							<td colspan="3"><a th:text="${ notice.title }" th:href="@{/notice/detail(no=${notice.no})}" style="color:black"></a></td>
+							<td colspan="3"><a th:text="${ notice.title }" th:href="@{/board/nodetail(no=${notice.no})}" style="color:black"></a></td>
 							<td colspan="3" th:text="${ notice.regDate }" style="text-align: right; color: black;"> </td>
 							<td colspan="3" th:text="${ notice.hit }" style="text-align: right; color:black;"></td>
 						  </tr>

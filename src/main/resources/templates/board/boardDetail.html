@@ -71,8 +71,7 @@
 				id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
-				<a class="sidebar-brand"
-					href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+				<a class="sidebar-brand" href="/board/nolist">
 					<div class="sidebar-brand-icon rotate-n-15"></div>
 					<div class="sidebar-brand-text mx-3">게시판</div>
 				</a>
@@ -84,15 +83,19 @@
 				<hr class="sidebar-divider">
 
 				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item"><a class="nav-link collapsed" href="#"
-					data-toggle="collapse" data-target="#collapseUtilities"
-					aria-expanded="true" aria-controls="collapseUtilities"> <span>공지사항</span>
-				</a></li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="/board/nolist" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>공지사항</span>
+					</a>
+				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
-				<li class="nav-item"><a class="nav-link collapsed" href="#"
-					data-toggle="collapse" data-target="#collapseUtilities"
-					aria-expanded="true" aria-controls="collapseUtilities"> <span>사내게시판</span>
-				</a></li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="/board/list" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>사내게시판</span>
+					</a>
+				</li>
 				<hr class="sidebar-divider">
 			</ul>
 			<!-- End of Sidebar -->
@@ -103,16 +106,16 @@
 				<a type="button" style="color: black" href="/board/list" >목록보기</a></div>
 					
 				<hr style="clear: both;">
-				<div class="bonmun" th:each="detail:${ detail }">
-					<h6 th:text="${ detail.regDate }"></h6>
-					<h5 th:if="${ detail.no } == 1" th:text="[공지]" ></h5>
-					<h5 th:if="${ detail.no } == 2" th:text="[사내게시판]" ></h5>
-					<h2 th:text="${ detail.title }"></h2>
+				<div class="bonmun" >
+					<p th:text="${ boardDetail.regDate }"></p>
+					<p th:if="${ boardDetail.no } == 1" th:text="[공지]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
+					<p th:if="${ boardDetail.no } == 2" th:text="[사내게시판]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
 					<br>
-					<div class="realBonmun" th:text="${ detail.content }">
-					 </div>
-				 </div>
-				
+				<div class="realBonmun" >
+				<p th:text="${ boardDetail.content }"> </p>
+				</div>
+			</div>
+			
 				<hr style="clear: both;">
 				<h5 class="comment_title" style="font-weight: bold">댓글</h5>
 
@@ -134,7 +137,7 @@
 				<br>
 				<div class="CommentBox">
 					<ul class="comment_list">
-						<img th:src="@{uses/pngwing.com.png}" class="wing">
+						<img th:src="@{/uses/pngwing.com.png}" class="wing">
 						<li id="75070218" class="CommentItem CommentItem--reply">
 							<div class="comment_area" style="background-color: #b6e8fd;">
 								<div class="comment_box">

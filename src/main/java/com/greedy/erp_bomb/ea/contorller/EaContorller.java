@@ -16,5 +16,6 @@ public class EaContorller {
 	public EaContorller(EaService eaService) {
 		this.eaService = eaService;
 	}
+	
 
 }
