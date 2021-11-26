@@ -25,20 +25,8 @@ public class InOutDAO {
 	public List<InOutDTO> findInOutList(String name) {
 		MemberDTO member = em.find(MemberDTO.class, name);
 		
-		String jpql = "SELECT a FROM InOutDTO as a";
-		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).getResultList();
-		
-		List<Integer> removeList = new ArrayList<>();
-		
-		for(int i = 0 ; i < inOutList.size() ; i++) {
-			if(inOutList.get(i).getInventory().getCompany().getSerialNo() != member.getCompany().getSerialNo()) {
-				removeList.add(i);
-			}
-		}
-		Collections.sort(removeList, Collections.reverseOrder());
-		for(Integer remove : removeList) {
-			inOutList.remove(remove + 1 -1);
-		}
+		String jpql = "SELECT a FROM InOutDTO as a LEFT JOIN a.inventory as b LEFT JOIN b.company as c WHERE c.serialNo = :serialNo";
+		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).setParameter("serialNo", member.getCompany().getSerialNo()).getResultList();
 		
 		return inOutList;
 	}

@@ -382,7 +382,56 @@
 						
 					</div>
 					<!-- 여기까지 전자 결재 디테일 팝업 -->
-
+					
+					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
+					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
+						<div class="top_area">
+							<h2>전자 결재</h2>
+							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
+						</div>
+						<h2 class="approval_title mt-3" th:text="${ list.title }"></h2>
+						<div class="line-div ml-2">
+							결재자&nbsp;
+							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+								<th:block th:each="member2 : ${ memberList }" th:with="data = 1">
+									<th:block th:each="path : ${ list.eaApprovalPathList }">
+										<th:block th:if="${ member2.name.equals(path.member.name) }">
+											<th:block th:with="data = 2"/>
+										</th:block>
+									</th:block>
+									<option th:if="${ data == 2 }" th:text="${ member2.name + data }" th:attr="selected"></option>
+									<option th:unless="${ data == 2 }" th:text="${ member2.name + data }" ></option>
+								</th:block>
+							</select>
+							<br>
+						</div>
+						<div class="mt-2 line-div ml-2">
+							참조자&nbsp;
+							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
+								<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+							</select>
+							<br>
+						</div>
+						<div class="pop_inner">
+							<div class="detail_note">
+								<div class="top">
+									<p class="name">기안 일자</p>
+									<p class="date"></p>
+								</div>
+								<div class="approval_content">
+									<textarea></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="blue_btn">결재</a>
+							<a href="#n" class="blue_btn">수정</a>
+							<a href="#n" class="blue_btn">삭제</a>
+							<a href="#n" class="gray_btn">첨언</a>
+							<a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
+						</div>
+					</div>
+					<!-- 여기까지 임시저장 전자 결재 디테일 팝업 -->
 				</div>
 			</div>
 		</div>
