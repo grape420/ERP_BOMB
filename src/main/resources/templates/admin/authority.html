@@ -51,7 +51,7 @@
 						<a class="nav-link font-weight-bold" href="">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="inventory">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="">근태 관리</a>
@@ -84,7 +84,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="inventory/inventory">
+					<a class="nav-link">
 					<span>권한 관리</span>
 					</a>
 				</li>
@@ -139,7 +139,7 @@
 							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
 						</div>
 						<div class="tableArea">
-						<form action="/inventory/regist" method="post">
+						<form action="/admin/" method="post">
 							<table>
 								<colgroup>
 									<col style="width: 33%" />
@@ -186,7 +186,7 @@
 							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
 						</div>
 						<div class="tableArea">
-						<form action="/inventory/newIce" method="post">
+						<form action="/admin/" method="post">
 							<table>
 								<colgroup>
 									<col style="width: 50%" />
@@ -231,7 +231,7 @@
 	</section>
 	
 	<script>
-		$.ajax({
+		/* $.ajax({
 			url: "/inventory/company",
 			success: function(data){
 				const $companyCode = $("#companyCode");
@@ -259,7 +259,7 @@
 			error: function(xhr){
 				console.log(xhr);
 			}
-		});
+		}); */
 	</script>
 </body>
 </html>
