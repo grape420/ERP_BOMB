@@ -50,4 +50,14 @@ public class VoteService {
 	public void insertVvote(VoteParticipationDTO vote, String votes, int serialNo) {
 		voteDAO.insertVvote(vote, votes, serialNo);
 	}
+
+	@Transactional
+	public VoteDTO selectResult(int voteNumber) {
+		return voteDAO.selectResult(voteNumber);
+	}
+
+	@Transactional
+	public void insertCandidate(VoteOptionDTO voteOption) {
+		voteDAO.insertCandidate(voteOption);
+	}
 }

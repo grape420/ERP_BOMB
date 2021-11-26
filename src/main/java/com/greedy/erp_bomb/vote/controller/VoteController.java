@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,8 +106,15 @@ public class VoteController {
 		VoteDTO voteDetail = voteService.selectVoteDetail(detailnum);
 		
 		for (VoteOptionDTO vote : voteDetail.getVoteOptionList()) {
+			String member = vote.getMember().getName();
+
 			vote.setMember(null);
 			vote.setVote(null);
+			
+			MemberDTO mem = new MemberDTO();
+			mem.setName(member);
+			
+			vote.setMember(mem);
 		}
 		
 		for (VoteParticipationDTO votePa : voteDetail.getVoteParticipationList()) {
@@ -126,7 +134,12 @@ public class VoteController {
 			votePa.setVote(vote);
 		}
 		System.out.println(voteDetail.getVoteParticipationList());
-		voteDetail.setMember(null);
+		
+		String member = voteDetail.getMember().getName();
+		MemberDTO mem = new MemberDTO();
+		mem.setName(member);
+		
+		voteDetail.setMember(mem);
 		
 		return voteDetail;
 	}
@@ -155,4 +168,42 @@ public class VoteController {
 		return mv;
 	}
 	
+	@GetMapping(value = "resultVote", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public VoteDTO resultvote(@RequestParam int voteNumber) {
+		VoteDTO result = voteService.selectResult(voteNumber);
+		
+		System.out.println("여기왔으면 올려");
+		
+		for (VoteOptionDTO vote : result.getVoteOptionList()) {
+			vote.setMember(null);
+			vote.setVote(null);
+		}
+		
+		result.setMember(null);
+		
+		return result;
+		
+	}
+	
+	@PostMapping(value = "plusCandi", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public void plusCandidate(@RequestParam String candiInsert, @RequestParam int votenum,
+			Principal principal) {
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		
+		MemberDTO member = new MemberDTO();
+		member.setName(user.getName());
+		
+		VoteDTO vote = new VoteDTO();
+		vote.setSerialNo(votenum);
+		
+		VoteOptionDTO voteOption = new VoteOptionDTO();
+		voteOption.setMember(member);
+		voteOption.setVote(vote);
+		voteOption.setDesc(candiInsert);
+		
+		voteService.insertCandidate(voteOption);
+		
+	}
 }
