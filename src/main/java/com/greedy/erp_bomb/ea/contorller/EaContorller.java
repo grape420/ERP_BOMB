@@ -70,10 +70,10 @@ public class EaContorller {
 		}
 		
 		if(carboner != null) {
-			for(int i = 0 ; i < approvaler.length ; i++) {
+			for(int i = 0 ; i < carboner.length ; i++) {
 				EACarbonDTO eaCarbon = new EACarbonDTO();
 				MemberDTO member = new MemberDTO();
-				member.setName(approvaler[i]);
+				member.setName(carboner[i]);
 				eaCarbon.setEa(ea);
 				eaCarbon.setStatus(1);
 				eaCarbon.setMember(member);
@@ -88,6 +88,24 @@ public class EaContorller {
 		
 		mv.setViewName("redirect:/ea/ea");
 		
+		return mv;
+	}
+	
+	@GetMapping("/approval")
+	public ModelAndView approval(Principal principal, ModelAndView mv, @RequestParam int no) {
+		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
+		eaService.approval(userName, no);
+		mv.setViewName("redirect:/ea/ea");
+		
+		return mv;
+	}
+	
+	@GetMapping("/eaCancle")
+	public ModelAndView eaCancle(Principal principal, ModelAndView mv, @RequestParam int no) {
+		System.out.println();
+		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
+		eaService.eaCancle(userName, no);
+		mv.setViewName("redirect:/ea/ea");
 		return mv;
 	}
 	
@@ -115,6 +133,27 @@ public class EaContorller {
 		allEaList.addAll(myEaList);
 		allEaList.addAll(myEaPathList);
 		allEaList.addAll(myEaCarbonList);
+		
+		for(EADTO ea : allEaList) {
+			ea.setSaveNo(4);
+			if(userName.equals(ea.getMember().getName())) {
+				if(ea.getEaApprovalPathList().get(0).getStatus() == 4) {
+					ea.setSaveNo(3);
+				}
+			} else {
+				for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
+					if(userName.equals(eaPath.getMember().getName()) && eaPath.getStatus() == 4) {
+						ea.setSaveNo(1);
+						break;
+					} else if(userName.equals(eaPath.getMember().getName()) && eaPath.getStatus() == 3) {
+						ea.setSaveNo(3);
+						break;
+					}
+				}
+			}
+		}
+		
+		Collections.sort(allEaList);
 		
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);

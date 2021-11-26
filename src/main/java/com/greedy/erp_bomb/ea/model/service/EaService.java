@@ -60,4 +60,14 @@ public class EaService {
 	public AddendumDTO addAddendum(AddendumDTO addAd) {
 		return eaDAO.addAddendum(addAd);
 	}
+
+	@Transactional
+	public void approval(String userName, int eaNo) {
+		eaDAO.approval(userName, eaNo);
+	}
+
+	@Transactional
+	public void eaCancle(String userName, int eaNo) {
+		eaDAO.eaCancle(userName, eaNo);
+	}
 }

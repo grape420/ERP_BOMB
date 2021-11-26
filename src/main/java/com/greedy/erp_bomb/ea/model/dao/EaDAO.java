@@ -12,6 +12,7 @@ import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
 import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
+import com.greedy.erp_bomb.ea.model.dto.EAPathPk;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Repository
@@ -54,17 +55,16 @@ public class EaDAO {
 	public List<EADTO> findEaCarbonList(String userName) {
 		String jpql = "SELECT a FROM EACarbonDTO as a WHERE a.member.name = :name";
 		
-		List<EACarbonDTO> myEaPathList = em.createQuery(jpql, EACarbonDTO.class).setParameter("name", userName).getResultList();
+		List<EACarbonDTO> myEaCarbonList = em.createQuery(jpql, EACarbonDTO.class).setParameter("name", userName).getResultList();
 		
 		List<EADTO> eaCarbonList = new ArrayList<>();
 		
-		for(EACarbonDTO eaCarbon : myEaPathList) {
+		for(EACarbonDTO eaCarbon : myEaCarbonList) {
 			eaCarbon.getEa().getAddendumList().size();
 			eaCarbon.getEa().getEaApprovalPathList().size();
 			eaCarbon.getEa().getEaCarbonList().size();
 			eaCarbonList.add(eaCarbon.getEa());
 		}
-		
 		return eaCarbonList;
 	}
 
@@ -138,6 +138,47 @@ public class EaDAO {
 		
 		em.persist(addAd);
 		return addAd;
+	}
+
+	public void approval(String userName, int eaNo) {
+		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.ea.serialNo = :eaNo AND a.member.name = :userName";
+		EAPathDTO eaPath = em.createQuery(jpql, EAPathDTO.class)
+							 .setParameter("eaNo", eaNo)
+							 .setParameter("userName", userName)
+							 .getSingleResult();
+		
+		System.out.println(eaPath);
+		
+		eaPath.setStatus(3);
+		eaPath.setDate(new java.sql.Date(System.currentTimeMillis()));
+		
+		EAPathDTO nextEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() + 1, eaNo));
+		
+		if(nextEaPath != null) {
+			nextEaPath.setStatus(4);
+		} else {
+			eaPath.getEa().setCategory(2);
+		}
+	}
+
+	public void eaCancle(String userName, int eaNo) {
+		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.ea.serialNo = :eaNo AND a.member.name = :userName";
+		EAPathDTO eaPath = em.createQuery(jpql, EAPathDTO.class)
+							 .setParameter("eaNo", eaNo)
+							 .setParameter("userName", userName)
+							 .getSingleResult();
+		
+		System.out.println(eaPath);
+		
+		eaPath.setStatus(4);
+		eaPath.setDate(null);
+		eaPath.getEa().setCategory(1);
+		
+		EAPathDTO nextEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() + 1, eaNo));
+		
+		if(nextEaPath != null) {
+			nextEaPath.setStatus(1);
+		}
 	}
 
 }

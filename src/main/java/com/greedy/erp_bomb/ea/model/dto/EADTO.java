@@ -25,7 +25,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 		sequenceName = "SEQ_EA_CODE",
 		initialValue = 1, allocationSize = 1)
 @Table(name = "ELECTRONIC_APPROVAL")
-public class EADTO implements Serializable {
+public class EADTO implements Serializable, Comparable<EADTO> {
 	private static final long serialVersionUID = -2118009690203268689L;
 	
 	@Id
@@ -145,5 +145,13 @@ public class EADTO implements Serializable {
 	public String toString() {
 		return "EADTO [serialNo=" + serialNo + ", member=" + member.getName() + ", date=" + date + ", title=" + title
 				+ ", content=" + content + ", category=" + category + ", saveNo=" + saveNo + "]";
+	}
+	@Override
+	public int compareTo(EADTO o) {
+		if (o.getSerialNo() < this.serialNo) {
+			return 1;
+		} else  {
+			return -1;
+		}
 	}
 }

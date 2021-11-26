@@ -103,8 +103,8 @@
 						</div>
 						<ul class="tab ul-tab">
 							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
-							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>참조 기안</span></li>
-							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
 						</ul>
 						<div id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">
@@ -182,8 +182,15 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-												<td th:text="${ path.member.name }"></td>
+											<th:block th:if="${ list.category != 2 }">
+												<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+													<td th:text="${ path.member.name }"></td>
+												</th:block>
+											</th:block>
+											<th:block th:unless="${ list.category != 2 }">
+												<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+													<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+												</th:block>
 											</th:block>
 											<th:block th:switch="${ list.category }">
 												<td th:case="1">결재 중</td>
@@ -223,13 +230,20 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaCarbonList }" th:if="${ list.category  } == 4 and ${ #authentication.name } != ${ list.member.name }">
+										<tr th:each="list : ${ myEaCarbonList }">
 											<td th:text="${ list.serialNo }"></td>
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-												<td th:text="${ path.member.name }"></td>
+											<th:block th:if="${ list.category == 2 }">
+												<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+													<td th:text="${ path.member.name }"></td>
+												</th:block>
+											</th:block>
+											<th:block th:unless="${ list.category == 2 }">
+												<th:block th:each="path : ${ list.eaApprovalPathList }">
+													<td th:if="${ pathStat.last }" th:text="${ path.member.name }"></td>
+												</th:block>
 											</th:block>
 											<th:block th:switch="${ list.category }">
 												<td th:case="1">결재 중</td>
@@ -289,7 +303,7 @@
 					<!-- 여기까지 신규 전자 결재 팝업 -->
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 and #authentication.name != list.member.name}" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
+					<div th:each="list : ${ allEaList }" th:if="${ list.category != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
 						<div class="top_area">
 							<h2>전자 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -312,7 +326,7 @@
 							</tr>
 							<tr>
 								<td th:text="${ #dates.format(list.date, 'yyyy/MM/dd') }" class="approval_person"></td>
-								<td th:each="eaPath : ${list.eaApprovalPathList}" th:text="${ #dates.format(eaPath.date, 'yyyy/MM/dd') }">2021/22/22</td>
+								<td th:each="eaPath : ${list.eaApprovalPathList}" th:text="${ #dates.format(eaPath.date, 'yyyy/MM/dd') }"></td>
 							</tr>
 						</table>
 						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
@@ -331,7 +345,7 @@
 							<div class="detail_note">
 								<div class="top">
 									<p class="name">기안 일자</p>
-									<p th:utext="${ #dates.format(list.date, 'yyyy/MM/dd') } + '&nbsp;&nbsp' + ${ #dates.format(list.date, 'hh:mm:ss') }" class="date">2021/11/07 11:17:01</p>
+									<p th:utext="${ #dates.format(list.date, 'yyyy/MM/dd') } + '&nbsp;&nbsp' + ${ #dates.format(list.date, 'hh:mm:ss') }" class="date"></p>
 								</div>
 
 								<div class="approval_content">
@@ -360,7 +374,8 @@
 							</div>
 						</div>
 						<div class="btn_area">
-							<a class="blue_btn">결재 취소</a>
+							<a th:href="@{/ea/eaCancle(no=${list.serialNo})}" th:if="${ list.saveNo == 3 }" class="blue_btn" style="cursor: pointer;">결재 취소</a>
+							<a th:href="@{/ea/approval(no=${list.serialNo})}" th:if="${ list.saveNo == 1 }" class="blue_btn" style="cursor: pointer;">결재</a>
 							<a class="gray_btn pop_btn new_ad" data-button="new_comment_pop" th:attr="name=${ list.serialNo }">첨언</a>
 							<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 						</div>
@@ -368,181 +383,6 @@
 					</div>
 					<!-- 여기까지 전자 결재 디테일 팝업 -->
 
-					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop2" class="pop_layer approval_detail">
-						<div class="top_area">
-							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop2">닫기</button>
-						</div>
-						<h2 class="approval_title mt-3">결재 완료 기안입니다.</h2>
-						<table class="approval_line" border="1">
-							<tr>
-								<td rowspan="4">결재</td>
-								<td class="approval_person">사원<br>황성연</td>
-								<td class="approval_person">과장<br>최유정</td>
-								<td class="approval_person">이사<br>김성민</td>
-								<td class="approval_person">사장<br>김가희</td>
-							</tr>
-							<tr class="approval_status">
-								<td>결재</td>
-								<td>결재</td>
-								<td>결재</td>
-								<td>결재</td>
-							</tr>
-							<tr>
-								<td>21/11/09</td>
-								<td>21/11/09</td>
-								<td>21/11/10</td>
-								<td>21/11/12</td>
-							</tr>
-						</table>
-						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
-							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
-								참조자
-							</div>
-							<div style="display: inline-block;">
-								<span style="color: black;">김지혁, 최호진</span>
-							</div>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
-								</div>
-								<div class="approval_content">
-									<p>
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="btn_area">
-							<a class="gray_btn">첨언</a>
-							<a class="gray_btn pop_close" data-button="approval_detail_pop2">닫기</a>
-						</div>
-					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
-
-					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop3" class="pop_layer approval_detail">
-						<div class="top_area">
-							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop3">닫기</button>
-						</div>
-						<h2 class="approval_title mt-3">기안 중 기안입니다.</h2>
-						<div class="line-div ml-2">
-							결재자&nbsp;
-							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-								<option selected>황성연</option>
-								<option>최유정</option>
-								<option>김종현</option>
-								<option selected>김성민</option>
-								<option selected>최호진</option>
-								<option>김지혁</option>
-								<option selected>김가희</option>
-							</select>
-							<br>
-						</div>
-						<div class="mt-2 line-div ml-2">
-							참조자&nbsp;
-							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-								<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
-							</select>
-							<br>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
-								</div>
-								<div class="approval_content">
-									<textarea>테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트</textarea>
-								</div>
-							</div>
-						</div>
-						<div class="btn_area">
-							<a class="blue_btn">결재</a>
-							<a class="blue_btn">수정</a>
-							<a class="blue_btn">삭제</a>
-							<a class="gray_btn">첨언</a>
-							<a class="gray_btn pop_close" data-button="approval_detail_pop3">닫기</a>
-						</div>
-					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
-
-					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop4" class="pop_layer approval_detail">
-						<div class="top_area">
-							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop4">닫기</button>
-						</div>
-						<h2 class="approval_title mt-3">반려 기안입니다.</h2>
-						<table class="approval_line" border="1">
-							<tr>
-								<td rowspan="4">결재</td>
-								<td class="approval_person">사원<br>황성연</td>
-								<td class="approval_person">과장<br>최유정</td>
-								<td class="approval_person">이사<br>김성민</td>
-								<td class="approval_person">사장<br>김가희</td>
-							</tr>
-							<tr class="approval_status">
-								<td>결재</td>
-								<td>결재</td>
-								<td>반려</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>21/11/09</td>
-								<td>21/11/09</td>
-								<td>21/11/10</td>
-								<td></td>
-							</tr>
-						</table>
-						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
-							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
-								참조자
-							</div>
-							<div style="display: inline-block;">
-								<span style="color: black;">김지혁, 최호진</span>
-							</div>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
-								</div>
-								<div class="approval_content">
-									<p>
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="btn_area">
-							<a class="gray_btn">첨언</a>
-							<a class="gray_btn pop_close" data-button="approval_detail_pop4">닫기</a>
-						</div>
-					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
 				</div>
 			</div>
 		</div>
