@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InOutDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;
@@ -46,9 +46,10 @@ public class InOutController {
 	
 	@GetMapping(value = "icecream", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<IceCreamDTO> findIcecreamList() {
+	public List<InventoryDTO> findIcecreamList(Principal principal) {
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
-		return inOutService.findIcecreamList();
+		return inOutService.findIcecreamList(user.getName());
 	}
 	
 	@PostMapping(value = "comparison", produces = "application/json; charset=UTF-8")
@@ -89,13 +90,7 @@ public class InOutController {
 			if (headInven.getInvenRemainStock() - amount >= 0) {
 				headInven.setInvenRemainStock(headInven.getInvenRemainStock() - amount);
 				
-				/* 본사 재고 UPDATE */
-				inOutService.updateHeadInven(headInven);
-				
 				inven.setInvenRemainStock(inven.getInvenRemainStock() + amount);
-				
-				/* 가맹점 입출고 INSERT */
-				inOutService.registInOut(inOut);
 			} else {
 				return 1;
 			}
@@ -103,26 +98,17 @@ public class InOutController {
 		} else if (division == 2) {										// 출고
 			if (inven.getInvenRemainStock() - amount >= 0) {
 				inven.setInvenRemainStock(inven.getInvenRemainStock() - amount);
-				
-				/* 가맹점 입출고 INSERT */
-				inOutService.registInOut(inOut);
 			} else {
 				return 2;
 			}
 		} else {														// 판매
 			if (inven.getInvenRemainStock() - amount >= 0) {
 				inven.setInvenRemainStock(inven.getInvenRemainStock() - amount);
-				
-				/* 가맹점 입출고 INSERT */
-				inOutService.registInOut(inOut);
 			} else {
 				return 3;
 			}
 		}
 		
-		System.out.println(inOut);
-		
-		inOutService.updateInventory(inven);
 		return 4;
 		
 	}
@@ -172,9 +158,7 @@ public class InOutController {
 				
 				/* 가맹점 입출고 INSERT */
 				inOutService.registInOut(inOut);
-			} else {
-				
-			}
+			} 
 			
 		} else if (division == 2) {										// 출고
 			if (inven.getInvenRemainStock() - amount >= 0) {
@@ -182,15 +166,13 @@ public class InOutController {
 				
 				/* 가맹점 입출고 INSERT */
 				inOutService.registInOut(inOut);
-			} else {
-			}
+			} 
 		} else {														// 판매
 			if (inven.getInvenRemainStock() - amount >= 0) {
 				inven.setInvenRemainStock(inven.getInvenRemainStock() - amount);
 				
 				/* 가맹점 입출고 INSERT */
 				inOutService.registInOut(inOut);
-			} else {
 			}
 		}
 		

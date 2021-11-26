@@ -33,7 +33,7 @@ public class InventoryDTO implements Serializable {
 	@Column(name = "INVEN_REMAIN_STOCK")
 	private int invenRemainStock;
 	
-	@OneToMany(mappedBy = "inventory", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "inventory")
 	private List<InOutDTO> inOutList = new ArrayList<>();
 
 	public InventoryDTO() {

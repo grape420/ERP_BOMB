@@ -19,7 +19,7 @@ public class InventoryDAO {
 	private EntityManager em;
 
 	public List<InventoryDTO> findInvenList() {
-		String jpql = "SELECT m FROM InventoryDTO as m";
+		String jpql = "SELECT m FROM InventoryDTO as m ORDER BY m.company.serialNo";
 		
 		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class).getResultList();
 		
@@ -27,27 +27,25 @@ public class InventoryDAO {
 	}
 
 	public List<CompanyDTO> findCompanyList() {
-		String jpql = "SELECT DISTINCT m FROM CompanyDTO as m ORDER BY m.serialNo";
+		String jpql = "SELECT m FROM CompanyDTO as m ORDER BY m.serialNo";
 		
 		List<CompanyDTO> companyList = em.createQuery(jpql, CompanyDTO.class).getResultList();
 		
 		for(CompanyDTO com : companyList) {
 			com.setInventoryList(null);
 			com.setMemberList(null);
-			System.out.println("여기는 DAO company : " + com);
 		}
 		
 		return companyList;
 	}
 
 	public List<IceCreamDTO> findIcecreamList() {
-		String jpql = "SELECT DISTINCT m FROM IceCreamDTO as m ORDER BY m.no";
+		String jpql = "SELECT m FROM IceCreamDTO as m ORDER BY m.no";
 		
 		List<IceCreamDTO> icecreamList = em.createQuery(jpql, IceCreamDTO.class).getResultList();
 		
 		for (IceCreamDTO ice : icecreamList) {
 			ice.setInventoryList(null);
-			System.out.println("여기는 DAO icecream : " + ice);
 		}
 		
 		return icecreamList;
@@ -62,14 +60,16 @@ public class InventoryDAO {
 		inven.setIceCream(em.find(IceCreamDTO.class, inven.getIceCream().getNo()));
 		
 		em.persist(inven);
+	}
+
+	public List<InventoryDTO> searchInven(String keyword) {
+		System.out.println("키워드 : " + keyword);
+		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.iceCream.name LIKE :keyword ORDER BY m.company.serialNo";
 		
-//		InventoryPk pk = new InventoryPk();
-//		pk.setCompany(inven.getCompany().getSerialNo());
-//		pk.setIceCream(inven.getIceCream().getNo());
-//		
-//		InventoryDTO selectedInven = em.find(InventoryDTO.class, pk);
-//		selectedInven.setInvenRemainStock(inven.getInvenRemainStock());
-		
+		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class)
+										 .setParameter("keyword", "%" + keyword + "%")
+				                         .getResultList();
+		return invenList;
 	}
 	
 }

@@ -97,12 +97,21 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기에 적으셈 -->
 					<br>
-					<h1 class="h2 text-gray-900"
-						style="padding: 30px; display: inline;">입출고 관리</h1>
+					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">입출고 관리</h1>
 					<div class="search_form">
-						<input type="text" placeholder="검색어 입력" />
-						<button type="button" class="blue_btn">Search</button>
+						<form action="/inOut/search" method="get">
+							<input type="text" placeholder="검색어 입력" name="keyword" />
+							<button type="button" class="blue_btn">Search</button>
+						</form>
 					</div>
+					
+					<script>
+				    	var test = "${ test }";
+				    	
+				    	$('#search').change(function() {
+				    		test = $("#search").val();
+				    	});
+				    </script>
 
 					<ul class="tab ul-tab">
 						<li class="li-tab product on" data-tab="all_product"><span>전체</span></li>
@@ -133,7 +142,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="inOut : ${ inOutList }">
+									<tr th:each="inOut : ${ inOutList }" >
 										<td th:text="${ inOut.no }">
 											<input type="checkbox" id="total_01" class="check_box" /> 
 										</td>
@@ -345,10 +354,11 @@
 				$icecreamCode.html("");
 				
 				for (let i in data){
-					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
+					$icecreamCode.append($("<option>").val(data[i].iceCream.no).text(data[i].iceCream.name));
 				}
 			},
 			error: function(xhr){
+				console.log("왜 안 나와");
 				console.log(xhr);
 			}
 		});
@@ -372,14 +382,15 @@
 					success : function(data) {
 						console.log(data);
 						
-						if(data==1) {
+						if(data == 1) {
 							alert("본사에 수량이 부족해 입고할 수 없습니다");
 							
-						} else if(data==2) {
+						} else if(data == 2) {
 							alert("재고가 부족해 출고할 수 없습니다");
 							
-						} else if(data==3) {
+						} else if(data == 3) {
 							alert("재고가 부족해 판매할 수 없습니다");
+							
 						} else {
 							$("#inOutForm").submit();
 						}

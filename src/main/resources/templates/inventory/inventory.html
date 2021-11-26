@@ -101,8 +101,10 @@
 					<h1 class="h2 text-gray-900"
 						style="padding: 30px; display: inline;">재고 관리</h1>
 					<div class="search_form">
-						<input type="text" placeholder="검색어 입력" />
-						<button type="button" class="blue_btn">Search</button>
+						<form action="/inventory/search" method="post">
+							<input type="text" placeholder="검색어 입력" name="keyword"/>
+							<button type="submit" class="blue_btn">Search</button>
+						</form>
 					</div>
 
 					<!-- 테이블 -->

@@ -1,5 +1,7 @@
 package com.greedy.erp_bomb.inventory.model.dao;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -22,36 +24,39 @@ public class InOutDAO {
 
 	public List<InOutDTO> findInOutList(String name) {
 		MemberDTO member = em.find(MemberDTO.class, name);
-		member.getCompany().getSerialNo();
 		
-//		CompanyDTO com = em.find(CompanyDTO.class, 2);
-//		for(InventoryDTO inven : com.getInventoryList()) {
-//			System.out.println("인벤임 : " + inven);
-//			for (InOutDTO inOut : inven.getInOutList()) {
-//				System.out.println("인아웃임 : " + inOut);
-//			}
-//		}
-		InOutDTO inOut = em.find(InOutDTO.class, 2);
-		System.out.println("인벤인벤 : " + inOut.getInventory().getCompany());
+		String jpql = "SELECT a FROM InOutDTO as a ORDER BY a.no DESC";
+		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).getResultList();
 		
-		System.out.println("이름 뭐야 : " + member.getName());
-		System.out.println("번호 뭐야 : " + member.getCompany().getSerialNo());
+		List<Integer> removeList = new ArrayList<>();
 		
-		String jpql = "SELECT m FROM InOutDTO as m WHERE m.inventory.company.serialNo = 2";
+		for(int i = 0 ; i < inOutList.size() ; i++) {
+			if(inOutList.get(i).getInventory().getCompany().getSerialNo() != member.getCompany().getSerialNo()) {
+				removeList.add(i);
+			}
+		}
 		
-		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class)
-//				                     .setParameter("company", member.getCompany().getSerialNo())
-				                     .getResultList();
+		Collections.sort(removeList, Collections.reverseOrder());
+		for(Integer remove : removeList) {
+			inOutList.remove(remove + 1 -1);
+		}
 		return inOutList;
 	}
 
-	public List<IceCreamDTO> findIcecreamList() {
-		String jpql = "SELECT m FROM IceCreamDTO as m";
+	public List<InventoryDTO> findIcecreamList(String name) {
+		MemberDTO member = em.find(MemberDTO.class, name);
 		
-		List<IceCreamDTO> icecreamList = em.createQuery(jpql, IceCreamDTO.class).getResultList();
+		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.company.serialNo = :company";
 		
-		for (IceCreamDTO ice : icecreamList) {
-			ice.setInventoryList(null);
+		List<InventoryDTO> icecreamList = em.createQuery(jpql, InventoryDTO.class)
+											.setParameter("company", member.getCompany().getSerialNo())
+											.getResultList();
+		
+		for (InventoryDTO ice : icecreamList) {
+			ice.setInOutList(null);
+			ice.getIceCream().setInventoryList(null);
+			ice.getCompany().setInventoryList(null);
+			ice.getCompany().setMemberList(null);
 		}
 		
 		return icecreamList;

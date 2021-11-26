@@ -32,8 +32,8 @@ public class InOutDTO implements Serializable {
 	
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name = "ICE_NO"),
-		@JoinColumn(name = "CO_SERIAL_NO")
+		@JoinColumn(name = "ICE_NO", referencedColumnName = "ICE_NO"),
+		@JoinColumn(name = "CO_SERIAL_NO", referencedColumnName = "CO_SERIAL_NO")
 	})
 	private InventoryDTO inventory;
 	

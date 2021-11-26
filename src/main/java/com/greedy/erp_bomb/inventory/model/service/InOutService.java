@@ -30,8 +30,8 @@ public class InOutService {
 	}
 
 	@Transactional
-	public List<IceCreamDTO> findIcecreamList() {
-		return inOutDAO.findIcecreamList();
+	public List<InventoryDTO> findIcecreamList(String name) {
+		return inOutDAO.findIcecreamList(name);
 	}
 
 	@Transactional
@@ -58,6 +58,5 @@ public class InOutService {
 	public void updateHeadInven(InventoryDTO headInven) {
 		inOutDAO.updateHeadInven(headInven);
 	}
-
 
 }

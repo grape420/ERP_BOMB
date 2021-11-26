@@ -100,41 +100,18 @@
 
 			<div id="boardList" class="container"  style="width: 80%;">
 				<table class="table table-hover">
-					<h3 style="font-weight: 900;">공지사항</h3>
+					<button type="button" class="btn btn-outline-secondary" id="listBtn" onclick="location. href='houseboard.html'" style="float: right;">신규</button>
+					<h3 style="font-weight: 900;">사내게시판</h3>
 					<tbody>
-					  <tr>
-						<td colspan="3"><a href="board detail.html" style="color: black;">[이벤트 발표] LUCKY 샤넬 클래식 파우치</a></td>
-					  </tr>
-					  <tr>
-						<td colspan="3"><a href="board detail.html" style="color: black;">[이벤트 발표] LUCKY 카카오 라이언 400%</a></td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[이벤트 발표] LUCKY 프라다 에어팟프로 케이스</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[공지] 2022년 모나미와 함께한 콜라보 굿즈 아이템 제작안내</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[공지] 추석 연휴 쇼룸 및 오프라인 접수 운영 안내</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[공지] 추석 연휴 고객센터 운영 안내</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[공지] 추석 연휴 택배사 휴무에 따른 거래 일정 안내</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[공지] 보관판매 판매자 심사 오류 안내</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[공지] 개인정보처리방침 변경 안내</td>
-					  </tr>
-					  <tr>
-						<td colspan="3">[이벤트 발표] LUCKY 루이비통 포쉐트클레 </td>
+					  <tr th:each="board : ${ boardList }" >
+					  	<td colspan="3" th:if="${ board.no } == 1" th:text="[공지]" style="color: black"></td>
+					  	<td colspan="3" th:if="${ board.no } == 2" th:text="[사내게시판]" style="color: black"></td>
+						<td colspan="3"><a th:text="${ board.title }" th:href="@{/board/detail(no=${board.no})}" style="color: black"></a></td>
+						<td colspan="3" th:text="${ board.regDate }"style="text-align: right; color:black;" ></td>
+						<td colspan="3" th:text="${ board.hit}"style="text-align: right; color:black;"></td>
 					  </tr>
 					</tbody>
 				  </table>
-				
 				<div class="paging">
 				  <a href="#" class="btn_arr first"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="hide"></span></a>            
 				  <a href="#" class="btn_arr prev"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="hide"></span></a>     
