@@ -159,7 +159,7 @@
 								</div>
 								
 								<!-- 진행중인 투표 부분 -->
-								<div id="vote-ing" class="tab_contents electronic_approval">
+								<!-- <div id="vote-ing" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table>
 											
@@ -195,7 +195,7 @@
 									</div>
 								</div>
 								
-								<!-- 투표 종료 부분 -->
+								투표 종료 부분
 								<div id="endvote" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table>
@@ -230,14 +230,14 @@
 											</tbody>
 										</table>
 									</div>
-								</div>
+								</div> -->
 								<div class="paging">
-									<button type="button" class="first_btn">처음페이지</button>
-									<button type="button" class="prev_btn">이전페이지</button>
-									<a href="#n" class="num on">1</a>
-									<a href="#n" class="num">2</a>
-									<a href="#n" class="num">3</a>
-									<a href="#n" class="num">4</a>
+									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=1)}" type="button" class="first_btn">처음페이지</a>
+									<button th:if="${selectCriteria.pageNo > 1}" type="button" class="prev_btn">이전페이지</button>
+									<a href="/vote/vote?page=1" class="num on">1</a>
+									<a href="/vote/vote?page=2" class="num">2</a>
+									<a href="/vote/vote?page=3" class="num">3</a>
+									<a href="/vote/vote?page=4" class="num">4</a>
 									<button type="button" class="next_btn">다음페이지</button>
 									<button type="button" class="last_btn">마지막페이지</button>
 								</div>

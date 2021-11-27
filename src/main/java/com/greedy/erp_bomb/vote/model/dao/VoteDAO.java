@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.common.paging.SelectCriteria;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
@@ -31,6 +32,40 @@ public class VoteDAO {
 		return voteList;
 	}
 
+	public List<VoteDTO> selectAllVoteList(SelectCriteria selectCriteria) {
+		String jpql = null;
+		List<VoteDTO> vote = null;
+		int first = 1;
+		
+		if(selectCriteria.getPageNo() == 1) {
+			first = 1;
+		} else {
+			first = selectCriteria.getPageNo() * selectCriteria.getLimit() - selectCriteria.getLimit() + 1;
+		}
+		if(selectCriteria.getSearchValue() == null) {
+			jpql = "SELECT a FROM VoteDTO as a ORDER BY a.serialNo DESC";
+			
+			vote = em.createQuery(jpql, VoteDTO.class)
+					.setFirstResult(first - 1)
+					.setMaxResults(selectCriteria.getLimit())
+					.getResultList();
+
+		} else {
+			jpql = "SELECT a FROM VoteDTO as a WHERE a.title LIKE CONCAT('%',:searchValue,'%') ORDER BY a.serialNo DESC ";
+
+			vote = em.createQuery(jpql, VoteDTO.class)
+					.setParameter("searchValue", selectCriteria.getSearchValue())
+					.setFirstResult(selectCriteria.getPageNo() - 1)
+					.setMaxResults(selectCriteria.getLimit())
+					.getResultList();
+		}
+		
+											
+		
+		return vote;
+	}
+	
+	
 	public void insertVote(VoteDTO vote) {
 		em.persist(vote);
 		
@@ -95,14 +130,24 @@ public class VoteDAO {
 	}
 
 	public void insertCandidate(VoteOptionDTO voteOption) {
-		System.out.println("체크2");
 		voteOption.setMember(em.find(MemberDTO.class, voteOption.getMember().getName()));
-		System.out.println("체크3");
 		voteOption.setVote(em.find(VoteDTO.class, voteOption.getVote().getSerialNo()));
-		System.out.println("체크4");
 		
 		em.persist(voteOption);
-		System.out.println("체크5");
 	}
+
+	public int selectAllVote() {
+		
+		return ((Number) em.createQuery("select count(*) from VoteDTO")
+				.getSingleResult()).intValue();
+	}
+
+	public int selectAllVote(String search) {
+		return ((Number) em.createQuery("select count(*) from VoteDTO as a WHERE a.title LIKE CONCAT('%',:search,'%')")
+				.setParameter("search", search)
+				.getSingleResult()).intValue();
+	}
+
+	
 	
 }

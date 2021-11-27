@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.greedy.erp_bomb.common.paging.Pagenation;
+import com.greedy.erp_bomb.common.paging.SelectCriteria;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
@@ -32,27 +34,55 @@ public class VoteController {
 		this.voteService = voteService;
 	}
 	
-	@GetMapping(value = "vote", produces = "application/json; charset=UTF-8")
-	public ModelAndView votePage(ModelAndView mv) {
+	@GetMapping(value = "vote")
+	public ModelAndView votePage(ModelAndView mv, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "") String search) {
 		
-		List<VoteDTO> voteList = voteService.selectALLVote();
-		Date date = new Date();
-		List<VoteDTO> endVoteList = new ArrayList<>();
-		List<VoteDTO> regVoteList = new ArrayList<>();
+		int onePost = 10;					// 한 페이지에 노출시킬 게시글의 수
+		int onePage = 5;					// 한번에 보여줄 페이지 버튼의 갯수
+		int totalVote = 0;
+//		search = "ㅁㅁㅁ";
 		
-		for (VoteDTO voteDTO : voteList) {
-			if (voteDTO.getEndDate().before(date)) {
-				endVoteList.add(voteDTO);
-			}
-			if (voteDTO.getEndDate().after(date)) {
-				regVoteList.add(voteDTO);
-			}
+		System.out.println("이거옴?" + totalVote);
+		
+		SelectCriteria selectCriteria = null;
+		List<VoteDTO> voteList = null;
+		if(search.equals("")) {
+			totalVote = voteService.selectAllVote();
+			selectCriteria = Pagenation.getSelectCriteria(page, totalVote, onePost, onePage);
+			
+			System.out.println("이거동작?" + totalVote);
+		
+		} else {
+			totalVote = voteService.selectAllvote(search);
+			selectCriteria = Pagenation.getSelectCriteria(page, totalVote, onePage, onePage, null, search);
+			
+			System.out.println("요게동작?" + totalVote);
 		}
 		
-		mv.addObject("voteList", voteList);
-		mv.addObject("endVoteList", endVoteList);
-		mv.addObject("regVoteList", regVoteList);
+		System.out.println("selectCriteria임" + selectCriteria);
+		voteList = voteService.selectAllVoteList(selectCriteria);
 		
+		
+//		List<VoteDTO> voteList = voteService.selectALLVote();
+//		Date date = new Date();
+//		List<VoteDTO> endVoteList = new ArrayList<>();
+//		List<VoteDTO> regVoteList = new ArrayList<>();
+//		
+//		for (VoteDTO voteDTO : voteList) {
+//			if (voteDTO.getEndDate().before(date)) {
+//				endVoteList.add(voteDTO);
+//			}
+//			if (voteDTO.getEndDate().after(date)) {
+//				regVoteList.add(voteDTO);
+//			}
+//		}
+//		
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.addObject("voteList", voteList);
+//		mv.addObject("endVoteList", endVoteList);
+//		mv.addObject("regVoteList", regVoteList);
+//		
 		mv.setViewName("/vote/vote");
 		
 		return mv;
