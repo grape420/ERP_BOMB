@@ -56,16 +56,11 @@ public class SalaryDAO {
 	
 	/* name을 전달 받아 member 조회하기 */
 	public MemberDTO findMemberInfo(String name) {
-		System.out.println("====================newsalaryDAO======================");
-		System.out.println("name : " + name);
 		return em.find(MemberDTO.class, name);
 	}
 	
 	/* 급여 상세 추가하기 */
 	public void registNewSalary(SalaryDTO newSalary) {
-//		System.out.println("=====================newsalaryDAO======================");
-//		System.out.println(newSalary);
-		
 		em.persist(newSalary);
 	}
 

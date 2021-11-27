@@ -38,6 +38,22 @@ public class SalaryController {
 		List<SalaryDTO> allSalaryList = salaryService.findAllSalary();
 		List<MemberDTO> memberList = salaryService.findMemberList();
 		
+		for (SalaryDTO salaryDTO : allSalaryList) {
+			if (salaryDTO.getBonus() == null) {
+				salaryDTO.setBonus(0);
+			} if (salaryDTO.getRegularPay() == null) {
+				salaryDTO.setRegularPay(0);
+			}
+		}
+		
+		for (SalaryDTO salaryDTO : salaryList) {
+			if (salaryDTO.getBonus() == null) {
+				salaryDTO.setBonus(0);
+			} if (salaryDTO.getRegularPay() == null) {
+				salaryDTO.setRegularPay(0);
+			}
+		}
+		
 		mv.addObject("salaryList", salaryList);
 		mv.addObject("allSalaryList", allSalaryList);
 		mv.addObject("memberList", memberList);
@@ -83,6 +99,9 @@ public class SalaryController {
 		
 		return mv;
 	}
+	
+	/* 급여 내역 수정 */
+	
 
 }
 
