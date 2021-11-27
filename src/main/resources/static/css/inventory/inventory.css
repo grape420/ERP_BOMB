@@ -361,7 +361,7 @@ caption {
 	top: 40%;
 }
 
-#new_note_pop2, #new_inventory_pop, #note_detail_pop2 {
+#new_note_pop2, #new_inventory_pop, #auth_detail_pop {
 	width: 1014px;
 	height: 457px;
 	min-width: auto;

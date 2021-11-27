@@ -9,7 +9,6 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
-import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteParticipationDTO;
@@ -47,7 +46,6 @@ public class VoteDAO {
 
 	public VoteDTO selectVoteDetail(int detailnum) {
 		
-		
 		VoteDTO voteDetail = em.find(VoteDTO.class, detailnum);
 		
 		int hit = voteDetail.getHit();
@@ -56,8 +54,6 @@ public class VoteDAO {
 		em.persist(voteDetail);
 		
 		voteDetail.getVoteOptionList().size();
-		
-//		voteDetail.setVoteParticipationList(null);
 		voteDetail.getVoteParticipationList().size();
 		
 		return voteDetail;
@@ -87,4 +83,26 @@ public class VoteDAO {
 		em.persist(vote);
 		em.persist(voteOption);
 	}
+
+	public VoteDTO selectResult(int voteNumber) {
+		
+		VoteDTO result = em.find(VoteDTO.class, voteNumber);
+		
+		result.getVoteOptionList().size();
+		result.setVoteParticipationList(null);
+		
+		return result;
+	}
+
+	public void insertCandidate(VoteOptionDTO voteOption) {
+		System.out.println("체크2");
+		voteOption.setMember(em.find(MemberDTO.class, voteOption.getMember().getName()));
+		System.out.println("체크3");
+		voteOption.setVote(em.find(VoteDTO.class, voteOption.getVote().getSerialNo()));
+		System.out.println("체크4");
+		
+		em.persist(voteOption);
+		System.out.println("체크5");
+	}
+	
 }

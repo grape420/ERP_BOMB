@@ -50,7 +50,7 @@
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="">퇴직금</a>
 					</li>
-					<li class="nav-item mr-3 tab-selected">
+					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
@@ -71,7 +71,7 @@
 				id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
-				<a class="sidebar-brand" href="inventory/inventory">
+				<a class="sidebar-brand">
 					<div class="sidebar-brand-icon rotate-n-15"></div>
 					<div class="sidebar-brand-text mx-3">관리자 페이지</div>
 				</a>
@@ -84,8 +84,29 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link">
-					<span>권한 관리</span>
+					<a class="nav-link on" href="/admin/authority">
+						<span>권한 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/member">
+						<span>회원 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/company">
+						<span>회사 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/rank">
+						<span>직급 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/dept">
+						<span>부서 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/icecream">
+						<span>아이스크림 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/sp">
+						<span>퇴직금 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/document">
+						<span>문서 관리</span>
 					</a>
 				</li>
 
@@ -96,7 +117,6 @@
 
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div style="width: 80%;" class="">
-					<!-- 여기에 적으셈 -->
 					<br>
 					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">권한 관리</h1>
 					<div class="search_form">
@@ -106,34 +126,118 @@
 						</form>
 					</div>
 
-					<!-- 테이블 -->
+					<!-- 전체 회원 테이블 -->
 					<div id="all_product" class="tab_contents inventory current">
 						<div class="tableArea">
 							<table>
 								<colgroup>
-									<col style="width: 30%" />
-									<col style="width: 40%" />
-									<col style="width: 25%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th>
+										<th>사원명</th>
+										<th>회사</th>
+										<th>부서</th>
+										<th>직급</th>
+										<th>권한</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="inventory : ${ inventoryList }">
-										<td class="t_center pop_btn" th:text="${ inventory.company.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.iceCream.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.invenRemainStock }"></td>
+									<tr th:each="auth : ${ authorityList }">
+										<td class="t_center pop_btn" th:text="${ auth.member.name }"></td>
+										<td class="t_center pop_btn" th:text="${ auth.member.company.name }"></td>
+										<td class="t_center pop_btn" th:text="${ auth.member.dept.name }"></td>
+										<td class="t_center pop_btn" th:text="${ auth.member.rank.name }"></td>
+										<td th:text="${ auth.authority.desc }" data-button="auth_detail_pop" style="font-weight: bold;" class="t_center pop_btn" th:attr="onclick=|authDetail('${ auth.member.name }')|"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- 입출고 추가 -->
-					<div id="new_inventory_pop" class="pop_layer">
+										<!-- 권한 변경 팝업 -->
+			          <div id="auth_detail_pop" class="pop_layer">
+			            <div class="top_area">
+			              <h2>입출고 관리</h2>
+			              <button type="button" class="pop_close" data-button="auth_detail_pop">닫기</button>
+			            </div>
+			            <div class="pop_inner">
+			              <div class="tableArea">
+			                <table>
+			                  <colgroup>
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                  </colgroup>
+			                  <thead>
+			                    <tr>
+									<th>사원명</th>
+									<th>회사</th>
+									<th>부서</th>
+									<th>직급</th>
+									<th>권한</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+								<tr>
+									<td id="authName">김종현</td>
+									<td id="authCompany">본사</td>
+									<td id="authDept">영업부</td>
+									<td id="authRank">과장</td>
+									<td>
+										<select>
+											<option value="1">일반회원</option>
+											<option value="2">관리자</option>
+										</select>
+									</td>
+								</tr>
+			                  </tbody>
+			                </table>
+			              </div>
+			            </div>
+			            <div class="btm_area" style="text-align: center;">
+			              <a href="#n" class="blue_btn pop_close" data-button="auth_detail_pop">수정</a>
+			            </div>
+			          </div>
+					<!-- 권한 변경 팝업 -->
+					
+					<script>
+					function authDetail(name){
+						console.log(name);
+						var detailName = name;
+						const authName = $("#authName");
+						const authCompany = $("#authCompany");
+						const authDept = $("#authDept");
+						const authRank = $("#authRank");
+						
+						$.ajax({
+						url: "/admin/authDetail",
+						type: "get",
+						data: {
+							detailName : detailName
+						},
+						success: function(data){
+							console.log(data);
+							/* authName.text(data.member.name); */
+							/* authCompany.text(data.member.company.name); */
+							/* authDept.text(data.member.dept.name); */
+							/* authRank.text(data.member.rank.name); */
+						},
+						error: function(xhr){
+							console.log("에러임");
+							console.log(xhr);
+							 }
+						});
+					}
+					</script>
+					
+					<!-- 권한 추가 -->
+<!-- 					<div id="new_inventory_pop" class="pop_layer">
 						<div class="top_area">
 							<h2>재고관리</h2>
 							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
@@ -142,27 +246,31 @@
 						<form action="/admin/" method="post">
 							<table>
 								<colgroup>
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-									<col style="width: 33%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th> 
+										<th>사원명</th>
+										<th>회사</th>
+										<th>부서</th>
+										<th>직급</th>
+										<th>권한</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td>
 											<select id="companyCode" name="companyCode">
-												<!-- ajax로 처리 -->
+												ajax로 처리
 											</select>
 										</td>
 										<td>
 											<select id="icecreamCode" name="icecreamCode">
-												<!-- ajax로 처리 -->
+												ajax로 처리
 											</select>
 										</td>
 										<td>
@@ -177,44 +285,12 @@
 							</div>
 						</form>
 						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<!-- 아이스크림 추가 -->
-					<div id="new_icecream_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>신규 아이스크림 추가</h2>
-							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/admin/" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 50%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>아이스크림 이름</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="name">
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_icecream_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_icecream_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-					<!-- 아이스크림 추가 -->
+					</div> -->
+					<!-- 권한 추가 -->
+					
+
 					<div class="btm_area" style="margin-left: 10px;">
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a> 
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_icecream_pop">신규 아이스크림</a>
+						<!-- <a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a>  -->
 					</div>
 					<div class="paging">
 						<button type="button" class="first_btn">처음페이지</button>

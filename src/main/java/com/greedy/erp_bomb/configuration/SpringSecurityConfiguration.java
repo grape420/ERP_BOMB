@@ -46,7 +46,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.antMatchers("/menu/**").authenticated()					// /menu/**에 대해서는 하나하나 권한을 등록하겠다.
 				.antMatchers(HttpMethod.GET, "/menu/**").hasRole("MEMBER")	// hasRole은 ROLE_를 달아주며 ROLE_MEMBER와 일치하면 허용하겠다는 뜻
 				.antMatchers(HttpMethod.POST, "/menu/**").hasRole("ADMIN")
-				.antMatchers("/admin/**").hasRole("ADMIN")
+//				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().permitAll()									// 등록되지 않은 경로는 누구나 접근 가능
 			.and()
 			    .formLogin()												// 로그인 form을 따로 이용해 로그인 처리를 할 것이다.

@@ -28,31 +28,49 @@ public class DocumentFormDTO implements Serializable {
 	@Column(name = "DF_FORM")
 	private String form;
 
+	@Column(name = "DF_NAME")
+	private String name;
+
 	public DocumentFormDTO() {
 	}
-	public DocumentFormDTO(int no, String form) {
+
+	public DocumentFormDTO(int no, String form, String name) {
 		this.no = no;
 		this.form = form;
+		this.name = name;
 	}
-	
+
 	public int getNo() {
 		return no;
 	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
+
 	public String getForm() {
 		return form;
 	}
+
 	public void setForm(String form) {
 		this.form = form;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "DocumentFormDTO [no=" + no + ", form=" + form + "]";
+		return "DocumentFormDTO [no=" + no + ", form=" + form + ", name=" + name + "]";
 	}
+	
 }

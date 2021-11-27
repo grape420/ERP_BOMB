@@ -93,13 +93,13 @@
 					<a class="nav-link mt-1" href="/admin/company">
 						<span>회사 관리</span>
 					</a>
-					<a class="nav-link mt-1" href="/admin/rank">
+					<a class="nav-link mt-1 on" href="/admin/rank">
 						<span>직급 관리</span>
 					</a>
 					<a class="nav-link mt-1" href="/admin/dept">
 						<span>부서 관리</span>
 					</a>
-					<a class="nav-link mt-1 on" href="/admin/icecream">
+					<a class="nav-link mt-1" href="/admin/icecream">
 						<span>아이스크림 관리</span>
 					</a>
 					<a class="nav-link mt-1" href="/admin/sp">
@@ -119,7 +119,7 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기에 적으셈 -->
 					<br>
-					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">아이스크림 관리</h1>
+					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">직급 관리</h1>
 					<div class="search_form">
 						<form action="/inventory/search" method="post">
 							<input type="text" placeholder="검색어 입력" name="keyword"/>
@@ -137,34 +137,34 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th>아이스크림 번호</th>
-										<th>아이스크림 이름</th>
+										<th>부서 번호</th>
+										<th>부서 이름</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="ice : ${ icecreamList }">
-										<td class="t_center pop_btn" th:text="${ ice.no }"></td>
-										<td class="t_center pop_btn" th:text="${ ice.name }"></td>
+									<tr th:each="rank : ${ rankList }">
+										<td class="t_center pop_btn" th:text="${ rank.no }"></td>
+										<td class="t_center pop_btn" th:text="${ rank.name }"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- 아이스크림 추가 -->
-					<div id="new_icecream_pop" class="pop_layer">
+					<!-- 직급 추가 -->
+					<div id="new_rank_pop" class="pop_layer">
 						<div class="top_area">
-							<h2>신규 아이스크림 추가</h2>
-							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
+							<h2>직급 추가</h2>
+							<button type="button" class="pop_close" data-button="new_rank_pop">닫기</button>
 						</div>
 						<div class="tableArea">
-						<form action="/admin/newIce" method="post">
+						<form action="/admin/newRank" method="post">
 							<table>
 								<colgroup>
 									<col style="width: 50%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>아이스크림 이름</th>
+										<th>직급 이름</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -176,21 +176,23 @@
 								</tbody>
 							</table>
 							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_icecream_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_icecream_pop">닫기</a>
+								<button type="submit" class="blue_btn pop_close" data-button="new_rank_pop">추가</button> 
+								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_rank_pop">닫기</a>
 							</div>
 						</form>
 						</div>
 					</div>
-					<!-- 아이스크림 추가 -->
+					<!-- 직급 추가 -->
 					<div class="btm_area" style="margin-left: 10px;">
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_icecream_pop">아이스크림 추가</a>
+						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_rank_pop">직급 추가</a>
 					</div>
 					<div class="paging">
 						<button type="button" class="first_btn">처음페이지</button>
 						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a> <a
-							href="#n" class="num">3</a> <a href="#n" class="num">4</a>
+						<a href="#n" class="num on">1</a> 
+						<a href="#n" class="num">2</a> 
+						<a href="#n" class="num">3</a> 
+						<a href="#n" class="num">4</a>
 						<button type="button" class="next_btn">다음페이지</button>
 						<button type="button" class="last_btn">마지막페이지</button>
 					</div>
