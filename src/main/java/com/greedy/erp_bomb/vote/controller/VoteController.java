@@ -41,7 +41,7 @@ public class VoteController {
 		int onePost = 10;					// 한 페이지에 노출시킬 게시글의 수
 		int onePage = 5;					// 한번에 보여줄 페이지 버튼의 갯수
 		int totalVote = 0;
-//		search = "ㅁㅁㅁ";
+//		search = "aaa";
 		
 		System.out.println("이거옴?" + totalVote);
 		
@@ -55,7 +55,7 @@ public class VoteController {
 		
 		} else {
 			totalVote = voteService.selectAllvote(search);
-			selectCriteria = Pagenation.getSelectCriteria(page, totalVote, onePage, onePage, null, search);
+			selectCriteria = Pagenation.getSelectCriteria(page, totalVote, onePost, onePage, null, search);
 			
 			System.out.println("요게동작?" + totalVote);
 		}

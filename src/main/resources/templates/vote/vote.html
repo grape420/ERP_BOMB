@@ -112,9 +112,18 @@
 							<div class="">
 								<div class="search_form">
 									<button sec:authentication="name" id="bob" style="display:none;"></button>
-									<input type="text" placeholder="검색어 입력" />
-									<button type="button" class="blue_btn">Search</button>
+									<input th:if="${selectCriteria.searchValue == null}" type="text" placeholder="검색어 입력" id="searchName"/>
+									<input th:unless="${selectCriteria.searchValue == null}" type="text" placeholder="검색어 입력" th:value="${selectCriteria.searchValue}" id="searchName"/>
+									<button type="button" class="blue_btn" onclick="searchButton()">Search</button>
 								</div>
+								
+								<script>
+									function searchButton(){
+										var searchName = $("#searchName").val();
+										location.href="/vote/vote?search="+ searchName;
+									}
+								</script>
+								
 								<ul class="tab ul-tab">
 									<li class="li-tab electronic_approval on" data-tab="total-vote"><span>전체</span></li>
 									<li class="li-tab electronic_approval" data-tab="vote-ing"><span>진행 중</span></li>
@@ -231,17 +240,20 @@
 										</table>
 									</div>
 								</div> -->
-								<div class="paging">
-									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=1)}" type="button" class="first_btn">처음페이지</a>
-									<button th:if="${selectCriteria.pageNo > 1}" type="button" class="prev_btn">이전페이지</button>
-									<a href="/vote/vote?page=1" class="num on">1</a>
-									<a href="/vote/vote?page=2" class="num">2</a>
-									<a href="/vote/vote?page=3" class="num">3</a>
-									<a href="/vote/vote?page=4" class="num">4</a>
-									<button type="button" class="next_btn">다음페이지</button>
-									<button type="button" class="last_btn">마지막페이지</button>
+								<div class="paging" th:if="${selectCriteria.searchValue == null}">
+									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=1)}" type="button"><img th:src="@{/uses/btn_first.gif}"></a>
+									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo - 1 })}"><img th:src="@{/uses/btn_prev.gif}"></a>
+									<a th:each="num : ${#numbers.sequence(selectCriteria.startPage,selectCriteria.endPage)}" th:href="@{/vote/vote?(page=${num})}" class="num on" th:text="${num}">1</a>
+									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo + 1 })}"><img th:src="@{/uses/btn_prev.gif}" style="transform: rotate(180deg)"></a>
+									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.maxPage })}"><img th:src="@{/uses/btn_first.gif}" style="transform: rotate(180deg)"></a>
 								</div>
-
+								<div class="paging" th:unless="${selectCriteria.searchValue == null}">
+									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=1,search=${selectCriteria.searchValue})}" type="button"><img th:src="@{/uses/btn_first.gif}"></a>
+									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo - 1 },search=${selectCriteria.searchValue})}"><img th:src="@{/uses/btn_prev.gif}"></a>
+									<a th:each="num : ${#numbers.sequence(selectCriteria.startPage,selectCriteria.endPage)}" th:href="@{/vote/vote?(page=${num},search=${selectCriteria.searchValue})}" class="num on" th:text="${num}">1</a>
+									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo + 1 },search=${selectCriteria.searchValue})}"><img th:src="@{/uses/btn_prev.gif}" style="transform: rotate(180deg)"></a>
+									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.maxPage },search=${selectCriteria.searchValue})}"><img th:src="@{/uses/btn_first.gif}" style="transform: rotate(180deg)"></a>
+								</div>
 								<div class="btn_area">
 									<button type="button" class="blue_btn pop_btn" data-button="new-vote">신규</button>							
 								</div>

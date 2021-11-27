@@ -55,7 +55,7 @@ public class VoteDAO {
 
 			vote = em.createQuery(jpql, VoteDTO.class)
 					.setParameter("searchValue", selectCriteria.getSearchValue())
-					.setFirstResult(selectCriteria.getPageNo() - 1)
+					.setFirstResult(first - 1)
 					.setMaxResults(selectCriteria.getLimit())
 					.getResultList();
 		}
