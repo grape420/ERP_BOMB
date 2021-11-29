@@ -16,7 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.greedy.erp_bomb.ea.vo.ApprovalerVO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Entity
@@ -55,16 +57,23 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 	@OneToMany(mappedBy = "ea")
 	private List<AddendumDTO> addendumList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "ea", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "ea", cascade = CascadeType.ALL)
 	private List<EACarbonDTO> eaCarbonList = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "ea", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "ea", cascade = CascadeType.ALL)
 	private List<EAPathDTO> eaApprovalPathList = new ArrayList<>();
 
+	@Transient
+	private List<ApprovalerVO> approvalerList = new ArrayList<>();
+	
+	@Transient
+	private List<ApprovalerVO> carbonerList = new ArrayList<>();
+	
 	public EADTO() {
 	}
 	public EADTO(int serialNo, MemberDTO member, Date date, String title, String content, int category, int saveNo,
-			List<AddendumDTO> addendumList, List<EACarbonDTO> eaCarbonList, List<EAPathDTO> eaApprovalPathList) {
+			List<AddendumDTO> addendumList, List<EACarbonDTO> eaCarbonList, List<EAPathDTO> eaApprovalPathList,
+			List<ApprovalerVO> approvalerList, List<ApprovalerVO> carbonerList) {
 		this.serialNo = serialNo;
 		this.member = member;
 		this.date = date;
@@ -75,8 +84,10 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 		this.addendumList = addendumList;
 		this.eaCarbonList = eaCarbonList;
 		this.eaApprovalPathList = eaApprovalPathList;
+		this.approvalerList = approvalerList;
+		this.carbonerList = carbonerList;
 	}
-	
+
 	public int getSerialNo() {
 		return serialNo;
 	}
@@ -137,6 +148,18 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 	public void setEaApprovalPathList(List<EAPathDTO> eaApprovalPathList) {
 		this.eaApprovalPathList = eaApprovalPathList;
 	}
+	public List<ApprovalerVO> getApprovalerList() {
+		return approvalerList;
+	}
+	public void setApprovalerList(List<ApprovalerVO> approvalerList) {
+		this.approvalerList = approvalerList;
+	}
+	public List<ApprovalerVO> getCarbonerList() {
+		return carbonerList;
+	}
+	public void setCarbonerList(List<ApprovalerVO> carbonerList) {
+		this.carbonerList = carbonerList;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -146,6 +169,7 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 		return "EADTO [serialNo=" + serialNo + ", member=" + member.getName() + ", date=" + date + ", title=" + title
 				+ ", content=" + content + ", category=" + category + ", saveNo=" + saveNo + "]";
 	}
+	
 	@Override
 	public int compareTo(EADTO o) {
 		if (o.getSerialNo() < this.serialNo) {

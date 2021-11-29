@@ -18,6 +18,7 @@
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/ea/ea.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -95,12 +96,8 @@
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 전자 결재 리스트 -->
-					<div class="">
+					<div class="mt-3">
 
-						<div class="search_form">
-							<input type="text" placeholder="검색어 입력" />
-							<button type="button" class="blue_btn">Search</button>
-						</div>
 						<ul class="tab ul-tab">
 							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
 							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
@@ -108,12 +105,12 @@
 						</ul>
 						<div id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
+								<table class="Table">
+									<caption>내 기안 리스트</caption>
 									<colgroup>
 										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
+										<col style="width:11%" />
+										<col style="width:47%" />
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:8%" />
@@ -136,8 +133,25 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-												<td th:text="${ path.member.name }"></td>
+											<th:block th:switch="${ list.category }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="4">
+													<td th:text="${ #authentication.principal.name }"></td>
+												</th:block>
 											</th:block>
 											<th:block th:switch="${ list.category }">
 												<td th:case="1">결재 중</td>
@@ -154,8 +168,8 @@
 
 						<div id="myEaPathList" class="tab_contents electronic_approval">
 							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
+								<table class="Table">
+									<caption>내 결재 리스트</caption>
 									<colgroup>
 										<col style="width:10%" />
 										<col style="width:8%" />
@@ -177,19 +191,26 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaPathList }">
+										<tr th:each="list : ${ myEaPathList }" th:if="${ list.category != 4}">
 											<td th:text="${ list.serialNo }"></td>
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:if="${ list.category != 2 }">
-												<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-													<td th:text="${ path.member.name }"></td>
+											<th:block th:switch="${ list.category }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
 												</th:block>
-											</th:block>
-											<th:block th:unless="${ list.category != 2 }">
-												<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
-													<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
 												</th:block>
 											</th:block>
 											<th:block th:switch="${ list.category }">
@@ -207,8 +228,8 @@
 
 						<div id="myEaCarbonList" class="tab_contents electronic_approval">
 							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
+								<table class="Table">
+									<caption>내 참조 리스트</caption>
 									<colgroup>
 										<col style="width:10%" />
 										<col style="width:8%" />
@@ -235,14 +256,21 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:if="${ list.category == 2 }">
-												<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-													<td th:text="${ path.member.name }"></td>
+											<th:block th:switch="${ list.category }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
 												</th:block>
-											</th:block>
-											<th:block th:unless="${ list.category == 2 }">
-												<th:block th:each="path : ${ list.eaApprovalPathList }">
-													<td th:if="${ pathStat.last }" th:text="${ path.member.name }"></td>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
 												</th:block>
 											</th:block>
 											<th:block th:switch="${ list.category }">
@@ -294,8 +322,8 @@
 								<textarea name="content" class="approval_content_text" required="required"></textarea>
 							</div>
 							<div class="btn_area">
-								<button type="submit" class="blue_btn pop_close mr-1">결재</button>
-								<a id="temp_approval" class="blue_btn pop_close">임시 저장</a>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/1'">결재</button>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/2'">임시저장</button>
 								<a class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
 							</div>
 						</form>
@@ -303,7 +331,7 @@
 					<!-- 여기까지 신규 전자 결재 팝업 -->
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
+					<div th:each="list : ${ allEaList }" th:if="${ list.category != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
 						<div class="top_area">
 							<h2>전자 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -321,6 +349,7 @@
 									<td th:case="1" class="approval_person"></td>
 									<td th:case="2" class="approval_person">반려</td>
 									<td th:case="3" class="approval_person">결재</td>
+									<td th:case="5" class="approval_person">결재</td>
 									<td th:case="*" class="approval_person"></td>
 								</th:block>
 							</tr>
@@ -374,8 +403,16 @@
 							</div>
 						</div>
 						<div class="btn_area">
-							<a th:href="@{/ea/eaCancle(no=${list.serialNo})}" th:if="${ list.saveNo == 3 }" class="blue_btn" style="cursor: pointer;">결재 취소</a>
-							<a th:href="@{/ea/approval(no=${list.serialNo})}" th:if="${ list.saveNo == 1 }" class="blue_btn" style="cursor: pointer;">결재</a>
+						<th:block th:if="${ list.saveNo == 1 }">
+							<a th:href="@{/ea/approval(no=${list.serialNo})}" class="blue_btn" style="cursor: pointer;">결재</a>
+							<a th:href="@{/ea/return(no=${list.serialNo})}" class="blue_btn" style="cursor: pointer;">반려</a>
+						</th:block>
+						<th:block th:if="${ list.saveNo == 2 }">
+							<a th:href="@{/ea/eaCancle(no=${list.serialNo})}" class="blue_btn" style="cursor: pointer;">결재 취소</a>
+						</th:block>
+						<th:block th:if="${ list.saveNo == 3 }">
+							<a th:href="@{/ea/eaCancle(no=${list.serialNo},type=1)}" class="blue_btn" style="cursor: pointer;">결재 취소</a>
+						</th:block>
 							<a class="gray_btn pop_btn new_ad" data-button="new_comment_pop" th:attr="name=${ list.serialNo }">첨언</a>
 							<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 						</div>
@@ -384,41 +421,44 @@
 					<!-- 여기까지 전자 결재 디테일 팝업 -->
 					
 					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail">
+					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
 						<div class="top_area">
-							<h2>전자 결재</h2>
+							<h2>신규 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
 						</div>
-						<form id="new_approval_form" method="post" action="/ea/reApproval">
-							<h2 class="approval_title mt-3" th:text="${ list.title }"></h2>
-							<div class="line-div ml-2">
-								결재자&nbsp;
-								<select style="width: 91.5%;" class="form-control select2 test" multiple="multiple" required="required">
-									<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
-								</select>
-								<br>
-							</div>
-							<div class="mt-2 line-div ml-2">
-								참조자&nbsp;
-								<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-									<option class="testop" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
-								</select>
-								<br>
-							</div>
+						<form id="new_approval_form" method="post" action="/ea/updateEa">
+							<input name="eaNo" th:attr="value=${ list.serialNo }" hidden >
 							<div class="pop_inner">
-								<div class="detail_note">
-									<div class="top">
-										<p class="name">기안 일자</p>
-										<p class="date"></p>
-									</div>
-									<div class="approval_content">
-										<textarea th:utext="${ list.content }" required="required"></textarea>
-									</div>
+								<div class="line-div">
+									제&nbsp; 목&nbsp;&nbsp;&nbsp;
+									<input name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required" th:attr="value=${ list.title }">
+									<br>
 								</div>
+								<div class="mt-2 line-div">
+									결재자&nbsp;
+									<select name="approvaler" th:attr="id=${ 'new_approvaler' + list.serialNo }" style="width: 91.5%;" class="form-control select2" multiple="multiple" required="required">
+										<th:block th:each="member : ${ list.approvalerList }">
+											<option th:if="${ member.type } == 1" th:text="${ member.name }" th:attr="selected='selected'"></option>
+											<option th:unless="${ member.type } == 1" th:text="${ member.name }"></option>
+										</th:block>
+									</select>
+									<br>
+								</div>
+								<div class="mt-2 line-div">
+									참조자&nbsp;
+									<select name="carboner" th:attr="id=${ 'new_carboner' + list.serialNo }" style="width: 91.5%;" class="form-control select2" multiple="multiple" >
+										<th:block th:each="member : ${ list.carbonerList }">
+											<option th:if="${ member.type } == 1" th:text="${ member.name }" th:attr="selected='selected'"></option>
+											<option th:unless="${ member.type } == 1" th:text="${ member.name }"></option>
+										</th:block>
+									</select>
+									<br>
+								</div>
+								<textarea name="content" class="approval_content_text" required="required" th:utext="${ list.content }"></textarea>
 							</div>
 							<div class="btn_area">
-								<button type="submit" class="blue_btn pop_close mr-1">결재</button>
-								<a class="gray_btn pop_btn new_ad" data-button="new_comment_pop" th:attr="name=${ list.serialNo }">첨언</a>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/1'">결재</button>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/2'">임시저장</button>
 								<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 							</div>
 						</form>
@@ -460,6 +500,7 @@
 		</div>
 		<!-- 여기까지 답글 첨언 팝업 -->
 	</section>
+	
 	<script>
 		$(document).ready(function () {
 			var $reply;
@@ -666,8 +707,29 @@
 				});
 			});
 		});
+		
+		$('.Table').DataTable({
+			"pagingType": "full_numbers",
+			"language": {
+	            "lengthMenu": "페이지당 줄수 _MENU_",
+	            "zeroRecords": "전자 결재가 존재하지 않습니다.",
+	            "info": "_PAGE_ / _PAGES_",
+	            "infoEmpty": "결재 항목이 존재하지 않습니다.",
+	            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+	            "search": "검색 : ",
+	            "paginate": {
+	                "previous": "이전",
+	                "next" : "다음",
+	                "first" : "처음",
+	                "last" : "마지막"
+	              }
+	        },
+            "order" : [ 0, 'desc' ]
+        });
+		$.fn.DataTable.ext.pager.numbers_length = 5;
 	</script>
 	
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 </body>
 </html>
