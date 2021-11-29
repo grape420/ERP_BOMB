@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
 import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
-import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;
-import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Repository
 public class CompanyDAO {
@@ -28,27 +26,33 @@ public class CompanyDAO {
 	}
 
 	public void registNewCompany(CompanyDTO company) {
+		
+		/* 회사 추가 */
 		em.persist(company);
-	}
-
-	public List<IceCreamDTO> findIceList() {
+		
 		String jpql = "SELECT a FROM IceCreamDTO a";
 		
+		/* 모든 아이스크림 리스트 */
 		List<IceCreamDTO> iceList = em.createQuery(jpql, IceCreamDTO.class).getResultList();
 		
-		return iceList;
+		for (IceCreamDTO ice : iceList) {
+			
+			/* 새로운 InventoryDTO에 추가된 회사와 모든 아이스크림 리스트 추가 */
+			em.persist(new InventoryDTO(ice, company, 0, null));
+		}
 	}
 
-	public void registNewInven(InventoryDTO inven, List<IceCreamDTO> iceList) {
-		inven.setCompany(em.find(CompanyDTO.class, inven.getCompany().getSerialNo()));
+	public CompanyDTO comDetail(int detailNum) {
+		CompanyDTO com = em.find(CompanyDTO.class, detailNum);
+		com.setInventoryList(null);
+		com.setMemberList(null);
 		
-		for (IceCreamDTO ice : iceList) {
-			System.out.println("ice : " + ice);
-			inven.setIceCream(ice);
-			System.out.println("inven : " + inven);
-		}
-		em.persist(inven);
-		
+		return com;
+	}
+
+	public void updateCompany(CompanyDTO company) {
+		CompanyDTO com = em.find(CompanyDTO.class, company.getSerialNo());
+		com.setStatus(company.getStatus());
 	}
 
 

@@ -19,6 +19,7 @@
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
 <!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -122,15 +123,15 @@
 					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">부서 관리</h1>
 					<div class="search_form">
 						<form action="/inventory/search" method="post">
-							<input type="text" placeholder="검색어 입력" name="keyword"/>
-							<button type="submit" class="blue_btn">Search</button>
+<!-- 							<input type="text" placeholder="검색어 입력" name="keyword"/>
+							<button type="submit" class="blue_btn">Search</button> -->
 						</form>
 					</div>
 
 					<!-- 테이블 -->
 					<div id="all_product" class="tab_contents inventory current">
 						<div class="tableArea">
-							<table>
+							<table class="Table">
 								<colgroup>
 									<col style="width: 30%" />
 									<col style="width: 70%" />
@@ -186,18 +187,34 @@
 					<div class="btm_area" style="margin-left: 10px;">
 						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_dept_pop">부서 추가</a>
 					</div>
-					<div class="paging">
-						<button type="button" class="first_btn">처음페이지</button>
-						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a> <a
-							href="#n" class="num">3</a> <a href="#n" class="num">4</a>
-						<button type="button" class="next_btn">다음페이지</button>
-						<button type="button" class="last_btn">마지막페이지</button>
-					</div>
-					<!-- 여기에 적으셈 -->
 				</div>
 			</div>
 		</div>
 	</section>
+	
+	<script>
+		/* dataTable */
+	$('.Table').DataTable({
+		"pagingType": "full_numbers",
+		"language": {
+            "lengthMenu": "페이지당 줄수 _MENU_",
+            "zeroRecords": "해당 부서가 존재하지 않습니다.",
+            "info": "_PAGE_ / _PAGES_",
+            "infoEmpty": "부서 항목이 존재하지 않습니다.",
+            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+            "search": "검색 : ",
+            "paginate": {
+                "previous": "이전",
+                "next" : "다음",
+                "first" : "처음",
+                "last" : "마지막"
+              }
+        },
+        "order" : [ 0, 'asc' ]
+    });
+	$.fn.DataTable.ext.pager.numbers_length = 5;
+	</script>
+	
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 </body>
 </html>

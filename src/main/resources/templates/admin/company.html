@@ -19,6 +19,7 @@
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
 <!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -122,15 +123,15 @@
 					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">회사 관리</h1>
 					<div class="search_form">
 						<form action="/inventory/search" method="post">
-							<input type="text" placeholder="검색어 입력" name="keyword"/>
-							<button type="submit" class="blue_btn">Search</button>
+							<!-- <input type="text" placeholder="검색어 입력" name="keyword"/>
+							<button type="submit" class="blue_btn">Search</button> -->
 						</form>
 					</div>
 
 					<!-- 테이블 -->
 					<div id="all_product" class="tab_contents inventory current">
 						<div class="tableArea">
-							<table>
+							<table class="Table">
 								<colgroup>
 									<col style="width: 15%" />
 									<col style="width: 30%" />
@@ -147,66 +148,97 @@
 								</thead>
 								<tbody>
 									<tr th:each="com : ${ companyList }">
-										<td class="t_center pop_btn" th:text="${ com.serialNo }"></td>
-										<td class="t_center pop_btn" th:text="${ com.division }"></td>
-										<td class="t_center pop_btn" th:text="${ com.name }"></td>
-										<td class="t_center pop_btn" th:text="${ com.status }"></td>
+										<td class="t_center pop_btn" th:text="${ com.serialNo }" th:attr="onclick=|comDetail('${ com.serialNo }')|"></td>
+										<td class="t_center pop_btn" th:text="${ com.division }" th:attr="onclick=|comDetail('${ com.serialNo }')|" data-button="com_detail_pop" style="cursor: pointer;"></td>
+										<td class="t_center pop_btn" th:text="${ com.name }" th:attr="onclick=|comDetail('${ com.serialNo }')|" data-button="com_detail_pop" style="cursor: pointer;"></td>
+										<td class="t_center pop_btn" th:text="${ com.status }" th:attr="onclick=|comDetail('${ com.serialNo }')|" data-button="com_detail_pop" style="cursor: pointer;"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- 입출고 추가 -->
-					<div id="new_inventory_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>재고관리</h2>
-							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/inventory/regist" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th> 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<select id="companyCode" name="companyCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<select id="icecreamCode" name="icecreamCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<input type="number" name="invenRemainStock">
-										</td> 
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<!-- 아이스크림 추가 -->
+					<!-- 권한 변경 팝업 -->
+			          <div id="com_detail_pop" class="pop_layer">
+			            <div class="top_area">
+			              <h2>회사 관리</h2>
+			              <button type="button" class="pop_close" data-button="com_detail_pop">닫기</button>
+			            </div>
+			            <div class="pop_inner">
+			              <div class="tableArea">
+			              <form action="/admin/updateCom" method="post">
+			                <table>
+			                  <colgroup>
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                    <col style="width:20%" />
+			                  </colgroup>
+			                  <thead>
+			                    <tr>
+									<th>회사 번호</th>
+									<th>회사 구분</th>
+									<th>회사 이름</th>
+									<th>회사 운영 상태</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+								<tr>
+									<td id="comNo"></td>
+									<td id="comDivision"></td>
+									<td id="comName"></td>
+									<td>
+										<select  name="status">
+											<option hidden="hidden" id="comStatus"></option>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</td>
+								</tr>
+			                  </tbody>
+			                </table>
+			              
+			              <div class="btm_area mt-2" style="text-align: center;">
+			              	<input type="hidden" name="serialNo" id="newNum">
+			              	<button type="submit" class="blue_btn pop_close" data-button="com_detail_pop">수정</button>
+			              </div>
+			            </form>
+			            </div>
+			            </div>
+			          </div>
+					<!-- 권한 변경 팝업 -->
+					<script>
+					function comDetail(num){
+						var detailNum = num;
+						const comNo = $("#comNo");
+						const comDivision = $("#comDivision");
+						const comName = $("#comName");
+						const comStatus = $("#comStatus");
+						
+						$.ajax({
+						url: "/admin/comDetail",
+						type: "get",
+						data: {
+							detailNum : detailNum
+						},
+						success: function(data){
+							comNo.text(data.serialNo); 
+							$("#newNum").attr('value', data.serialNo); 
+							
+							comDivision.text(data.division); 
+							comName.text(data.name); 
+							comStatus.text(data.status);
+						},
+						error: function(xhr){
+							console.log(xhr);
+							 }
+						});
+					}
+					</script>
+					
+					<!-- 회사 추가 -->
 					<div id="new_company_pop" class="pop_layer">
 						<div class="top_area">
-							<h2>신규 아이스크림 추가</h2>
+							<h2>회사 추가</h2>
 							<button type="button" class="pop_close" data-button="new_company_pop">닫기</button>
 						</div>
 						<div class="tableArea">
@@ -235,22 +267,39 @@
 						</form>
 						</div>
 					</div>
-					<!-- 아이스크림 추가 -->
+					<!-- 회사 추가 -->
 					<div class="btm_area" style="margin-left: 10px;">
 						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_company_pop">회사 추가</a>
 					</div>
-					<div class="paging">
-						<button type="button" class="first_btn">처음페이지</button>
-						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a> <a
-							href="#n" class="num">3</a> <a href="#n" class="num">4</a>
-						<button type="button" class="next_btn">다음페이지</button>
-						<button type="button" class="last_btn">마지막페이지</button>
-					</div>
-					<!-- 여기에 적으셈 -->
 				</div>
 			</div>
 		</div>
 	</section>
+	
+	<script>
+	/* dataTable */
+	$('.Table').DataTable({
+		"pagingType": "full_numbers",
+		"language": {
+            "lengthMenu": "페이지당 줄수 _MENU_",
+            "zeroRecords": "해당 회사가 존재하지 않습니다.",
+            "info": "_PAGE_ / _PAGES_",
+            "infoEmpty": "회사 항목이 존재하지 않습니다.",
+            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+            "search": "검색 : ",
+            "paginate": {
+                "previous": "이전",
+                "next" : "다음",
+                "first" : "처음",
+                "last" : "마지막"
+              }
+        },
+        "order" : [ 0, 'asc' ]
+    });
+	$.fn.DataTable.ext.pager.numbers_length = 5;
+	</script>
+	
+	<!-- dataTable -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 </body>
 </html>

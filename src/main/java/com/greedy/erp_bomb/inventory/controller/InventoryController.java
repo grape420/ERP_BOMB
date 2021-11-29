@@ -38,13 +38,13 @@ public class InventoryController {
 		return mv;
 	}
 	
-	@GetMapping(value = "company", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/company", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<CompanyDTO> findCompanyList() {
 		return inventoryService.findCompanyList();
 	}
 	
-	@GetMapping(value = "icecream", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/icecream", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<IceCreamDTO> findIcecreamList() {
 		return inventoryService.findIcecreamList();

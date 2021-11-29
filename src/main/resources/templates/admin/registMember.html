@@ -52,7 +52,7 @@
 						<a class="nav-link font-weight-bold" href="">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="inventory">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="">근태 관리</a>
@@ -88,7 +88,7 @@
 					<a class="nav-link " href="/admin/authority">
 						<span>권한 관리</span>
 					</a>
-					<a class="nav-link mt-1" href="/admin/member">
+					<a class="nav-link mt-1 on" href="/admin/member">
 						<span>회원 관리</span>
 					</a>
 					<a class="nav-link mt-1" href="/admin/company">
@@ -103,7 +103,7 @@
 					<a class="nav-link mt-1" href="/admin/icecream">
 						<span>아이스크림 관리</span>
 					</a>
-					<a class="nav-link mt-1 on" href="/admin/sp">
+					<a class="nav-link mt-1" href="/admin/sp">
 						<span>퇴직금 관리</span>
 					</a>
 					<a class="nav-link mt-1" href="/admin/document">
@@ -120,102 +120,35 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기에 적으셈 -->
 					<br>
-					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">퇴직금 관리</h1>
+					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">회원 추가</h1>
 					<div class="search_form">
-						<form action="/inventory/search" method="post">
+						<form action="" method="post">
 <!-- 							<input type="text" placeholder="검색어 입력" name="keyword"/>
 							<button type="submit" class="blue_btn">Search</button> -->
 						</form>
 					</div>
-
-					<!-- 테이블 -->
-					<div id="all_product" class="tab_contents inventory current">
-						<div class="tableArea">
-							<table class="Table">
-								<colgroup>
-									<col style="width: 30%" />
-									<col style="width: 40%" />
-									<col style="width: 25%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="inventory : ${ inventoryList }">
-										<td class="t_center pop_btn" th:text="${ inventory.company.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.iceCream.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.invenRemainStock }"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<div id="new_inventory_pop" class="pop_layer">
+					<!-- 회원 추가 -->
+					<div>
 						<div class="top_area">
-							<h2>재고관리</h2>
-							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
+							<h2>회원 추가</h2>
+							<button type="button" class="pop_close">닫기</button>
 						</div>
 						<div class="tableArea">
-						<form action="/inventory/regist" method="post">
+						<form action="/admin/newMember" method="post">
 							<table>
 								<colgroup>
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-									<col style="width: 33%" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th> 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<select id="companyCode" name="companyCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<select id="icecreamCode" name="icecreamCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<input type="number" name="invenRemainStock">
-										</td> 
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<!-- 아이스크림 추가 -->
-					<div id="new_icecream_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>신규 아이스크림 추가</h2>
-							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/inventory/newIce" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 50%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>아이스크림 이름</th>
+										<th>사원명</th>
+										<th>회사</th>
+										<th>부서</th>
+										<th>직급</th>
+										<th>사번</th>
+										<th>생년월일</th>
+										<th>전화번호</th>
+										<th>E-Mail</th>
+										<th>퇴사여부</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -223,20 +156,48 @@
 										<td>
 											<input type="text" name="name">
 										</td>
+										<td>
+											<select id="companyCode" name="companyCode">
+											
+											</select>
+										</td>
+										<td>
+											<select id="deptCode">
+											
+											</select>
+										</td>
+										<td>
+											<select id="rankCode">
+											
+											</select>
+										</td>
+										<td>
+											<input type="text" name="empNo">
+										</td>
+										<td>
+											<input type="text" name="birth">
+										</td>
+										<td>
+											<input type="text" name="phone">
+										</td>
+										<td>
+											<input type="text" name="email">
+										</td>
+										<td>
+											<select>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
+										</td>
 									</tr>
 								</tbody>
 							</table>
 							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_icecream_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_icecream_pop">닫기</a>
+								<button type="submit" class="blue_btn pop_close">추가</button> 
+								<a style="cursor: pointer;" class="gray_btn pop_close">닫기</a>
 							</div>
 						</form>
 						</div>
-					</div>
-					<!-- 아이스크림 추가 -->
-					<div class="btm_area" style="margin-left: 10px;">
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a> 
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_icecream_pop">신규 아이스크림</a>
 					</div>
 				</div>
 			</div>
@@ -244,8 +205,8 @@
 	</section>
 	
 	<script>
-		$.ajax({
-			url: "/inventory/company",
+ 		$.ajax({
+			url: "/admin/companyCode",
 			success: function(data){
 				const $companyCode = $("#companyCode");
 				$companyCode.html("");
@@ -260,19 +221,35 @@
 		});
 		
 		$.ajax({
-			url: "/inventory/icecream",
+			url: "/admin/deptCode",
 			success: function(data){
-				const $icecreamCode = $("#icecreamCode");
-				$icecreamCode.html("");
+				const $deptCode = $("#deptCode");
+				$deptCode.html("");
 				
 				for (let i in data){
-					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
+					$deptCode.append($("<option>").val(data[i].no).text(data[i].name));
 				}
 			},
 			error: function(xhr){
 				console.log(xhr);
 			}
-		});
+		}); 
+		
+		$.ajax({
+			url: "/admin/rankCode",
+			success: function(data){
+				const $rankCode = $("#rankCode");
+				$rankCode.html("");
+				
+				for (let i in data){
+					$rankCode.append($("<option>").val(data[i].no).text(data[i].name));
+				}
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		}); 
+		
 		
  		/* dataTable */
 		$('.Table').DataTable({
@@ -281,7 +258,7 @@
 	            "lengthMenu": "페이지당 줄수 _MENU_",
 	            "zeroRecords": "해당 내역이 존재하지 않습니다.",
 	            "info": "_PAGE_ / _PAGES_",
-	            "infoEmpty": "퇴직금 항목이 존재하지 않습니다.",
+	            "infoEmpty": "회원 항목이 존재하지 않습니다.",
 	            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
 	            "search": "검색 : ",
 	            "paginate": {
