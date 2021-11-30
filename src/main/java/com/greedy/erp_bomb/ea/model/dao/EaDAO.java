@@ -36,7 +36,7 @@ public class EaDAO {
 	}
 
 	public List<EADTO> findEaPathList(String userName) {
-		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.member.name = :name	AND a.status = 4";
+		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.member.name = :name";
 		
 		List<EAPathDTO> myEaPathList = em.createQuery(jpql, EAPathDTO.class).setParameter("name", userName).getResultList();
 		
