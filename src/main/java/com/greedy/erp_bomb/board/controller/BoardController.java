@@ -53,7 +53,7 @@ public class BoardController {
 		return mv;
 	}
 	
-	/* 사내게시판 대댓글 */ 
+	/* 사내게시판 대댓글 시작 */ 
 	@GetMapping(value = "/replyComment", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public CommentDTO replyComment(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {

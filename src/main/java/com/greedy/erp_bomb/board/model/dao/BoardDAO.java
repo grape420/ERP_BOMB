@@ -34,6 +34,11 @@ public class BoardDAO {
 	/* 사내게시판 디테일 */ 
 	public BoardDTO selectBoardDetail(int no) {
 		   BoardDTO boardDetail = em.find(BoardDTO.class, no);
+		   
+		   /* 조회수 증가 */ 
+		   int hit = boardDetail.getHit();
+		   boardDetail.setHit(hit+1);
+			
 		   return boardDetail;
 	}
 
@@ -55,6 +60,11 @@ public class BoardDAO {
 	/* 공지사항 디테일 */ 
 	public BoardDTO selectNoticeDetail(int no) {
 		   BoardDTO noticeDetail = em.find(BoardDTO.class, no);
+		   
+		   /* 조회수 증가 */ 
+		   int hit = noticeDetail.getHit();
+		   noticeDetail.setHit(hit+1);
+		   
 		   return noticeDetail;
 	}
 	
@@ -113,7 +123,7 @@ public class BoardDAO {
 		ad.setCommentList(null);
 		ad.setRefNo(null);
 		ad.setMember(null);
-		ad.setMember(null);
+		ad.setBoard(null);
 		em.remove(ad);
 	}
 }
