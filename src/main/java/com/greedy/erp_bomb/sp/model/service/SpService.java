@@ -39,10 +39,26 @@ public class SpService {
 		return spDAO.findDetailSp(userName);
 	}
 	
+	@Transactional
+	public MemberDTO findMemberInfo(String name) {
+
+		return spDAO.findMemberInfo(name);
+	}
 	
-//	@Transactional
-//	public List<MemberDTO> findMemberList() {
-//		return spDAO.findMemberList();
-//	}
+	@Transactional
+	public void deleteSpList(int spNo) {
+		
+		spDAO.deleteSpList(spNo);
+	}
+	
+	@Transactional
+	public void updateSp(SPDTO sp2) {
+		spDAO.updateSp(sp2);
+	}
+
+	public List<SPDTO> findEntryMember() {
+		return spDAO.findEntryMember();
+	}
+
 
 }

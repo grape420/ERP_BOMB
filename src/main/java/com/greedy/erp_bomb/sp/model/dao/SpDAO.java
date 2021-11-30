@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.sp.model.dto.SPDTO;
 
 @Repository
@@ -28,7 +29,7 @@ public class SpDAO {
 		return spList;
 	}
 
-	public void newRegistSp(SPDTO sp ) {
+	public void newRegistSp(SPDTO sp) {
 		
 		em.persist(sp);
 	}
@@ -45,15 +46,45 @@ public class SpDAO {
 		
 		return detailSp;
 	}
-	
 
-//	public List<MemberDTO> findMemberList() {
-//		String jpql = "SELECT m FROM MemberDTO as m";
-//		
-//		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList();
-//		
-//		return memberList;
-//	}
+	public List<MemberDTO> findMemberList() {
+		String jpql = "SELECT m FROM MemberDTO as m ORDER BY a.rank.no DESC";
+		return em.createQuery(jpql, MemberDTO.class).getResultList();
+	}
+	
+	public MemberDTO findMemberInfo(String name) {
+		return em.find(MemberDTO.class, name);
+	}
+
+	public void deleteSpList(int spNo) {
+		SPDTO deleteSp = em.find(SPDTO.class, spNo);
+		
+		deleteSp.setMember(null);
+		
+		em.remove(deleteSp);
+		
+	}
+
+	public void updateSp(SPDTO sp2) {
+		MemberDTO member = new MemberDTO();
+		member.setName(sp2.getMember().getName());
+		
+		MemberDTO selectMem = em.find(MemberDTO.class, member.getName());
+		
+		selectMem.getSp().setEmpYear(sp2.getEmpYear());
+		selectMem.getSp().setServerancePay(sp2.getServerancePay());
+		
+	}
+
+	public List<SPDTO> findEntryMember() {
+		String jpql = "SELECT a FROM SPDTO as a WHERE a.member.entYn = 'Y'";
+		
+		
+		
+		return em.createQuery(jpql, SPDTO.class).getResultList();
+	}
+
+
 
 	
 }
