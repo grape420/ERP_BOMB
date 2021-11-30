@@ -55,9 +55,9 @@ public class EaContorller {
 		ea.setDate(new java.sql.Date(System.currentTimeMillis()));
 		
 		if(type == 1) {
-			ea.setCategory(1);
+			ea.setEaStatus(1);
 		} else {
-			ea.setCategory(4);
+			ea.setEaStatus(4);
 		}
 		
 		for(int i = 0 ; i < approvaler.length ; i++) {
@@ -116,9 +116,9 @@ public class EaContorller {
 		ea.setDate(new java.sql.Date(System.currentTimeMillis()));
 		
 		if(type == 1) {
-			ea.setCategory(1);
+			ea.setEaStatus(1);
 		} else {
-			ea.setCategory(4);
+			ea.setEaStatus(4);
 		}
 		
 		for(int i = 0 ; i < approvaler.length ; i++) {
@@ -217,7 +217,7 @@ public class EaContorller {
 			ea.setSaveNo(4);
 			
 			/* 결재 중 상태면 아래에 알고리즘을 시작한다. */
-			if(ea.getCategory() == 1) {
+			if(ea.getEaStatus() == 1) {
 				
 				/* 현재 로그인한 사용자가 기안자라면 */
 				if(userName.equals(ea.getMember().getName())) {
@@ -256,7 +256,7 @@ public class EaContorller {
 				}
 			}
 			
-			if(ea.getCategory() == 4) {
+			if(ea.getEaStatus() == 4) {
 				List<ApprovalerVO> approvalerList = new ArrayList<>();
 				for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
 					approvalerList.add(new ApprovalerVO(eaPath.getMember().getName(), 1));

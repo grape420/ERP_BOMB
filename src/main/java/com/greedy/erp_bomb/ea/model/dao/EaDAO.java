@@ -43,7 +43,7 @@ public class EaDAO {
 		List<EADTO> eaPathList = new ArrayList<>();
 		
 		for(EAPathDTO eaPath : myEaPathList) {
-			if(eaPath.getEa().getCategory() != 4) {
+			if(eaPath.getEa().getEaStatus() != 4) {
 				eaPath.getEa().getAddendumList().size();
 				eaPath.getEa().getEaApprovalPathList().size();
 				eaPath.getEa().getEaCarbonList().size();
@@ -62,7 +62,7 @@ public class EaDAO {
 		List<EADTO> eaCarbonList = new ArrayList<>();
 		
 		for(EACarbonDTO eaCarbon : myEaCarbonList) {
-			if(eaCarbon.getEa().getCategory() != 4) {
+			if(eaCarbon.getEa().getEaStatus() != 4) {
 				eaCarbon.getEa().getAddendumList().size();
 				eaCarbon.getEa().getEaApprovalPathList().size();
 				eaCarbon.getEa().getEaCarbonList().size();
@@ -97,7 +97,7 @@ public class EaDAO {
 		originEa.setDate(ea.getDate());
 		originEa.setTitle(ea.getTitle());
 		originEa.setContent(ea.getContent());
-		originEa.setCategory(ea.getCategory());
+		originEa.setEaStatus(ea.getEaStatus());
 		originEa.setSaveNo(ea.getSaveNo());
 		
 		for(EAPathDTO eaPath : originEa.getEaApprovalPathList()) {
@@ -193,7 +193,7 @@ public class EaDAO {
 			if(nextEaPath != null) {
 				nextEaPath.setStatus(4);
 			} else {
-				eaPath.getEa().setCategory(2);
+				eaPath.getEa().setEaStatus(2);
 			}
 			
 			if(eaPath.getNo() > 0) {
@@ -214,14 +214,14 @@ public class EaDAO {
 			if(eaPath.getStatus() ==3) {
 				eaPath.setStatus(4);
 				eaPath.setDate(null);
-				eaPath.getEa().setCategory(1);
+				eaPath.getEa().setEaStatus(1);
 				
 				EAPathDTO nextEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() + 1, eaNo));
 				
 				if(nextEaPath != null) {
 					nextEaPath.setStatus(1);
 				} else {
-					eaPath.getEa().setCategory(1);
+					eaPath.getEa().setEaStatus(1);
 				}
 				
 				if(eaPath.getNo() > 0) {
@@ -231,7 +231,7 @@ public class EaDAO {
 			}
 		} else {
 			EADTO ea = em.find(EADTO.class, eaNo);
-			ea.setCategory(4);
+			ea.setEaStatus(4);
 		}
 	}
 
@@ -244,7 +244,7 @@ public class EaDAO {
 		
 		eaPath.setStatus(2);
 		eaPath.setDate(new java.sql.Date(System.currentTimeMillis()));
-		eaPath.getEa().setCategory(3);
+		eaPath.getEa().setEaStatus(3);
 	}
 	
 }

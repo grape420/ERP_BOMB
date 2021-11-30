@@ -31,7 +31,7 @@ public class CommentDTO implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 	generator = "COMMENT_SEQ_GENERATOR")
 	@Column(name = "COMMENT_NO")
-	private int no;
+	private Integer no;
 	
 	@ManyToOne
 	@JoinColumn(name = "REF_COMMENT_NO", nullable = true)
@@ -65,7 +65,7 @@ public class CommentDTO implements Serializable {
 
 	public CommentDTO() {
 	}
-	public CommentDTO(int no, CommentDTO refNo, BoardDTO board, MemberDTO member, String content, Date date, int depth,
+	public CommentDTO(Integer no, CommentDTO refNo, BoardDTO board, MemberDTO member, String content, Date date, int depth,
 			int length, String status, List<CommentDTO> commentList) {
 		this.no = no;
 		this.refNo = refNo;
@@ -79,10 +79,10 @@ public class CommentDTO implements Serializable {
 		this.commentList = commentList;
 	}
 	
-	public int getNo() {
+	public Integer getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(Integer no) {
 		this.no = no;
 	}
 	public CommentDTO getRefNo() {

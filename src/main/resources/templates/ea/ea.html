@@ -114,7 +114,6 @@
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:11%" />
-										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -124,7 +123,6 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -133,7 +131,7 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<th:block th:case="1">
 													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
 														<td th:text="${ path.member.name }"></td>
@@ -153,13 +151,12 @@
 													<td th:text="${ #authentication.principal.name }"></td>
 												</th:block>
 											</th:block>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<td th:case="1">결재 중</td>
 												<td th:case="2">결재 완료</td>
 												<td th:case="3">결재 반려</td>
 												<td th:case="4">임시 저장</td>
 											</th:block>
-											<td class="copy-approval pop_btn" data-button="new_approval_pop" th:attr="id=${ 'copy_btn_' + list.serialNo }">복사</td>
 										</tr>
 									</tbody>
 								</table>
@@ -184,7 +181,6 @@
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:11%" />
-										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -194,16 +190,15 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaPathList }" th:if="${ list.category != 4}">
+										<tr th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4}">
 											<td th:text="${ list.serialNo }"></td>
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<th:block th:case="1">
 													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
 														<td th:text="${ path.member.name }"></td>
@@ -220,13 +215,12 @@
 													</th:block>
 												</th:block>
 											</th:block>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<td th:case="1">결재 중</td>
 												<td th:case="2">결재 완료</td>
 												<td th:case="3">결재 반려</td>
 												<td th:case="4">임시 저장</td>
 											</th:block>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
@@ -244,7 +238,6 @@
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:11%" />
-										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -254,7 +247,6 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -263,7 +255,7 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<th:block th:case="1">
 													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
 														<td th:text="${ path.member.name }"></td>
@@ -280,13 +272,12 @@
 													</th:block>
 												</th:block>
 											</th:block>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<td th:case="1">결재 중</td>
 												<td th:case="2">결재 완료</td>
 												<td th:case="3">결재 반려</td>
 												<td th:case="4">임시 저장</td>
 											</th:block>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
@@ -347,7 +338,7 @@
 					</script>
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
 						<div class="top_area">
 							<h2>전자 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -437,7 +428,7 @@
 					<!-- 여기까지 전자 결재 디테일 팝업 -->
 					
 					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
 						<div class="top_area">
 							<h2>신규 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -726,6 +717,7 @@
 		
 		/* dataTable */
 		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
 			$('.Table').DataTable({
 				"pagingType": "full_numbers",
 				"language": {
@@ -744,8 +736,6 @@
 		        },
 	            "order" : [ 0, 'asc' ]
 	        });
-			
-			$.fn.DataTable.ext.pager.numbers_length = 5;
 			
 			clearInterval(timer);
 		}, 100);
