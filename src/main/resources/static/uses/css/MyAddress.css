@@ -1,0 +1,86 @@
+.cart-list{border-top:5px solid #000;}
+.cart-list .item-info{padding: 25px 20px;border-bottom:1px solid #ccc;display: flex;background: #fff;align-items: center;position: relative;}
+.cart-list .item-info .img-wrap{width: 110px;height: 115px;overflow: hidden;border-radius: 20px;}
+.cart-list .item-info .img-wrap img{width: 100%;}
+.cart-list .item-info .info-wrap{padding-left: 30px;width: calc(100% - 110px);position: relative;}
+.cart-list .item-info .info-wrap span{display: block;letter-spacing: -0.5px;font-size: 15px;}
+.cart-list .item-info .info-wrap .tit{font-size: 17px;font-weight: 600;margin-bottom: 15px;}
+.cart-list .item-info .info-wrap .price{background: #cf6655;color: #fff;border-radius: 10px;font-size: 18px;height: 50px;display: flex;align-items: center;}
+.cart-list .item-info .info-wrap .price>*{padding: 12px 19px;height: 50px;}
+.cart-list .item-info .info-wrap .price em{font-style: normal;display: inline-block;font-weight: 600;padding-right: 20px;position: relative;}
+.cart-list .item-info .info-wrap .price em:before{content: '';width: 1px;height: 50px;background-color: #c56252;position: absolute;right:0;top:0}
+.cart-list .item-info .info-wrap .delete{border: none;background: none;font-size: 14px;text-decoration: underline;padding: 0;margin-top: 10px;}
+
+/* 배송지 추가*/ 
+.customer-contents .title > .btn-link {
+    float: right;
+}
+.Add-addressBTN {
+    height: 30px;
+    font-size: 13px;
+    padding: 8px 16px;
+    line-height: 1.1;
+    background-color: black;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    position: absolute;
+    right: 24px;
+    top : 129px;
+    
+}
+
+
+/* 주소록 */ 
+.sm .basic .name{
+    font-size: 16px;
+    letter-spacing: -.16px;
+}
+.address_info .name{
+    display: inline-block;
+    vertical-align: top;
+    line-height: 20px;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    font-weight: 700;
+    color: #222;
+}
+.is_active .address_info .name {
+    font-weight: 700;
+}
+.mo .basic .mark .sm .basic .mark {
+    display: inline-block;
+    line-height: 14px;
+    margin-top: 0;
+    margin-left: 4px;
+    padding: 3px 6px;
+    box-sizing: border-box;
+}
+.address_info .markT {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 14px;
+    margin-top: 0;
+    margin-left: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+.address_info .address_box{
+    padding-top: 4px;
+    font-size: 14px;
+    letter-spacing: -.21px;
+    position: absolute;
+    top: 65%;
+}
+.phone {
+    padding-top: 5px;
+    font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 15px;
+    color: #858796;
+}
+.cart-list .address_info .right_btm{position: absolute;right:20px;top:50%;transform: translateY(-50%);}
+.cart-list .address_info .right_btm a {border:1px solid #d3d3d3}
+             
