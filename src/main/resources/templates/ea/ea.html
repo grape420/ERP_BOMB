@@ -734,7 +734,16 @@
 		                "last" : "마지막"
 		              }
 		        },
-	            "order" : [ 0, 'asc' ]
+		        "order" : [],
+	               /* 보이는 갯수 설정 안보이게 */
+	               lengthChange: false,
+	               /* 페이지 전체수 나오던 부분 안보이게*/
+	               info : false,
+	               /* 구조 설정 태그 안에 글자는 div클래스명 */
+	               "dom": 't<"fDiv"f><"pDiv"p>',
+	               "aoColumnDefs": [
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5 ] }
+	                ]
 	        });
 			
 			clearInterval(timer);
