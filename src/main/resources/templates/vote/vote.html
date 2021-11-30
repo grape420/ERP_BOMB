@@ -335,7 +335,7 @@
 			</div>
 		</div>
 		<div class="btn_area">
-			<a class="gray_btn pop_close" data-button="resultVote">닫기</a>
+			<button class="gray_btn pop_close" data-button="resultVote">닫기</button>
 		</div>
 	</div>
 	
@@ -655,13 +655,18 @@
 		                "last" : "마지막"
 		              }
 		        },
-	            "order" : [ 0, 'desc' ],
+	            "order" : [],
 	            /* 보이는 갯수 설정 안보이게 */
 	            lengthChange: false,
 	            /* 페이지 전체수 나오던 부분 안보이게*/
 	            info : false,
-	            /* 구조 설정 태그 안에 글자는 div클래스명 */
-	            "dom": 't<"fDiv"f><"pDiv"p>'
+	            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+	            "dom": 't<"fDiv"f><"pDiv"p>',
+	            
+	            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+	            "aoColumnDefs": [
+	                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5 ] }
+	             ]
 	        });
 			
 			clearInterval(timer);
