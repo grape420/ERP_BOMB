@@ -1,7 +1,6 @@
 package com.greedy.erp_bomb.tna.model.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.Objects;
 
 public class TNAPk implements Serializable {
