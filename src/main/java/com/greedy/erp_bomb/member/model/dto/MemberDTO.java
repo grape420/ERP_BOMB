@@ -363,6 +363,6 @@ public class MemberDTO implements Serializable {
 		return "MemberDTO [name=" + name + ", coSerialNo=" + company.getName() + ", deptNo=" + dept.getName() + ", rankNo=" + rank.getName()
 				+ ", pwd=" + pwd + ", empNo=" + empNo + ", birth=" + birth + ", phone=" + phone + ", joinDate="
 				+ joinDate + ", quitDate=" + quitDate + ", regularPay=" + regularPay + ", bonus=" + bonus
-				+ ", annualIncome=" + annualIncome + ", email=" + email + ", entYn=" + entYn + ", sp=" + sp.getServerancePay() + "]";
+				+ ", annualIncome=" + annualIncome + ", email=" + email + ", entYn=" + entYn + "]";
 	}
 }

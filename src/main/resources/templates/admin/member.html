@@ -132,17 +132,6 @@
 					<div id="all_product" class="tab_contents inventory current">
 						<div class="tableArea">
 							<table class="Table">
-								<colgroup>
-									<col style="width: 11.1%" />
-									<col style="width: 11.1%" />
-									<col style="width: 11.1%" />
-									<col style="width: 6.1%" />
-									<col style="width: 11.1%" />
-									<col style="width: 11.1%" />
-									<col style="width: 11.1%" />
-									<col style="width: 21.1%" />
-									<col style="width: 6.1%" />
-								</colgroup>
 								<thead>
 									<tr>
 										<th>사원명</th>
@@ -158,7 +147,7 @@
 								</thead>
 								<tbody>
 									<tr th:each="mem : ${ memberList }">
-										<td class="t_center pop_btn" th:text="${ mem.name }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.name }" th:attr="onclick=|memDetail('${ mem.name }')|" data-button="mem_detail_pop" style="cursor: pointer;"></td>
 										<td class="t_center pop_btn" th:text="${ mem.company.name }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.dept.name }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.rank.name }"></td>
@@ -172,79 +161,86 @@
 							</table>
 						</div>
 					</div>
-					<!-- 회원 추가 -->
-					<div id="new_member_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>회원 추가</h2>
-							<button type="button" class="pop_close" data-button="new_member_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/admin/newMember" method="post">
-							<table>
-								<colgroup>
-								</colgroup>
-								<thead>
-									<tr>
-										<th>사원명</th>
-										<th>회사</th>
-										<th>부서</th>
-										<th>직급</th>
-										<th>사번</th>
-										<th>생년월일</th>
-										<th>전화번호</th>
-										<th>E-Mail</th>
-										<th>퇴사여부</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="name">
-										</td>
-										<td>
-											<select id="companyCode" name="companyCode">
+					<!-- 멤버 변경 팝업 -->
+			          <div id="mem_detail_pop" class="pop_layer">
+			            <div class="top_area">
+			              <h2>멤버 관리</h2>
+			              <button type="button" class="pop_close" data-button="mem_detail_pop">닫기</button>
+			            </div>
+			            <div class="pop_inner">
+			              <div class="tableArea">
+			              <form action="/admin/updateMem" method="post">
+			                <table>
+			                  <colgroup>
+			                  </colgroup>
+			                  <thead>
+			                    <tr>
+									<th>사원명</th>
+									<th>회사</th>
+									<th>부서</th>
+									<th>직급</th>
+									<th>비밀번호</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+								<tr>
+									<td id="memName"></td>
+									<td>
+										<select id="companyCode">
 											
-											</select>
-										</td>
-										<td>
-											<select id="deptCode">
+										</select>
+									</td>
+									<td>
+										<select id="deptCode">
 											
-											</select>
-										</td>
-										<td>
-											<select id="rankCode">
-											
-											</select>
-										</td>
-										<td>
-											<input type="text" name="empNo">
-										</td>
-										<td>
-											<input type="text" name="birth">
-										</td>
-										<td>
-											<input type="text" name="phone">
-										</td>
-										<td>
-											<input type="text" name="email">
-										</td>
-										<td>
-											<select>
-												<option value="Y">Y</option>
-												<option value="N">N</option>
-											</select>
-										</td>
-									</tr>
+										</select>
+									</td>
+									<td>
+										<select id="rankCode">
+										
+										</select>
+									</td>
+									<td>
+										<input type="text" name="pwd">
+									</td>
+								</tr>
 								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_member_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_member_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-					<!-- 회원 추가 -->
+								<thead>
+								<tr>
+			                    	<th>사번</th>
+									<th>생년월일</th>
+									<th>입사일</th>
+									<th>E-Mail</th>
+									<th>퇴사 여부</th>
+			                    </tr>
+			                    </thead>
+			                    <tbody>
+								<tr>
+									<td id="memEmpNo"></td>
+									<td id="memBirth"></td>
+									<td id="memJoinDate"></td>
+									<td>
+										<input type="text" name="email">
+									</td>
+									<td>
+										<select name="entYn">
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</td>
+								</tr>
+			                  </tbody>
+			                </table>
+			              
+			              <div class="btm_area mt-2" style="text-align: center;">
+			              	<input type="hidden" name="name" id="newName">
+			              	<button type="submit" class="blue_btn pop_close" data-button="mem_detail_pop">수정</button>
+			              </div>
+			            </form>
+			            </div>
+			            </div>
+			          </div>
+					<!-- 멤버 변경 팝업 -->
 					<div class="btm_area" style="margin-left: 10px;">
 						<a style="cursor: pointer;" class="blue_btn pop_btn" href="/admin/registMember">추가</a> 
 					</div>
@@ -254,6 +250,34 @@
 	</section>
 	
 	<script>
+	
+	function memDetail(name){
+		var detailName = name;
+		const memName = $("#memName");
+		const memEmpNo = $("#memEmpNo");
+		const memBirth = $("#memBirth");
+		const memJoinDate = $("#memJoinDate");
+		
+		$.ajax({
+		url: "/admin/memDetail",
+		type: "get",
+		data: {
+			detailName : detailName
+		},
+		success: function(data){
+			/* memName.text(data.name); 
+			memEmpNo.text(data.empNo); 
+			memBirth.text(data.birth); 
+			memJoinDate.text(data.joinDate);  */
+			
+			/* $("#newName").attr('value', data.name);  */
+		},
+		error: function(xhr){
+			console.log(xhr);
+			 }
+		});
+	}
+	
  		$.ajax({
 			url: "/admin/companyCode",
 			success: function(data){

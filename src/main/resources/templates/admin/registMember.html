@@ -18,6 +18,7 @@
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
+<link rel="stylesheet" th:href="@{/css/admin/signup.css}">
 <!-- 여기에 페이지 css파일 적용 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
@@ -115,92 +116,96 @@
 				<hr class="sidebar-divider">
 			</ul>
 			<!-- End of Sidebar -->
+			
+      <div class="section-main-div">
+        <br>
+        <h2 class="signup-text">회원 추가</h2>
+        <br>
+        <form class="signup-form" id="signup-form" action="/admin/signup" method="POST">
+        	<div class="row pb-0">
+		          <input required type="text" name="name" id="name" class="form-control col-8" placeholder="사용하실 이름를 입력해주세요." autofocus>
+		          <div class="col-1"></div>
+		          <button type="button" id="name-check-btn" class="double-check-btn col-3 hsy-btn btn btn-lg btn-block btn-outline-dark">중복확인</button>
+		          <label class="name-result mb-0" id="name-result"></label>
+          	</div>
+          	<br>
+          	<div class="row">
+	          <select class="form-control" id="companyCode" name="companyCode" required="required">
+	          		<!-- 회사 코드 ajax로 처리 -->
+	          </select>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <select class="form-control" id="deptCode" name="deptCode" required="required">
+	          		<!-- 부서 코드 ajax로 처리 -->
+	          </select>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <select class="form-control" id="rankCode" name="rankCode" required="required">
+	          		<!-- 직급 코드 ajax로 처리 -->
+	          </select>
+	        </div>
+	        <br>
+          	<div class="row">
+		          <input required type="password" name="pwd" id="password" class="form-control" placeholder="영문 대 소문+숫자+특수문자 8~16자리">
+		          <label class="password-result mb-0" id="password-result"></label>
+		    </div>
+          	<br>
+	        <div class="row">
+	          <input required type="password" name="password-check" id="password-check" class="form-control" placeholder="패스워드를 다시 입력해주세요.">
+	          <label class="password-result mb-0" id="password-check-result"></label>
+	        </div>
+          	<br>
+            <div class="row">
+	          <input required type="text" name="empNo" id="empNo" class="form-control" placeholder="사번을 입력해주세요    예)201">
+	          <label class="empNo-result mb-0" id="empNo-result"></label>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <input required type="text" name="birth" id="birth" class="form-control" placeholder="생년월일을 입력해주세요    예)19990719">
+	          <label class="birth-result mb-0" id="birth-result"></label>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <input required type="text" name="phone" id="phone" class="form-control" placeholder="휴대폰 번호 '-'표 없이 입력해 주세요.">
+	          <label class="phone-result mb-0" id="phone-result"></label>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <input type="text" placeholder="입사일을 입력하세요" onfocus="(this.type='date')" name="joinDate" id="joinDate" class="form-control">
+	          <label class="joinDate-result mb-0" id="joinDate-result"></label>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <input required type="text" name="regularPay" id="regularPay" class="form-control" placeholder="기본급을 입력하세요		예)3500000">
+	          <label class="regularPay-result mb-0" id="regularPay-result"></label>
+	        </div>
+	        <br>
+	        <div class="row">
+	          <input required type="text" name="annualIncome" id="annualIncome" class="form-control" placeholder="연봉을 입력하세요		예)55000000">
+	          <label class="annualIncome-result mb-0" id="annualIncome-result"></label>
+	        </div>
+	        <br>
+	        <div class="row">
+                <input type="text" name="email" id="email" class="form-control" placeholder="이메일을 입력해주세요		예)grape420@naver.com" autofocus required>
+                <label class="email-result mb-0" id="email-result"></label>
+            </div>
+            <br>
+            <div class="row">
+	          <select class="form-control" id="entYn" name="entYn" required="required">
+	          		<option value="" disabled selected hidden>퇴사 여부를 선택해주세요</option>
+	          		<option value="Y">Y</option>
+	          		<option value="N">N</option>
+	          </select>
+	        </div>
+	        <br>
+	          <div class="row">
+	          <button id="submit-btn" type="button" class="col-12 hsy-btn btn btn-lg btn-block btn-outline-dark" value="로그인">회원가입</button>
+	          </div>
+        </form>
+      </div>
 
-			<div id="content-wrapper" class="d-flex flex-column">
-				<div style="width: 80%;" class="">
-					<!-- 여기에 적으셈 -->
-					<br>
-					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">회원 추가</h1>
-					<div class="search_form">
-						<form action="" method="post">
-<!-- 							<input type="text" placeholder="검색어 입력" name="keyword"/>
-							<button type="submit" class="blue_btn">Search</button> -->
-						</form>
-					</div>
-					<!-- 회원 추가 -->
-					<div>
-						<div class="top_area">
-							<h2>회원 추가</h2>
-							<button type="button" class="pop_close">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/admin/newMember" method="post">
-							<table>
-								<colgroup>
-								</colgroup>
-								<thead>
-									<tr>
-										<th>사원명</th>
-										<th>회사</th>
-										<th>부서</th>
-										<th>직급</th>
-										<th>사번</th>
-										<th>생년월일</th>
-										<th>전화번호</th>
-										<th>E-Mail</th>
-										<th>퇴사여부</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="name">
-										</td>
-										<td>
-											<select id="companyCode" name="companyCode">
-											
-											</select>
-										</td>
-										<td>
-											<select id="deptCode">
-											
-											</select>
-										</td>
-										<td>
-											<select id="rankCode">
-											
-											</select>
-										</td>
-										<td>
-											<input type="text" name="empNo">
-										</td>
-										<td>
-											<input type="text" name="birth">
-										</td>
-										<td>
-											<input type="text" name="phone">
-										</td>
-										<td>
-											<input type="text" name="email">
-										</td>
-										<td>
-											<select>
-												<option value="Y">Y</option>
-												<option value="N">N</option>
-											</select>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</section>
 	
@@ -271,9 +276,103 @@
             "order" : [ 0, 'asc' ]
         });
 		$.fn.DataTable.ext.pager.numbers_length = 5;
+		
+		var code = "";
+		var nameFlag = false;
+		var passwordFlag = false;
+		var birthFlag = false;
+		var phoneFlag = false;
+		var empNoFlag = false;
+		var emailFlag = false;
+		var regularPayFlag = false;
+		var annualIncomeFlag = false;
+		
+			$("#name-check-btn").click(function() {
+				var nameExp = /^[가-힣0-9a-zA-Z]{2,}$/;
+				const value = $("#name").val();
+				
+				if (!nameExp.test($("#name").val())) {
+					$("#name-result").text("이름을 다시 입력하세요").css("color", "red");
+					$("#name").val("").focus();
+				} else {
+					$.ajax({
+						url: "/admin/nameCheck",
+						type: "GET",
+						data: {
+							value : value
+							},
+						success: function(data) {
+							if(data) {
+								$("#name-result").text("중복된 이름 입니다.").css("color", "red");
+								$("#name").val("").focus();
+							} else {
+								console.log("여기는 else : " + data);
+								$("#name-result").text("사용 가능한 이름 입니다.").css("color", "blue");
+								nameFlag = true;
+							}
+						},
+						error: function(request, status, error) {
+							alert("code:" + request.responseText + "\n"
+								+ "message:" + request.responseText + "\n"
+								+ "error:" + error);
+						}
+					});
+				}	
+			});
+			
+			$("#submit-btn").click(function() {
+				if(phoneFlag == false) {
+					$("#phone-result").text("휴대폰 번호를 다시 확인 해주세요").css("color", "red");
+					$("#phone").val("").focus();
+				}
+				
+				if(regularPayFlag == false) {
+					$("#regularPay-result").text("기본급을 다시 확인 해주세요").css("color", "red");
+					$("#regularPay").val("").focus();
+				}
+				
+				if(annualIncomeFlag == false) {
+					$("#annualIncome-result").text("연봉을 다시 확인 해주세요").css("color", "red");
+					$("#annualIncome").val("").focus();
+				}
+				
+				if(empNoFlag == false) {
+					$("#empNo-result").text("사번를 다시 확인 해주세요").css("color", "red");
+					$("#empNo").val("").focus();
+				}
+				
+				if(birthFlag == false) {
+					$("#birth-result").text("생년월일을 확인 해주세요.").css("color", "red");
+					$("#birth").val("").focus();
+				}
+				
+				if(passwordFlag == false) {
+					$("#password-result").text("비밀번호를 다시 확인 해주세요.").css("color", "red");
+					$("#passowrd").val("").focus();
+				}
+				
+				if(nameFlag == false) {
+					$("#name-result").text("이름 중복 확인을 해주세요.").css("color", "red");
+					$("#name").val("").focus();
+				}
+				
+				if(emailFlag == false) {
+					$("#email-result").text("이메일을 다시 확인해주세요.").css("color", "red");
+					$("#email").val("").focus();
+				}
+				
+				if((nameFlag == true) && (passwordFlag == true) && (birthFlag == true) && (phoneFlag == true) &&
+				   (emailFlag == true) && (empNoFlag == true) && (regularPayFlag == true) && (annualIncomeFlag == true)) {
+					alert("회원 추가가 성공적으로 완료되었습니다");
+					 $("#signup-form").submit(); 
+				}
+			});
 	</script>
 	
 	<!-- dataTable -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	
+	<!-- signup -->
+	<script type="text/javascript" th:src="@{/js/admin/signup.js}"></script>
 </body>
 </html>

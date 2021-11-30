@@ -24,14 +24,14 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 		sequenceName = "SEQ_ADDENDUM_CODE",
 		initialValue = 1, allocationSize = 1)
 @Table(name ="ADDENDUM")
-public class AddendumDTO implements Serializable {
+public class AddendumDTO implements Serializable,Comparable<AddendumDTO> {
 	private static final long serialVersionUID = -2785740755032023520L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 	generator = "ADDENDUM_SEQ_GENERATOR")
 	@Column(name = "COMMENT_NO")
-	private int no;
+	private Integer no;
 	
 	@ManyToOne
 	@JoinColumn(name = "REF_COMMENT_NO")
@@ -58,15 +58,15 @@ public class AddendumDTO implements Serializable {
 	private int length;
 	
 	@Column(name = "COMMENT_YN")
-	private int requestYn;
+	private String requestYn;
 	
 	@OneToMany(mappedBy = "refNo")
 	private List<AddendumDTO> addendumList = new ArrayList<>();
 
 	public AddendumDTO() {
 	}
-	public AddendumDTO(int no, AddendumDTO refNo, EADTO ea, MemberDTO member, String content, Date date, int depth,
-			int length, int requestYn, List<AddendumDTO> addendumList) {
+	public AddendumDTO(Integer no, AddendumDTO refNo, EADTO ea, MemberDTO member, String content, Date date, int depth,
+			int length, String requestYn, List<AddendumDTO> addendumList) {
 		this.no = no;
 		this.refNo = refNo;
 		this.ea = ea;
@@ -78,11 +78,10 @@ public class AddendumDTO implements Serializable {
 		this.requestYn = requestYn;
 		this.addendumList = addendumList;
 	}
-	
-	public int getNo() {
+	public Integer getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(Integer no) {
 		this.no = no;
 	}
 	public AddendumDTO getRefNo() {
@@ -127,10 +126,10 @@ public class AddendumDTO implements Serializable {
 	public void setLength(int length) {
 		this.length = length;
 	}
-	public int getRequestYn() {
+	public String getRequestYn() {
 		return requestYn;
 	}
-	public void setRequestYn(int requestYn) {
+	public void setRequestYn(String requestYn) {
 		this.requestYn = requestYn;
 	}
 	public List<AddendumDTO> getAddendumList() {
@@ -142,10 +141,18 @@ public class AddendumDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "AddendumDTO [no=" + no + ", refNo=" + refNo.getNo() + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", content="
+		return "AddendumDTO [no=" + no + ", refNo=" + refNo + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", content="
 				+ content + ", date=" + date + ", dept=" + depth + ", length=" + length + ", requestYn=" + requestYn + "]";
+	}
+	@Override
+	public int compareTo(AddendumDTO o) {
+		if (o.getLength() < this.length) {
+			return 1;
+		} else  {
+			return -1;
+		}
 	}
 }

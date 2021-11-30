@@ -30,34 +30,34 @@
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/">
+			<a class="navbar-brand font-weight-bold" href="/main/main">
 				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -83,7 +83,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+					<a class="nav-link collapsed on" href="#" data-toggle="collapse" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>전자결재</span>
 					</a>
@@ -114,7 +114,6 @@
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:11%" />
-										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -124,7 +123,6 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -133,7 +131,7 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<th:block th:case="1">
 													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
 														<td th:text="${ path.member.name }"></td>
@@ -153,18 +151,24 @@
 													<td th:text="${ #authentication.principal.name }"></td>
 												</th:block>
 											</th:block>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<td th:case="1">결재 중</td>
 												<td th:case="2">결재 완료</td>
 												<td th:case="3">결재 반려</td>
 												<td th:case="4">임시 저장</td>
 											</th:block>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
+						
+						<script>
+							$(".copy-approval").click(function() {
+								let copy_ea_no = $(this).attr("id").replace('copy_btn_', '');
+								
+							});
+						</script>
 
 						<div id="myEaPathList" class="tab_contents electronic_approval">
 							<div class="tableArea">
@@ -177,7 +181,6 @@
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:11%" />
-										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -187,16 +190,15 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaPathList }" th:if="${ list.category != 4}">
+										<tr th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4}">
 											<td th:text="${ list.serialNo }"></td>
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<th:block th:case="1">
 													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
 														<td th:text="${ path.member.name }"></td>
@@ -213,13 +215,12 @@
 													</th:block>
 												</th:block>
 											</th:block>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<td th:case="1">결재 중</td>
 												<td th:case="2">결재 완료</td>
 												<td th:case="3">결재 반려</td>
 												<td th:case="4">임시 저장</td>
 											</th:block>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
@@ -237,7 +238,6 @@
 										<col style="width:8%" />
 										<col style="width:8%" />
 										<col style="width:11%" />
-										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -247,7 +247,6 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -256,7 +255,7 @@
 											<td th:text="${ list.date }"></td>
 											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
 											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<th:block th:case="1">
 													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
 														<td th:text="${ path.member.name }"></td>
@@ -273,13 +272,12 @@
 													</th:block>
 												</th:block>
 											</th:block>
-											<th:block th:switch="${ list.category }">
+											<th:block th:switch="${ list.eaStatus }">
 												<td th:case="1">결재 중</td>
 												<td th:case="2">결재 완료</td>
 												<td th:case="3">결재 반려</td>
 												<td th:case="4">임시 저장</td>
 											</th:block>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
 										</tr>
 									</tbody>
 								</table>
@@ -302,36 +300,45 @@
 							<div class="pop_inner">
 								<div class="line-div">
 									제&nbsp; 목&nbsp;&nbsp;&nbsp;
-									<input name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required">
+									<input id="new_approval_title" name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required">
 									<br>
 								</div>
 								<div class="mt-2 line-div">
 									결재자&nbsp;
 									<select name="approvaler" id="new_approvaler" style="width: 91.5%;" class="form-control select2" multiple="multiple" required="required">
-										<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+										<option class="approvaler_option" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
 									</select>
 									<br>
 								</div>
 								<div class="mt-2 line-div">
 									참조자&nbsp;
 									<select name="carboner" id="new_carboner" style="width: 91.5%;" class="form-control select2" multiple="multiple" >
-										<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+										<option class="carboner_option" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
 									</select>
 									<br>
 								</div>
-								<textarea name="content" class="approval_content_text" required="required"></textarea>
+								<textarea id="new_approval_content" name="content" class="approval_content_text" required="required"></textarea>
 							</div>
 							<div class="btn_area">
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/1'">결재</button>
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/2'">임시저장</button>
-								<a class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
+								<a id="new_approval_pop_close_btn" class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
 							</div>
 						</form>
 					</div>
 					<!-- 여기까지 신규 전자 결재 팝업 -->
+					
+					<script>
+						$("#new_approval_pop_close_btn").click(function() {
+							$("#new_approval_content").val("");
+							$("#new_approval_title").val("");
+							$('#new_approvaler').val(null).trigger('change');
+							$('#new_carboner').val(null).trigger('change');
+						});
+					</script>
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
 						<div class="top_area">
 							<h2>전자 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -421,7 +428,7 @@
 					<!-- 여기까지 전자 결재 디테일 팝업 -->
 					
 					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.category == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
 						<div class="top_area">
 							<h2>신규 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -709,25 +716,29 @@
 		});
 		
 		/* dataTable */
-		$('.Table').DataTable({
-			"pagingType": "full_numbers",
-			"language": {
-	            "lengthMenu": "페이지당 줄수 _MENU_",
-	            "zeroRecords": "전자 결재가 존재하지 않습니다.",
-	            "info": "_PAGE_ / _PAGES_",
-	            "infoEmpty": "결재 항목이 존재하지 않습니다.",
-	            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
-	            "search": "검색 : ",
-	            "paginate": {
-	                "previous": "이전",
-	                "next" : "다음",
-	                "first" : "처음",
-	                "last" : "마지막"
-	              }
-	        },
-            "order" : [ 0, 'desc' ]
-        });
-		$.fn.DataTable.ext.pager.numbers_length = 5;
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "전자 결재가 존재하지 않습니다.",
+		            "info": "_PAGE_ / _PAGES_",
+		            "infoEmpty": "결재 항목이 존재하지 않습니다.",
+		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+	            "order" : [ 0, 'asc' ]
+	        });
+			
+			clearInterval(timer);
+		}, 100);
 	</script>
 	
 	<!-- dataTable -->

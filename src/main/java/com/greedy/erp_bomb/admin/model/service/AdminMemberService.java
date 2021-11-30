@@ -33,12 +33,30 @@ public class AdminMemberService {
 		return adminMemberDAO.findCompanyList();
 	}
 
+	@Transactional
 	public List<DeptDTO> findDeptCodeList() {
 		return adminMemberDAO.findDeptCodeList();
 	}
 
+	@Transactional
 	public List<RankDTO> findRankCodeList() {
 		return adminMemberDAO.findRankCodeList();
 	}
+
+	@Transactional
+	public MemberDTO selectMemberByName(String value) {
+		return adminMemberDAO.selectMemberByName(value);
+	}
+
+	@Transactional
+	public void registMember(MemberDTO member) {
+		adminMemberDAO.registMember(member);
+	}
+
+	@Transactional
+	public MemberDTO memDetail(String detailName) {
+		return adminMemberDAO.memDetail(detailName);
+	}
+
 
 }
