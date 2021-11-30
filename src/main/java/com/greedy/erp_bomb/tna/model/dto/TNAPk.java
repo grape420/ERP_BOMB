@@ -7,20 +7,20 @@ import java.util.Objects;
 public class TNAPk implements Serializable {
 	private static final long serialVersionUID = -5114884986733995330L;
 	
-	private java.sql.Date date;
+	private String date;
 	private String member;
 	
 	public TNAPk() {
 	}
-	public TNAPk(Date date, String member) {
+	public TNAPk(String date, String member) {
 		this.date = date;
 		this.member = member;
 	}
-	
-	public java.sql.Date getDate() {
+
+	public String getDate() {
 		return date;
 	}
-	public void setDate(java.sql.Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getMember() {
@@ -58,7 +58,7 @@ public class TNAPk implements Serializable {
 						if(objTemp.getDate() == null) {
 							return false;
 						} else {
-							if(this.date.getTime() == objTemp.getDate().getTime()) {
+							if(this.date.equals(objTemp.getDate())) {
 								return true;
 							} else {
 								return false;
@@ -83,7 +83,7 @@ public class TNAPk implements Serializable {
 							if(objTemp.getDate() == null) {
 								return false;
 							} else {
-								if(this.date.getTime() == objTemp.getDate().getTime()) {
+								if(this.date.equals(objTemp.getDate())) {
 									return true;
 								} else {
 									return false;
