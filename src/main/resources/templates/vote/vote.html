@@ -408,10 +408,19 @@
 		},
 		success: function(data){
 			var date1 = new Date(data.endDate);
+			var voteCheckFlag = false;
 			
 			if(date > date1){
 				vvote = true;
 				candi = true;
+				voteCheckFlag = true;
+			}
+			
+			for(var index in data.voteParticipationList){
+				if(bob == data.voteParticipationList[index].member.name){
+					vvote = true;
+					voteCheckFlag = true;
+				}	
 			}
 			
 			title.text("제목 : " + data.title);								
@@ -424,9 +433,9 @@
 				for(var index in data.voteOptionList){
 					$index = "vote" + index;
 					
-					if(date > date1){
+					if(voteCheckFlag){
 						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
-					} else{
+					} else {
 						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
 					}
 					
@@ -436,11 +445,7 @@
 					
 				}
 				
-				for(var index in data.voteParticipationList){
-					if(bob == data.voteParticipationList[index].member.name){
-						vvote = true;
-					}	
-				}
+				
 				
 				if(date > date1){
 					vvote = true;
@@ -540,7 +545,9 @@
 		function vVote(){
 			var voteFlag = false;
 			const serialNo = $(".serialNo").val();
-			const desc = $(".vote").val();
+			var desc = $(":input:radio[name=votes]:checked").val();
+			
+			console.log(desc);
 			
 			if($(".vote").is(":checked")){
 				voteFlag = true;

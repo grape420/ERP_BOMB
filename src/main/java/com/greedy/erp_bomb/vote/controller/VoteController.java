@@ -166,6 +166,7 @@ public class VoteController {
 		VoteDTO result = voteService.selectResult(voteNumber);
 		
 		for (VoteOptionDTO vote : result.getVoteOptionList()) {
+			
 			vote.setMember(null);
 			vote.setVote(null);
 		}
