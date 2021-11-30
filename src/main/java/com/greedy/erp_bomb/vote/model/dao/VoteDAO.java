@@ -78,7 +78,6 @@ public class VoteDAO {
 		voteOption.setVoteCount(num + 1);
 		
 		em.persist(vote);
-		em.persist(voteOption);
 	}
 
 	public VoteDTO selectResult(int voteNumber) {

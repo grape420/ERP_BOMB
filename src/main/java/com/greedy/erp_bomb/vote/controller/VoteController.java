@@ -43,6 +43,7 @@ public class VoteController {
 		List<VoteDTO> endVoteList = new ArrayList<>();
 		List<VoteDTO> regVoteList = new ArrayList<>();
 		
+		/* 진행중, 종료 부분을 위한 코딩 */
 		for (VoteDTO voteDTO : voteList) {
 			if (voteDTO.getEndDate().before(date)) {
 				endVoteList.add(voteDTO);

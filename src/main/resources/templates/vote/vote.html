@@ -517,8 +517,6 @@
 	function plusCandi(num){
 		var candiInsert = $("#candiInsert").val();
 		var votenum = num;
-		console.log(votenum);
-		console.log(candiInsert);
 		if(candiInsert == ""){
 			alert("후보를 입력하세요");
 		} else {
@@ -546,8 +544,6 @@
 			var voteFlag = false;
 			const serialNo = $(".serialNo").val();
 			var desc = $(":input:radio[name=votes]:checked").val();
-			
-			console.log(desc);
 			
 			if($(".vote").is(":checked")){
 				voteFlag = true;
