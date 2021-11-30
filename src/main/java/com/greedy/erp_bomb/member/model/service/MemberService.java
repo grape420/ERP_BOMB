@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.erp_bomb.member.model.dao.MemberDAO;
 import com.greedy.erp_bomb.member.model.dto.AuthorityDTO;
@@ -28,6 +29,7 @@ public class MemberService implements UserDetailsService {
 	}
 
 	/* 사용자 정보를 조회해서 UserDetails 타입을 반환하는 메소드 */
+	@Transactional
 	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 
 		/* 우리가 만든 MemberDTO를 쓸 수 없고 User객체를 반환해야 한다. */

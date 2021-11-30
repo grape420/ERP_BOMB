@@ -12,6 +12,11 @@ public class MainController {
 		return "member/login";
 	}
 	
+	@PostMapping(value = "/main/main")
+	public String mainMain() {
+		return "main/main";
+	}
+	
 	@PostMapping(value = "/")
 	public String redirectMain() {
 		return "redirect:/";

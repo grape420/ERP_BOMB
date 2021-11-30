@@ -23,7 +23,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 		name = "COMMENT_SEQ_GENERATOR",
 		sequenceName = "SEQ_COMMENT_CODE",
 		initialValue = 1, allocationSize = 1)
-@Table(name = "COMMENT")
+@Table(name = "COMMENTS")
 public class CommentDTO implements Serializable {
 	private static final long serialVersionUID = 2552178329837419126L;
 	
@@ -34,7 +34,7 @@ public class CommentDTO implements Serializable {
 	private int no;
 	
 	@ManyToOne
-	@JoinColumn(name = "REF_COMMENT_NO")
+	@JoinColumn(name = "REF_COMMENT_NO", nullable = true)
 	private CommentDTO refNo;
 	
 	@ManyToOne
@@ -66,7 +66,7 @@ public class CommentDTO implements Serializable {
 	public CommentDTO() {
 	}
 	public CommentDTO(int no, CommentDTO refNo, BoardDTO board, MemberDTO member, String content, Date date, int depth,
-			int length, String status) {
+			int length, String status, List<CommentDTO> commentList) {
 		this.no = no;
 		this.refNo = refNo;
 		this.board = board;
@@ -76,6 +76,7 @@ public class CommentDTO implements Serializable {
 		this.depth = depth;
 		this.length = length;
 		this.status = status;
+		this.commentList = commentList;
 	}
 	
 	public int getNo() {
@@ -132,10 +133,16 @@ public class CommentDTO implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public List<CommentDTO> getCommentList() {
+		return commentList;
+	}
+	public void setCommentList(List<CommentDTO> commentList) {
+		this.commentList = commentList;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "CommentDTO [no=" + no + ", refNo=" + refNo.getNo() + ", board=" + board.getTitle() + ", member=" + member.getName() + ", content="

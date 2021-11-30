@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.greedy.erp_bomb.board.model.dao.BoardDAO;
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
+import com.greedy.erp_bomb.board.model.dto.CommentDTO;
 
 @Service
 public class BoardService {
@@ -31,23 +32,42 @@ public class BoardService {
 		return boardDAO.selectBoardDetail(no);
 	}
 
-	
+	/* 사내게시판 입력 */ 
+	@Transactional
+	public void insertBoard(BoardDTO board) {
+		boardDAO.insertBoard(board);
+	}
 
-	/*공지사항 리스트 */ 
+	/* 공지사항 리스트 */ 
 	@Transactional
 	public List<BoardDTO> findNoticeList() {
 		return boardDAO.findNoticeList();
 	}
 
-	/*공지사항 디테일 */
+	/* 공지사항 디테일 */
 	@Transactional
 	public BoardDTO selectNoticeDetail(int no) {
 		return boardDAO.selectNoticeDetail(no);
 	}
+	
+	/* 공지사항 입력 */
 	@Transactional
-	public void insertBoard(BoardDTO board) {
-		boardDAO.insertBoard(board);
-		
+	public void insertNotice(BoardDTO notice) {
+		boardDAO.insertNotice(notice);
+	}
+
+	/* 사내게시판 대댓글 */
+	@Transactional
+	public CommentDTO replyComment(CommentDTO replyCm) {
+		return boardDAO.replyComment(replyCm);
+	}
+	@Transactional
+	public CommentDTO addComment(CommentDTO addAd) {
+		return boardDAO.addComment(addAd);
+	}
+	@Transactional
+	public void deleteComment(int no) {
+		boardDAO.deleteComment(no);
 	}
 
 

@@ -82,15 +82,15 @@
 				<hr class="sidebar-divider">
 
 				<!-- Nav Item - Pages Collapse Menu -->
-			    <li class="nav-item">
-					<a class="nav-link collapsed" href="/board/nolist" data-target="#collapseUtilities"
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="/board/noticeList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>공지사항</span>
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="/board/list" data-target="#collapseUtilities"
+					<a class="nav-link collapsed" href="/board/boardList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사내게시판</span>
 					</a>
@@ -101,12 +101,12 @@
 
 			<div id="boardList" class="container"  style="width: 80%;">
 					<table class="table table-hover">
-						<button type="button" class="btn btn-outline-secondary" id="listBtn" onclick="location. href='houseboard.html'" style="float: right;">신규</button>
+						<button type="button" class="btn btn-outline-secondary" id="listBtn" style="float: right;">신규</button>
 						<h3 style="font-weight: 900;">공지사항</h3>
 						<tbody>
 						  <tr th:each="notice : ${ noticeList }" >
-							<td colspan="3" th:if="${ notice.no } == 1" th:text="[공지]" style="color: black"></td>
-							<td colspan="3" th:if="${ notice.no } == 2" th:text="[사내게시판]" style="color: black"></td>
+							<td colspan="3" th:if="${ notice.category } == 1" th:text="[공지]" style="color: black"></td>
+							<td colspan="3" th:if="${ notice.category } == 2" th:text="[사내게시판]" style="color: black"></td>
 							<td colspan="3"><a th:text="${ notice.title }" th:href="@{/board/nodetail(no=${notice.no})}" style="color:black"></a></td>
 							<td colspan="3" th:text="${ notice.regDate }" style="text-align: right; color: black;"> </td>
 							<td colspan="3" th:text="${ notice.hit }" style="text-align: right; color:black;"></td>
@@ -126,7 +126,12 @@
 				   </div>
 				</div>
 			</div>
-		</div>
 	</section>
+	<script>
+		$("#listBtn").click(function(){
+			location.href='/board/regNotice';
+			
+		});
+	</script>
 </body>
 </html>
