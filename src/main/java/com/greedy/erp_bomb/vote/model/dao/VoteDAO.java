@@ -28,47 +28,11 @@ public class VoteDAO {
 		
 		List<VoteDTO> voteList = query.getResultList();
 		
-		System.out.println(voteList);
 		return voteList;
 	}
-
-	public List<VoteDTO> selectAllVoteList(SelectCriteria selectCriteria) {
-		String jpql = null;
-		List<VoteDTO> vote = null;
-		int first = 1;
-		
-		if(selectCriteria.getPageNo() == 1) {
-			first = 1;
-		} else {
-			first = selectCriteria.getPageNo() * selectCriteria.getLimit() - selectCriteria.getLimit() + 1;
-		}
-		if(selectCriteria.getSearchValue() == null) {
-			jpql = "SELECT a FROM VoteDTO as a ORDER BY a.serialNo DESC";
-			
-			vote = em.createQuery(jpql, VoteDTO.class)
-					.setFirstResult(first - 1)
-					.setMaxResults(selectCriteria.getLimit())
-					.getResultList();
-
-		} else {
-			jpql = "SELECT a FROM VoteDTO as a WHERE a.title LIKE CONCAT('%',:searchValue,'%') ORDER BY a.serialNo DESC ";
-
-			vote = em.createQuery(jpql, VoteDTO.class)
-					.setParameter("searchValue", selectCriteria.getSearchValue())
-					.setFirstResult(first - 1)
-					.setMaxResults(selectCriteria.getLimit())
-					.getResultList();
-		}
-		
-											
-		
-		return vote;
-	}
-	
 	
 	public void insertVote(VoteDTO vote) {
 		em.persist(vote);
-		
 	}
 
 	public void insertVote(VoteOptionDTO voteOption) {
@@ -94,20 +58,18 @@ public class VoteDAO {
 		return voteDetail;
 	}
 
-	public void insertVvote(VoteParticipationDTO vote, String votes, int serialNo) {
+	public void insertVvote(VoteParticipationDTO vote, String desc, int serialNo) {
 		
 		vote.setVote(em.find(VoteDTO.class, serialNo));
 		vote.setMember(em.find(MemberDTO.class, vote.getMember().getName()));
 		
-		System.out.println(vote.getMember().getName());
-		System.out.println(vote.getVote());
-		
 		vote.getVote().setVoteOptionList(null);
 		vote.getVote().setVoteParticipationList(null);
 		
-		TypedQuery<VoteOptionDTO> query = em.createQuery("SELECT a FROM VoteOptionDTO as a WHERE a.desc = :desc", VoteOptionDTO.class);
+		TypedQuery<VoteOptionDTO> query = em.createQuery("SELECT a FROM VoteOptionDTO as a WHERE a.desc = :desc AND a.vote.serialNo = :serialNo", VoteOptionDTO.class);
 		
-		query.setParameter("desc", votes);
+		query.setParameter("desc", desc);
+		query.setParameter("serialNo", serialNo);
 		
 		VoteOptionDTO voteOption = query.getSingleResult();
 		
@@ -135,19 +97,6 @@ public class VoteDAO {
 		
 		em.persist(voteOption);
 	}
-
-	public int selectAllVote() {
-		
-		return ((Number) em.createQuery("select count(*) from VoteDTO")
-				.getSingleResult()).intValue();
-	}
-
-	public int selectAllVote(String search) {
-		return ((Number) em.createQuery("select count(*) from VoteDTO as a WHERE a.title LIKE CONCAT('%',:search,'%')")
-				.setParameter("search", search)
-				.getSingleResult()).intValue();
-	}
-
 	
 	
 }

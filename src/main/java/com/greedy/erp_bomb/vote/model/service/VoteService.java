@@ -62,16 +62,4 @@ public class VoteService {
 		voteDAO.insertCandidate(voteOption);
 	}
 
-	public int selectAllVote() {
-		return voteDAO.selectAllVote();
-	}
-
-	public int selectAllvote(String search) {
-		return voteDAO.selectAllVote(search);
-	}
-
-	public List<VoteDTO> selectAllVoteList(SelectCriteria selectCriteria) {
-		return voteDAO.selectAllVoteList(selectCriteria);
-	}
-
 }

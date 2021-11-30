@@ -35,54 +35,27 @@ public class VoteController {
 	}
 	
 	@GetMapping(value = "vote")
-	public ModelAndView votePage(ModelAndView mv, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "") String search) {
+	public ModelAndView votePage(ModelAndView mv) {
 		
-		int onePost = 10;					// 한 페이지에 노출시킬 게시글의 수
-		int onePage = 5;					// 한번에 보여줄 페이지 버튼의 갯수
-		int totalVote = 0;
-//		search = "aaa";
+		List<VoteDTO> voteList = voteService.selectALLVote();
 		
-		System.out.println("이거옴?" + totalVote);
+		Date date = new Date();
+		List<VoteDTO> endVoteList = new ArrayList<>();
+		List<VoteDTO> regVoteList = new ArrayList<>();
 		
-		SelectCriteria selectCriteria = null;
-		List<VoteDTO> voteList = null;
-		if(search.equals("")) {
-			totalVote = voteService.selectAllVote();
-			selectCriteria = Pagenation.getSelectCriteria(page, totalVote, onePost, onePage);
-			
-			System.out.println("이거동작?" + totalVote);
-		
-		} else {
-			totalVote = voteService.selectAllvote(search);
-			selectCriteria = Pagenation.getSelectCriteria(page, totalVote, onePost, onePage, null, search);
-			
-			System.out.println("요게동작?" + totalVote);
+		for (VoteDTO voteDTO : voteList) {
+			if (voteDTO.getEndDate().before(date)) {
+				endVoteList.add(voteDTO);
+			}
+			if (voteDTO.getEndDate().after(date)) {
+				regVoteList.add(voteDTO);
+			}
 		}
 		
-		System.out.println("selectCriteria임" + selectCriteria);
-		voteList = voteService.selectAllVoteList(selectCriteria);
-		
-		
-//		List<VoteDTO> voteList = voteService.selectALLVote();
-//		Date date = new Date();
-//		List<VoteDTO> endVoteList = new ArrayList<>();
-//		List<VoteDTO> regVoteList = new ArrayList<>();
-//		
-//		for (VoteDTO voteDTO : voteList) {
-//			if (voteDTO.getEndDate().before(date)) {
-//				endVoteList.add(voteDTO);
-//			}
-//			if (voteDTO.getEndDate().after(date)) {
-//				regVoteList.add(voteDTO);
-//			}
-//		}
-//		
-		mv.addObject("selectCriteria", selectCriteria);
 		mv.addObject("voteList", voteList);
-//		mv.addObject("endVoteList", endVoteList);
-//		mv.addObject("regVoteList", regVoteList);
-//		
+		mv.addObject("endVoteList", endVoteList);
+		mv.addObject("regVoteList", regVoteList);
+		
 		mv.setViewName("/vote/vote");
 		
 		return mv;
@@ -93,10 +66,9 @@ public class VoteController {
 			@RequestParam java.sql.Date endDate, @RequestParam String content
 			, Principal principal) {
 		
+		/* 작성일 */
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
-		System.out.println(user.getName());
 		
 		MemberDTO member = new MemberDTO();
 		member.setName(user.getName());
@@ -108,8 +80,7 @@ public class VoteController {
 		vote.setEndDate(endDate);
 		vote.setContent(content);
 		
-		System.out.println(insertMember);
-		
+		/* 신규 투표 작성시 후보가 있나없나 판별 */
 		if(!insertMember.isEmpty()) {
 			VoteOptionDTO voteOption = new VoteOptionDTO();
 			
@@ -118,8 +89,6 @@ public class VoteController {
 			voteOption.setDesc(insertMember);
 			
 			voteService.insertVote(voteOption);
-			
-			System.out.println("보트" + vote);
 		} else {
 			voteService.insertVote(vote);
 		}
@@ -135,6 +104,7 @@ public class VoteController {
 		
 		VoteDTO voteDetail = voteService.selectVoteDetail(detailnum);
 		
+		/* json 문자열 반환을 위해 DTO안의 List들을 끊어냄 */
 		for (VoteOptionDTO vote : voteDetail.getVoteOptionList()) {
 			String member = vote.getMember().getName();
 
@@ -163,7 +133,6 @@ public class VoteController {
 			votePa.setMember(mem);
 			votePa.setVote(vote);
 		}
-		System.out.println(voteDetail.getVoteParticipationList());
 		
 		String member = voteDetail.getMember().getName();
 		MemberDTO mem = new MemberDTO();
@@ -174,15 +143,13 @@ public class VoteController {
 		return voteDetail;
 	}
 	
-	@PostMapping("/vvote")
-	public ModelAndView vvote(ModelAndView mv, @RequestParam int serialNo, @RequestParam String votes,
+	/* 투표하기 */
+	@PostMapping(value = "vvote", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public void vvote(@RequestParam int serialNo, @RequestParam String desc,
 			Principal principal) {
 		
-		System.out.println("넘버다" + serialNo);
-		
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
-		System.out.println(user.getName());
 		
 		MemberDTO member = new MemberDTO();
 		member.setName(user.getName());
@@ -190,20 +157,13 @@ public class VoteController {
 		VoteParticipationDTO vote = new VoteParticipationDTO();
 		
 		vote.setMember(member);
-		
-		voteService.insertVvote(vote, votes, serialNo);
-		
-		mv.setViewName("redirect:/vote/vote");
-		
-		return mv;
+		voteService.insertVvote(vote, desc, serialNo);
 	}
 	
 	@GetMapping(value = "resultVote", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public VoteDTO resultvote(@RequestParam int voteNumber) {
 		VoteDTO result = voteService.selectResult(voteNumber);
-		
-		System.out.println("여기왔으면 올려");
 		
 		for (VoteOptionDTO vote : result.getVoteOptionList()) {
 			vote.setMember(null);
