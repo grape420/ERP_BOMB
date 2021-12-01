@@ -114,6 +114,8 @@ public class SalaryController {
 			salaryService.registNewSalary(salary);
 			System.out.println("controller salary : " + salary);
 			mv.setViewName("redirect:/salary/salary");
+			
+			//flashAttribute
 			return mv;
 //		} else {
 //			mv.setViewName("");
