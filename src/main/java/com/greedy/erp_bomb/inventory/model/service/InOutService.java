@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greedy.erp_bomb.inventory.model.dao.InOutDAO;
+import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
 import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InOutDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
@@ -29,8 +30,8 @@ public class InOutService {
 	}
 
 	@Transactional
-	public List<IceCreamDTO> findIcecreamList() {
-		return inOutDAO.findIcecreamList();
+	public List<InventoryDTO> findIcecreamList(String name) {
+		return inOutDAO.findIcecreamList(name);
 	}
 
 	@Transactional
@@ -58,5 +59,9 @@ public class InOutService {
 		inOutDAO.updateHeadInven(headInven);
 	}
 
+//	@Transactional
+//	public List<InOutDTO> searchInOutList(String keyword, String name) {
+//		return inOutDAO.searchInOutList(keyword, name);
+//	}
 
 }

@@ -19,6 +19,19 @@
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/vote/vote.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<style>
+	.fDiv{
+		float: left;
+		text-align: left;
+		margin-left: 5px;
+	}
+	.pDiv{
+		float: right;
+		text-align: right;
+	}
+</style>
+
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -36,29 +49,29 @@
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="/board/nolist">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
-					</li>
+                  		<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+               		</li>
+	                <li class="nav-item mr-3 tab-selected">
+	                    <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+	                </li>
 				</ul>
 			</div>
 		</nav>
@@ -89,7 +102,7 @@
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="/board/boardList">
 						<span>사내게시판</span>
 					</a>
 				</li>
@@ -112,17 +125,7 @@
 							<div class="">
 								<div class="search_form">
 									<button sec:authentication="name" id="bob" style="display:none;"></button>
-									<input th:if="${selectCriteria.searchValue == null}" type="text" placeholder="검색어 입력" id="searchName"/>
-									<input th:unless="${selectCriteria.searchValue == null}" type="text" placeholder="검색어 입력" th:value="${selectCriteria.searchValue}" id="searchName"/>
-									<button type="button" class="blue_btn" onclick="searchButton()">Search</button>
 								</div>
-								
-								<script>
-									function searchButton(){
-										var searchName = $("#searchName").val();
-										location.href="/vote/vote?search="+ searchName;
-									}
-								</script>
 								
 								<ul class="tab ul-tab">
 									<li class="li-tab electronic_approval on" data-tab="total-vote"><span>전체</span></li>
@@ -131,15 +134,14 @@
 								</ul>
 								<div id="total-vote" class="tab_contents electronic_approval current">
 									<div class="tableArea">
-										<table>
-											
+										<table class="Table">
 											<colgroup>
-												<col style="width:5%" />
+												<col style="width:8%" />
 												<col style="width:10%" />
 												<col style="width:45%" />
 												<col style="width:10%" />
 												<col style="width:10%" />
-												<col style="width:5%" />
+												<col style="width:9%" />
 											</colgroup>
 											<thead>
 												<tr>
@@ -155,30 +157,27 @@
 												<tr th:each="vote : ${ voteList }">
 													<td th:text="${ vote.serialNo }"></td>
 													<td th:text="${ vote.member.name }"></td>
-													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${vote.serialNo}')|"></td>
+													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${vote.serialNo}')|" id="mainTitle"></td>
 													<td th:text="${ vote.regDate }"></td>
 													<td th:text="${ vote.endDate }"></td>
 													<td th:text="${ vote.hit }"></td>
 												</tr>
 											</tbody>
 										</table>
-											
-											
 									</div>
 								</div>
 								
 								<!-- 진행중인 투표 부분 -->
-								<!-- <div id="vote-ing" class="tab_contents electronic_approval">
+								<div id="vote-ing" class="tab_contents electronic_approval">
 									<div class="tableArea">
-										<table>
-											
+										<table class="Table">
 											<colgroup>
-												<col style="width:5%" />
+												<col style="width:8%" />
 												<col style="width:10%" />
 												<col style="width:45%" />
 												<col style="width:10%" />
 												<col style="width:10%" />
-												<col style="width:5%" />
+												<col style="width:9%" />
 											</colgroup>
 											<thead>
 												<tr>
@@ -204,18 +203,17 @@
 									</div>
 								</div>
 								
-								투표 종료 부분
+								<!-- 투표 종료 부분 -->
 								<div id="endvote" class="tab_contents electronic_approval">
 									<div class="tableArea">
-										<table>
-											
+										<table class="Table">
 											<colgroup>
-												<col style="width:5%" />
+												<col style="width:8%" />
 												<col style="width:10%" />
 												<col style="width:45%" />
 												<col style="width:10%" />
 												<col style="width:10%" />
-												<col style="width:5%" />
+												<col style="width:9%" />
 											</colgroup>
 											<thead>
 												<tr>
@@ -239,20 +237,6 @@
 											</tbody>
 										</table>
 									</div>
-								</div> -->
-								<div class="paging" th:if="${selectCriteria.searchValue == null}">
-									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=1)}" type="button"><img th:src="@{/uses/btn_first.gif}"></a>
-									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo - 1 })}"><img th:src="@{/uses/btn_prev.gif}"></a>
-									<a th:each="num : ${#numbers.sequence(selectCriteria.startPage,selectCriteria.endPage)}" th:href="@{/vote/vote?(page=${num})}" class="num on" th:text="${num}">1</a>
-									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo + 1 })}"><img th:src="@{/uses/btn_prev.gif}" style="transform: rotate(180deg)"></a>
-									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.maxPage })}"><img th:src="@{/uses/btn_first.gif}" style="transform: rotate(180deg)"></a>
-								</div>
-								<div class="paging" th:unless="${selectCriteria.searchValue == null}">
-									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=1,search=${selectCriteria.searchValue})}" type="button"><img th:src="@{/uses/btn_first.gif}"></a>
-									<a th:if="${selectCriteria.pageNo > 1}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo - 1 },search=${selectCriteria.searchValue})}"><img th:src="@{/uses/btn_prev.gif}"></a>
-									<a th:each="num : ${#numbers.sequence(selectCriteria.startPage,selectCriteria.endPage)}" th:href="@{/vote/vote?(page=${num},search=${selectCriteria.searchValue})}" class="num on" th:text="${num}">1</a>
-									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.pageNo + 1 },search=${selectCriteria.searchValue})}"><img th:src="@{/uses/btn_prev.gif}" style="transform: rotate(180deg)"></a>
-									<a th:if="${selectCriteria.pageNo < selectCriteria.maxPage}" th:href="@{/vote/vote?(page=${selectCriteria.maxPage },search=${selectCriteria.searchValue})}"><img th:src="@{/uses/btn_first.gif}" style="transform: rotate(180deg)"></a>
 								</div>
 								<div class="btn_area">
 									<button type="button" class="blue_btn pop_btn" data-button="new-vote">신규</button>							
@@ -288,197 +272,12 @@
 
 			<div class="btn_area">
 				<a class="blue_btn pop_close" data-toggle="collapse" href="#collspse2">후보 추가</a>
-				<button class="blue_btn pop_close" onclick="insertVote()">작성하기</button>
+				<button class="blue_btn pop_close" onclick="insertVote()" style="margin-right: 5px;">작성하기</button>
 				<a href="#n" class="gray_btn pop_close" data-button="new-vote">닫기</a>
 			</div>
 		</div>
 		
-		<script>
-			function insertVote(){
-				var titleFlag = false;
-				var dateFlag = false;
-				var textFlag = false;
-				var dateCheckFlag = false;
-				
-				const titleArea = $("#titleName").val();
-				const textArea = $("#textcon").val();
-				const dateCheck = $("#endDate").val();
-
-				var date = new Date();
-				var date1 = new Date(dateCheck);
-				
-				if(dateCheck != ""){
-					dateFlag = true;
-				}
-				if(titleArea != ""){
-					titleFlag = true;
-				}
-				if(textArea != ""){
-					textFlag = true;
-				}
-				if(date < date1){
-					dateCheckFlag = true;
-				}
-				
-				if(!titleFlag){
-					alert("제목을 입력하세요!");
-				} else if(!dateFlag){
-					alert("종료일을 선택하세요!");
-				} else if(!dateCheckFlag) {
-					alert("오늘 이후의 날짜만 가능합니다.");					
-				} else if(!textFlag){
-					alert("내용을 입력하세요!");
-				} else {
-					$("#voteForm").submit();
-				}
-			};
-			
-		</script>
-		
 		<!-- /새로운 투표-->
-
-	<script>
-		function voteDetail(num){
-			var date = new Date();
-			var detailnum = num;
-			const title = $("#titleVo");
-			const content = $("#contentVo");
-			const voteList = $("#voteList");
-			const buttonArea = $("#buttonArea");
-			
-			var candi = false;
-			var vvote = false;
-			var writer = false;
-			var bob = $("#bob").text();
-			
-			title.html("");
-			content.html("");
-			voteList.html("");
-			buttonArea.html("");			
-			
-			$.ajax({
-			url: "/vote/detail",
-			type: "get",
-			data: {
-				detailnum : detailnum
-			},
-			success: function(data){
-				var date1 = new Date(data.endDate);
-				
-				title.text("제목 : " + data.title);								
-				content.text("내용 : " + data.content);
-				
-				title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
-				
-				if(data.voteOptionList != ""){
-					
-					for(var index in data.voteOptionList){
-						$index = "vote" + index;
-						
-						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
-						
-						if(bob == data.voteOptionList[index].member.name ){
-							candi = true;
-						}
-						
-					}
-					
-					for(var index in data.voteParticipationList){
-						if(bob == data.voteParticipationList[index].member.name){
-							vvote = true;
-						}	
-					}
-					
-					if(date > date1){
-						vvote = true;
-						candi = true;
-					}
-					
-					/* Controller로 보내기위한 임의적인 input */
-					voteList.append("<input type='text' name='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
-					
-					if(!candi){
-						buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")	;	
-					}
-					if(!vvote){
-						buttonArea.append("<button type='button' style='margin-right: 5px;' class='blue_btn pop_close' onclick='vVote()'>투표하기</button>");
-					}
-					
-				} else {
-					voteList.text("후보가 없습니다.");
-					if(!candi){
-						buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>");
-					}
-				}
-				buttonArea.append("<button class='gray_btn pop_btn' data-button='vote-detail' id='closeVoteDetail'>닫기</button>");
-				
-				$("#candivote").html("");
-				$("#candivote").append("<button type='button' class='blue_btn pop_close' data-button='insertVote' id='insertCandi' onclick='plusCandi(" + data.serialNo + ")'>추가하기</button>");
-				$("#candivote").append("<button type='button' class='gray_btn pop_close' data-button='insertVote' id='candiClose'>닫기</button>");
-				$("#candiArea").html("");
-				$("#candiArea").append("<p>제목 : " + data.title + "</p>");
-				$("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
-				
-				$("#voteInIN, #insertCandi, #candiClose, #closeVoteDetail").click(function(){
-						var pop_name = $(this).data('button');
-
-						$('#' + pop_name).stop().toggle();
-						var window_w = $(window).width();
-						$('.pop_layer').each(function (index, item) {
-							$(item).addClass('pop_0' + index);
-
-							var pop_width = $('.pop_0' + index).width();
-							var pop_height = $('.pop_0' + index).height();
-
-							$('.pop_0' + index).css({
-								'margin-left': -(pop_width / '2'),
-								'margin-top': -(pop_height / '2')
-							});
-						});
-						
-						$('.payroll_pop_layer').each(function (index, item) {
-							$(item).addClass('pop_0' + index);
-
-							var pop_width = $('.pop_0' + index).width();
-							var pop_height = $('.pop_0' + index).height();
-
-							$('.pop_0' + index).css({
-								'margin-left': -(pop_width / '2'),
-								'margin-top': -(pop_height / '2')
-							});
-						});
-					});
-			},
-			error: function(xhr){
-				console.log("에러임");
-				console.log(xhr);
-				 }
-			});
-		}
-		
-		function plusCandi(num){
-			var candiInsert = $("#candiInsert").val();
-			var votenum = num;
-			console.log(votenum);
-			console.log(candiInsert);
-
-			$.ajax({
-				url: "/vote/plusCandi",
-				type: "post",
-				data: {
-					candiInsert : candiInsert,
-					votenum : votenum
-				},
-				success: function(data){
-					voteDetail(votenum);
-				},
-				error: function(xhr){
-					console.log("에러임");
-					console.log(xhr);
-					 }
-			});
-		}
-	</script>
 
 		<!-- 투표 게시판 디테일 -->
 		<div id="vote-detail" class="pop_layer">
@@ -503,9 +302,218 @@
 		</div>
 	<!-- /투표 게시판 디테일-->
 	
+	
+	
+	
+	<!-- 후보 등록 -->
+	<div id="insertVote" class="pop_layer">
+		<div class="top_area">
+			<h2>후보 등록</h2>
+			<button type="button" class="pop_close" data-button="insertVote">닫기</button>
+		</div>
+		<div class="pop_inner">
+			<div class="top" id="candiArea">
+			</div>
+		</div>
+		<div class="btn_area" id="candivote">
+			
+		</div>
+	</div>
+	<!-- /후보 등록 -->
+
+	<!-- 투표 결과 -->
+	<div id="resultVote" class="pop_layer">
+		<div class="top_area">
+			<h2>투표 결과</h2>
+			<button type="button" class="pop_close" data-button="resultVote">닫기</button>
+		</div>
+		<div class="pop_inner">
+			<div class="top">
+				<div class="tableArea" id="voteResultTable">
+				</div>
+			</div>
+		</div>
+		<div class="btn_area">
+			<button class="gray_btn pop_close" data-button="resultVote">닫기</button>
+		</div>
+	</div>
+	
+	
 	<script>
+	/* 신규 투표작성 */
+	function insertVote(){
+		var titleFlag = false;
+		var dateFlag = false;
+		var textFlag = false;
+		var dateCheckFlag = false;
+		
+		const titleArea = $("#titleName").val();
+		const textArea = $("#textcon").val();
+		const dateCheck = $("#endDate").val();
+
+		var date = new Date();
+		var date1 = new Date(dateCheck);
+		
+		if(dateCheck != ""){
+			dateFlag = true;
+		}
+		if(titleArea != ""){
+			titleFlag = true;
+		}
+		if(textArea != ""){
+			textFlag = true;
+		}
+		if(date < date1){
+			dateCheckFlag = true;
+		}
+		
+		if(!titleFlag){
+			alert("제목을 입력하세요!");
+		} else if(!dateFlag){
+			alert("종료일을 선택하세요!");
+		} else if(!dateCheckFlag) {
+			alert("오늘 이후의 날짜만 가능합니다.");					
+		} else if(!textFlag){
+			alert("내용을 입력하세요!");
+		} else {
+			$("#voteForm").submit();
+		}
+	};
+	
+	/* 투표 디테일 부분 */
+	function voteDetail(num){
+		var date = new Date();
+		var detailnum = num;
+		const title = $("#titleVo");
+		const content = $("#contentVo");
+		const voteList = $("#voteList");
+		const buttonArea = $("#buttonArea");
+		
+		var candi = false;
+		var vvote = false;
+		var writer = false;
+		var bob = $("#bob").text();
+		
+		title.html("");
+		content.html("");
+		voteList.html("");
+		buttonArea.html("");			
+		
+		$.ajax({
+		url: "/vote/detail",
+		type: "get",
+		data: {
+			detailnum : detailnum
+		},
+		success: function(data){
+			var date1 = new Date(data.endDate);
+			var voteCheckFlag = false;
+			
+			if(date > date1){
+				vvote = true;
+				candi = true;
+				voteCheckFlag = true;
+			}
+			
+			for(var index in data.voteParticipationList){
+				if(bob == data.voteParticipationList[index].member.name){
+					vvote = true;
+					voteCheckFlag = true;
+				}	
+			}
+			
+			title.text("제목 : " + data.title);								
+			content.text("내용 : " + data.content);
+			
+			title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
+			
+			if(data.voteOptionList != ""){
+				
+				for(var index in data.voteOptionList){
+					$index = "vote" + index;
+					
+					if(voteCheckFlag){
+						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
+					} else {
+						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
+					}
+					
+					if(bob == data.voteOptionList[index].member.name ){
+						candi = true;
+					}
+					
+				}
+				
+				
+				
+				if(date > date1){
+					vvote = true;
+					candi = true;
+				}
+				
+				/* Controller로 보내기위한 임의적인 input */
+				voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
+				
+				if(!candi){
+					buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")	;	
+				}
+				if(!vvote){
+					buttonArea.append("<button type='button' style='margin-right: 5px;' class='blue_btn pop_close' onclick='vVote()'>투표하기</button>");
+				}
+				
+			} else {
+				voteList.text("후보가 없습니다.");
+				if(!candi){
+					buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>");
+				}
+			}
+			buttonArea.append("<button class='gray_btn pop_btn' data-button='vote-detail' id='closeVoteDetail'>닫기</button>");
+			
+			$("#candivote").html("");
+			$("#candivote").append("<button type='button' class='blue_btn pop_close' style='margin-right: 5px;' data-button='insertVote' id='insertCandi' onclick='plusCandi(" + data.serialNo + ")'>추가하기</button>");
+			$("#candivote").append("<button type='button' class='gray_btn pop_close' data-button='insertVote' id='candiClose'>닫기</button>");
+			$("#candiArea").html("");
+			$("#candiArea").append("<p>제목 : " + data.title + "</p>");
+			$("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
+			
+		},
+		error: function(xhr){
+			console.log(xhr);
+			 }
+		});
+	}
+	
+	/* 후보 추가 */
+	function plusCandi(num){
+		var candiInsert = $("#candiInsert").val();
+		var votenum = num;
+		if(candiInsert == ""){
+			alert("후보를 입력하세요");
+		} else {
+			
+		$.ajax({
+			url: "/vote/plusCandi",
+			type: "post",
+			data: {
+				candiInsert : candiInsert,
+				votenum : votenum
+			},
+			success: function(data){
+				voteDetail(votenum);
+			},
+			error: function(xhr){
+				console.log("에러임");
+				console.log(xhr);
+				 }
+		});
+		}
+	}
+	
+		/* 투표하기 */
 		function vVote(){
 			var voteFlag = false;
+			const serialNo = $(".serialNo").val();
+			var desc = $(":input:radio[name=votes]:checked").val();
 			
 			if($(".vote").is(":checked")){
 				voteFlag = true;
@@ -514,10 +522,25 @@
 			if(!voteFlag){
 				alert("투표하실 내용을 선택하세요.");
 			} else {
-				$("#vvote").submit();
+				$.ajax({
+					url: "/vote/vvote",
+					type: "post",
+					data: {
+						serialNo : serialNo,
+						desc : desc
+					},
+					success: function(data){
+						voteDetail(serialNo);
+					},
+					error: function(xhr){
+						console.log("에러임");
+						console.log(xhr);
+						 }
+				});
 			}
 		}
 		
+		/* 투표결과조회 */
 		function resultVote(){
 			var voteNumber = $("#pareNum").val();
 			const resultVoteBody = $("#resultVoteBody");
@@ -526,7 +549,6 @@
 			resultVoteBody.html("");
 			voteResultTable.html("");
 			
-			console.log("나옴?" + voteNumber);
 			$.ajax({
 				url: "/vote/resultVote",
 				type: "get",
@@ -534,7 +556,6 @@
 					voteNumber : voteNumber
 				},
 				success: function(data){
-					console.table(data.voteOptionList);
 					
 					if(data.voteOptionList != ""){
 						$table = $("<table>");
@@ -586,51 +607,50 @@
 					
 				},
 				error: function(xhr){
-					console.log("에러임");
 					console.log(xhr);
 					 }
 			});
 		}
 		
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 6;
+			
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "투표가 존재하지 않습니다.",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+	            "order" : [],
+	            /* 보이는 갯수 설정 안보이게 */
+	            lengthChange: false,
+	            /* 페이지 전체수 나오던 부분 안보이게*/
+	            info : false,
+	            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+	            "dom": 't<"fDiv"f><"pDiv"p>',
+	            
+	            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+	            "aoColumnDefs": [
+	                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5 ] }
+	             ]
+	        });
+			
+			clearInterval(timer);
+			
+		}, 100);
 	</script>
 	
 	
-	<!-- 후보 등록 -->
-	<div id="insertVote" class="pop_layer">
-		<div class="top_area">
-			<h2>후보 등록</h2>
-			<button type="button" class="pop_close" data-button="insertVote">닫기</button>
-		</div>
-		<div class="pop_inner">
-			<div class="top" id="candiArea">
-			</div>
-		</div>
-		<div class="btn_area" id="candivote">
-			
-		</div>
-	</div>
-	<!-- /후보 등록 -->
-
-	<!-- 투표 결과 -->
-	<div id="resultVote" class="pop_layer">
-		<div class="top_area">
-			<h2>투표 결과</h2>
-			<button type="button" class="pop_close" data-button="resultVote">닫기</button>
-		</div>
-		<div class="pop_inner">
-			<div class="top">
-				<div class="tableArea" id="voteResultTable">
-				</div>
-			</div>
-		</div>
-		<div class="btn_area">
-			<a href="#n" class="gray_btn pop_close" data-button="resultVote">닫기</a>
-		</div>
-	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 	
 	</section>
-
-
 
 </body>
 </html>

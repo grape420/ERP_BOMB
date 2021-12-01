@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -80,7 +81,10 @@ public class MemberDTO implements Serializable {
 	@Column(name = "MEMBER_EMAIL")
 	private String email;
 	
-	@OneToMany(mappedBy = "member")
+	@Column(name = "ENT_YN")
+	private String entYn;
+	
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	private List<MemberRoleDTO> memberRoleList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "member")
@@ -129,7 +133,7 @@ public class MemberDTO implements Serializable {
 	}
 	public MemberDTO(String name, CompanyDTO company, DeptDTO dept, RankDTO rank, String pwd, int empNo, String birth,
 			String phone, Date joinDate, Date quitDate, int regularPay, int bonus, int annualIncome, String email,
-			List<MemberRoleDTO> memberRoleList, List<EADTO> eaList, List<EACarbonDTO> eaBonDTOList,
+			String entYn, List<MemberRoleDTO> memberRoleList, List<EADTO> eaList, List<EACarbonDTO> eaBonDTOList,
 			List<AddendumDTO> addendumList, List<EAPathDTO> eaPathList, List<TNADTO> tnaList, List<VoteDTO> voteList,
 			List<VoteParticipationDTO> voteParticipationList, List<VoteOptionDTO> voteOptionList,
 			List<BoardDTO> boardList, List<CommentDTO> commentList, List<NoteDTO> sentNoteList,
@@ -148,6 +152,7 @@ public class MemberDTO implements Serializable {
 		this.bonus = bonus;
 		this.annualIncome = annualIncome;
 		this.email = email;
+		this.entYn = entYn;
 		this.memberRoleList = memberRoleList;
 		this.eaList = eaList;
 		this.eaBonDTOList = eaBonDTOList;
@@ -164,7 +169,6 @@ public class MemberDTO implements Serializable {
 		this.salaryList = salaryList;
 		this.sp = sp;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -248,6 +252,12 @@ public class MemberDTO implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getEntYn() {
+		return entYn;
+	}
+	public void setEntYn(String entYn) {
+		this.entYn = entYn;
 	}
 	public List<MemberRoleDTO> getMemberRoleList() {
 		return memberRoleList;
@@ -342,12 +352,12 @@ public class MemberDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MemberDTO [name=" + name + ", coSerialNo=" + company.getName() + ", deptNo=" + dept.getName() + ", rankNo=" + rank.getName()
 				+ ", pwd=" + pwd + ", empNo=" + empNo + ", birth=" + birth + ", phone=" + phone + ", joinDate="
 				+ joinDate + ", quitDate=" + quitDate + ", regularPay=" + regularPay + ", bonus=" + bonus
-				+ ", annualIncome=" + annualIncome + ", email=" + email + ", sp=" + sp.getServerancePay() + "]";
+				+ ", annualIncome=" + annualIncome + ", email=" + email + ", entYn=" + entYn + "]";
 	}
 }

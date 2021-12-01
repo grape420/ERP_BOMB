@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.note.model.dto.NoteDTO;
 
 @Repository
@@ -168,6 +169,14 @@ public class NoteDAO {
 		int pk = Integer.parseInt(serialNo);
 		NoteDTO noteDto = em.find(NoteDTO.class, pk);
 		noteDto.setReception("Y");
+	}
+	
+	public List<MemberDTO> findAllMember() {
+		String jpql = "SELECT m FROM MemberDTO m";
+
+		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList();
+		
+		return memberList;
 	}
 	
 }

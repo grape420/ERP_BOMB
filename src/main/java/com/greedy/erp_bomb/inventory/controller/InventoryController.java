@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,13 +38,13 @@ public class InventoryController {
 		return mv;
 	}
 	
-	@GetMapping(value = "company", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/company", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<CompanyDTO> findCompanyList() {
 		return inventoryService.findCompanyList();
 	}
 	
-	@GetMapping(value = "icecream", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/icecream", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<IceCreamDTO> findIcecreamList() {
 		return inventoryService.findIcecreamList();
@@ -83,5 +84,14 @@ public class InventoryController {
 		
 		return mv;
 	}
+	
+//	@PostMapping("/search")
+//	public String searchInven(Model model, @RequestParam String keyword) {
+//		List<InventoryDTO> inventoryList = inventoryService.searchInven(keyword);
+//		
+//		model.addAttribute("inventoryList", inventoryList);
+//		
+//		return "/inventory/inventory";
+//	}
 	
 }

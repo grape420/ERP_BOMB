@@ -1,5 +1,7 @@
 package com.greedy.erp_bomb.inventory.model.dao;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,19 +25,42 @@ public class InOutDAO {
 	public List<InOutDTO> findInOutList(String name) {
 		MemberDTO member = em.find(MemberDTO.class, name);
 		
-		String jpql = "SELECT a FROM InOutDTO as a LEFT JOIN a.inventory as b LEFT JOIN b.company as c WHERE c.serialNo = :serialNo";
-		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).setParameter("serialNo", member.getCompany().getSerialNo()).getResultList();
+//		String jpql = "SELECT a FROM InOutDTO as a ORDER BY a.no DESC";
+//		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).getResultList();
+		String jpql = "SELECT a FROM InOutDTO as a LEFT JOIN a.inventory as b LEFT JOIN b.company as c WHERE c.serialNo = :serialNo ORDER BY a.no DESC";
+		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class)
+				                     .setParameter("serialNo", member.getCompany().getSerialNo())
+				                     .getResultList();
 		
+//		List<Integer> removeList = new ArrayList<>();
+//		
+//		for(int i = 0 ; i < inOutList.size() ; i++) {
+//			if(inOutList.get(i).getInventory().getCompany().getSerialNo() != member.getCompany().getSerialNo()) {
+//				removeList.add(i);
+//			} 
+//		}
+//		
+//		Collections.sort(removeList, Collections.reverseOrder());
+//		for(Integer remove : removeList) {
+//			inOutList.remove(remove + 1 -1);
+//		}
 		return inOutList;
 	}
 
-	public List<IceCreamDTO> findIcecreamList() {
-		String jpql = "SELECT m FROM IceCreamDTO as m";
+	public List<InventoryDTO> findIcecreamList(String name) {
+		MemberDTO member = em.find(MemberDTO.class, name);
 		
-		List<IceCreamDTO> icecreamList = em.createQuery(jpql, IceCreamDTO.class).getResultList();
+		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.company.serialNo = :company";
 		
-		for (IceCreamDTO ice : icecreamList) {
-			ice.setInventoryList(null);
+		List<InventoryDTO> icecreamList = em.createQuery(jpql, InventoryDTO.class)
+											.setParameter("company", member.getCompany().getSerialNo())
+											.getResultList();
+		
+		for (InventoryDTO ice : icecreamList) {
+			ice.setInOutList(null);
+			ice.getIceCream().setInventoryList(null);
+			ice.getCompany().setInventoryList(null);
+			ice.getCompany().setMemberList(null);
 		}
 		
 		return icecreamList;
@@ -73,6 +98,46 @@ public class InOutDAO {
 		InventoryDTO selectedInven = em.find(InventoryDTO.class, pk2);
 		selectedInven.setInvenRemainStock(headInven.getInvenRemainStock());
 	}
+
+//	public List<InOutDTO> searchInOutList(String keyword, String name) {
+//		MemberDTO member = em.find(MemberDTO.class, name);
+//		
+//		String jpql = "SELECT a FROM InOutDTO as a "
+//				      + "LEFT JOIN a.inventory as b "
+//				      + "LEFT JOIN b.iceCream as c "
+//				      + "LEFT JOIN b.company as d "
+//				      + "WHERE d.serialNo = :serialNo "
+//				      + "AND c.name LIKE :keyword "
+//				      + "ORDER BY a.no desc";
+//
+//		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class)
+//				                     .setParameter("serialNo", member.getCompany().getSerialNo())
+//				                     .setParameter("keyword", "%" + keyword + "%")
+//				                     .getResultList();
+//		
+//		for (InOutDTO in : inOutList) {
+//			System.out.println(in);
+//		}
+//		
+////		List<Integer> removeList = new ArrayList<>();
+////		
+////		for(int i = 0 ; i < inOutList.size() ; i++) {
+////	         if(inOutList.get(i).getInventory().getCompany().getSerialNo() != member.getCompany().getSerialNo()) {
+////	            removeList.add(i);
+////	         } else {
+////	            if(!inOutList.get(i).getInventory().getIceCream().getName().contains(keyword)) {
+////	               removeList.add(i);
+////	            }
+////	         }
+////	      }
+////		
+////		Collections.sort(removeList, Collections.reverseOrder());
+////		for(Integer remove : removeList) {
+////			inOutList.remove(remove + 1 -1);
+////		}
+//		return inOutList;
+//	}
+
 
 
 }

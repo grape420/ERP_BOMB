@@ -19,6 +19,7 @@
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inOut/inOut.css}">
 <!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -35,30 +36,30 @@
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="main">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">전자결재</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="inOut">입출고</a>
-					</li>
+				   <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+	               </li>
+	               <li class="nav-item mr-3 tab-selected">
+	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+	               </li>
 				</ul>
 			</div>
 		</nav>
@@ -97,12 +98,21 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기에 적으셈 -->
 					<br>
-					<h1 class="h2 text-gray-900"
-						style="padding: 30px; display: inline;">입출고 관리</h1>
+					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">입출고 관리</h1>
 					<div class="search_form">
-						<input type="text" placeholder="검색어 입력" />
-						<button type="button" class="blue_btn">Search</button>
+						<form action="/inOut/search" method="post">
+							<!-- <input type="text" placeholder="검색어 입력" name="keyword" />
+							<button type="submit" class="blue_btn">Search</button> -->
+						</form>
 					</div>
+					
+					<script>
+				    	var test = "${ test }";
+				    	
+				    	$('#search').change(function() {
+				    		test = $("#search").val();
+				    	});
+				    </script>
 
 					<ul class="tab ul-tab">
 						<li class="li-tab product on" data-tab="all_product"><span>전체</span></li>
@@ -113,7 +123,7 @@
 					<!-- 전체 테이블 -->
 					<div id="all_product" class="tab_contents product current">
 						<div class="tableArea">
-							<table>
+							<table class="Table">
 								<colgroup>
 									<col style="width: 5%" />
 									<col style="width: 20%" />
@@ -133,7 +143,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="inOut : ${ inOutList }">
+									<tr th:each="inOut : ${ inOutList }" >
 										<td th:text="${ inOut.no }">
 											<input type="checkbox" id="total_01" class="check_box" /> 
 										</td>
@@ -154,7 +164,7 @@
 					<!-- 입고 테이블 -->
 					<div id="in_product" class="tab_contents product">
 						<div class="tableArea">
-							<table>
+							<table class="Table">
 								<colgroup>
 									<col style="width: 5%" />
 									<col style="width: 20%" />
@@ -193,7 +203,7 @@
 					<!-- 출고 테이블 -->
 					<div id="out_product" class="tab_contents product">
 						<div class="tableArea">
-							<table>
+							<table class="Table">
 								<colgroup>
 									<col style="width: 5%" />
 									<col style="width: 20%" />
@@ -232,7 +242,7 @@
 					<!-- 판매 테이블 -->
 					<div id="sales_product" class="tab_contents product">
 						<div class="tableArea">
-							<table>
+							<table class="Table">
 								<colgroup>
 									<col style="width: 5%" />
 									<col style="width: 20%" />
@@ -291,12 +301,12 @@
 								<tbody>
 									<tr>
 										<td>
-											<select id="icecreamCode" name="icecreamCode">
+											<select id="icecreamCode" name="icecreamCode" style="text-align: center; text-align-last: center">
 											<!-- ajax로 처리 -->
 											</select>
 										</td>
 										<td>
-											<select name="division" id="division">
+											<select name="division" id="division" style="text-align: center; text-align-last: center">
 												<option value="1">입고</option>
 												<option value="2">출고</option>
 												<option value="3">판매</option>
@@ -320,18 +330,6 @@
 					<div class="btm_area" style="margin-left: 10px;">
 						<a class="blue_btn pop_btn" data-button="new_product_pop" id="plusBtn" style="cursor: pointer;">추가</a> 
 					</div>
-					
-					<div class="paging">
-						<button type="button" class="first_btn">처음페이지</button>
-						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a> 
-						<a href="#n" class="num">2</a> 
-						<a href="#n" class="num">3</a> 
-						<a href="#n" class="num">4</a>
-						<button type="button" class="next_btn">다음페이지</button>
-						<button type="button" class="last_btn">마지막페이지</button>
-					</div>
-					<!-- 여기에 적으셈 -->
 				</div>
 			</div>
 		</div>
@@ -345,10 +343,11 @@
 				$icecreamCode.html("");
 				
 				for (let i in data){
-					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
+					$icecreamCode.append($("<option>").val(data[i].iceCream.no).text(data[i].iceCream.name));
 				}
 			},
 			error: function(xhr){
+				console.log("왜 안 나와");
 				console.log(xhr);
 			}
 		});
@@ -372,14 +371,15 @@
 					success : function(data) {
 						console.log(data);
 						
-						if(data==1) {
+						if(data == 1) {
 							alert("본사에 수량이 부족해 입고할 수 없습니다");
 							
-						} else if(data==2) {
+						} else if(data == 2) {
 							alert("재고가 부족해 출고할 수 없습니다");
 							
-						} else if(data==3) {
+						} else if(data == 3) {
 							alert("재고가 부족해 판매할 수 없습니다");
+							
 						} else {
 							$("#inOutForm").submit();
 						}
@@ -402,8 +402,43 @@
 			alert(errorMessage);
 			
  		}		
-		
  		
+ 		/* dataTable */
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "해당 내역이 존재하지 않습니다.",
+		            "info": "_PAGE_ / _PAGES_",
+		            "infoEmpty": "입출고 항목이 존재하지 않습니다.",
+		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+		        "order" : [],
+	               /* 보이는 갯수 설정 안보이게 */
+	               lengthChange: false,
+	               /* 페이지 전체수 나오던 부분 안보이게*/
+	               info : false,
+	               /* 구조 설정 태그 안에 글자는 div클래스명 */
+	               "dom": 't<"fDiv"f><"pDiv"p>',
+	               "aoColumnDefs": [
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4 ] }
+	                ]
+	        });
+			
+			clearInterval(timer);
+		}, 100);
 	</script>
+	
+		<!-- dataTable -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 </body>
 </html>

@@ -1,73 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	lang="ko">
+<html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css"
-	rel="stylesheet" />
-<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}"
-	rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
-<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}"
-	rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
-<link rel="stylesheet" th:href="@{/css/tna/tnaDetail.css}">
-<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" th:href="@{/css/tna/tnaDetail.css}">	<!-- 여기에 페이지 css파일 적용 -->
 <title>ERP BOMB</title>
 </head>
 <body>
 
 	<!-- header -->
 	<header id="top">
-		<th:block th:include="common/header" />
+		<th:block th:include="common/header"/>
 	</header>
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/"> <img
-				th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			<a class="navbar-brand font-weight-bold" href="/">
+				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="shoes/list">메인 페이지</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="resell/resellList">게시판</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="resell/resellList">전자결재</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="resell/resellList">급여관리</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="resell/resellList">퇴직금</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="resell/resellList">재고 관리</a></li>
-					<li class="nav-item mr-3 tab-selected"><a
-						class="nav-link font-weight-bold" href="resell/resellList">근태
-							관리</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="resell/resellList">입출고</a></li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -75,14 +66,12 @@
 		<div id="wrapper">
 
 			<!-- Sidebar -->
-			<ul
-				class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-				id="accordionSidebar">
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
-				<a class="sidebar-brand"
-					href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
-					<div class="sidebar-brand-icon rotate-n-15"></div>
+				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+					<div class="sidebar-brand-icon rotate-n-15">
+					</div>
 					<div class="sidebar-brand-text mx-3">근태관리</div>
 				</a>
 
@@ -92,15 +81,21 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 
-				<li class="nav-item"><a class="nav-link collapsed"
-					href="input.html"> <span>근태입력</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link collapsed on"
-					href="reference.html"> <span>근태조회</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link collapsed"
-					href="status.html"> <span>출퇴근/근태현황</span>
-				</a></li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="input.html">
+						<span>근태입력</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed on" href="reference.html">
+						<span>근태조회</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="status.html">
+						<span>출퇴근/근태현황</span>
+					</a>
+				</li>
 
 				<hr class="sidebar-divider">
 			</ul>
@@ -108,6 +103,7 @@
 
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div style="width: 80%;" class="">
+					<!--hhj_내용추가-->
 					<div class="content_area">
 						<div class="top">
 							<div class="title">
@@ -119,12 +115,9 @@
 							</div>
 						</div>
 						<ul style="padding-bottom: 0.4px" class="tab ul-tab">
-							<li class="li-tab electronic_approval on"
-								data-tab="total_attendance"><span style="font-size: 14px">전체</span></li>
-							<li class="li-tab electronic_approval"
-								data-tab="paying_attendance"><span style="font-size: 14px">결재중</span></li>
-							<li class="li-tab electronic_approval"
-								data-tab="comfirm_attendance"><span style="font-size: 14px">확인</span></li>
+							<li class="li-tab electronic_approval on" data-tab="total_attendance"><span style="font-size: 14px">전체</span></li>
+							<li class="li-tab electronic_approval" data-tab="paying_attendance"><span style="font-size: 14px">결재중</span></li>
+							<li class="li-tab electronic_approval" data-tab="comfirm_attendance"><span style="font-size: 14px">확인</span></li>
 						</ul>
 						<!--전체-->
 						<div id="total_attendance" class="tab_contents current">
@@ -133,19 +126,20 @@
 								<table class="h_table">
 									<caption>근태조회 전체</caption>
 									<colgroup>
-										<col style="width: 5%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
+										<col style="width:5%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
 									</colgroup>
 									<thead>
 										<tr>
-											<th><input type="checkbox" class="check_box"
-												id="total_num01"> <label for="total_num01"></label>
+											<th>
+												<input type="checkbox" class="check_box" id="total_num01">
+												<label for="total_num01"></label>
 											</th>
 											<th>근태번호</th>
 											<th>근태일자</th>
@@ -158,28 +152,29 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="checkbox" id="total01_num_01"
-												class="check_box"> <label for="total01_num_01"
-												data-num="1"></label></td>
-											<td class="pop_btn" data-button="attendance_edit_pop">2021/11/10
-												-1</td>
+											<td>
+												<input type="checkbox" id="total01_num_01" class="check_box">
+												<label for="total01_num_01" data-num="1"></label>
+											</td>
+											<td class="pop_btn" data-button="attendance_edit_pop">2021/11/10 -1</td>
 											<td>2021/11/10</td>
 											<td>오로라</td>
-											<td>연차</td>
-											<td>7.00</td>
-											<td>2021 휴가</td>
+											<td>연차</td>											
+											<td>7.00</td>											
+											<td>2021 휴가</td>											
 											<td>다양한 항목을 추가하여 활용할 수 있습니다.</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox" id="total01_num_02"
-												class="check_box"> <label for="total01_num_02"
-												data-num="2"></label></td>
+											<td>
+												<input type="checkbox" id="total01_num_02" class="check_box">
+												<label for="total01_num_02" data-num="2"></label>
+											</td>
 											<td></td>
 											<td></td>
 											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td></td>											
+											<td></td>											
+											<td></td>											
 											<td></td>
 										</tr>
 									</tbody>
@@ -187,8 +182,10 @@
 								<div class="paging">
 									<button type="button" class="first_btn">처음페이지</button>
 									<button type="button" class="prev_btn">이전페이지</button>
-									<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a>
-									<a href="#n" class="num">3</a> <a href="#n" class="num">4</a>
+									<a href="#n" class="num on">1</a>
+									<a href="#n" class="num">2</a>
+									<a href="#n" class="num">3</a>
+									<a href="#n" class="num">4</a>
 									<button type="button" class="next_btn">다음페이지</button>
 									<button type="button" class="last_btn">마지막페이지</button>
 								</div>
@@ -206,19 +203,20 @@
 								<table class="h_table">
 									<caption>근태조회 결재중</caption>
 									<colgroup>
-										<col style="width: 5%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
+										<col style="width:5%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
 									</colgroup>
 									<thead>
 										<tr>
-											<th><input type="checkbox" class="check_box"
-												id="total_num02"> <label for="total_num02"></label>
+											<th>
+												<input type="checkbox" class="check_box" id="total_num02">
+												<label for="total_num02"></label>
 											</th>
 											<th>근태번호</th>
 											<th>근태일자</th>
@@ -240,8 +238,10 @@
 								<div class="paging">
 									<button type="button" class="first_btn">처음페이지</button>
 									<button type="button" class="prev_btn">이전페이지</button>
-									<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a>
-									<a href="#n" class="num">3</a> <a href="#n" class="num">4</a>
+									<a href="#n" class="num on">1</a>
+									<a href="#n" class="num">2</a>
+									<a href="#n" class="num">3</a>
+									<a href="#n" class="num">4</a>
 									<button type="button" class="next_btn">다음페이지</button>
 									<button type="button" class="last_btn">마지막페이지</button>
 								</div>
@@ -251,7 +251,7 @@
 								<a href="#n" class="gray_btn">선택삭제</a>
 							</div>
 						</div>
-						<!--결재중-->
+						<!--결재중-->						
 						<!--확인-->
 						<div id="comfirm_attendance" class="tab_contents">
 							<div class="tableArea">
@@ -259,19 +259,20 @@
 								<table class="h_table">
 									<caption>근태조회 확인</caption>
 									<colgroup>
-										<col style="width: 5%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
-										<col style="width: 11%">
+										<col style="width:5%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
+										<col style="width:11%">
 									</colgroup>
 									<thead>
 										<tr>
-											<th><input type="checkbox" class="check_box"
-												id="total_num03"> <label for="total_num03"></label>
+											<th>
+												<input type="checkbox" class="check_box" id="total_num03">
+												<label for="total_num03"></label>
 											</th>
 											<th>근태번호</th>
 											<th>근태일자</th>
@@ -284,28 +285,29 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="checkbox" id="total03_num_01"
-												class="check_box"> <label for="total03_num_01"
-												data-num="1"></label></td>
-											<td class="pop_btn" data-button="attendance_edit_pop">2021/11/10
-												-1</td>
+											<td>
+												<input type="checkbox" id="total03_num_01" class="check_box">
+												<label for="total03_num_01" data-num="1"></label>
+											</td>
+											<td class="pop_btn" data-button="attendance_edit_pop">2021/11/10 -1</td>
 											<td>2021/11/10</td>
 											<td>오로라</td>
-											<td>연차</td>
-											<td>7.00</td>
-											<td>2021 휴가</td>
+											<td>연차</td>											
+											<td>7.00</td>											
+											<td>2021 휴가</td>											
 											<td>다양한 항목을 추가하여 활용할 수 있습니다.</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox" id="total01_num_02"
-												class="check_box"> <label for="total01_num_02"
-												data-num="2"></label></td>
+											<td>
+												<input type="checkbox" id="total01_num_02" class="check_box">
+												<label for="total01_num_02" data-num="2"></label>
+											</td>
 											<td></td>
 											<td></td>
 											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td></td>											
+											<td></td>											
+											<td></td>											
 											<td></td>
 										</tr>
 									</tbody>
@@ -313,26 +315,27 @@
 								<div class="paging">
 									<button type="button" class="first_btn">처음페이지</button>
 									<button type="button" class="prev_btn">이전페이지</button>
-									<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a>
-									<a href="#n" class="num">3</a> <a href="#n" class="num">4</a>
+									<a href="#n" class="num on">1</a>
+									<a href="#n" class="num">2</a>
+									<a href="#n" class="num">3</a>
+									<a href="#n" class="num">4</a>
 									<button type="button" class="next_btn">다음페이지</button>
 									<button type="button" class="last_btn">마지막페이지</button>
 								</div>
 							</div>
 							<div class="btm_area">
 								<a href="#n" class="blue_btn pop_btn" data-button="new_inpu_pop">신규</a>
-								<a href="#n" class="gray_btn">전자결재</a> <a href="#n"
-									class="gray_btn">선택삭제</a>
+								<a href="#n" class="gray_btn">전자결재</a>
+								<a href="#n" class="gray_btn">선택삭제</a>
 							</div>
 						</div>
 						<!--확인-->
 					</div>
-					<!--근태수정 팝업-->
+					<!--근태수정 팝업-->					
 					<div id="attendance_edit_pop" class="pop_layer">
 						<div class="top_area">
 							<h2>근태수정</h2>
-							<button type="button" class="pop_close"
-								data-button="attendance_edit_pop">닫기</button>
+							<button type="button" class="pop_close" data-button="attendance_edit_pop">닫기</button>
 						</div>
 						<div class="search_form">
 							<input type="text" placeholder="검색어 입력" />
@@ -342,14 +345,14 @@
 							<div class="data_line">
 								<p>일자</p>
 								<div class="data_info">
-									<select id="select8" onchange="changeHandler(this)"
-										value="2021">
+									<select id="select8" onchange="changeHandler(this)" value="2021">
 										<option value="2022">2022</option>
 										<option value="2021">2021</option>
 										<option value="2020">2020</option>
 										<option value="2019">2019</option>
 										<option value="직접입력">직접입력</option>
-									</select>/ <select value="11">
+									</select>/
+									<select value="11">
 										<option>1</option>
 										<option>2</option>
 										<option>3</option>
@@ -362,27 +365,28 @@
 										<option>10</option>
 										<option>11</option>
 										<option>12</option>
-									</select>/ <input type="text" value="08" /> <input type="text"
-										name="date" class="datepicker-new" data-position="right top"
-										size="12">
+									</select>/
+									<input type="text" value="08" />
+									<input type="text" name="date" class="datepicker-new" data-position="right top" size="12">
 								</div>
 							</div>
 							<div class="tableArea">
-								<table style="width: 1127px" class="input_table">
+								<table style="width:1127px" class="input_table">
 									<caption>근태수정</caption>
 									<colgroup>
-										<col style="width: 3%">
-										<col style="width: 27%">
-										<col style="width: 10%">
-										<col style="width: 10%">
-										<col style="width: 10%">
-										<col style="width: 9%">
-										<col style="width: 28%">
+										<col style="width:3%">
+										<col style="width:27%">
+										<col style="width:10%">
+										<col style="width:10%">
+										<col style="width:10%">
+										<col style="width:9%">
+										<col style="width:28%">
 									</colgroup>
 									<thead>
 										<tr>
-											<th><input type="checkbox" class="check_box"
-												id="total_num04"> <label for="total_num04"></label>
+											<th>
+												<input type="checkbox" class="check_box" id="total_num04">
+												<label for="total_num04"></label>
 											</th>
 											<th>근태일자</th>
 											<th>사원</th>
@@ -394,20 +398,21 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="checkbox" id="total04_num_01"
-												class="check_box"> <label for="total04_num_01"
-												data-num="1"></label></td>
+											<td>
+												<input type="checkbox" id="total04_num_01" class="check_box">
+												<label for="total04_num_01" data-num="1"></label>
+											</td>
 											<td>
 												<div class="data_info">
-													<select id="select1" onchange="changeHandler(this)"
-														value="2021">
+													<select id="select1" onchange="changeHandler(this)" value="2021">
 														<option>====</option>
 														<option value="2022">2022</option>
 														<option value="2021">2021</option>
 														<option value="2020">2020</option>
 														<option value="2019">2019</option>
 														<option value="직접입력">직접입력</option>
-													</select>/ <select>
+													</select>/
+													<select>
 														<option>====</option>
 														<option>1</option>
 														<option>2</option>
@@ -421,22 +426,32 @@
 														<option>10</option>
 														<option>11</option>
 														<option>12</option>
-													</select>/ <input type="text" value="08" /> <input type="text"
-														name="date" class="datepicker-new"
-														data-position="right top" size="12" />
+													</select>/
+													<input type="text" value="08" />
+													<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
 												</div>
 											</td>
-											<td><input type="text" value="오로라" /></td>
-											<td><input type="text" value="연차" /></td>
-											<td><input type="text" value="2021 휴가" /></td>
-											<td><input type="text" value="1" /></td>
-											<td><input type="text" value="다양한 항목을 추가하여 활용할 수 있습니다." />
+											<td>
+												<input type="text" value="오로라" />
+											</td>
+											<td>
+												<input type="text" value="연차" />
+											</td>
+											<td>
+												<input type="text" value="2021 휴가" />
+											</td>
+											<td>
+												<input type="text" value="1" />
+											</td>
+											<td>
+												<input type="text" value="다양한 항목을 추가하여 활용할 수 있습니다." />
 											</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox" id="total04_num_02"
-												class="check_box"> <label for="total04_num_02"
-												data-num="2"></label></td>
+											<td>
+												<input type="checkbox" id="total04_num_02" class="check_box">
+												<label for="total04_num_02" data-num="2"></label>
+											</td>
 											<td>
 												<div class="data_info">
 													<select id="select2" onchange="changeHandler(this)">
@@ -446,7 +461,8 @@
 														<option>2020</option>
 														<option>2019</option>
 														<option>직접입력</option>
-													</select>/ <select>
+													</select>/
+													<select>
 														<option>====</option>
 														<option>1</option>
 														<option>2</option>
@@ -460,16 +476,25 @@
 														<option>10</option>
 														<option>11</option>
 														<option>12</option>
-													</select>/ <input type="text" value="08" /> <input type="text"
-														name="date" class="datepicker-new"
-														data-position="right top" size="12" />
+													</select>/
+													<input type="text" value="08" />
+													<input type="text" name="date"  class="datepicker-new" data-position="right top" size="12" />
 												</div>
 											</td>
-											<td><input type="text" value="오로라" /></td>
-											<td><input type="text" value="연차" /></td>
-											<td><input type="text" value="2021 휴가" /></td>
-											<td><input type="text" value="1" /></td>
-											<td><input type="text" value="다양한 항목을 추가하여 활용할 수 있습니다." />
+											<td>
+												<input type="text" value="오로라" />
+											</td>
+											<td>
+												<input type="text" value="연차" />
+											</td>
+											<td>
+												<input type="text" value="2021 휴가" />
+											</td>
+											<td>
+												<input type="text" value="1" />
+											</td>
+											<td>
+												<input type="text" value="다양한 항목을 추가하여 활용할 수 있습니다." />
 											</td>
 										</tr>
 										<tr class="last_tr">
@@ -486,18 +511,17 @@
 							</div>
 						</div>
 						<div class="btm_area">
-							<a href="#n" class="blue_btn">저장</a> <a href="#n"
-								class="gray_btn pop_close" data-button="attendance_edit_pop">닫기</a>
+							<a href="#n" class="blue_btn">저장</a>
+							<a href="#n" class="gray_btn pop_close" data-button="attendance_edit_pop">닫기</a>
 							<a href="#n" class="gray_btn">삭제</a>
 						</div>
 					</div>
 					<!--//근태수정 팝업-->
-					<!--근태신규 팝업-->
+					<!--근태신규 팝업-->					
 					<div id="new_inpu_pop" class="pop_layer">
 						<div class="top_area">
 							<h2>근태입력</h2>
-							<button type="button" class="pop_close"
-								data-button="new_inpu_pop">닫기</button>
+							<button type="button" class="pop_close" data-button="new_inpu_pop">닫기</button>
 						</div>
 						<div class="search_form">
 							<input type="text" placeholder="검색어 입력" />
@@ -513,7 +537,8 @@
 										<option value="2020">2020</option>
 										<option value="2019">2019</option>
 										<option value="직접입력">직접입력</option>
-									</select>/ <select>
+									</select>/
+									<select>
 										<option>1</option>
 										<option>2</option>
 										<option>3</option>
@@ -526,27 +551,28 @@
 										<option>10</option>
 										<option>11</option>
 										<option>12</option>
-									</select>/ <input type="text" value="08" /> <input type="text"
-										name="date" class="datepicker-new" data-position="right top"
-										size="12" />
+									</select>/
+									<input type="text" value="08" />
+									<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
 								</div>
 							</div>
 							<div class="tableArea">
-								<table style="width: 1127px" class="input_table">
+								<table style="width:1127px" class="input_table">
 									<caption>근태수정</caption>
 									<colgroup>
-										<col style="width: 3%">
-										<col style="width: 27%">
-										<col style="width: 10%">
-										<col style="width: 10%">
-										<col style="width: 10%">
-										<col style="width: 9%">
-										<col style="width: 28%">
+										<col style="width:3%">
+										<col style="width:27%">
+										<col style="width:10%">
+										<col style="width:10%">
+										<col style="width:10%">
+										<col style="width:9%">
+										<col style="width:28%">
 									</colgroup>
 									<thead>
 										<tr>
-											<th><input type="checkbox" class="check_box"
-												id="total_num04"> <label for="total_num04"></label>
+											<th>
+												<input type="checkbox" class="check_box" id="total_num04">
+												<label for="total_num04"></label>
 											</th>
 											<th>근태일자</th>
 											<th>사원</th>
@@ -558,20 +584,21 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="checkbox" id="total04_num_01"
-												class="check_box"> <label for="total04_num_01"
-												data-num="1"></label></td>
+											<td>
+												<input type="checkbox" id="total04_num_01" class="check_box">
+												<label for="total04_num_01" data-num="1"></label>
+											</td>
 											<td>
 												<div class="data_info">
-													<select id="select4" onchange="changeHandler(this)"
-														value="2021">
+													<select id="select4" onchange="changeHandler(this)" value="2021">
 														<option>====</option>
 														<option value="2022">2022</option>
 														<option value="2021">2021</option>
 														<option value="2020">2020</option>
 														<option value="2019">2019</option>
 														<option value="직접입력">직접입력</option>
-													</select>/ <select>
+													</select>/
+													<select>
 														<option>====</option>
 														<option>1</option>
 														<option>2</option>
@@ -585,19 +612,31 @@
 														<option>10</option>
 														<option>11</option>
 														<option>12</option>
-													</select>/ <input type="text" />
+													</select>/
+													<input type="text" />
 												</div>
 											</td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox" id="total04_num_02"
-												class="check_box"> <label for="total04_num_02"
-												data-num="2"></label></td>
+											<td>
+												<input type="checkbox" id="total04_num_02" class="check_box">
+												<label for="total04_num_02" data-num="2"></label>
+											</td>
 											<td>
 												<div class="data_info">
 													<select id="select5" onchange="changeHandler(this)">
@@ -607,7 +646,8 @@
 														<option>2020</option>
 														<option>2019</option>
 														<option>직접입력</option>
-													</select>/ <select>
+													</select>/
+													<select>
 														<option>====</option>
 														<option>1</option>
 														<option>2</option>
@@ -621,19 +661,31 @@
 														<option>10</option>
 														<option>11</option>
 														<option>12</option>
-													</select>/ <input type="text" />
+													</select>/
+													<input type="text" />
 												</div>
 											</td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox" id="total04_num_03"
-												class="check_box"> <label for="total04_num_03"
-												data-num="3"></label></td>
+											<td>
+												<input type="checkbox" id="total04_num_03" class="check_box">
+												<label for="total04_num_03" data-num="3"></label>
+											</td>
 											<td>
 												<div class="data_info">
 													<select id="select6" onchange="changeHandler(this)">
@@ -643,7 +695,8 @@
 														<option>2020</option>
 														<option>2019</option>
 														<option>직접입력</option>
-													</select>/ <select>
+													</select>/
+													<select>
 														<option>====</option>
 														<option>1</option>
 														<option>2</option>
@@ -657,19 +710,31 @@
 														<option>10</option>
 														<option>11</option>
 														<option>12</option>
-													</select>/ <input type="text" />
+													</select>/
+													<input type="text" />
 												</div>
 											</td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
 										</tr>
 										<tr>
-											<td><input type="checkbox" id="total04_num_04"
-												class="check_box"> <label for="total04_num_04"
-												data-num="4"></label></td>
+											<td>
+												<input type="checkbox" id="total04_num_04" class="check_box">
+												<label for="total04_num_04" data-num="4"></label>
+											</td>
 											<td>
 												<div class="data_info">
 													<select id="select7" onchange="changeHandler(this)">
@@ -679,7 +744,8 @@
 														<option>2020</option>
 														<option>2019</option>
 														<option>직접입력</option>
-													</select>/ <select>
+													</select>/
+													<select>
 														<option>====</option>
 														<option>1</option>
 														<option>2</option>
@@ -693,16 +759,27 @@
 														<option>10</option>
 														<option>11</option>
 														<option>12</option>
-													</select>/ <input type="text" />
+													</select>/
+													<input type="text" />
 												</div>
 											</td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
-											<td><input type="text" /></td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
+											<td>
+												<input type="text" />
+											</td>
 										</tr>
-
+										
 										<tr class="last_tr">
 											<td></td>
 											<td></td>
@@ -717,24 +794,23 @@
 							</div>
 						</div>
 						<div class="btm_area">
-							<a href="#n" class="blue_btn">저장</a> <a href="#n"
-								class="gray_btn">다시작성</a> <a href="#n"
-								class="gray_btn pop_close" data-button="new_inpu_pop">닫기</a>
+							<a href="#n" class="blue_btn">저장</a>
+							<a href="#n" class="gray_btn">다시작성</a>
+							<a href="#n" class="gray_btn pop_close" data-button="new_inpu_pop">닫기</a>
 						</div>
 					</div>
 					<!--//근태신규 팝업-->
 					<!--//hhj_내용추가-->
-
+					
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<link th:href="@{/uses/vendor/jquery/datepicker.min.css}"
-		rel="stylesheet" type="text/css">
-	<script th:src="@{/uses/vendor/jquery/datepicker.min.js}"></script>
-	<script th:src="@{/uses/vendor/jquery/datepicker.ko.js}"></script>
-
+	
+	<link th:href="@{/uses/vendor/jquery/datepicker.min.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/uses/vendor/jquery/datepicker.min.js}"></script> 
+    <script th:src="@{/uses/vendor/jquery/datepicker.ko.js}"></script> 
+	
 	<script>
 		function changeHandler(e){
 			const input = document.createElement("input");
