@@ -72,44 +72,14 @@
 						<div class="notice">
 							<p class="titleM">공지사항</p>
 							<ul class="notice_list">
-								<li>
-									<a href="#n">
-										<p>[공지]2021년 4월 인사발령</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]신규 거래식당 추가의 건</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]사내 심장제세동기 설치 및 사용방법안내</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]불법 SW 사용 금지 관련 공지 사항</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]옥상 휴게공간 개선 공사 완료의건</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]외국어 교육과정 실시 안내</p>
-										<span class="date">2021.11.10 14:39</span>
+								<li th:each="board : ${ boardList }">
+									<a th:href="@{/board/detail(no=${board.no})}">
+										<p th:text="${ board.title }">[공지]2021년 4월 인사발령</p>
+										<span class="date" th:text="${ board.regDate }">2021.11.10 14:39</span>
 									</a>
 								</li>
 							</ul>
-							<a href="#n" class="link_arrow">공지사항 바로가기</a>
+							<a href="/board/noticeList" class="link_arrow">공지사항 바로가기</a>
 						</div>
 						<div class="calendar">
 							<div id='calendar'></div>
