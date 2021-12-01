@@ -48,6 +48,4 @@ public class SalaryService {
 		System.out.println("DTO : " + salaryDAO.findMemberInfo(name));
 		return salaryDAO.findMemberInfo(name);
 	}
-
-	
 }

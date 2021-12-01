@@ -1,12 +1,14 @@
 package com.greedy.erp_bomb.salary.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,13 +60,6 @@ public class SalaryController {
 		mv.addObject("allSalaryList", allSalaryList);
 		mv.addObject("memberList", memberList);
 		
-		for (MemberDTO memberDTO : memberList) {
-			System.out.println(memberDTO.getName());
-		}
-		
-//		? 로그인 한 사람의 권한 정보 받아오는 법 ? 
-//		mv.addObject("user", user);
-		
 		mv.setViewName("/salary/salary");
 		
 		return mv;
@@ -91,17 +86,52 @@ public class SalaryController {
 		salary.setBonus(bonus);
 		salary.setRegularPay(regularPay);
 
-		salaryService.registNewSalary(salary);
+		boolean flag = true;
 		
-		System.out.println("controller salary : " + salary);
+		/* (이름 + 귀속연월) 기존 값 존재 여부 확인 */
+		List<SalaryDTO> allSalaryList = salaryService.findAllSalary();
+		for (SalaryDTO salaryDTO : allSalaryList) {
+			
+			/* 기존 값 */
+			SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM");
+			String curDate = sd.format(salaryDTO.getDate());
+			System.out.println(curDate);
+			
+			/* insert를 시도하는 값 */
+			Date now = new Date();
+			String newDate = sd.format(now);
+			System.out.println(newDate);
+			
+			/* 귀속연월과 이름 중복 */
+			if (curDate.equals(newDate) && salaryDTO.getMember().getName().equals(name)){
+				// 에러 출력
+				flag = false;
+				System.out.println("같아요! 들어가면 안됩니다!");
+			} 
+		}
 		
-		mv.setViewName("redirect:/salary/salary");
-		
-		return mv;
+//		if(flag == true) {
+			salaryService.registNewSalary(salary);
+			System.out.println("controller salary : " + salary);
+			mv.setViewName("redirect:/salary/salary");
+			return mv;
+//		} else {
+//			mv.setViewName("");
+//			return mv;
+//		}
 	}
 	
-	/* 급여 내역 수정 */
-	
-
+	/* 급여 검색 - 관리자 O *
+	/* 권한 데려오기 */
+//	@PostMapping("/search")
+//	public String searchInOut(Model model, @RequestParam String keyword, Principal principal) {
+//		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+//		
+//		List<SalaryDTO> salaryList = salaryService.searchSalaryList(keyword, user.getName());
+//		
+//		model.addAttribute("salaryList", salaryList);
+//		
+//		return "/salary/salary";
+//	}
 }
 
