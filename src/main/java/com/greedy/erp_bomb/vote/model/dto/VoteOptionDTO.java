@@ -73,7 +73,7 @@ public class VoteOptionDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "VoteOptionDTO [vote=" + vote + ", member=" + member + ", desc=" + desc + ", voteCount=" + voteCount
+		return "VoteOptionDTO [vote=" + vote.getTitle() + ", member=" + member.getName() + ", desc=" + desc + ", voteCount=" + voteCount
 				+ "]";
 	}
 }

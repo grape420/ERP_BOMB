@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InOutDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;
@@ -33,9 +34,7 @@ public class InOutController {
 	}
 
 	@GetMapping("/inOut")
-	public ModelAndView findInOutList(ModelAndView mv, Principal principal) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
+	public ModelAndView findInOutList(ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		List<InOutDTO> inOutList = inOutService.findInOutList(user.getName());
 		
 		mv.addObject("inOutList", inOutList);
@@ -46,22 +45,14 @@ public class InOutController {
 	
 	@GetMapping(value = "icecream", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<IceCreamDTO> findIcecreamList() {
-		
-		return inOutService.findIcecreamList();
+	public List<InventoryDTO> findIcecreamList(@AuthenticationPrincipal UserImpl user) {
+		return inOutService.findIcecreamList(user.getName());
 	}
 	
 	@PostMapping(value = "comparison", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public int findComparison(@RequestParam int icecreamCode,@RequestParam int division, @RequestParam int amount,
-			                             Principal principal ) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
-		System.out.println("회사 코드 : " + user.getCompany().getSerialNo());
-		System.out.println("아이스크림 코드 : " + icecreamCode);
-		System.out.println("구분 : " + division);
-		System.out.println("수량 : " + amount);
-		
+							  @AuthenticationPrincipal UserImpl user) {
 		InventoryPk pk = new InventoryPk();
 		pk.setIceCream(icecreamCode);
 		pk.setCompany(user.getCompany().getSerialNo());
@@ -89,54 +80,32 @@ public class InOutController {
 			if (headInven.getInvenRemainStock() - amount >= 0) {
 				headInven.setInvenRemainStock(headInven.getInvenRemainStock() - amount);
 				
-				/* 본사 재고 UPDATE */
-				inOutService.updateHeadInven(headInven);
-				
 				inven.setInvenRemainStock(inven.getInvenRemainStock() + amount);
-				
-				/* 가맹점 입출고 INSERT */
-				inOutService.registInOut(inOut);
 			} else {
 				return 1;
 			}
-			
 		} else if (division == 2) {										// 출고
 			if (inven.getInvenRemainStock() - amount >= 0) {
 				inven.setInvenRemainStock(inven.getInvenRemainStock() - amount);
-				
-				/* 가맹점 입출고 INSERT */
-				inOutService.registInOut(inOut);
 			} else {
 				return 2;
 			}
 		} else {														// 판매
 			if (inven.getInvenRemainStock() - amount >= 0) {
 				inven.setInvenRemainStock(inven.getInvenRemainStock() - amount);
-				
-				/* 가맹점 입출고 INSERT */
-				inOutService.registInOut(inOut);
 			} else {
 				return 3;
 			}
 		}
 		
-		System.out.println(inOut);
-		
-		inOutService.updateInventory(inven);
 		return 4;
 		
 	}
 	
 	@PostMapping("/regist")
 	public ModelAndView registInOut(ModelAndView mv, @RequestParam int icecreamCode,
-			                        @RequestParam int division, @RequestParam int amount, Principal principal,
+			                        @RequestParam int division, @RequestParam int amount, @AuthenticationPrincipal UserImpl user,
 			                        RedirectAttributes rttr) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
-		System.out.println("user : " + user);
-		System.out.println("로그인한 사용자 이름 : " + user.getName());
-		System.out.println("로그인한 사용자 회사 : " + user.getCompany());
-		
 		/* 재고 테이블 복합키 값 대입 */
 		InventoryPk pk = new InventoryPk();
 		pk.setIceCream(icecreamCode);
@@ -172,9 +141,7 @@ public class InOutController {
 				
 				/* 가맹점 입출고 INSERT */
 				inOutService.registInOut(inOut);
-			} else {
-				
-			}
+			} 
 			
 		} else if (division == 2) {										// 출고
 			if (inven.getInvenRemainStock() - amount >= 0) {
@@ -182,15 +149,13 @@ public class InOutController {
 				
 				/* 가맹점 입출고 INSERT */
 				inOutService.registInOut(inOut);
-			} else {
-			}
+			} 
 		} else {														// 판매
 			if (inven.getInvenRemainStock() - amount >= 0) {
 				inven.setInvenRemainStock(inven.getInvenRemainStock() - amount);
 				
 				/* 가맹점 입출고 INSERT */
 				inOutService.registInOut(inOut);
-			} else {
 			}
 		}
 		
@@ -202,5 +167,14 @@ public class InOutController {
 		
 		return mv;
 	}
+	
+//	@PostMapping("/search")
+//	public String searchInOut(Model model, @RequestParam String keyword, @AuthenticationPrincipal UserImpl user) {
+//		List<InOutDTO> inOutList = inOutService.searchInOutList(keyword, user.getName());
+//		
+//		model.addAttribute("inOutList", inOutList);
+//		
+//		return "/inOut/inOut";
+//	}
 	
 }

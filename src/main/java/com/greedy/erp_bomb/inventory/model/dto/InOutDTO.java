@@ -3,6 +3,7 @@ package com.greedy.erp_bomb.inventory.model.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,8 +32,8 @@ public class InOutDTO implements Serializable {
 	
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name = "CO_SERIAL_NO", referencedColumnName = "CO_SERIAL_NO"),
-		@JoinColumn(name = "ICE_NO", referencedColumnName = "ICE_NO")
+		@JoinColumn(name = "ICE_NO", referencedColumnName = "ICE_NO"),
+		@JoinColumn(name = "CO_SERIAL_NO", referencedColumnName = "CO_SERIAL_NO")
 	})
 	private InventoryDTO inventory;
 	

@@ -47,4 +47,9 @@ public class InventoryService {
 		inventoryDAO.registInven(inven);
 	}
 
+//	@Transactional
+//	public List<InventoryDTO> searchInven(String keyword) {
+//		return inventoryDAO.searchInven(keyword);
+//	}
+
 }

@@ -22,7 +22,7 @@
 }
 
 .id-result, .password-result, .name-result, .phone-result, .email-result,
-	.birth-result, .empNo-result, .regularPay-result {
+	.birth-result, .empNo-result, .regularPay-result, .annualIncome-result {
 	margin-top: 2px;
 	font-size: 11px;
 }

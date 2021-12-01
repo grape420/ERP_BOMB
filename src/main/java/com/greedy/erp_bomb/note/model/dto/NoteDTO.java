@@ -1,8 +1,9 @@
 package com.greedy.erp_bomb.note.model.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class NoteDTO implements Serializable {
 	private MemberDTO receiveMember;
 	
 	@Column(name = "NOTE_SEND_DATE")
-	private java.sql.Date sendDate;
+	private Date sendDate;
 	
 	@Column(name = "NOTE_RECEPTION")
 	private String reception;
@@ -77,10 +78,10 @@ public class NoteDTO implements Serializable {
 	public void setReceiveMember(MemberDTO receiveMember) {
 		this.receiveMember = receiveMember;
 	}
-	public java.sql.Date getSendDate() {
+	public Date getSendDate() {
 		return sendDate;
 	}
-	public void setSendDate(java.sql.Date sendDate) {
+	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
 	}
 	public String getReception() {

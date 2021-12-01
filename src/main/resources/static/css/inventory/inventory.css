@@ -621,3 +621,13 @@ caption {
 	left: 15px;
 	top: 7px;
 }
+
+.fDiv{
+      float: left;
+      text-align: left;
+      margin-left: 5px;
+}
+.pDiv{
+      float: right;
+      text-align: right;
+}
