@@ -15,7 +15,6 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public ModelAndView loginSuccess(ModelAndView mv) {
-		System.out.println("여기 오냐?");
 		
 		mv.setViewName("redirect:/main/main");
 		

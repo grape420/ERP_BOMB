@@ -122,16 +122,15 @@ public class MemberDTO implements Serializable {
 	
 	@OneToMany(mappedBy = "receiveMember")
 	private List<NoteDTO> receiveMemberList = new ArrayList<>();
-
+	
 	@OneToMany(mappedBy = "member")
 	private List<SalaryDTO> salaryList = new ArrayList<>();
 
 	@OneToOne(mappedBy = "member")
 	private SPDTO sp;
-	
+
 	public MemberDTO() {
 	}
-
 	public MemberDTO(String name, CompanyDTO company, DeptDTO dept, RankDTO rank, String pwd, int empNo, String birth,
 			String phone, Date joinDate, Date quitDate, int regularPay, int bonus, int annualIncome, String email,
 			String entYn, List<MemberRoleDTO> memberRoleList, List<EADTO> eaList, List<EACarbonDTO> eaBonDTOList,
@@ -170,7 +169,6 @@ public class MemberDTO implements Serializable {
 		this.salaryList = salaryList;
 		this.sp = sp;
 	}
-
 	public String getName() {
 		return name;
 	}
@@ -255,6 +253,12 @@ public class MemberDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getEntYn() {
+		return entYn;
+	}
+	public void setEntYn(String entYn) {
+		this.entYn = entYn;
+	}
 	public List<MemberRoleDTO> getMemberRoleList() {
 		return memberRoleList;
 	}
@@ -279,7 +283,6 @@ public class MemberDTO implements Serializable {
 	public void setAddendumList(List<AddendumDTO> addendumList) {
 		this.addendumList = addendumList;
 	}
-
 	public List<EAPathDTO> getEaPathList() {
 		return eaPathList;
 	}
@@ -334,30 +337,20 @@ public class MemberDTO implements Serializable {
 	public void setReceiveMemberList(List<NoteDTO> receiveMemberList) {
 		this.receiveMemberList = receiveMemberList;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	public String getEntYn() {
-		return entYn;
-	}
-	public void setEntYn(String entYn) {
-		this.entYn = entYn;
-	}
-
 	public List<SalaryDTO> getSalaryList() {
 		return salaryList;
 	}
-
 	public void setSalaryList(List<SalaryDTO> salaryList) {
 		this.salaryList = salaryList;
 	}
-
 	public SPDTO getSp() {
 		return sp;
 	}
-
 	public void setSp(SPDTO sp) {
 		this.sp = sp;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,14 +41,14 @@ public class EaContorller {
 	}
 	
 	@PostMapping("/regNewEa/{type}")
-	public ModelAndView regEa(Principal principal, ModelAndView mv, HttpServletRequest request, @PathVariable int type) {
+	public ModelAndView regEa(@AuthenticationPrincipal UserImpl user, ModelAndView mv, HttpServletRequest request, @PathVariable int type) {
 		EADTO ea = new EADTO();
 		List<EAPathDTO> eaPathList = new ArrayList<>();
 		List<EACarbonDTO> eaCarbonList = new ArrayList<>();
 		String[] approvaler = request.getParameterValues("approvaler");
 		String[] carboner = request.getParameterValues("carboner");
 		MemberDTO drafter = new MemberDTO();
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		
 		ea.setMember(drafter);
 		ea.setTitle(request.getParameter("title"));
@@ -98,14 +99,14 @@ public class EaContorller {
 	}
 	
 	@PostMapping("/updateEa/{type}")
-	public ModelAndView updateEa(Principal principal, ModelAndView mv, HttpServletRequest request, @PathVariable int type) {
+	public ModelAndView updateEa(@AuthenticationPrincipal UserImpl user, ModelAndView mv, HttpServletRequest request, @PathVariable int type) {
 		EADTO ea = new EADTO();
 		List<EAPathDTO> eaPathList = new ArrayList<>();
 		List<EACarbonDTO> eaCarbonList = new ArrayList<>();
 		String[] approvaler = request.getParameterValues("approvaler");
 		String[] carboner = request.getParameterValues("carboner");
 		MemberDTO drafter = new MemberDTO();
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		
 		System.out.println(request.getParameter("eaNo"));
 		
@@ -161,34 +162,31 @@ public class EaContorller {
 	}
 	
 	@GetMapping("/approval")
-	public ModelAndView approval(Principal principal, ModelAndView mv, @RequestParam int no) {
-		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
-		eaService.approval(userName, no);
+	public ModelAndView approval(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no) {
+		eaService.approval(user.getName(), no);
 		mv.setViewName("redirect:/ea/ea");
 		
 		return mv;
 	}
 	
 	@GetMapping("/return")
-	public ModelAndView eaReturn(Principal principal, ModelAndView mv, @RequestParam int no) {
-		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
-		eaService.eaReturn(userName, no);
+	public ModelAndView eaReturn(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no) {
+		eaService.eaReturn(user.getName(), no);
 		mv.setViewName("redirect:/ea/ea");
 		
 		return mv;
 	}
 	
 	@GetMapping("/eaCancle")
-	public ModelAndView eaCancle(Principal principal, ModelAndView mv, @RequestParam int no, @RequestParam(defaultValue = "0") int type) {
-		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
-		eaService.eaCancle(userName, no, type);
+	public ModelAndView eaCancle(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no, @RequestParam(defaultValue = "0") int type) {
+		eaService.eaCancle(user.getName(), no, type);
 		mv.setViewName("redirect:/ea/ea");
 		return mv;
 	}
 	
 	@GetMapping("/ea")
-	public void ea(Principal principal, Model model) {
-		String userName = ((UserImpl)((Authentication)principal).getPrincipal()).getName();
+	public void ea(@AuthenticationPrincipal UserImpl user, Model model) {
+		String userName = user.getName();
 		
 		List<MemberDTO> memberList = eaService.findMemberList();
 		

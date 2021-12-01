@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.greedy.erp_bomb.common.paging.SelectCriteria;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dao.VoteDAO;
@@ -60,4 +61,5 @@ public class VoteService {
 	public void insertCandidate(VoteOptionDTO voteOption) {
 		voteDAO.insertCandidate(voteOption);
 	}
+
 }

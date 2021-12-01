@@ -40,20 +40,19 @@ public class MemberService implements UserDetailsService {
 		}
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		
-			if (member.getMemberRoleList() != null) {
-				List<MemberRoleDTO> roleList = member.getMemberRoleList();
-	
-				for (int i = 0; i < roleList.size(); i++) {
-					AuthorityDTO authority = roleList.get(i).getAuthority();
-	
-					authorities.add(new SimpleGrantedAuthority(authority.getName()));
-				}
-			}
+		if (member.getMemberRoleList() != null) {
+			List<MemberRoleDTO> roleList = member.getMemberRoleList();
 
-			UserImpl user = new UserImpl(member.getName(), member.getPwd(), authorities);
-			user.setDetails(member);
-			
+			for (int i = 0; i < roleList.size(); i++) {
+				AuthorityDTO authority = roleList.get(i).getAuthority();
+
+				authorities.add(new SimpleGrantedAuthority(authority.getName()));
+			}
+		}
+
+		UserImpl user = new UserImpl(member.getName(), member.getPwd(), authorities);
+		user.setDetails(member);
+
 		return user;
 	}
 }

@@ -39,7 +39,7 @@
 						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
 						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
@@ -54,7 +54,7 @@
 						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -581,31 +581,6 @@
 							
 							$reply = $(this).attr("name");
 
-							$('#' + pop_name).stop().toggle();
-							var window_w = $(window).width();
-							$('.pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
-							
-							$('.payroll_pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
 						});
 						$("#reply_content").val('');
 					},
@@ -680,31 +655,6 @@
 							
 							$reply = $(this).attr("name");
 
-							$('#' + pop_name).stop().toggle();
-							var window_w = $(window).width();
-							$('.pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
-							
-							$('.payroll_pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
 						});
 						$("#add_ad_content").val('');
 					},
