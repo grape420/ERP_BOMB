@@ -62,14 +62,14 @@ public class InventoryDAO {
 		em.persist(inven);
 	}
 
-	public List<InventoryDTO> searchInven(String keyword) {
-		System.out.println("키워드 : " + keyword);
-		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.iceCream.name LIKE :keyword ORDER BY m.company.serialNo";
-		
-		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class)
-										 .setParameter("keyword", "%" + keyword + "%")
-				                         .getResultList();
-		return invenList;
-	}
+//	public List<InventoryDTO> searchInven(String keyword) {
+//		System.out.println("키워드 : " + keyword);
+//		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.iceCream.name LIKE :keyword ORDER BY m.company.serialNo";
+//		
+//		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class)
+//										 .setParameter("keyword", "%" + keyword + "%")
+//				                         .getResultList();
+//		return invenList;
+//	}
 	
 }

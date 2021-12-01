@@ -85,13 +85,13 @@ public class InventoryController {
 		return mv;
 	}
 	
-	@PostMapping("/search")
-	public String searchInven(Model model, @RequestParam String keyword) {
-		List<InventoryDTO> inventoryList = inventoryService.searchInven(keyword);
-		
-		model.addAttribute("inventoryList", inventoryList);
-		
-		return "/inventory/inventory";
-	}
+//	@PostMapping("/search")
+//	public String searchInven(Model model, @RequestParam String keyword) {
+//		List<InventoryDTO> inventoryList = inventoryService.searchInven(keyword);
+//		
+//		model.addAttribute("inventoryList", inventoryList);
+//		
+//		return "/inventory/inventory";
+//	}
 	
 }
