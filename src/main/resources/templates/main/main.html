@@ -102,15 +102,15 @@
 							<div class="flex_div">
 								<div>
 									<p>결재대기문서</p>
-									<span>0</span>
+									<a href="/ea/ea"><span th:text="${ myApprovalingDocumentCount }"></span></a>
 								</div>
 								<div>
 									<p>결재진행문서</p>
-									<span>3</span>
+									<a href="/ea/ea?tab=2"><span th:text="${ myApprovalingCount }"></span></a>
 								</div>
 								<div>
 									<p>참조결재문서</p>
-									<span>0</span>
+									<a href="/ea/ea?tab=3"><span th:text="${ myCarbonCount }"></span></a>
 								</div>
 							</div>
 							<a href="#n" class="link_arrow">결재 바로가기</a>
@@ -120,11 +120,11 @@
 							<div class="flex_div">
 								<div>
 									<p>투표 진행중</p>
-									<span>0</span>
+									<a href="/vote/vote?tab=2"><span th:text="${ voting }">0</span></a>
 								</div>
 								<div>
 									<p>투표 완료</p>
-									<span>3</span>
+									<a href="/vote/vote?tab=3"><span th:text="${ endVote }">3</span></a>
 								</div>
 							</div>
 							<a href="#n" class="link_arrow">결재 바로가기</a>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.note.model.dao.NoteDAO;
 import com.greedy.erp_bomb.note.model.dto.NoteDTO;
 
@@ -69,6 +70,11 @@ public class NoteService {
 	@Transactional
 	public void updateNoteReception(String serialNo) {
 		noteDAO.updateNoteReception(serialNo);
+	}
+	
+	@Transactional
+	public List<MemberDTO> findAllMember(){
+		return noteDAO.findAllMember();
 	}
 	
 	

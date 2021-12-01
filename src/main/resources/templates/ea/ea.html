@@ -99,9 +99,21 @@
 					<div class="mt-4">
 
 						<ul class="tab ul-tab">
+						<th:block th:if="${#strings.equals(tab, 1)}">
 							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
 							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
 							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
+						<th:block th:if="${#strings.equals(tab, 2)}">
+							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
+						<th:block th:if="${#strings.equals(tab, 3)}">
+							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
 						</ul>
 						<div id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">

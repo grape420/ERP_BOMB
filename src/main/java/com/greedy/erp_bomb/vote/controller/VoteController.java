@@ -8,15 +8,12 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.greedy.erp_bomb.common.paging.Pagenation;
-import com.greedy.erp_bomb.common.paging.SelectCriteria;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;

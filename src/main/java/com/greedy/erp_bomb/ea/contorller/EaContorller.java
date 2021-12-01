@@ -185,7 +185,7 @@ public class EaContorller {
 	}
 	
 	@GetMapping("/ea")
-	public void ea(@AuthenticationPrincipal UserImpl user, Model model) {
+	public void ea(@AuthenticationPrincipal UserImpl user, Model model, @RequestParam(defaultValue = "1") int tab) {
 		String userName = user.getName();
 		
 		List<MemberDTO> memberList = eaService.findMemberList();
@@ -296,11 +296,14 @@ public class EaContorller {
 		
 		Collections.sort(allEaList);
 		
+		System.out.println(tab);
+		
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
 		model.addAttribute("allEaList", allEaList);
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("tab", tab);
 		
 	}
 	

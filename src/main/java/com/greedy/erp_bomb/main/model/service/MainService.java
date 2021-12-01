@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
 import com.greedy.erp_bomb.main.model.dao.MainDAO;
+import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 
 @Service
 public class MainService {
@@ -23,8 +24,21 @@ public class MainService {
 	}
 
 	@Transactional
-	public Integer myApprovalingDocumentCount(String userName) {
+	public Long myApprovalingDocumentCount(String userName) {
 		return mainDAO.myApprovalingDocumentCount(userName);
+	}
+
+	@Transactional
+	public Long myApprovalingCount(String userName) {
+		return mainDAO.myApprovalingCount(userName);
+	}
+
+	public Long myCarbonCount(String userName) {
+		return mainDAO.myCarbonCount(userName);
+	}
+
+	public List<VoteDTO> selectAllVote() {
+		return mainDAO.selectAllVote();
 	}
 
 }
