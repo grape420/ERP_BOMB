@@ -29,40 +29,34 @@
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/ea/test">
+			<a class="navbar-brand font-weight-bold" href="/main/main">
 				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">판매현황</a>
+						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">사내 투표</a>
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -145,7 +139,7 @@
 									<span>3</span>
 								</div>
 								<div>
-									<p>수신대기문서</p>
+									<p>참조결재문서</p>
 									<span>0</span>
 								</div>
 							</div>
@@ -179,7 +173,7 @@
 	<!--캘린더-->
 	<link th:href="@{/uses/vendor/fullcalendar/main.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/uses/vendor/fullcalendar/main.js}"></script> 
-    <script th:src="@{uses/vendor/fullcalendar/ko.js}"></script> 
+    <script th:src="@{/uses/vendor/fullcalendar/ko.js}"></script> 
     
     <script>
 	    function changeHandler(e){
