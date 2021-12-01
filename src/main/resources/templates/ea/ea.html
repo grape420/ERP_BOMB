@@ -581,31 +581,6 @@
 							
 							$reply = $(this).attr("name");
 
-							$('#' + pop_name).stop().toggle();
-							var window_w = $(window).width();
-							$('.pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
-							
-							$('.payroll_pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
 						});
 						$("#reply_content").val('');
 					},
@@ -680,31 +655,6 @@
 							
 							$reply = $(this).attr("name");
 
-							$('#' + pop_name).stop().toggle();
-							var window_w = $(window).width();
-							$('.pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
-							
-							$('.payroll_pop_layer').each(function (index, item) {
-								$(item).addClass('pop_0' + index);
-
-								var pop_width = $('.pop_0' + index).width();
-								var pop_height = $('.pop_0' + index).height();
-
-								$('.pop_0' + index).css({
-									'margin-left': -(pop_width / '2'),
-									'margin-top': -(pop_height / '2')
-								});
-							});
 						});
 						$("#add_ad_content").val('');
 					},
