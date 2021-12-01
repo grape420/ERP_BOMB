@@ -9,7 +9,7 @@ public class MainController {
 	
 	@GetMapping(value = {"/", "main"})
 	public String main() {
-		return "board/boardList";
+		return "tna/regTna";
 //		return "member/login";
 	}
 	
