@@ -29,34 +29,34 @@
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/">
+			<a class="navbar-brand font-weight-bold" href="/main/main">
 				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
-					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -68,7 +68,7 @@
 			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
-				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
+				<a class="sidebar-brand" href="/board/nolist">
 					<div class="sidebar-brand-icon rotate-n-15">
 					</div>
 					<div class="sidebar-brand-text mx-3">게시판</div>
@@ -82,14 +82,14 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+					<a class="nav-link collapsed" href="/board/noticeList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>공지사항</span>
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+					<a class="nav-link collapsed" href="/board/boardList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사내게시판</span>
 					</a>
@@ -103,25 +103,41 @@
 						<h3 style="font-weight: 900;">공지사항</h3>
 					</table>
 				<hr>
-				<form class="needs-validation" novalidate>
-				  <div class="row">
-					<div class="col-md-6 mb-3">
-					  <label for="firstName">제목</label>
-					  <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-					  
+				<form action="/board/insertNotice" method="post" class="needs-validation" id="regnotice">
+					<div class="row">
+						<div class="col-md-12 mb-3">
+							<label for="firstName">제목</label> <input type="text" class="form-control" id="titleName1" name="title" required>
+						</div>
+						<div class="col-md-12">
+							<label for="exampleFormControlTextarea1">내용</label>
+							<textarea class="form-control" id="Textarea" rows="20" name="content"></textarea>
+						</div>
+						<button type="button" class="btn btn-outline-secondary" onclick="insertNotice()">등록</button>
 					</div>
-					<div class="col-md-6 mb-3">
-					  <label for="lastName">작성자</label>
-					  <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-					
-					</div>
-					<div class="col-md-12">
-					  <label for="exampleFormControlTextarea1">내용</label>
-					  <textarea class="form-control" id="exampleFormControlTextarea1" rows="20"></textarea>
-					</div> 
+				</form>
+				<script>
+					function insertNotice(){ 
+						var titleFlag = false;
+						var textFlag = false; 
+						const titleArea = $("#titleName1").val(); 
+						const textArea = $("#Textarea").val(); 
+						
+						if(titleArea != ""){
+							titleFlag = true;
+						}
+						if(textArea != ""){
+							textFlag = true;
+						}
+						if(!titleFlag){
+							alert("제목을 입력하세요!");
+						} else if(!textFlag){
+							alert("내용을 입력하세요!");
+						} else {
+							$("#regnotice").submit();
+						}
+					};
 				
-					<button type="submit" class="btn btn-outline-secondary">등록</button>
-				 </form>
+				</script>
 			</div>
 		</div>
 	</section>
