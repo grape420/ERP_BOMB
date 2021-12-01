@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+.pop_btn, .pop_close{
+	cursor: pointer;
+}
+
 /* sidebar */
 .bg-gradient-primary {
 	background: #f2f3f7 !important;
@@ -68,7 +73,6 @@
 	cursor: pointer;
 }
 
-#new_approval_pop,
 #approval_detail_pop {
 	width: 700px;
 	height: 600px;
@@ -77,12 +81,12 @@
 	top: 40%;
 }
 
-#new_approvaler_pop {
-	width: 300px;
-	height: 400px;
+#new_approval_pop {
+	width: 700px;
+	height: 630px;
 	min-width: auto;
 	min-height: auto;
-	top: 30%;
+	top: 45%;
 }
 
 #new_approval_pop .top {
@@ -145,7 +149,7 @@
 }
 
 .approval_person {
-	width: 70px !important;
+	width: 84px !important;
 }
 
 .approval_line {

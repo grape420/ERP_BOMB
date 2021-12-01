@@ -8,7 +8,11 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
+import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InOutDTO;
+import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
+import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Repository
 public class InOutDAO {
@@ -16,25 +20,59 @@ public class InOutDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public List<InOutDTO> findInOutList() {
-		String jpql = "SELECT m FROM InOutDTO as m ORDER BY m.no";
+	public List<InOutDTO> findInOutList(String name) {
+		MemberDTO member = em.find(MemberDTO.class, name);
 		
-		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).getResultList();
+		String jpql = "SELECT a FROM InOutDTO as a LEFT JOIN a.inventory as b LEFT JOIN b.company as c WHERE c.serialNo = :serialNo";
+		List<InOutDTO> inOutList = em.createQuery(jpql, InOutDTO.class).setParameter("serialNo", member.getCompany().getSerialNo()).getResultList();
 		
 		return inOutList;
 	}
 
-	public List<CompanyDTO> findCompanyList() {
-		String jpql = "SELECT m FROM CompanyDTO as m ORDER BY m.serialNo";
+	public List<IceCreamDTO> findIcecreamList() {
+		String jpql = "SELECT m FROM IceCreamDTO as m";
 		
-		List<CompanyDTO> companyList = em.createQuery(jpql, CompanyDTO.class).getResultList();
+		List<IceCreamDTO> icecreamList = em.createQuery(jpql, IceCreamDTO.class).getResultList();
 		
-		for(CompanyDTO com : companyList) {
-			com.setInventoryList(null);
-			com.setMemberList(null);
+		for (IceCreamDTO ice : icecreamList) {
+			ice.setInventoryList(null);
 		}
 		
-		return companyList;
+		return icecreamList;
 	}
+
+	public void registInOut(InOutDTO inOut) {
+		inOut.getInventory().setCompany(em.find(CompanyDTO.class, inOut.getInventory().getCompany().getSerialNo()));
+		inOut.getInventory().setIceCream(em.find(IceCreamDTO.class, inOut.getInventory().getIceCream().getNo()));
+		
+		em.persist(inOut);
+	}
+
+	public void updateInventory(InventoryDTO inven) {
+		InventoryPk pk = new InventoryPk();
+		pk.setCompany(inven.getCompany().getSerialNo());
+		pk.setIceCream(inven.getIceCream().getNo());
+		
+		InventoryDTO selectedInven = em.find(InventoryDTO.class, pk);
+		selectedInven.setInvenRemainStock(inven.getInvenRemainStock());
+	}
+
+	public InventoryDTO findInven(InventoryPk inventoryPk) {
+		return em.find(InventoryDTO.class, inventoryPk);
+	}
+
+	public InventoryDTO findHeadInven(InventoryPk pk2) {
+		return em.find(InventoryDTO.class, pk2);
+	}
+
+	public void updateHeadInven(InventoryDTO headInven) {
+		InventoryPk pk2 = new InventoryPk();
+		pk2.setCompany(1);
+		pk2.setIceCream(headInven.getIceCream().getNo());
+		
+		InventoryDTO selectedInven = em.find(InventoryDTO.class, pk2);
+		selectedInven.setInvenRemainStock(headInven.getInvenRemainStock());
+	}
+
 
 }
