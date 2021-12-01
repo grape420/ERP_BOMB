@@ -1,5 +1,6 @@
 package com.greedy.erp_bomb.sp.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -56,15 +57,6 @@ public class SpDAO {
 		return em.find(MemberDTO.class, name);
 	}
 
-	public void deleteSpList(int spNo) {
-		SPDTO deleteSp = em.find(SPDTO.class, spNo);
-		
-		deleteSp.setMember(null);
-		
-		em.remove(deleteSp);
-		
-	}
-
 	public void updateSp(SPDTO sp2) {
 		MemberDTO member = new MemberDTO();
 		member.setName(sp2.getMember().getName());
@@ -76,12 +68,20 @@ public class SpDAO {
 		
 	}
 
-	public List<SPDTO> findEntryMember() {
-		String jpql = "SELECT a FROM SPDTO as a WHERE a.member.entYn = 'Y'";
+	public List<MemberDTO> findEntryMember() {
+		String jpql = "SELECT a FROM MemberDTO as a";
 		
+		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList(); 
 		
+		List<MemberDTO> spList = new ArrayList<>();
+		for (MemberDTO member : memberList) {
+			
+			if(member.getSp() == null) {
+				spList.add(member);
+			}
+		}
 		
-		return em.createQuery(jpql, SPDTO.class).getResultList();
+		return spList;
 	}
 
 

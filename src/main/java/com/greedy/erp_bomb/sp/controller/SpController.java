@@ -42,7 +42,7 @@ public class SpController {
 	public ModelAndView findSpList(ModelAndView mv, Principal principal) {
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
-		List<SPDTO> member = spService.findEntryMember();
+		List<MemberDTO> member = spService.findEntryMember();
 		
 		List<SPDTO> detailSp = spService.findDetailSp(user.getName());
 		List<SPDTO> spList = spService.findSpList();
@@ -76,10 +76,8 @@ public class SpController {
 		return mv;
 	}
 	
-	@GetMapping("updateSp")
-	@ResponseBody
-	public void UpdateSpList(@RequestParam String name, 
-									@RequestParam Integer serverancePay, @RequestParam Integer empYear) {
+	@PostMapping("updateSp")
+	public ModelAndView UpdateSpList(ModelAndView mv, @RequestParam String name, @RequestParam Integer serverancePay, @RequestParam Integer empYear) {
 		
 		MemberDTO member = new MemberDTO();
 		member = spService.findMemberInfo(name);
@@ -93,11 +91,9 @@ public class SpController {
 		
 		System.out.println("에러 확인??");
 		
+		mv.setViewName("redirect:/sp/sp");
+		
+		return mv;
 	}
 	
-//	@GetMapping(value = "member", produces = "application/json; charset=UTF-8")
-//	@ResponseBody
-//	public List<MemberDTO> findMemberList() {
-//		return spService.findMemberList();
-//	}
 }

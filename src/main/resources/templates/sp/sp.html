@@ -70,8 +70,7 @@
 
 				<!-- Sidebar - Brand -->
 				<a class="sidebar-brand" href="/sp">
-					<div class="sidebar-brand-icon rotate-n-15">
-					</div>
+					<div class="sidebar-brand-icon rotate-n-15"></div>
 					<div class="sidebar-brand-text mx-3">퇴직금 목록</div>
 				</a>
 
@@ -102,14 +101,14 @@
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 퇴직금 리스트 -->
-						<div>
+					<div>
 						<!-- <div class="search_form">
 							<input type="text" placeholder="검색어 입력" />
 							<button type="button" class="blue_btn">Search</button>
-						</div> -->
+						</div>-->
 						<ul class="tab ul-tab">
 							<li class="li-tab retire on" data-tab="all_retire"><span>퇴직금 목록</span></li>
-							<li class="li-tab retire" data-tab="confirm_retire"><span>퇴직금 합계</span></li>
+							<!-- <li class="li-tab retire" data-tab="confirm_retire"><span>퇴직금 합계</span></li> -->
 						</ul>
 						<div id="all_retire" class="tab_contents retire current">
 							<div class="tableArea">
@@ -152,59 +151,6 @@
 								</table>
 							</div>
 						</div>
-
-						<div id="confirm_retire" class="tab_contents retire">
-							<div class="tableArea">
-								<table>
-									<caption>퇴직금 합계</caption>
-									<colgroup>
-										<col style="width:4%" />
-										<col style="width:10%" />
-										<col style="width:10%" />
-										<col style="width:10%" />
-										<col style="width:10%" />
-										<col style="width:15%" />
-										<col style="width:15%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>번호</th>
-											<th>사원번호</th>
-											<th>이름</th>
-											<th>정산 시작일</th>
-											<th>재직년수</th>
-											<th>재직일수</th>
-											<th>퇴직 급여</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>3</td>
-											<td>2014-03</td>
-											<td>김가희</td>
-											<td>2015-03-01</td>
-											<td>2</td>
-											<td>756</td>
-											<td>100,000,000</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>2014-03</td>
-											<td>김종현</td>
-											<td>2015-01-01</td>
-											<td>3</td>
-											<td>1060</td>
-											<td>150,000,000</td>
-										</tr>
-										<tr style="background-color: #e5e5e5;">
-											<td colspan="6">합계[2]</td>
-											<td>250,000,000</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						
 						<div class="btn_area">
 							<a href="#n" class="blue_btn pop_btn" data-button="new_retire_pop">신규</a>
 							<a href="#n" class="gray_btn pop_btn" data-button="update_retire_pop">수정</a>
@@ -230,7 +176,6 @@
 										<col style="width:19%" />
 										<col style="width:19%" />
 										<col style="width:19%" />
-										<col style="width:19%" />
 									</colgroup>
 									<thead class="spDetailList">
 										<tr>
@@ -238,7 +183,6 @@
 											<th>퇴직일자</th>
 											<th>지급일자</th>
 											<th>퇴직금</th>
-											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -247,7 +191,6 @@
 											<td th:text="${#dates.format(sp.member.quitDate, 'yyyy-MM-dd')}"></td>
 											<td th:text="${#dates.format(sp.member.quitDate, 'yyyy-MM-dd')}"></td>
 											<td th:text="${ sp.serverancePay }"></td>
-											<td class="t_left pop_btn" id="deleteBtn" th:attr="data-button=${ 'retire_delete_pop' + sp.spNo }">삭제</td>
 										</tr>
 									</tbody>
 								</table>
@@ -260,11 +203,9 @@
 							<a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</a>
 						</div>
 					</div>
-
-					<!-- 퇴직금 추가 팝업 -->
-
 				</div>
 				
+					<!-- 퇴직금 추가 팝업 -->
 				<div id="new_retire_pop" class="pop_layer">
 					<div class="top_area">
 						<h2>퇴직자 퇴직금 등록</h2>
@@ -276,12 +217,12 @@
 							<div class="top">
 								<p class="name">퇴직 정보 등록</p>
 							</div>
-							<divrm class="btn">
+							<div class="tableArea">
 								<table>
 									<colgroup>
-										<col style="width:5%" />
-										<col style="width:5%" />
-										<col style="width:5%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -293,7 +234,7 @@
 									<tbody>
 										<tr>
 											<td><select name="name" id="name" required="required">
-												<option th:each="sp : ${ entYn }" th:text="${ sp.member.name }"></option>
+												<option th:each="sp : ${ entYn }" th:text="${ sp.name }"></option>
 											</select></td>
 											<td><input type="text" id="empYear" name="empYear" required="required"></td>
 											<td><input type="text" id="serverancePay" name="serverancePay" ></td>
@@ -304,16 +245,14 @@
 									</tbody>
 								</table>
 							</div>
-							
-					</div>
-								
+						</div>
+					</form>
 					<div class="btn_area">
 						<!-- <a href="#n" class="blue_btn">삭제</a> -->
 						<button class="blue_btn" >등록</button>
 						<a href="#n" class="gray_btn pop_close" data-button="new_retire_pop">닫기</a>
 					</div>
 				</div>
-				</form>
 			</div>
 			
 			<!-- 여기까지 퇴직금 팝업 -->
@@ -329,7 +268,7 @@
 							<div class="top">
 								<p class="name">퇴직 정보 수정</p>
 							</div>
-							<div class="btn">
+							<div class="tableArea">
 								<table>
 									<colgroup>
 										<col style="width:30%" />
@@ -346,13 +285,13 @@
 									<tbody>
 										<tr>
 											<td>
-												<select required="required">
-													<option name="name" value="name" id="name1" th:each="sp : ${ spList }" th:text="${ sp.member.name }"></option>
+												<select required="required" name="name" id="name1">
+													<option th:each="sp : ${ spList }" th:text="${ sp.member.name }"></option>
 												</select>
 											</td>
 											<!-- <td><input type="text" id="name1" name="name"></td> -->
-											<td><input type="text" id="empYear1" name="empYear"></td>
-											<td><input type="text" id="serverancePay1" name="serverancePay"></td>
+											<td><input type="text" id="empYear1" name="empYear" required="required"></td>
+											<td><input type="text" id="serverancePay1" name="serverancePay" required="required"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -360,12 +299,13 @@
 						</div>
 					<div class="btn_area">
 						<!-- <a href="#n" class="blue_btn">삭제</a> -->
-						<a href="#n" class="blue_btn" id="updateBtn">등록</a>
+						<button class="blue_btn">수정</button>
 						<a href="#n" class="gray_btn pop_close" data-button="update_retire_pop">닫기</a>
 					</div>
 				</div>
 				</form>
 			</div>
+		</div>
 	</section>
 	
 	<script>

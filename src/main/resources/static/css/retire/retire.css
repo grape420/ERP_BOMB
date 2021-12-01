@@ -269,6 +269,18 @@ caption {
 	font-size: 14px;
 	color: #333;
 	border-top: 1px solid black;
+	
+}
+
+.fDiv{
+      float: left;
+      text-align: left;
+      margin-left: 5px;
+}
+   
+.pDiv{
+      float: right;
+      text-align: right;
 }
 
 .tableArea table thead {

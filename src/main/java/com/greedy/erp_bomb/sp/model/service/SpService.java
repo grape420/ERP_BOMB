@@ -46,17 +46,11 @@ public class SpService {
 	}
 	
 	@Transactional
-	public void deleteSpList(int spNo) {
-		
-		spDAO.deleteSpList(spNo);
-	}
-	
-	@Transactional
 	public void updateSp(SPDTO sp2) {
 		spDAO.updateSp(sp2);
 	}
 
-	public List<SPDTO> findEntryMember() {
+	public List<MemberDTO> findEntryMember() {
 		return spDAO.findEntryMember();
 	}
 
