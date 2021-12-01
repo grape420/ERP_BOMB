@@ -101,7 +101,7 @@ public class BoardDAO {
 	}
 
 	public CommentDTO addComment(CommentDTO addAd) {
-		addAd.setBoard(em.find(BoardDTO.class, addAd.getNo()));
+		addAd.setBoard(em.find(BoardDTO.class, addAd.getBoard().getNo()));
 		addAd.setMember(em.find(MemberDTO.class, addAd.getMember().getName()));
 		
 		String jpql = "SELECT a FROM CommentDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";

@@ -95,12 +95,12 @@ public class BoardController {
 	@ResponseBody
 	public CommentDTO addComment(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
 		CommentDTO addAd = new CommentDTO();
-		BoardDTO BT = new BoardDTO();
+		BoardDTO bt = new BoardDTO();
 		MemberDTO drafter = new MemberDTO();
-		BT.setNo(no);
+		bt.setNo(no);
 		
 		addAd.setRefNo(null);
-		addAd.setBoard(BT);
+		addAd.setBoard(bt);
 		addAd.setDepth(0);
 		addAd.setContent(content);
 		addAd.setDate(new java.sql.Date(System.currentTimeMillis()));
@@ -113,13 +113,13 @@ public class BoardController {
 		
 		MemberDTO eaMember = new MemberDTO();
 		eaMember.setName(addAd.getBoard().getMember().getName());
-		BT.setMember(eaMember);
+		bt.setMember(eaMember);
 		
 		MemberDTO adMember = new MemberDTO();
 		adMember.setName(addAd.getMember().getName());
 		
 		addAd.setCommentList(null);
-		addAd.setBoard(BT);
+		addAd.setBoard(bt);
 		addAd.setMember(adMember);
 		addAd.setRefNo(null);
 		
