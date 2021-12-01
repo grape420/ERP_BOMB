@@ -93,18 +93,18 @@ $("#annualIncome").change(function() {
 	var annualIncomeExp = /^[0-9]+$/;
 
 	if (!annualIncomeExp.test($(this).val())) {
-		$("#regularPay-result").text("올바르지 않은 형식입니다.").css("color", "red");
+		$("#annualIncome-result").text("올바르지 않은 형식입니다.").css("color", "red");
 		$(this).focus();
 		annualIncomeFlag = false;
 	} else {
-		$("#regularPay-result").text("").css("color", "green");
+		$("#annualIncome-result").text("").css("color", "green");
 		annualIncomeFlag = true;
 	}
 })
 
 $("#email").change(function() {
 	var emailExp = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/
-	emailChangeFlag = false;
+	
 	if (!emailExp.test($(this).val())) {
 		$("#email-result").text("올바르지 않은 이메일 형식입니다.").css("color", "red");
 		$(this).focus();

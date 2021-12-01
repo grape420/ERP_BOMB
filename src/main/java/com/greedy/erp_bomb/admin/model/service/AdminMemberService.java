@@ -58,5 +58,10 @@ public class AdminMemberService {
 		return adminMemberDAO.memDetail(detailName);
 	}
 
+	@Transactional
+	public void updateMem(MemberDTO member) {
+		adminMemberDAO.updateMem(member);
+	}
+
 
 }

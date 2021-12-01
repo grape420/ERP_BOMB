@@ -1,5 +1,6 @@
 package com.greedy.erp_bomb.admin.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -85,7 +86,6 @@ public class AdminMemberController {
 	public ModelAndView registMember(ModelAndView mv, @RequestParam int companyCode, @RequestParam int deptCode, @RequestParam int rankCode, @ModelAttribute MemberDTO member) {
 		String encodePassword = passwordEncoder.encode(member.getPwd());
 		
-		
 		CompanyDTO com = new CompanyDTO();
 		com.setSerialNo(companyCode);
 		
@@ -99,6 +99,8 @@ public class AdminMemberController {
 		member.setDept(dept);
 		member.setRank(rank);
 		member.setPwd(encodePassword);
+		member.setJoinDate(new java.sql.Date(System.currentTimeMillis()));
+		member.setEntYn("N");
 		
 		adminMemberService.registMember(member);
 		
@@ -110,7 +112,55 @@ public class AdminMemberController {
 	@GetMapping(value = "memDetail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public MemberDTO memDetail(@RequestParam String detailName) {
-		return adminMemberService.memDetail(detailName);
+		MemberDTO mem1 = new MemberDTO();
+		MemberDTO mem2 = adminMemberService.memDetail(detailName);
+		
+		CompanyDTO com = new CompanyDTO();
+		com.setSerialNo(mem2.getCompany().getSerialNo());
+		com.setName(mem2.getCompany().getName());
+		
+		DeptDTO dept = new DeptDTO();
+		dept.setNo(mem2.getDept().getNo());
+		dept.setName(mem2.getDept().getName());
+		
+		RankDTO rank = new RankDTO();
+		rank.setNo(mem2.getRank().getNo());
+		rank.setName(mem2.getRank().getName());
+		
+		mem1.setName(mem2.getName());
+		mem1.setCompany(com);
+		mem1.setDept(dept);
+		mem1.setRank(rank);
+		mem1.setEntYn(mem2.getEntYn());
+		mem1.setEmpNo(mem2.getEmpNo());
+		mem1.setBirth(mem2.getBirth());
+		
+		
+		return mem1;
 	}
+	
+	@PostMapping("/updateMem")
+	public String updateMem(@RequestParam int companyCode, @RequestParam int deptCode, @RequestParam int rankCode, @ModelAttribute MemberDTO member) {
+		String encodePassword = passwordEncoder.encode(member.getPwd());
+		
+		CompanyDTO com = new CompanyDTO();
+		com.setSerialNo(companyCode);
+		
+		RankDTO rank = new RankDTO();
+		rank.setNo(rankCode);
+		
+		DeptDTO dept = new DeptDTO();
+		dept.setNo(deptCode);
+		
+		member.setCompany(com);
+		member.setRank(rank);
+		member.setDept(dept);
+		member.setPwd(encodePassword);
+		
+		adminMemberService.updateMem(member);
+		
+		return "redirect:/admin/member";
+	}
+	
 
 }

@@ -8,8 +8,11 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
+import com.greedy.erp_bomb.member.model.dto.AuthorityDTO;
 import com.greedy.erp_bomb.member.model.dto.DeptDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
+import com.greedy.erp_bomb.member.model.dto.MemberRoleDTO;
+import com.greedy.erp_bomb.member.model.dto.MemberRolePk;
 import com.greedy.erp_bomb.member.model.dto.RankDTO;
 
 @Repository
@@ -71,6 +74,8 @@ public class AdminMemberDAO {
 	}
 
 	public void registMember(MemberDTO member) {
+		member.getMemberRoleList().add(new MemberRoleDTO(em.find(AuthorityDTO.class, 1), member));
+		
 		em.persist(member);
 	}
 
@@ -97,5 +102,16 @@ public class AdminMemberDAO {
 		member.setVoteParticipationList(null);
 		
 		return member;
+	}
+
+	public void updateMem(MemberDTO member) {
+		MemberDTO mem = em.find(MemberDTO.class, member.getName());
+		mem.setCompany(member.getCompany());
+		mem.setDept(member.getDept());
+		mem.setRank(member.getRank());
+		mem.setPwd(member.getPwd());
+		mem.setEmail(member.getEmail());
+		mem.setEntYn(member.getEntYn());
+		mem.setPhone(member.getPhone());
 	}
 }

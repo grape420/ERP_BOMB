@@ -327,15 +327,6 @@
 						</form>
 					</div>
 					<!-- 여기까지 신규 전자 결재 팝업 -->
-					
-					<script>
-						$("#new_approval_pop_close_btn").click(function() {
-							$("#new_approval_content").val("");
-							$("#new_approval_title").val("");
-							$('#new_approvaler').val(null).trigger('change');
-							$('#new_carboner').val(null).trigger('change');
-						});
-					</script>
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
 					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
@@ -401,8 +392,10 @@
 								<div style="height: auto;" class="col">
 									<span th:if="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name } + '&nbsp;(기안자)'" style="color: black;"></span>
 									<span th:unless="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name }" style="color: black;"></span>
-									<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" data-button="reply_comment_pop" th:attr="name=${ ad.no }">답글</button>
-									<button th:if="${#authentication.name} == ${ad.member.name}" class="ml-3 delete_btn" style="font-size: 13px;" th:attr="id=${'commentDelete' + ad.no}">삭제</button>
+									<th:block th:if="${ list.eaStatus == 1}">
+										<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" data-button="reply_comment_pop" th:attr="name=${ ad.no }">답글</button>
+										<button th:if="${#authentication.name} == ${ad.member.name}" class="ml-3 delete_btn" style="font-size: 13px;" th:attr="id=${'commentDelete' + ad.no}">삭제</button>
+									</th:block>
 									<b th:text="${ ad.date }" style="color: black; float: right;"></b>
 									<p  style="font-size: 13px;" class="m-0" th:utext="${#strings.replace(ad.content,'
 ','<br>')} "></p>
@@ -512,6 +505,13 @@
 		$(document).ready(function () {
 			var $reply;
 			var $eaNo;
+			
+			$("#new_approval_pop_close_btn").click(function() {
+				$("#new_approval_content").val("");
+				$("#new_approval_title").val("");
+				$('#new_approvaler').val(null).trigger('change');
+				$('#new_carboner').val(null).trigger('change');
+			});
 			
 			$(".new_ad").click(function() {
 				$eaNo = $(this).attr("name");
@@ -734,7 +734,16 @@
 		                "last" : "마지막"
 		              }
 		        },
-	            "order" : [ 0, 'asc' ]
+		        "order" : [],
+	               /* 보이는 갯수 설정 안보이게 */
+	               lengthChange: false,
+	               /* 페이지 전체수 나오던 부분 안보이게*/
+	               info : false,
+	               /* 구조 설정 태그 안에 글자는 div클래스명 */
+	               "dom": 't<"fDiv"f><"pDiv"p>',
+	               "aoColumnDefs": [
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5 ] }
+	                ]
 	        });
 			
 			clearInterval(timer);
@@ -743,7 +752,6 @@
 	
 	<!-- dataTable -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 </body>

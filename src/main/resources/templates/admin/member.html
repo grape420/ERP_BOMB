@@ -36,30 +36,30 @@
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="main">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">전자결재</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
-					</li>
+				   <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+	               </li>
 				</ul>
 			</div>
 		</nav>
@@ -142,12 +142,13 @@
 										<th>생년월일</th>
 										<th>전화번호</th>
 										<th>E-Mail</th>
+										<th>입사일</th>
 										<th>퇴사여부</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="mem : ${ memberList }">
-										<td class="t_center pop_btn" th:text="${ mem.name }" th:attr="onclick=|memDetail('${ mem.name }')|" data-button="mem_detail_pop" style="cursor: pointer;"></td>
+										<td class="t_center pop_btn" th:text="${ mem.name }" th:attr="onclick=|memDetail('${ mem.name }')|" data-button="mem_detail_pop" style="cursor: pointer; font-weight: bold;"></td>
 										<td class="t_center pop_btn" th:text="${ mem.company.name }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.dept.name }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.rank.name }"></td>
@@ -155,6 +156,7 @@
 										<td class="t_center pop_btn" th:text="${ mem.birth }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.phone }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.email }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.joinDate }"></td>
 										<td class="t_center pop_btn" th:text="${ mem.entYn }"></td>
 									</tr>
 								</tbody>
@@ -164,7 +166,7 @@
 					<!-- 멤버 변경 팝업 -->
 			          <div id="mem_detail_pop" class="pop_layer">
 			            <div class="top_area">
-			              <h2>멤버 관리</h2>
+			              <h2>회원 관리</h2>
 			              <button type="button" class="pop_close" data-button="mem_detail_pop">닫기</button>
 			            </div>
 			            <div class="pop_inner">
@@ -172,6 +174,11 @@
 			              <form action="/admin/updateMem" method="post">
 			                <table>
 			                  <colgroup>
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
 			                  </colgroup>
 			                  <thead>
 			                    <tr>
@@ -179,29 +186,34 @@
 									<th>회사</th>
 									<th>부서</th>
 									<th>직급</th>
-									<th>비밀번호</th>
+									<th>퇴사 여부</th>
 			                    </tr>
 			                  </thead>
 			                  <tbody>
 								<tr>
 									<td id="memName"></td>
 									<td>
-										<select id="companyCode">
+										<select id="companyCode" name="companyCode">
 											
 										</select>
 									</td>
 									<td>
-										<select id="deptCode">
+										<select id="deptCode" name="deptCode">
 											
 										</select>
 									</td>
 									<td>
-										<select id="rankCode">
-										
+										<select id="rankCode" name="rankCode">
+											<option hidden="hidden" id="memRank"></option>
 										</select>
 									</td>
+									
 									<td>
-										<input type="text" name="pwd">
+										<select name="entYn">
+											<option hidden="hidden" id="memEntYn"></option>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
 									</td>
 								</tr>
 								</tbody>
@@ -209,24 +221,23 @@
 								<tr>
 			                    	<th>사번</th>
 									<th>생년월일</th>
-									<th>입사일</th>
+									<th>휴대폰 번호</th>
 									<th>E-Mail</th>
-									<th>퇴사 여부</th>
+									<th>비밀번호</th>
 			                    </tr>
 			                    </thead>
 			                    <tbody>
 								<tr>
 									<td id="memEmpNo"></td>
 									<td id="memBirth"></td>
-									<td id="memJoinDate"></td>
+									<td>
+										<input type="text" name="phone">
+									</td>
 									<td>
 										<input type="text" name="email">
 									</td>
 									<td>
-										<select name="entYn">
-											<option value="Y">Y</option>
-											<option value="N">N</option>
-										</select>
+										<input type="password" name="pwd">
 									</td>
 								</tr>
 			                  </tbody>
@@ -241,6 +252,34 @@
 			            </div>
 			          </div>
 					<!-- 멤버 변경 팝업 -->
+					<script>
+					function memDetail(name){
+						var detailName = name;
+						const memName = $("#memName");
+						const memEmpNo = $("#memEmpNo");
+						const memBirth = $("#memBirth");
+						const memEntYn = $("#memEntYn");
+						
+						$.ajax({
+						url: "/admin/memDetail",
+						type: "get",
+						data: {
+							detailName : detailName
+						},
+						success: function(data){
+							memName.text(data.name); 
+							memEmpNo.text(data.empNo); 
+							memBirth.text(data.birth); 
+							memEntYn.text(data.entYn);
+							
+							$("#newName").attr('value', data.name);
+						},
+						error: function(xhr){
+							console.log(xhr);
+							 }
+						});
+					}
+					</script>
 					<div class="btm_area" style="margin-left: 10px;">
 						<a style="cursor: pointer;" class="blue_btn pop_btn" href="/admin/registMember">추가</a> 
 					</div>
@@ -250,34 +289,6 @@
 	</section>
 	
 	<script>
-	
-	function memDetail(name){
-		var detailName = name;
-		const memName = $("#memName");
-		const memEmpNo = $("#memEmpNo");
-		const memBirth = $("#memBirth");
-		const memJoinDate = $("#memJoinDate");
-		
-		$.ajax({
-		url: "/admin/memDetail",
-		type: "get",
-		data: {
-			detailName : detailName
-		},
-		success: function(data){
-			/* memName.text(data.name); 
-			memEmpNo.text(data.empNo); 
-			memBirth.text(data.birth); 
-			memJoinDate.text(data.joinDate);  */
-			
-			/* $("#newName").attr('value', data.name);  */
-		},
-		error: function(xhr){
-			console.log(xhr);
-			 }
-		});
-	}
-	
  		$.ajax({
 			url: "/admin/companyCode",
 			success: function(data){
@@ -324,26 +335,63 @@
 		}); 
 		
 		
- 		/* dataTable */
-		$('.Table').DataTable({
-			"pagingType": "full_numbers",
-			"language": {
-	            "lengthMenu": "페이지당 줄수 _MENU_",
-	            "zeroRecords": "해당 내역이 존재하지 않습니다.",
-	            "info": "_PAGE_ / _PAGES_",
-	            "infoEmpty": "회원 항목이 존재하지 않습니다.",
-	            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
-	            "search": "검색 : ",
-	            "paginate": {
-	                "previous": "이전",
-	                "next" : "다음",
-	                "first" : "처음",
-	                "last" : "마지막"
-	              }
-	        },
-            "order" : [ 0, 'asc' ]
-        });
-		$.fn.DataTable.ext.pager.numbers_length = 5;
+		/* dataTable */
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "해당 내역이 존재하지 않습니다.",
+		            "info": "_PAGE_ / _PAGES_",
+		            "infoEmpty": "회원이 존재하지 않습니다.",
+		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+		        "order" : [],
+	               /* 보이는 갯수 설정 안보이게 */
+	               lengthChange: false,
+	               /* 페이지 전체수 나오던 부분 안보이게*/
+	               info : false,
+	               /* 구조 설정 태그 안에 글자는 div클래스명 */
+	               "dom": 't<"fDiv"f><"pDiv"p>',
+	               "aoColumnDefs": [
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ] }
+	                ]
+	        });
+			
+			clearInterval(timer);
+		}, 100);
+		
+		var phoneFlag = false;
+		
+		$("#submit-btn").click(function() {
+			if(phoneFlag == false) {
+				$("#phone-result").text("휴대폰 번호를 다시 확인 해주세요").css("color", "red");
+				$("#phone").val("").focus();
+			}
+			
+			if(passwordFlag == false) {
+				$("#password-result").text("비밀번호를 다시 확인 해주세요.").css("color", "red");
+				$("#passowrd").val("").focus();
+			}
+			
+			if(emailFlag == false) {
+				$("#email-result").text("이메일을 다시 확인해주세요.").css("color", "red");
+				$("#email").val("").focus();
+			}
+			
+			if((phoneFlag == true) && (passwordFlag == true) && (emailFlag == true)) {
+				alert("회원 추가가 성공적으로 완료되었습니다");
+				 $("#signup-form").submit(); 
+			}
+		});
 	</script>
 	
 	<!-- dataTable -->
