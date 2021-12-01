@@ -74,8 +74,8 @@
 							<ul class="notice_list">
 								<li th:each="board : ${ boardList }">
 									<a th:href="@{/board/detail(no=${board.no})}">
-										<p th:text="${ board.title }">[공지]2021년 4월 인사발령</p>
-										<span class="date" th:text="${ board.regDate }">2021.11.10 14:39</span>
+										<p th:text="${ board.title }"></p>
+										<span class="date" th:text="${ board.regDate }"></span>
 									</a>
 								</li>
 							</ul>
@@ -88,11 +88,11 @@
 					<div class="main_right">
 						<div class="status">
 							<p class="titleM">근태현황</p>
-							<span class="time_p">출근허용시간 : 시 - 시</span>
+							<span class="time_p"></span>
 							<p class="text">출/퇴근시 아래 버튼을 클릭하세요.</p>
 							<div class="btn_area">
-								<button type="button">출근</button>
-								<button type="button">퇴근</button>
+								<button th:if="${ todayWorkFlag }" class="ent_work" type="button" th:attr="onclick=|location.replace('/main/entWork')|">출근</button>
+								<button th:unless="${ todayWorkFlag }" class="ent_work" type="button" disabled="disabled">출근</button>
 							</div>
 
 							<a href="#n" class="link_arrow">근태현황 바로가기</a>

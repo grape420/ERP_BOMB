@@ -8,6 +8,9 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
+import com.greedy.erp_bomb.tna.model.dto.TNADTO;
+import com.greedy.erp_bomb.tna.model.dto.TNAPk;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 
 @Repository
@@ -39,6 +42,15 @@ public class MainDAO {
 	public List<VoteDTO> selectAllVote() {
 		String jpql = "SELECT a FROM VoteDTO as a";
 		return em.createQuery(jpql, VoteDTO.class).getResultList();
+	}
+
+	public void regEntWork(TNADTO tna) {
+		tna.setMember(em.find(MemberDTO.class, tna.getMember().getName()));
+		em.persist(tna);
+	}
+
+	public TNADTO findTodayWork(TNAPk tnaPk) {
+		return em.find(TNADTO.class, tnaPk);
 	}
 
 }

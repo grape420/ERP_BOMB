@@ -1,5 +1,6 @@
 package com.greedy.erp_bomb.main.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
 import com.greedy.erp_bomb.main.model.service.MainService;
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
+import com.greedy.erp_bomb.tna.model.dto.TNADTO;
+import com.greedy.erp_bomb.tna.model.dto.TNAPk;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 
 @Controller
@@ -51,8 +55,11 @@ public class MainController {
 			}
 		}
 		
-		System.out.println("endVote : " + endVote);
-		System.out.println("voting : " + voting);
+		TNADTO tna = mainService.findTodayWork(new TNAPk(new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()), userName));
+		System.out.println(tna);
+		if(tna != null) {
+			mv.addObject("todayWorkFlag", false);
+		}
 		
 		mv.addObject("boardList" ,boardList);
 		mv.addObject("myApprovalingDocumentCount" ,myApprovalingDocumentCount);
@@ -64,5 +71,53 @@ public class MainController {
 		mv.setViewName("/main/main");
 		return mv;
 	}
+	
+	@GetMapping("/main/entWork")
+	public ModelAndView entWork(ModelAndView mv,  @AuthenticationPrincipal UserImpl user) {
+		TNADTO tna = new TNADTO();
+		MemberDTO member = new MemberDTO();
+		member.setName(user.getName());
+		
+		tna.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()));
+		tna.setMember(member);
+		tna.setCode(1);
+		
+		mainService.regEntWork(tna);
+		
+		mv.setViewName("redirect:/main/main");
+		
+		return mv;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
