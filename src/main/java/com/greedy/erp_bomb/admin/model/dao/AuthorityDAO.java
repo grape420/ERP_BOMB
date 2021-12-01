@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberRoleDTO;
 
 @Repository
@@ -15,12 +16,12 @@ public class AuthorityDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public List<MemberRoleDTO> findAuthorityList() {
-		String jpql = "SELECT a FROM MemberRoleDTO a ORDER BY a.member.name";
+	public List<MemberDTO> findAuthorityList() {
+		String jpql = "SELECT a FROM MemberDTO a ORDER BY a.name";
 		
-		List<MemberRoleDTO> authorityList = em.createQuery(jpql, MemberRoleDTO.class).getResultList();
+		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList();
 		
-		return authorityList;
+		return memberList;
 	}
 
 	public MemberRoleDTO findAuthDetail(String detailName) {

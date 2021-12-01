@@ -94,7 +94,7 @@ public class MemberDTO implements Serializable {
 	private List<EACarbonDTO> eaBonDTOList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member")
-	private List<AddendumDTO> addenumList = new ArrayList<>();
+	private List<AddendumDTO> addendumList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "member")
 	private List<EAPathDTO> eaPathList = new ArrayList<>();
@@ -135,7 +135,7 @@ public class MemberDTO implements Serializable {
 	public MemberDTO(String name, CompanyDTO company, DeptDTO dept, RankDTO rank, String pwd, int empNo, String birth,
 			String phone, Date joinDate, Date quitDate, int regularPay, int bonus, int annualIncome, String email,
 			String entYn, List<MemberRoleDTO> memberRoleList, List<EADTO> eaList, List<EACarbonDTO> eaBonDTOList,
-			List<AddendumDTO> addenumList, List<EAPathDTO> eaPathList, List<TNADTO> tnaList, List<VoteDTO> voteList,
+			List<AddendumDTO> addendumList, List<EAPathDTO> eaPathList, List<TNADTO> tnaList, List<VoteDTO> voteList,
 			List<VoteParticipationDTO> voteParticipationList, List<VoteOptionDTO> voteOptionList,
 			List<BoardDTO> boardList, List<CommentDTO> commentList, List<NoteDTO> sentNoteList,
 			List<NoteDTO> receiveMemberList, List<SalaryDTO> salaryList, SPDTO sp) {
@@ -157,7 +157,7 @@ public class MemberDTO implements Serializable {
 		this.memberRoleList = memberRoleList;
 		this.eaList = eaList;
 		this.eaBonDTOList = eaBonDTOList;
-		this.addenumList = addenumList;
+		this.addendumList = addendumList;
 		this.eaPathList = eaPathList;
 		this.tnaList = tnaList;
 		this.voteList = voteList;
@@ -273,12 +273,13 @@ public class MemberDTO implements Serializable {
 	public void setEaBonDTOList(List<EACarbonDTO> eaBonDTOList) {
 		this.eaBonDTOList = eaBonDTOList;
 	}
-	public List<AddendumDTO> getAddenumList() {
-		return addenumList;
+	public List<AddendumDTO> getAddendumList() {
+		return addendumList;
 	}
-	public void setAddenumList(List<AddendumDTO> addenumList) {
-		this.addenumList = addenumList;
+	public void setAddendumList(List<AddendumDTO> addendumList) {
+		this.addendumList = addendumList;
 	}
+
 	public List<EAPathDTO> getEaPathList() {
 		return eaPathList;
 	}

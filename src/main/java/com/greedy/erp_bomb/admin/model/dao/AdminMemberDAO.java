@@ -86,7 +86,7 @@ public class AdminMemberDAO {
 		member.getCompany().setMemberList(null);
 		member.getDept().setMemberList(null);
 		member.getRank().setMemberList(null);
-		member.setAddenumList(null);
+		member.setAddendumList(null);
 		member.setBoardList(null);
 		member.setCommentList(null);
 		member.setEaBonDTOList(null);

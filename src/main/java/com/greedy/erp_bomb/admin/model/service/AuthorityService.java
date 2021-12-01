@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.greedy.erp_bomb.admin.model.dao.AuthorityDAO;
+import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberRoleDTO;
 
 @Service
@@ -19,7 +20,7 @@ public class AuthorityService {
 	}
 
 	@Transactional
-	public List<MemberRoleDTO> findAuthorityList() {
+	public List<MemberDTO> findAuthorityList() {
 		return authorityDAO.findAuthorityList();
 	}
 
