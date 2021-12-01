@@ -193,23 +193,23 @@
 								<tr>
 									<td id="memName"></td>
 									<td>
-										<select id="companyCode" name="companyCode">
+										<select id="companyCode" name="companyCode" style="text-align: center; text-align-last: center">
 											
 										</select>
 									</td>
 									<td>
-										<select id="deptCode" name="deptCode">
+										<select id="deptCode" name="deptCode" style="text-align: center; text-align-last: center">
 											
 										</select>
 									</td>
 									<td>
-										<select id="rankCode" name="rankCode">
-											<option hidden="hidden" id="memRank"></option>
+										<select id="rankCode" name="rankCode" style="text-align: center; text-align-last: center">
+										
 										</select>
 									</td>
 									
 									<td>
-										<select name="entYn">
+										<select name="entYn" style="text-align: center; text-align-last: center">
 											<option hidden="hidden" id="memEntYn"></option>
 											<option value="Y">Y</option>
 											<option value="N">N</option>
@@ -231,13 +231,13 @@
 									<td id="memEmpNo"></td>
 									<td id="memBirth"></td>
 									<td>
-										<input type="text" name="phone">
+										<input type="text" name="phone" id="phone" style="text-align: center;">
 									</td>
 									<td>
-										<input type="text" name="email">
+										<input type="text" name="email" id="email" style="text-align: center;">
 									</td>
 									<td>
-										<input type="password" name="pwd">
+										<input type="password" name="pwd" autocomplete="off">
 									</td>
 								</tr>
 			                  </tbody>
@@ -259,6 +259,9 @@
 						const memEmpNo = $("#memEmpNo");
 						const memBirth = $("#memBirth");
 						const memEntYn = $("#memEntYn");
+						const phone = $("#phone");
+						const email = $("#email");
+						const newName = $("#newName");
 						
 						$.ajax({
 						url: "/admin/memDetail",
@@ -272,7 +275,9 @@
 							memBirth.text(data.birth); 
 							memEntYn.text(data.entYn);
 							
-							$("#newName").attr('value', data.name);
+							phone.attr('value', data.phone);
+							email.attr('value', data.email);
+							newName.attr('value', data.name);
 						},
 						error: function(xhr){
 							console.log(xhr);

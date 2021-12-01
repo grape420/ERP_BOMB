@@ -134,6 +134,8 @@ public class AdminMemberController {
 		mem1.setEntYn(mem2.getEntYn());
 		mem1.setEmpNo(mem2.getEmpNo());
 		mem1.setBirth(mem2.getBirth());
+		mem1.setPhone(mem2.getPhone());
+		mem1.setEmail(mem2.getEmail());
 		
 		
 		return mem1;
