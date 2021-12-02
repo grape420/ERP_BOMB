@@ -96,7 +96,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="/board/nolist">
+					<a class="nav-link" href="/board/noticeList">
 						<span>공지사항</span>
 					</a>
 				</li>
@@ -108,7 +108,7 @@
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="/vote/vote" >
+					<a class="nav-link on" href="/vote/vote" >
 						<span>투표 게시판</span>
 					</a>
 				</li>
@@ -128,9 +128,21 @@
 								</div>
 								
 								<ul class="tab ul-tab">
+									<th:block th:if="${#strings.equals(tab, 1)}">
 									<li class="li-tab electronic_approval on" data-tab="total-vote"><span>전체</span></li>
 									<li class="li-tab electronic_approval" data-tab="vote-ing"><span>진행 중</span></li>
-									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>									
+									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>
+									</th:block>
+									<th:block th:if="${#strings.equals(tab, 2)}">
+									<li class="li-tab electronic_approval" data-tab="total-vote"><span>전체</span></li>
+									<li class="li-tab electronic_approval on" data-tab="vote-ing"><span>진행 중</span></li>
+									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>
+									</th:block>
+									<th:block th:if="${#strings.equals(tab, 3)}">
+									<li class="li-tab electronic_approval" data-tab="total-vote"><span>전체</span></li>
+									<li class="li-tab electronic_approval" data-tab="vote-ing"><span>진행 중</span></li>
+									<li class="li-tab electronic_approval on" data-tab="endvote"><span>종료</span></li>
+									</th:block>									
 								</ul>
 								<div id="total-vote" class="tab_contents electronic_approval current">
 									<div class="tableArea">
