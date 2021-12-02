@@ -118,8 +118,6 @@
 									<caption>급여관리</caption>
 									
 									<!-- 관리자 X -->
-									<th:block sec:authorize="!hasRole('ADMIN')">
-										<th:block sec:authorize="hasRole('MEMBER')">	
 											<colgroup>
 												<col style="width:15%" />
 												<col style="width:10%" />
@@ -147,92 +145,22 @@
 													</th:block>
 												</tr>
 											</tbody>
-										 </th:block>	
-									 </th:block>
-									<!-- 관리자 O -->
-									<th:block sec:authorize="hasRole('ADMIN')">
-										<colgroup>
-											<col style="width:10%" />
-											<col style="width:14%" />
-											<col style="width:12%" />
-											<col style="width:19.5%" />
-											<col style="width:19.5%" />
-											<col style="width:25%" />
-										</colgroup> 
-										<thead>
-											<tr>
-												<th>번호</th>	
-												<th>귀속연월</th>
-												<th>사원명</th>
-												<th>월급</th>
-												<th>보너스</th>
-												<th>지급총액</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="salary : ${ allSalaryList }">
-												<td th:text="${ salary.serialNo }"></td>
-												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" class="t_center pop_btn" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }"></td>
-												<td th:text="${ salary.member.name }"></td>
-												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
-												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
-												<th:block th:with="total = ${ #numbers.formatInteger(salary.regularPay, 1)} +  ${ #numbers.formatInteger(salary.bonus, 1) }">
-													<td th:text="${ #numbers.formatInteger(total, 1, 'COMMA')}"></td>
-												</th:block>
-											</tr>
-										</tbody>
-									</th:block>
+								
 								</table>
 							</div>
 						</div>
 
-						<!-- 관리자 권한 설정 필요 -->
+						<!-- 관리자 권한 설정 필요
 						<div class="btn_area" sec:authorize="hasRole('ROLE_ADMIN')">
 							<a href="#n" class="blue_btn pop_btn" data-button="new_payroll_pop">신규등록</a>
 						</div>
+						 -->
 					</div>
 					<!-- 여기까지 급여관리 리스트 -->
 
 					<!-- 여기부터 급여관리 팝업 -->
 					<!-- 신규 등록하기 -->
-					<div id="new_payroll_pop" class="payroll_pop_layer">
-						<div class="top_area">
-							<h2>신규급여등록</h2>
-							<button type="button" class="pop_close" data-button="new_payroll_pop">닫기</button>
-						</div>
-						<form action="/salary/regist" method="post">										
-							<div class="pop_inner">
-								<div class="tableArea">
-									<table>
-										<caption>신규급여내역</caption>
-										<thead>
-											<th>귀속연월</th>
-											<th>사원명</th>
-											<th>기본급</th>
-											<th>보너스</th>
-										</thead>
-										<tbody>
-											<tr>
-												<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" name="Date" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
-												<td>
-													<select th:name="name" id="name" style="width: 80%;" class="form-control select2">
-														<option th:each="member : ${ memberList }" th:text="${ member.name }" th:value="${ member.name }"></option>
-													</select>
-												</td>
-												<td><input type="text" name="regularPay" id="regularPay" style="text-align: center;" required="required"></td>
-												<td><input type="text" name="bonus" id="bonus" style="text-align: center;"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="btn_area">
-									<!-- <a href="#n" class="blue_btn">등록</a> -->
-									<button type="submit" class="blue_btn" id="registBtn">등록</button>
-									<a href="#n" class="gray_btn pop_close" data-button="new_payroll_pop">닫기</a>
-								</div>
-							</div>
-						</form>
-					</div>
+			
 					
           	   <!-- 상세보기 및 수정 --> 
                <!-- 관리자 아닌 경우 : 본인의 내역 조회만 가능 (수정 및 추가 불가) -->

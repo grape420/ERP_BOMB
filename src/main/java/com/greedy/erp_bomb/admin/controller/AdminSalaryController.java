@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.salary.model.dto.SalaryDTO;
@@ -53,6 +54,7 @@ public class AdminSalaryController {
 	/* 신규 급여 내역 추가 */
 	@PostMapping("regist")
 	public ModelAndView registMenu(ModelAndView mv, 
+								   RedirectAttributes rttr,
 								   @RequestParam String name, 
 								   @RequestParam Integer regularPay, 
 								   @RequestParam(value="bonus", required=false, defaultValue="0") Integer bonus) {
@@ -75,35 +77,31 @@ public class AdminSalaryController {
 		
 		/* (이름 + 귀속연월) 기존 값 존재 여부 확인 */
 		List<SalaryDTO> allSalaryList = salaryService.findAllSalary();
+
 		for (SalaryDTO salaryDTO : allSalaryList) {
-			
 			/* 기존 값 */
 			SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM");
 			String curDate = sd.format(salaryDTO.getDate());
-			System.out.println(curDate);
 			
 			/* insert를 시도하는 값 */
 			Date now = new Date();
 			String newDate = sd.format(now);
-			System.out.println(newDate);
 			
 			/* 귀속연월과 이름 중복 */
 			if (curDate.equals(newDate) && salaryDTO.getMember().getName().equals(name)){
 				// 에러 출력
 				flag = false;
-				System.out.println("같아요! 들어가면 안됩니다!");
-			} 
+				rttr.addFlashAttribute("flashName", name);
+				rttr.addFlashAttribute("flashDate", curDate);
+			}
 		}
 		
-//		if(flag == true) {
+		if(flag == true) {
 			salaryService.registNewSalary(salary);
 			System.out.println("controller salary : " + salary);
-			mv.setViewName("redirect:/salary/salary");
-			return mv;
-//		} else {
-//			mv.setViewName("");
-//			return mv;
-//		}
+		}
+		mv.setViewName("redirect:/admin/salary");
+		return mv;
 	}
 }
 
