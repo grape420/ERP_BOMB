@@ -25,7 +25,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 		initialValue = 1, allocationSize = 1)
 @Table(name = "BOARD")
 public class BoardDTO implements Serializable {
-	private static final long serialVersionUID = -3526577256243753754L;
+	private static final long serialVersionUID = -3526577256043753754L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,

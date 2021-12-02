@@ -1,4 +1,28 @@
 @charset "UTF-8";
+
+.fDiv {
+	float: left;
+	text-align: left;
+	margin-left: 5px;
+}
+
+.pDiv {
+	float: right;
+	text-align: right;
+}
+
+a {
+	cursor: pointer;
+}
+
+button {
+	cursor: pointer;
+}
+
+.pop_btn, .pop_close {
+	cursor: pointer;
+}
+
 /* sidebar */
 .bg-gradient-primary {
 	background: #f2f3f7 !important;
@@ -68,7 +92,6 @@
 	cursor: pointer;
 }
 
-#new_approval_pop,
 #approval_detail_pop {
 	width: 700px;
 	height: 600px;
@@ -77,12 +100,20 @@
 	top: 40%;
 }
 
-#new_approvaler_pop {
-	width: 300px;
-	height: 400px;
+.approval_detail_pop {
+	width: 700px;
+	height: 600px;
 	min-width: auto;
 	min-height: auto;
-	top: 30%;
+	top: 40%;
+}
+
+#new_approval_pop {
+	width: 700px;
+	height: 630px;
+	min-width: auto;
+	min-height: auto;
+	top: 45%;
 }
 
 #new_approval_pop .top {
@@ -108,6 +139,48 @@
 }
 
 #new_approval_pop textarea {
+	border: 1px solid #ccc;
+	border-radius: 0;
+	font-size: 14px;
+	padding: 5px;
+	margin-top: 10px;
+	resize: none;
+	width: 100%;
+	height: 400px;
+	display: block;
+}
+
+.new_approval_pop {
+	width: 700px;
+	height: 630px;
+	min-width: auto;
+	min-height: auto;
+	top: 45%;
+}
+
+.new_approval_pop .top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.new_approval_pop .top p {
+	font-size: 14px;
+	margin: 0;
+	color: #333
+}
+
+.new_approval_pop .top input {
+	border: 1px solid #ccc;
+	border-radius: 0;
+	font-size: 14px;
+	padding: 5px;
+	height: 28px;
+	margin-right: 2px;
+	width: 75%;
+}
+
+.new_approval_pop textarea {
 	border: 1px solid #ccc;
 	border-radius: 0;
 	font-size: 14px;
@@ -145,7 +218,7 @@
 }
 
 .approval_person {
-	width: 70px !important;
+	width: 84px !important;
 }
 
 .approval_line {
@@ -172,7 +245,7 @@
 }
 
 .approvaler {
-	border-radius: 10px ; 
+	border-radius: 10px;
 	background-color: #8cceea;
 	padding: 1px 10px;
 	margin: 20px 3px;
@@ -181,8 +254,8 @@
 }
 
 .drafter {
-	border-radius: 10px ; 
-	background-color: #e5e5e5; 
+	border-radius: 10px;
+	background-color: #e5e5e5;
 	padding: 1px 10px;
 	margin: 0px 3px;
 	font-size: 14px;
@@ -190,7 +263,7 @@
 }
 
 .line {
-	border: 1px solid black; 
+	border: 1px solid black;
 	display: inline-block;
 	height: 30px;
 	padding-top: 2px;
@@ -205,14 +278,64 @@
 	height: 100px !important;
 }
 
-.sidebar{min-height: calc(100vh - 118px);}
-.sidebar-dark .hr.sidebar-divider{margin-bottom: 10px;}
-.sidebar-dark .sidebar-brand{background: #8cceea;text-align: left;height: auto;padding: 5px 10px;border-radius: 34px;letter-spacing: -1px;}
-.none-slected {background: none !important; color: black !important; }
-.sidebar .nav-item{margin-bottom: 5px;}
-.sidebar-dark .nav-item .nav-link{color: #555;padding: 0;padding-left: 30px;position: relative;}
-.sidebar-dark .nav-item .nav-link:before{content: '';width: 2px;height: 2px;background: #555;border-radius: 50%;position: absolute;left: 19px;top:11px;}
+.sidebar {
+	min-height: calc(100vh - 118px);
+}
 
-.sidebar-dark .nav-item .nav-link:hover, .sidebar-dark .nav-item .nav-link:focus{color: #8cceea;}
-.sidebar-dark .nav-item .nav-link:hover:before{background: #8cceea;}
-.sidebar-dark .nav-item .nav-link:focus:before{background: url(../../uses/check-line.png)center no-repeat;width: 12px;height: 12px;background-size: 100%;left: 15px;top: 7px;}
+.sidebar-dark .hr.sidebar-divider {
+	margin-bottom: 10px;
+}
+
+.sidebar-dark .sidebar-brand {
+	background: #8cceea;
+	text-align: left;
+	height: auto;
+	padding: 5px 10px;
+	border-radius: 34px;
+	letter-spacing: -1px;
+}
+
+.none-slected {
+	background: none !important;
+	color: black !important;
+}
+
+.sidebar .nav-item {
+	margin-bottom: 5px;
+}
+
+.sidebar-dark .nav-item .nav-link {
+	color: #555;
+	padding: 0;
+	padding-left: 30px;
+	position: relative;
+}
+
+.sidebar-dark .nav-item .nav-link:before {
+	content: '';
+	width: 2px;
+	height: 2px;
+	background: #555;
+	border-radius: 50%;
+	position: absolute;
+	left: 19px;
+	top: 11px;
+}
+
+.sidebar-dark .nav-item .nav-link:hover, .sidebar-dark .nav-item .nav-link:focus
+	{
+	color: #8cceea;
+}
+
+.sidebar-dark .nav-item .nav-link:hover:before {
+	background: #8cceea;
+}
+
+.sidebar-dark .nav-item .nav-link:focus:before {
+	background: url(../../uses/check-line.png) center no-repeat;
+	width: 12px;
+	height: 12px;
+	background-size: 100%;
+	left: 15px;
+	top: 7px;
+}

@@ -361,7 +361,7 @@ caption {
 	top: 40%;
 }
 
-#new_note_pop2, #new_product_pop, #note_detail_pop2 {
+#new_note_pop2, #new_product_pop, #auth_detail_pop {
 	width: 1014px;
 	height: 457px;
 	min-width: auto;
@@ -654,4 +654,14 @@ caption {
 	background-size: 100%;
 	left: 15px;
 	top: 7px;
+}
+
+.fDiv{
+      float: left;
+      text-align: left;
+      margin-left: 5px;
+}
+.pDiv{
+      float: right;
+      text-align: right;
 }

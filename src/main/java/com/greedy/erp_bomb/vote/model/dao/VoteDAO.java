@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.common.paging.SelectCriteria;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;
@@ -27,13 +28,11 @@ public class VoteDAO {
 		
 		List<VoteDTO> voteList = query.getResultList();
 		
-		System.out.println(voteList);
 		return voteList;
 	}
-
+	
 	public void insertVote(VoteDTO vote) {
 		em.persist(vote);
-		
 	}
 
 	public void insertVote(VoteOptionDTO voteOption) {
@@ -59,20 +58,18 @@ public class VoteDAO {
 		return voteDetail;
 	}
 
-	public void insertVvote(VoteParticipationDTO vote, String votes, int serialNo) {
+	public void insertVvote(VoteParticipationDTO vote, String desc, int serialNo) {
 		
 		vote.setVote(em.find(VoteDTO.class, serialNo));
 		vote.setMember(em.find(MemberDTO.class, vote.getMember().getName()));
 		
-		System.out.println(vote.getMember().getName());
-		System.out.println(vote.getVote());
-		
 		vote.getVote().setVoteOptionList(null);
 		vote.getVote().setVoteParticipationList(null);
 		
-		TypedQuery<VoteOptionDTO> query = em.createQuery("SELECT a FROM VoteOptionDTO as a WHERE a.desc = :desc", VoteOptionDTO.class);
+		TypedQuery<VoteOptionDTO> query = em.createQuery("SELECT a FROM VoteOptionDTO as a WHERE a.desc = :desc AND a.vote.serialNo = :serialNo", VoteOptionDTO.class);
 		
-		query.setParameter("desc", votes);
+		query.setParameter("desc", desc);
+		query.setParameter("serialNo", serialNo);
 		
 		VoteOptionDTO voteOption = query.getSingleResult();
 		
@@ -81,7 +78,6 @@ public class VoteDAO {
 		voteOption.setVoteCount(num + 1);
 		
 		em.persist(vote);
-		em.persist(voteOption);
 	}
 
 	public VoteDTO selectResult(int voteNumber) {
@@ -95,14 +91,11 @@ public class VoteDAO {
 	}
 
 	public void insertCandidate(VoteOptionDTO voteOption) {
-		System.out.println("체크2");
 		voteOption.setMember(em.find(MemberDTO.class, voteOption.getMember().getName()));
-		System.out.println("체크3");
 		voteOption.setVote(em.find(VoteDTO.class, voteOption.getVote().getSerialNo()));
-		System.out.println("체크4");
 		
 		em.persist(voteOption);
-		System.out.println("체크5");
 	}
+	
 	
 }

@@ -498,8 +498,8 @@ caption {
 /*1118_메인*/
 .main_section {
 	display: flex;
-	padding: 10px;
-	margin-left: 49px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .main_left {

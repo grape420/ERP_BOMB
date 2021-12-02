@@ -38,13 +38,13 @@ public class InventoryController {
 		return mv;
 	}
 	
-	@GetMapping(value = "company", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/company", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<CompanyDTO> findCompanyList() {
 		return inventoryService.findCompanyList();
 	}
 	
-	@GetMapping(value = "icecream", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/icecream", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<IceCreamDTO> findIcecreamList() {
 		return inventoryService.findIcecreamList();
@@ -85,13 +85,13 @@ public class InventoryController {
 		return mv;
 	}
 	
-	@PostMapping("/search")
-	public String searchInven(Model model, @RequestParam String keyword) {
-		List<InventoryDTO> inventoryList = inventoryService.searchInven(keyword);
-		
-		model.addAttribute("inventoryList", inventoryList);
-		
-		return "/inventory/inventory";
-	}
+//	@PostMapping("/search")
+//	public String searchInven(Model model, @RequestParam String keyword) {
+//		List<InventoryDTO> inventoryList = inventoryService.searchInven(keyword);
+//		
+//		model.addAttribute("inventoryList", inventoryList);
+//		
+//		return "/inventory/inventory";
+//	}
 	
 }

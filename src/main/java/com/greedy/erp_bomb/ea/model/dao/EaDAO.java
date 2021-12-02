@@ -12,6 +12,7 @@ import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
 import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
+import com.greedy.erp_bomb.ea.model.dto.EAPathPk;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Repository
@@ -42,10 +43,12 @@ public class EaDAO {
 		List<EADTO> eaPathList = new ArrayList<>();
 		
 		for(EAPathDTO eaPath : myEaPathList) {
-			eaPath.getEa().getAddendumList().size();
-			eaPath.getEa().getEaApprovalPathList().size();
-			eaPath.getEa().getEaCarbonList().size();
-			eaPathList.add(eaPath.getEa());
+			if(eaPath.getEa().getEaStatus() != 4) {
+				eaPath.getEa().getAddendumList().size();
+				eaPath.getEa().getEaApprovalPathList().size();
+				eaPath.getEa().getEaCarbonList().size();
+				eaPathList.add(eaPath.getEa());
+			}
 		}
 		
 		return eaPathList;
@@ -54,17 +57,18 @@ public class EaDAO {
 	public List<EADTO> findEaCarbonList(String userName) {
 		String jpql = "SELECT a FROM EACarbonDTO as a WHERE a.member.name = :name";
 		
-		List<EACarbonDTO> myEaPathList = em.createQuery(jpql, EACarbonDTO.class).setParameter("name", userName).getResultList();
+		List<EACarbonDTO> myEaCarbonList = em.createQuery(jpql, EACarbonDTO.class).setParameter("name", userName).getResultList();
 		
 		List<EADTO> eaCarbonList = new ArrayList<>();
 		
-		for(EACarbonDTO eaCarbon : myEaPathList) {
-			eaCarbon.getEa().getAddendumList().size();
-			eaCarbon.getEa().getEaApprovalPathList().size();
-			eaCarbon.getEa().getEaCarbonList().size();
-			eaCarbonList.add(eaCarbon.getEa());
+		for(EACarbonDTO eaCarbon : myEaCarbonList) {
+			if(eaCarbon.getEa().getEaStatus() != 4) {
+				eaCarbon.getEa().getAddendumList().size();
+				eaCarbon.getEa().getEaApprovalPathList().size();
+				eaCarbon.getEa().getEaCarbonList().size();
+				eaCarbonList.add(eaCarbon.getEa());
+			}
 		}
-		
 		return eaCarbonList;
 	}
 
@@ -85,6 +89,40 @@ public class EaDAO {
 		}
 		
 		em.persist(ea);
+	}
+	
+	public void updateEa(EADTO ea) {
+		EADTO originEa = em.find(EADTO.class, ea.getSerialNo());
+		
+		originEa.setDate(ea.getDate());
+		originEa.setTitle(ea.getTitle());
+		originEa.setContent(ea.getContent());
+		originEa.setEaStatus(ea.getEaStatus());
+		originEa.setSaveNo(ea.getSaveNo());
+		
+		for(EAPathDTO eaPath : originEa.getEaApprovalPathList()) {
+			em.remove(eaPath);
+		}
+		
+		for(EACarbonDTO eaCarbon : originEa.getEaCarbonList()) {
+			em.remove(eaCarbon);
+		}
+		
+		originEa.setEaApprovalPathList(null);
+		originEa.setEaCarbonList(null);
+		
+		em.flush();
+		
+		for(EAPathDTO eaPath : ea.getEaApprovalPathList()) {
+			eaPath.setMember(em.find(MemberDTO.class, eaPath.getMember().getName()));
+		}
+		
+		for(EACarbonDTO eaCarbon : ea.getEaCarbonList()) {
+			eaCarbon.setMember(em.find(MemberDTO.class, eaCarbon.getMember().getName()));
+		}
+		
+		originEa.setEaApprovalPathList(ea.getEaApprovalPathList());
+		originEa.setEaCarbonList(ea.getEaCarbonList());
 	}
 
 	public void deleteAddendum(int no) {
@@ -122,4 +160,91 @@ public class EaDAO {
 		return replyAd;
 	}
 
+	public AddendumDTO addAddendum(AddendumDTO addAd) {
+		addAd.setEa(em.find(EADTO.class, addAd.getEa().getSerialNo()));
+		addAd.setMember(em.find(MemberDTO.class, addAd.getMember().getName()));
+		
+		String jpql = "SELECT a FROM AddendumDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
+		List<AddendumDTO> adList = em.createQuery(jpql, AddendumDTO.class).setParameter("no", addAd.getEa().getSerialNo()).getResultList();
+		
+		addAd.setLength(adList.size() + 1);
+		
+		addAd.getEa().getMember().getName();
+		addAd.getMember().getName();
+		
+		System.out.println(addAd);
+		
+		em.persist(addAd);
+		return addAd;
+	}
+
+	public void approval(String userName, int eaNo) {
+		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.ea.serialNo = :eaNo AND a.member.name = :userName";
+		EAPathDTO eaPath = em.createQuery(jpql, EAPathDTO.class)
+							 .setParameter("eaNo", eaNo)
+							 .setParameter("userName", userName)
+							 .getSingleResult();
+		if(eaPath.getStatus() == 4) {
+			eaPath.setStatus(3);
+			eaPath.setDate(new java.sql.Date(System.currentTimeMillis()));
+			
+			EAPathDTO nextEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() + 1, eaNo));
+			
+			if(nextEaPath != null) {
+				nextEaPath.setStatus(4);
+			} else {
+				eaPath.getEa().setEaStatus(2);
+			}
+			
+			if(eaPath.getNo() > 0) {
+				EAPathDTO prevEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() - 1, eaNo));
+				prevEaPath.setStatus(5);
+			}
+		}
+	}
+
+	public void eaCancle(String userName, int eaNo, int type) {
+		if(type == 0) {
+			String jpql = "SELECT a FROM EAPathDTO as a WHERE a.ea.serialNo = :eaNo AND a.member.name = :userName";
+			EAPathDTO eaPath = em.createQuery(jpql, EAPathDTO.class)
+								 .setParameter("eaNo", eaNo)
+								 .setParameter("userName", userName)
+								 .getSingleResult();
+		
+			if(eaPath.getStatus() ==3) {
+				eaPath.setStatus(4);
+				eaPath.setDate(null);
+				eaPath.getEa().setEaStatus(1);
+				
+				EAPathDTO nextEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() + 1, eaNo));
+				
+				if(nextEaPath != null) {
+					nextEaPath.setStatus(1);
+				} else {
+					eaPath.getEa().setEaStatus(1);
+				}
+				
+				if(eaPath.getNo() > 0) {
+					EAPathDTO prevEaPath = em.find(EAPathDTO.class, new EAPathPk(eaPath.getNo() - 1, eaNo));
+					prevEaPath.setStatus(3);
+				}
+			}
+		} else {
+			EADTO ea = em.find(EADTO.class, eaNo);
+			ea.setEaStatus(4);
+		}
+	}
+
+	public void eaReturn(String userName, int eaNo) {
+		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.ea.serialNo = :eaNo AND a.member.name = :userName";
+		EAPathDTO eaPath = em.createQuery(jpql, EAPathDTO.class)
+							 .setParameter("eaNo", eaNo)
+							 .setParameter("userName", userName)
+							 .getSingleResult();
+		
+		eaPath.setStatus(2);
+		eaPath.setDate(new java.sql.Date(System.currentTimeMillis()));
+		eaPath.getEa().setEaStatus(3);
+	}
+	
 }

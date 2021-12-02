@@ -19,6 +19,7 @@
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
 <!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -35,30 +36,30 @@
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="main">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">전자결재</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
-					</li>
+				   <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+	               </li>
 				</ul>
 			</div>
 		</nav>
@@ -122,138 +123,179 @@
 					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">회원 관리</h1>
 					<div class="search_form">
 						<form action="/inventory/search" method="post">
-							<input type="text" placeholder="검색어 입력" name="keyword"/>
-							<button type="submit" class="blue_btn">Search</button>
+<!-- 							<input type="text" placeholder="검색어 입력" name="keyword"/>
+							<button type="submit" class="blue_btn">Search</button> -->
 						</form>
 					</div>
 
 					<!-- 테이블 -->
 					<div id="all_product" class="tab_contents inventory current">
 						<div class="tableArea">
-							<table>
-								<colgroup>
-									<col style="width: 30%" />
-									<col style="width: 40%" />
-									<col style="width: 25%" />
-								</colgroup>
+							<table class="Table">
 								<thead>
 									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th>
+										<th>사원명</th>
+										<th>회사</th>
+										<th>부서</th>
+										<th>직급</th>
+										<th>사번</th>
+										<th>생년월일</th>
+										<th>전화번호</th>
+										<th>E-Mail</th>
+										<th>입사일</th>
+										<th>퇴사여부</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="inventory : ${ inventoryList }">
-										<td class="t_center pop_btn" th:text="${ inventory.company.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.iceCream.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.invenRemainStock }"></td>
+									<tr th:each="mem : ${ memberList }">
+										<td class="t_center pop_btn" th:text="${ mem.name }" th:attr="onclick=|memDetail('${ mem.name }')|" data-button="mem_detail_pop" style="cursor: pointer; font-weight: bold;"></td>
+										<td class="t_center pop_btn" th:text="${ mem.company.name }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.dept.name }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.rank.name }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.empNo }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.birth }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.phone }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.email }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.joinDate }"></td>
+										<td class="t_center pop_btn" th:text="${ mem.entYn }"></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- 입출고 추가 -->
-					<div id="new_inventory_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>재고관리</h2>
-							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/inventory/regist" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th> 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<select id="companyCode" name="companyCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<select id="icecreamCode" name="icecreamCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<input type="number" name="invenRemainStock">
-										</td> 
-									</tr>
+					<!-- 멤버 변경 팝업 -->
+			          <div id="mem_detail_pop" class="pop_layer">
+			            <div class="top_area">
+			              <h2>회원 관리</h2>
+			              <button type="button" class="pop_close" data-button="mem_detail_pop">닫기</button>
+			            </div>
+			            <div class="pop_inner">
+			              <div class="tableArea">
+			              <form action="/admin/updateMem" method="post">
+			                <table>
+			                  <colgroup>
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  	 <col style="width:20%" />
+			                  </colgroup>
+			                  <thead>
+			                    <tr>
+									<th>사원명</th>
+									<th>회사</th>
+									<th>부서</th>
+									<th>직급</th>
+									<th>퇴사 여부</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+								<tr>
+									<td id="memName"></td>
+									<td>
+										<select id="companyCode" name="companyCode" style="text-align: center; text-align-last: center">
+											
+										</select>
+									</td>
+									<td>
+										<select id="deptCode" name="deptCode" style="text-align: center; text-align-last: center">
+											
+										</select>
+									</td>
+									<td>
+										<select id="rankCode" name="rankCode" style="text-align: center; text-align-last: center">
+										
+										</select>
+									</td>
+									
+									<td>
+										<select name="entYn" style="text-align: center; text-align-last: center">
+											<option hidden="hidden" id="memEntYn"></option>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</td>
+								</tr>
 								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<!-- 아이스크림 추가 -->
-					<div id="new_icecream_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>신규 아이스크림 추가</h2>
-							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/inventory/newIce" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 50%" />
-								</colgroup>
 								<thead>
-									<tr>
-										<th>아이스크림 이름</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="name">
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_icecream_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_icecream_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div>
-					<!-- 아이스크림 추가 -->
+								<tr>
+			                    	<th>사번</th>
+									<th>생년월일</th>
+									<th>휴대폰 번호</th>
+									<th>E-Mail</th>
+									<th>비밀번호</th>
+			                    </tr>
+			                    </thead>
+			                    <tbody>
+								<tr>
+									<td id="memEmpNo"></td>
+									<td id="memBirth"></td>
+									<td>
+										<input type="text" name="phone" id="phone" style="text-align: center;">
+									</td>
+									<td>
+										<input type="text" name="email" id="email" style="text-align: center;">
+									</td>
+									<td>
+										<input type="password" name="pwd" autocomplete="off">
+									</td>
+								</tr>
+			                  </tbody>
+			                </table>
+			              
+			              <div class="btm_area mt-2" style="text-align: center;">
+			              	<input type="hidden" name="name" id="newName">
+			              	<button type="submit" class="blue_btn pop_close" data-button="mem_detail_pop">수정</button>
+			              </div>
+			            </form>
+			            </div>
+			            </div>
+			          </div>
+					<!-- 멤버 변경 팝업 -->
+					<script>
+					function memDetail(name){
+						var detailName = name;
+						const memName = $("#memName");
+						const memEmpNo = $("#memEmpNo");
+						const memBirth = $("#memBirth");
+						const memEntYn = $("#memEntYn");
+						const phone = $("#phone");
+						const email = $("#email");
+						const newName = $("#newName");
+						
+						$.ajax({
+						url: "/admin/memDetail",
+						type: "get",
+						data: {
+							detailName : detailName
+						},
+						success: function(data){
+							memName.text(data.name); 
+							memEmpNo.text(data.empNo); 
+							memBirth.text(data.birth); 
+							memEntYn.text(data.entYn);
+							
+							phone.attr('value', data.phone);
+							email.attr('value', data.email);
+							newName.attr('value', data.name);
+						},
+						error: function(xhr){
+							console.log(xhr);
+							 }
+						});
+					}
+					</script>
 					<div class="btm_area" style="margin-left: 10px;">
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a> 
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_icecream_pop">신규 아이스크림</a>
+						<a style="cursor: pointer;" class="blue_btn pop_btn" href="/admin/registMember">추가</a> 
 					</div>
-					<div class="paging">
-						<button type="button" class="first_btn">처음페이지</button>
-						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a> <a href="#n" class="num">2</a> <a
-							href="#n" class="num">3</a> <a href="#n" class="num">4</a>
-						<button type="button" class="next_btn">다음페이지</button>
-						<button type="button" class="last_btn">마지막페이지</button>
-					</div>
-					<!-- 여기에 적으셈 -->
 				</div>
 			</div>
 		</div>
 	</section>
 	
 	<script>
-		$.ajax({
-			url: "/inventory/company",
+ 		$.ajax({
+			url: "/admin/companyCode",
 			success: function(data){
 				const $companyCode = $("#companyCode");
 				$companyCode.html("");
@@ -268,19 +310,96 @@
 		});
 		
 		$.ajax({
-			url: "/inventory/icecream",
+			url: "/admin/deptCode",
 			success: function(data){
-				const $icecreamCode = $("#icecreamCode");
-				$icecreamCode.html("");
+				const $deptCode = $("#deptCode");
+				$deptCode.html("");
 				
 				for (let i in data){
-					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
+					$deptCode.append($("<option>").val(data[i].no).text(data[i].name));
 				}
 			},
 			error: function(xhr){
 				console.log(xhr);
 			}
+		}); 
+		
+		$.ajax({
+			url: "/admin/rankCode",
+			success: function(data){
+				const $rankCode = $("#rankCode");
+				$rankCode.html("");
+				
+				for (let i in data){
+					$rankCode.append($("<option>").val(data[i].no).text(data[i].name));
+				}
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		}); 
+		
+		
+		/* dataTable */
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "해당 내역이 존재하지 않습니다.",
+		            "info": "_PAGE_ / _PAGES_",
+		            "infoEmpty": "회원이 존재하지 않습니다.",
+		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+		        "order" : [],
+	               /* 보이는 갯수 설정 안보이게 */
+	               lengthChange: false,
+	               /* 페이지 전체수 나오던 부분 안보이게*/
+	               info : false,
+	               /* 구조 설정 태그 안에 글자는 div클래스명 */
+	               "dom": 't<"fDiv"f><"pDiv"p>',
+	               "aoColumnDefs": [
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ] }
+	                ]
+	        });
+			
+			clearInterval(timer);
+		}, 100);
+		
+		var phoneFlag = false;
+		
+		$("#submit-btn").click(function() {
+			if(phoneFlag == false) {
+				$("#phone-result").text("휴대폰 번호를 다시 확인 해주세요").css("color", "red");
+				$("#phone").val("").focus();
+			}
+			
+			if(passwordFlag == false) {
+				$("#password-result").text("비밀번호를 다시 확인 해주세요.").css("color", "red");
+				$("#passowrd").val("").focus();
+			}
+			
+			if(emailFlag == false) {
+				$("#email-result").text("이메일을 다시 확인해주세요.").css("color", "red");
+				$("#email").val("").focus();
+			}
+			
+			if((phoneFlag == true) && (passwordFlag == true) && (emailFlag == true)) {
+				alert("회원 추가가 성공적으로 완료되었습니다");
+				 $("#signup-form").submit(); 
+			}
 		});
 	</script>
+	
+	<!-- dataTable -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 </body>
 </html>

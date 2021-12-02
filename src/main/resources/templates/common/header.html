@@ -1,234 +1,169 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/ea/ea.css}">	<!-- 여기에 페이지 css파일 적용 -->
+
+<script type="text/javascript" th:src="@{/uses/js/pagination.js}"></script>
+<title>ERP BOMB</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm navbar-light bg-light" style="padding: 0;">
-			<div class="collapse navbar-collapse justify-content-end">
-				<ul class="navbar-nav mr-3">
-					<li class="nav-item mr-2 ml-2">
-						<a style="cursor: text;">고객님 님 환영합니다.</a>
-					</li>
-					<li class="nav-item mr-2 ml-2 customer">
-						<a  href="board/list">고객센터</a>
-					</li>
-					<li class="nav-item mr-2 ml-2 logout">
-						<a href="/member/logout">로그아웃</a>
-					</li>
-					<!--1107 쪽지 추가-->
-					<li class="nav-item mr-2 ml-2 send_note">
-						<a href="#n" class="pop_btn" data-button="note_pop">쪽지</a>
-					</li>
-					<!--1107 쪽지 추가-->
-					<li class="nav-item mr-2 ml-2 mypage">
-						<a href="myPage/drawHistory">마이페이지</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-
-		<!--1107 쪽지팝업-->
-		<div id="note_pop" class="pop_layer">
-			<div class="top_area">
-				<h2>쪽지</h2>
-				<button type="button" class="pop_close" data-button="note_pop">닫기</button>
-			</div>
-			<div class="search_form">
-				<input type="text" placeholder="검색어 입력" />
-				<button type="button" class="blue_btn">Search</button>
-			</div>
-			<ul class="tab ul-tab">
-				<li class="on" data-tab="send_message"><span>보낸쪽지</span></li>
-				<li data-tab="received_message"><span>받은쪽지</span></li>
+	<input type="hidden" id="userName" th:value="${userName}"/>
+	<nav class="navbar navbar-expand-sm navbar-light bg-light"
+		style="padding: 0;">
+		<div class="collapse navbar-collapse justify-content-end">
+			<ul class="navbar-nav mr-3">
+				<li class="nav-item mr-2 ml-2"><a style="cursor: text;" th:text="${ #authentication.name + '님 환영합니다.'} ">고객님
+						님 환영합니다.</a></li>
+				<li class="nav-item mr-2 ml-2 customer"><a href="board/list">고객센터</a>
+				</li>
+				<li class="nav-item mr-2 ml-2 logout"><a href="/member/logout">로그아웃</a>
+				</li>
+				<!--1107 쪽지 추가-->
+				<li class="nav-item mr-2 ml-2 send_note"><a href="#n"
+					class="pop_btn" data-button="note_pop">쪽지</a></li>
+				<!--1107 쪽지 추가-->
+				<li class="nav-item mr-2 ml-2 mypage"><a href="/admin/authority">마이페이지</a></li>
 			</ul>
-			<!--보낸쪽지 내용-->
-			<div id="send_message" class="tab_contents current">
-				<div class="tableArea">
-					<table>
-						<caption>보낸쪽지 리스트</caption>
-						<colgroup>
-							<col style="width:5%" />
-							<col style="width:20%" />
-							<col style="width:45%" />
-							<col style="width:15%" />
-							<col style="width:15%" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th>
-									<input type="checkbox" class="check_box" id="total_num" />
-									<label for="total_num"></label>
-								</th>
-								<th>보낸/받는사람</th>
-								<th>내용</th>
-								<th>발송일자</th>
-								<th>상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<input type="checkbox" id="num_01" class="check_box" />
-									<label for="num_01" data-num="1"></label>
-								</td>
-								<td>ERP BOMB!</td>
-								<td class="t_left pop_btn" data-button="note_detail_pop">안녕하세요</td>
-								<td>2021/11/07</td>
-								<td>
-									<div class="status">
-										<button type="button">확인</button>
-										<button type="button">미확인</button>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="checkbox" id="num_02" class="check_box" />
-									<label for="num_02" data-num="2"></label>
-								</td>
-								<td>ERP BOMB!</td>
-								<td class="t_left pop_btn" data-button="note_detail_pop">안녕하세요</td>
-								<td>2021/11/07</td>
-								<td>
-									<div class="status">
-										<button type="button">확인</button>
-										<button type="button">미확인</button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="paging">
-						<button type="button" class="first_btn">처음페이지</button>
-						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a>
-						<a href="#n" class="num">2</a>
-						<a href="#n" class="num">3</a>
-						<a href="#n" class="num">4</a>
-						<button type="button" class="next_btn">다음페이지</button>
-						<button type="button" class="last_btn">마지막페이지</button>
-					</div>
+		</div>
+	</nav>
+
+	<!--1107 쪽지팝업-->
+	<div id="note_pop" class="pop_layer">
+		<div class="top_area">
+			<h2>쪽지</h2>
+			<button type="button" class="pop_close" data-button="note_pop">닫기</button>
+		</div>
+		<div class="search_form">
+			<input type="text" placeholder="검색어 입력" />
+			<button type="button" class="blue_btn">Search</button>
+		</div>
+		<ul class="tab ul-tab">
+			<li class="on" data-tab="send_message" id="send_tab"><span>보낸쪽지</span></li>
+			<li data-tab="received_message" id="receive_tab"><span>받은쪽지</span></li>
+		</ul>
+		<!--보낸쪽지 내용-->
+		<div id="send_message" class="tab_contents current">
+			<div class="tableArea">
+				<table>
+					<caption>보낸쪽지 리스트</caption>
+					<colgroup>
+						<col style="width: 5%" />
+						<col style="width: 20%" />
+						<col style="width: 45%" />
+						<col style="width: 15%" />
+						<col style="width: 15%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th><input type="checkbox" class="check_box" id="total_send" />
+								<label for="total_send"></label></th>
+							<th>보낸/받는사람</th>
+							<th>내용</th>
+							<th>발송일자</th>
+							<th>상태</th>
+						</tr>
+					</thead>
+					<tbody id="msg_send"></tbody>
+				</table>
+				<div class="paging" id="send_pagination">
+					<button type="button" class="first_btn">처음페이지</button>
+					<button type="button" class="prev_btn">이전페이지</button>
+					<a href="#n" class="num">1</a>
+					<button type="button" class="next_btn">다음페이지</button>
+					<button type="button" class="last_btn">마지막페이지</button>
 				</div>
-			</div>
-			<!--//보낸쪽지 내용-->
-			<!--받은쪽지 내용-->
-			<div id="received_message" class="tab_contents">
-				<div class="tableArea">
-					<table>
-						<caption>받은쪽지 리스트</caption>
-						<colgroup>
-							<col style="width:5%" />
-							<col style="width:20%" />
-							<col style="width:45%" />
-							<col style="width:15%" />
-							<col style="width:15%" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th>
-									<input type="checkbox" class="check_box" id="total_num" />
-									<label for="total_num"></label>
-								</th>
-								<th>보낸/받는사람</th>
-								<th>내용</th>
-								<th>발송일자</th>
-								<th>상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<input type="checkbox" id="num_01" class="check_box" />
-									<label for="num_01" data-num="1"></label>
-								</td>
-								<td>ERP BOMB!</td>
-								<td class="t_left pop_btn" data-button="note_detail_pop">안녕하세요</td>
-								<td>2021/11/07</td>
-								<td>
-									<div class="status">
-										<button type="button">확인</button>
-										<button type="button">미확인</button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="paging">
-						<button type="button" class="first_btn">처음페이지</button>
-						<button type="button" class="prev_btn">이전페이지</button>
-						<a href="#n" class="num on">1</a>
-						<a href="#n" class="num">2</a>
-						<a href="#n" class="num">3</a>
-						<a href="#n" class="num">4</a>
-						<button type="button" class="next_btn">다음페이지</button>
-						<button type="button" class="last_btn">마지막페이지</button>
-					</div>
-				</div>
-			</div>
-			<!--//받은쪽지 내용-->
-			<div class="btn_area">
-				<a href="#n" class="blue_btn pop_btn" data-button="new_note_pop">신규</a>
-				<a href="#n" class="gray_btn">확인</a>
-				<a href="#n" class="gray_btn">선택삭제</a>
-				<a href="#n" class="gray_btn">닫기</a>
 			</div>
 		</div>
-		<!--1107 쪽지팝업-->
-
-		<!--1107 신규쪽지팝업-->
-		<div id="new_note_pop" class="pop_layer">
-			<div class="top_area">
-				<h2>새 쪽지</h2>
-				<button type="button" class="pop_close" data-button="new_note_pop">닫기</button>
-			</div>
-			<div class="pop_inner">
-				<div class="top">
-					<p>받는사람</p>
-					<input type="text" placeholder="받는사람" />
-				</div>
-				<textarea class="new_note_content"></textarea>
-			</div>
-			<div class="btn_area">
-				<a href="#n" class="blue_btn pop_close" data-button="new_note_pop">보내기</a>
-				<a href="#n" class="gray_btn pop_close" data-button="new_note_pop">닫기</a>
-			</div>
-		</div>
-		<!--//1107 신규쪽지팝업-->
-
-		<!--1107 쪽지디테일팝업-->
-		<div id="note_detail_pop" class="pop_layer">
-			<div class="top_area">
-				<h2>받은쪽지</h2>
-				<button type="button" class="pop_close" data-button="note_detail_pop">닫기</button>
-			</div>
-			<div class="pop_inner">
-				<div class="detail_note">
-					<div class="top">
-						<p class="name">ERP BOMB!</p>
-						<p class="date">2021/11/07 11:17:01</p>
-					</div>
-					<div class="btn">
-						안녕하세요.
-						<br />ERP BOMB! 고객지원팀입니다.
-						<br /><br />문의주신 내용에 대해 추후 다시 상담이 필요하신 경우,
-						<br />[전화상담요청]을 남겨주시기 바랍니다.
-						<br /><br />감사합니다.
-					</div>
+		<!--//보낸쪽지 내용-->
+		<!--받은쪽지 내용-->
+		<div id="received_message" class="tab_contents">
+			<div class="tableArea">
+				<table>
+					<caption>받은쪽지 리스트</caption>
+					<colgroup>
+						<col style="width: 5%" />
+						<col style="width: 20%" />
+						<col style="width: 45%" />
+						<col style="width: 15%" />
+						<col style="width: 15%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th><input type="checkbox" class="check_box" id="total_receive" />
+								<label for="total_receive"></label></th>
+							<th>보낸/받는사람</th>
+							<th>내용</th>
+							<th>발송일자</th>
+							<th>상태</th>
+						</tr>
+					</thead>
+					<tbody id="msg_receive"></tbody>
+				</table>
+				<div class="paging" id="receive_pagination">
+					<button type="button" class="first_btn">처음페이지</button>
+					<button type="button" class="prev_btn">이전페이지</button>
+					<a href="#n" class="num">1</a>
+					<button type="button" class="next_btn">다음페이지</button>
+					<button type="button" class="last_btn">마지막페이지</button>
 				</div>
 			</div>
-			<div class="btn_area">
-				<a href="#n" class="blue_btn">삭제</a>
-				<a href="#n" class="gray_btn">이전</a>
-				<a href="#n" class="gray_btn">다음</a>
-				<a href="#n" class="gray_btn pop_close" data-button="note_detail_pop">닫기</a>
-			</div>
 		</div>
-		<!--//1107 쪽지디테일팝업-->
+		<!--//받은쪽지 내용-->
+		<div class="btn_area">
+			<a href="#n" class="blue_btn pop_btn" data-button="new_note_pop">신규</a>
+			<a href="#n" class="gray_btn">확인</a> 
+			<a href="#n" class="gray_btn" id="delete_message_list_btn">선택삭제</a>
+			<a href="#n" class="gray_btn pop_close" data-button="note_pop">닫기</a>
+		</div>
+	</div>
+	<!--1107 쪽지팝업-->
 
-		<hr class="m-0">
-		
+	<!--1107 신규쪽지팝업-->
+	<div id="new_note_pop" class="pop_layer">
+		<div class="top_area">
+			<h2>새 쪽지</h2>
+			<button type="button" class="pop_close" data-button="new_note_pop">닫기</button>
+		</div>
+		<div class="pop_inner">
+			<div class="top">
+				<p>받는사람</p>
+<!-- 				<input type="text" placeholder="받는사람" id="receive_member"/> -->
+				<select name="receive_member" id="receive_member" class="form-control" required="required" style="width: 426px;">
+					<option>선택하세요</option>
+					<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+				</select>
+			</div>
+			<textarea class="new_note_content" id="message_contents"></textarea>
+		</div>
+		<div class="btn_area">
+			<a href="javascript:void(0);" class="blue_btn pop_close" data-button="new_note_pop" id="send_message_btn">보내기</a>
+			<a href="javascript:void(0);" class="gray_btn pop_close" data-button="new_note_pop" id="close_popup">닫기</a>
+		</div>
+	</div>
+	<!--//1107 신규쪽지팝업-->
+
+	<!--1107 쪽지디테일팝업-->
+	<div id="note_detail_pop" class="pop_layer">
+		<div class="top_area">
+			<h2 id="detail_title"></h2>
+			<button type="button" class="pop_close" data-button="note_detail_pop">닫기</button>
+		</div>
+		<div class="pop_inner">
+			<div class="detail_note"></div>
+		</div>
+		<div class="btn_area">
+			<a href="#n" class="blue_btn" id="delete_message_btn" data-no="" data-send="" data-receive="">삭제</a>
+			<a href="#n" class="gray_btn" id="de_prev_btn" data-prev="">이전</a>
+			<a href="#n" class="gray_btn" id="de_next_btn" data-next="">다음</a>
+			<a href="#n" class="gray_btn pop_close" data-button="note_detail_pop">닫기</a>
+		</div>
+	</div>
+	<!--//1107 쪽지디테일팝업-->
+
+	<hr class="m-0">
+
 	<script th:src="@{/uses/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/uses/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/uses/vendor/jquery-easing/jquery.easing.min.js}"></script>
@@ -237,74 +172,460 @@
 	<script th:src="@{/uses/js/demo/datatables-demo.js}"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
-	
-	<script>
+
+	<script th:inline="javascript">
+	/*1107 css 추가*/
+	$(document).ready(function() {
+		var pageNo = 1;
 		
-		/*1107 css 추가*/
-		$(document).ready(function () {
+		//상태 확인, 미확인
+		$('.status button').on('click', function() {
+			$(this).toggleClass('on');
+		})
 
-			//상태 확인, 미확인
-			$('.status button').on('click', function () {
-				$(this).toggleClass('on');
-			})
-
-			//쪽지 탭
-			$('.tab>li').on('click', function () {
-				var this_tab = $(this).data('tab');
-
-				if ($(this).hasClass("electronic_approval")) {
-					$('.tab>li.electronic_approval').removeClass('on');
-					$('.tab_contents.electronic_approval').removeClass('current');
-				} else {
-					$('.tab>li').not(".electronic_approval").removeClass('on');
-					$('.tab_contents').not(".electronic_approval").removeClass('current');
-				}
-				$(this).addClass('on');
-				$('#' + this_tab).addClass('current');
-			});
-
-			//팝업열기닫기
-			$('.pop_btn').on('click', function () {
-				var pop_name = $(this).data('button');
-
-				$('#' + pop_name).stop().toggle();
-				pop_align();
-			});
-
-			$('.pop_close').on('click', function () {
-				var pop_name = $(this).data('button');
-
-				$('#' + pop_name).stop().toggle();
-			});
-
-			//팝업센터
-			function pop_align() {
-				var window_w = $(window).width();
-				$('.pop_layer').each(function (index, item) {
-					$(item).addClass('pop_0' + index);
-
-					var pop_width = $('.pop_0' + index).width();
-					var pop_height = $('.pop_0' + index).height();
-
-					$('.pop_0' + index).css({
-						'margin-left': -(pop_width / '2'),
-						'margin-top': -(pop_height / '2')
-					});
-				});
-				
-				$('.payroll_pop_layer').each(function (index, item) {
-					$(item).addClass('pop_0' + index);
-
-					var pop_width = $('.pop_0' + index).width();
-					var pop_height = $('.pop_0' + index).height();
-
-					$('.pop_0' + index).css({
-						'margin-left': -(pop_width / '2'),
-						'margin-top': -(pop_height / '2')
-					});
-				});
+		//쪽지 탭
+		$('.tab>li').on('click', function() {
+			$("#total_receive").prop("checked", false);
+			$("#total_send").prop("checked", false);
+			$(".send_box").prop("checked", false);
+			$(".receive_box").prop("checked", false);
+			
+			var this_tab = $(this).data('tab');
+			if ($(this).hasClass("electronic_approval")) {
+				$('.tab>li.electronic_approval')
+						.removeClass('on');
+				$('.tab_contents.electronic_approval')
+						.removeClass('current');
+			} else {
+				$('.tab>li').not(".electronic_approval")
+						.removeClass('on');
+				$('.tab_contents').not(
+						".electronic_approval")
+						.removeClass('current');
 			}
+			$(this).addClass('on');
+			$('#' + this_tab).addClass('current');
+		});
+
+		//팝업열기닫기
+		$(document).on('click', '.pop_btn', function() {
+			var pop_name = $(this).data('button');
+			var userName = $("#userName").val();
+			var serialNo = $(this).data('no');
+			var type = $(this).data('type');
+			
+			if(type == "send"){
+				userName = $(this).data('send');
+			}
+			
+			if(pop_name == "note_detail_pop"){
+				getDetailMessage(userName, serialNo, type);
+				
+				if(type == "receive"){
+					var cfm_btn = $('#status_'+serialNo).children().eq(0);
+					var none_cfm_btn = $('#status_'+serialNo).children().eq(1);
+					
+					$(cfm_btn).removeClass('on');
+					$(none_cfm_btn).removeClass('on');
+					$(cfm_btn).addClass('on');
+				}
+			}else{
+				getSendMessage(userName, pageNo);
+				getreceiveMessage(userName, pageNo);
+			}
+			$('#' + pop_name).stop().toggle();
+			pop_align();
+
+		});
+		
+		// 쪽지 상세 이전
+		$('#de_prev_btn').on('click', function() {
+			var serialNo = $(this).data('prev');
+			var userName = $("#userName").val();
+			
+			var cfm_btn = $('#status_'+serialNo).children().eq(0);
+			var none_cfm_btn = $('#status_'+serialNo).children().eq(1);
+			
+			$(cfm_btn).removeClass('on');
+			$(none_cfm_btn).removeClass('on');
+			$(cfm_btn).addClass('on');
+			
+			if(!serialNo) {
+				alert("마지막 쪽지 입니다.")
+				return;
+			}
+			
+			var type = "";
+			if($('#send_tab').hasClass('on')){
+				type = "send";
+			}else{
+				type = "receive";
+			}
+			getDetailMessage(userName, serialNo, type);
+		});
+		
+		// 쪽지 상세 다음
+		$('#de_next_btn').on('click', function() {
+			var serialNo = $(this).data('next');
+			var userName = $("#userName").val();
+			
+			var cfm_btn = $('#status_'+serialNo).children().eq(0);
+			var none_cfm_btn = $('#status_'+serialNo).children().eq(1);
+			
+			$(cfm_btn).removeClass('on');
+			$(none_cfm_btn).removeClass('on');
+			$(cfm_btn).addClass('on');
+			
+			if(!serialNo) {
+				alert("마지막 쪽지 입니다.")
+				return;
+			}
+			
+			
+			var type = "";
+			if($('#send_tab').hasClass('on')){
+				type = "send";
+			}else{
+				type = "receive";
+			}
+			getDetailMessage(userName, serialNo, type);
+		});
+
+		$('.pop_close').on('click', function() {
+			var pop_name = $(this).data('button');
+
+			$('#' + pop_name).stop().toggle();
+		});
+		
+		// SELECT BOX 이벤트
+		$('#total_send').click(function(){
+			if($('#total_send').is(":checked")){
+				$(".send_box").prop("checked", true);
+			}else{
+				$(".send_box").prop("checked", false);
+			}
+
+		})
+		$('#total_receive').click(function(){
+			if($('#total_receive').is(":checked")){
+				$(".receive_box").prop("checked", true);
+			}else{
+				$(".receive_box").prop("checked", false);
+			}
+		})
+		
+		//팝업센터
+		function pop_align() {
+			var window_w = $(window).width();
+			$('.pop_layer').each(function(index, item) {
+				$(item).addClass('pop_0' + index);
+
+				var pop_width = $('.pop_0' + index).width();
+				var pop_height = $('.pop_0' + index).height();
+
+				$('.pop_0' + index).css({
+					'margin-left' : -(pop_width / '2'),
+					'margin-top' : -(pop_height / '2')
+				});
+			});
+
+			$('.payroll_pop_layer').each(function(index, item) {
+				$(item).addClass('pop_0' + index);
+
+				var pop_width = $('.pop_0' + index).width();
+				var pop_height = $('.pop_0' + index).height();
+
+				$('.pop_0' + index).css({
+					'margin-left' : -(pop_width / '2'),
+					'margin-top' : -(pop_height / '2')
+				});
+			});
+		}
+				
+		// 쪽지 보내기 버튼 클릭 이벤트
+		$('#send_message_btn').click(function(){
+			var send_member = $('#userName').val();
+			var receive_member = $('#receive_member').val();
+			var message_contents = $('#message_contents').val();
+			
+			if(receive_member == "선택하세요") {
+				alert("받는사람을 선택하세요.")
+				$('#message_contents').val("");
+				return;
+			}
+			
+			var data = {};
+			data.send_member = send_member;
+			data.receive_member = receive_member;
+			data.message_contents = message_contents;
+			
+			$.ajax({
+				url : "/note/sendMessage",
+				type: 'post',
+				data: data,
+				dataType: 'json',
+				success : function(result) {
+					if(result.message == 'success'){
+						alert('쪽지를 보냈습니다.');
+						$("#receive_member option:eq(0)").prop("selected", true)
+						$('#message_contents').val("");
+						getSendMessage(result.sendMember, pageNo);
+// 						getreceiveMessage(userName, pageNo);
+					}
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+			
+		});
+		
+		// 쪽지 리스트삭제 버튼 클릭 이벤트
+		$('#delete_message_list_btn').click(function(){
+			var serialNo = new Array();
+			var send_member = new Array();
+			var receive_member = new Array();
+			$('input[type="checkbox"]:checked').each(function (i) {
+				serialNo[i] = $(this).data("no"); 
+				send_member[i] = $(this).data("send");
+				receive_member[i] = $(this).data("receive");
+			});
+			
+			var userName = $('#userName').val();
+			var data = {};
+			data.serialNo = serialNo;
+			data.send_member = send_member;
+			data.receive_member = receive_member;
+			data.userName = userName;
+			
+			delete_message(userName, data);
+		});
+		
+		// 쪽지 개별삭제 버튼 클릭 이벤트
+		$('#delete_message_btn').click(function(){
+			var serialNo = new Array();
+			var send_member = new Array();
+			var receive_member = new Array();
+			serialNo[0] = $(this).data("no"); 
+			send_member[0] = $(this).data("send");
+			receive_member[0] = $(this).data("receive");
+			
+			var userName = $('#userName').val();
+			var data = {};
+			data.serialNo = serialNo;
+			data.send_member = send_member;
+			data.receive_member = receive_member;
+			data.userName = userName;
+			
+			delete_message(userName, data);
+			
+			$('#note_detail_pop').stop().toggle();
+			pop_align();
+		});
+		
+		// 페이징 관련
+		$(document).on('click', '.num', function(){
+			pageNo = $(this).data('no');
+			goPage(pageNo);
+		})
+		
+		$(document).on('click', '.first_btn', function(){
+			if(typeof $(this).data('no') != 'undefined'){
+				pageNo = $(this).data('no');
+				goPage(pageNo);
+			}
+		})
+		$(document).on('click', '.prev_btn', function(){
+			if(typeof $(this).data('no') != 'undefined'){
+				pageNo = $(this).data('no');
+				goPage(pageNo);
+			}
+		})
+		$(document).on('click', '.next_btn', function(){
+			if(typeof $(this).data('no') != 'undefined'){
+				pageNo = $(this).data('no');
+				goPage(pageNo);
+			}
+		})
+		$(document).on('click', '.last_btn', function(){
+			if(typeof $(this).data('no') != 'undefined'){
+				pageNo = $(this).data('no');
+				goPage(pageNo);
+			}
+		})
+		
+		function goPage(pageNo){
+			var userName = $("#userName").val();
+			if($('#send_tab').hasClass('on')){
+				getSendMessage(userName, pageNo);
+			}else if($('#receive_tab').hasClass('on')){
+				getreceiveMessage(userName, pageNo);
+			}
+		}
+		// 페이징 관련
+		
+		// 쪽지 삭제
+		function delete_message(userName, data) {
+			$.ajax({
+				url : "/note/deleteMessage",
+				type: 'post',
+				data: data,
+				dataType: 'json',
+				success : function(result) {
+					if(result.message == 'success'){
+						alert('쪽지가 삭제되었습니다.');
+						getSendMessage(result.sendMember, pageNo);
+						getreceiveMessage(userName, pageNo);
+					}
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+		}
+		
+		// 보낸 쪽지 목록
+		function getSendMessage(name, pageNo){
+			var data = {};
+			data.name = name;
+			data.pageNumber = pageNo;
+			$.ajax({
+				url : "/note/getSendMessage",
+				type: 'post',
+				data: data,
+				dataType: 'json',
+				success : function(result) {
+					$('#msg_send').html(''); // 영역 초기화
+					var html = "";
+					var paging = Paging(result.pagination);
+					if(result.list.length > 0){
+						for(var i=0; i<result.list.length; i++){
+							html += '<tr>';
+							html += '<td><input type="checkbox" class="send_box" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-receive="'+result.list[i].receiveMember+'"></td>';
+							html += '<td>'+result.list[i].sendMember+'/'+result.list[i].receiveMember+'</td>';
+							html += '<td class="pop_btn" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-button="note_detail_pop" data-type="send">'+result.list[i].content+'</td>';
+							html += '<td>'+result.list[i].sendDate+'</td>';
+							html += '<td>'+result.list[i].status+'</td>';
+							html += '</tr>';
+						};
+					}else{
+						html = "<tr><td colspan='5'>보낸 쪽지가 없습니다.</td></tr>"	
+					}
+					
+					$('#msg_send').html(html);
+					$('#send_pagination').html(paging);
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+		}
+		
+		// 받은쪽지 목록
+		function getreceiveMessage(name, pageNo) {
+			var data = {};
+			data.name = name;
+			data.pageNumber = pageNo;
+			$.ajax({
+				url : "/note/getreceiveMessage",
+				type: 'post',
+				data: data,
+				dataType: 'json',
+				success : function(result) {
+					var paging = Paging(result.pagination);
+					$('#msg_receive').html(''); // 영역 초기화
+					var html = "";
+					if(result.list.length > 0){
+						for(var i=0; i<result.list.length; i++){
+							html += '<tr>';
+							html += '<td><input type="checkbox" class="receive_box" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-receive="'+result.list[i].receiveMember+'"></td>';
+							html += '<td>'+result.list[i].sendMember+'/'+result.list[i].receiveMember+'</td>';
+							html += '<td class="pop_btn" data-no="'+result.list[i].serialNo+'" data-button="note_detail_pop" data-type="receive">'+result.list[i].content+'</td>';
+							html += '<td>'+result.list[i].sendDate+'</td>';
+							html += '<td>';
+							html += '<div class="status" id="status_'+result.list[i].serialNo+'">';
+							if(result.list[i].status == 'Y'){
+								html += '<button type="button" class="on">확인</button>';
+								html += '<button type="button" >미확인</button>';
+							}else{
+								html += '<button type="button">확인</button>';
+								html += '<button type="button" class="on">미확인</button>';
+							}
+							html += '</div>';
+							html += '</td>';
+							html += '</tr>';
+						};
+					}else{
+						html = "<tr><td colspan='5'>받은 쪽지가 없습니다.</td></tr>"	
+					}
+					
+					$('#msg_receive').html(html);
+					$('#receive_pagination').html(paging);
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+		}
+		
+		// 쪽지 상세
+		function getDetailMessage(name, serialNo, type){
+			var data = {};
+			data.serialNo = serialNo;
+			data.name = name;
+			data.type = type;
+			$.ajax({
+				url : "/note/getDetailMessage",
+				type: 'post',
+				data: data,
+				dataType: 'json',
+				success : function(result) {
+					var title = "받은쪽지";
+					var name = result.sendMember;
+					if(type == "send") {
+						title = "보낸쪽지";
+						name = result.receiveMember;
+					}
+					
+					$('.detail_note').html(''); // 영역 초기화
+					var html = "";
+					html += '<div class="top">';
+					html += '<p class="name">'+name+'</p>';
+					html += '<p class="data">'+result.detailDate+'</p>';
+					html += '</div>';
+					html += '<div class="btn">'+result.content+'</div>';
+					$('.detail_note').html(html);
+					
+
+					$('#detail_title').text(title);
+					$('#delete_message_btn').data('no', result.serialNo);
+					$('#delete_message_btn').data('send', result.sendMember);
+					$('#delete_message_btn').data('receive', result.receiveMember);
+					$('#de_next_btn').data('next', result.next);
+					$('#de_prev_btn').data('prev', result.prev);
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+		}
+		
+		
+	});
+	
+		$('.pop_btn').on('click', function () {
+			var pop_name = $(this).data('button');
+	
+			$('#' + pop_name).stop().toggle();
+			pop_align();
+		});
+	
+		$('.pop_close').on('click', function () {
+			var pop_name = $(this).data('button');
+	
+			$('#' + pop_name).stop().toggle();
 		});
 	</script>
+
 </body>
 </html>

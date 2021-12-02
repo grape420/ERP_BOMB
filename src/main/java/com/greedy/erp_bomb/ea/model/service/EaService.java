@@ -45,6 +45,11 @@ public class EaService {
 	public void insertEa(EADTO ea) {
 		eaDAO.insertEa(ea);
 	}
+	
+	@Transactional
+	public void updateEa(EADTO ea) {
+		eaDAO.updateEa(ea);
+	}
 
 	@Transactional
 	public void deleteAddendum(int no) {
@@ -55,4 +60,25 @@ public class EaService {
 	public AddendumDTO replyAddendum(AddendumDTO replyAd) {
 		return eaDAO.replyAddendum(replyAd);
 	}
+
+	@Transactional
+	public AddendumDTO addAddendum(AddendumDTO addAd) {
+		return eaDAO.addAddendum(addAd);
+	}
+
+	@Transactional
+	public void approval(String userName, int eaNo) {
+		eaDAO.approval(userName, eaNo);
+	}
+
+	@Transactional
+	public void eaCancle(String userName, int eaNo, int type) {
+		eaDAO.eaCancle(userName, eaNo, type);
+	}
+
+	@Transactional
+	public void eaReturn(String userName, int eaNo) {
+		eaDAO.eaReturn(userName, eaNo);
+	}
+
 }

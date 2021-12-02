@@ -63,27 +63,4 @@ public class SalaryDAO {
 	public void registNewSalary(SalaryDTO newSalary) {
 		em.persist(newSalary);
 	}
-
-	/* 급여 검색하기 - 관리자 O */
-//	public List<SalaryDTO> searchInOutList(String keyword, String name) {		
-//		String jpql = "SELECT a FROM SalaryDTO as s "
-////				      + "LEFT JOIN b.iceCream as c "
-////				      + "WHERE d.serialNo = :serialNo "
-//				      + "WHERE s.member.name LIKE :keyword "
-//				      + "AND s.member.name = :name "
-//				      + "ORDER BY s.serialNo DESC ";
-//
-//		List<SalaryDTO> salaryList = em.createQuery(jpql, SalaryDTO.class)
-//				                     .setParameter("keyword", "%" + keyword + "%")
-//				                     .getResultList();
-//		
-//		for (SalaryDTO salary : salaryList) {
-//			System.out.println(salary);
-//		}
-//
-//		return salaryList;	
-//		}
-
-	
-	
 }
