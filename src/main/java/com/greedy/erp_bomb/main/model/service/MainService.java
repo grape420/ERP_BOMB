@@ -55,4 +55,9 @@ public class MainService {
 		return mainDAO.findTodayWork(tnaPk);
 	}
 
+	@Transactional
+	public List<TNADTO> findMyTnaList(String name) {
+		return mainDAO.findMyTnaList(name);
+	}
+
 }

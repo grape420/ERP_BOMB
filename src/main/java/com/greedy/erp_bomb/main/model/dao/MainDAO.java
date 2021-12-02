@@ -53,4 +53,9 @@ public class MainDAO {
 		return em.find(TNADTO.class, tnaPk);
 	}
 
+	public List<TNADTO> findMyTnaList(String name) {
+		String jpql = "SELECT a FROM TNADTO as a WHERE a.member.name = :userName";
+		return em.createQuery(jpql, TNADTO.class).setParameter("userName", name).getResultList();
+	}
+
 }

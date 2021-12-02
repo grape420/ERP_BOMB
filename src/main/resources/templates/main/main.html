@@ -89,7 +89,7 @@
 						<div class="status">
 							<p class="titleM">근태현황</p>
 							<span class="time_p"></span>
-							<p class="text">출/퇴근시 아래 버튼을 클릭하세요.</p>
+							<p class="text">출근시 아래 버튼을 클릭하세요.</p>
 							<div class="btn_area">
 								<button th:if="${ todayWorkFlag }" class="ent_work" type="button" th:attr="onclick=|location.replace('/main/entWork')|">출근</button>
 								<button th:unless="${ todayWorkFlag }" class="ent_work" type="button" disabled="disabled">출근</button>
@@ -143,50 +143,27 @@
 	<!--캘린더-->
 	<link th:href="@{/uses/vendor/fullcalendar/main.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/uses/vendor/fullcalendar/main.js}"></script> 
-    <script th:src="@{/uses/vendor/fullcalendar/ko.js}"></script> 
-    
-    <script>
-	    function changeHandler(e){
-			const input = document.createElement("input");
-			input.setAttribute('onblur', 'blurHandler(this)' )
-			input.setAttribute('id', `${e.id}`);		
-			
-			if(e.value == "직접입력"){
-				document.getElementById(`${e.id}`).replaceWith(input);
-				document.getElementById(`${e.id}`).focus();
+    <script th:src="@{/uses/vendor/fullcalendar/ko.js}"></script>
+
+	<script>
+		$.ajax({
+			url : "/main/fullCalendar",
+			success : function(data) {
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					initialView : 'dayGridMonth',
+					editable : true,
+					eventLimit : false,
+					aspectRatio : 1.8,
+					locale : 'ko',
+					events : data
+				});
+				calendar.render();
+			},
+			error : function(error) {
+				alert("출근 기록을 가져오는데 실패하였습니다.");
 			}
-		}
-	
-		function blurHandler(e){
-			if(e.value == ""){
-				const select = document.createElement("select");
-				select.setAttribute('onchange', 'changeHandler(this)');
-				select.setAttribute('id', `${e.id}`);
-	
-				select.innerHTML = `<option value="2022">2022</option>
-											<option value="2021">2021</option>
-											<option value="2020">2020</option>
-											<option value="2019">2019</option>
-											<option value="직접입력">직접입력</option>`;
-				document.getElementById(`${e.id}`).replaceWith(select);
-			}	
-		}
-	
-		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl = document.getElementById('calendar');
-		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		      initialView: 'dayGridMonth',
-			  editable : true,
-		    	eventLimit : true,
-				aspectRatio: 1.8,
-			  	locale: 'ko'
-		    });
-		    calendar.render();
 		});
-		$('.datepicker-new').datepicker({
-			language: 'ko',
-			minDate: new Date() // Now can select only dates, which goes after today
-		})
-    </script>
+	</script>
 </body>
 </html>

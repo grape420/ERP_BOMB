@@ -1,16 +1,19 @@
 package com.greedy.erp_bomb.main.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
 import com.greedy.erp_bomb.main.model.service.MainService;
+import com.greedy.erp_bomb.main.model.vo.FullCalendarVO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.tna.model.dto.TNADTO;
@@ -56,9 +59,11 @@ public class MainController {
 		}
 		
 		TNADTO tna = mainService.findTodayWork(new TNAPk(new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()), userName));
-		System.out.println(tna);
+		System.out.println("tna : " + tna);
 		if(tna != null) {
 			mv.addObject("todayWorkFlag", false);
+		} else {
+			mv.addObject("todayWorkFlag", true);
 		}
 		
 		mv.addObject("boardList" ,boardList);
@@ -87,6 +92,20 @@ public class MainController {
 		mv.setViewName("redirect:/main/main");
 		
 		return mv;
+	}
+	
+	@GetMapping("/main/fullCalendar")
+	@ResponseBody
+	public List<FullCalendarVO> insertDataInFullCalendar(@AuthenticationPrincipal UserImpl user) {
+		List<TNADTO> myTnaList = mainService.findMyTnaList(user.getName());
+		
+		List<FullCalendarVO> ajaxMyTnaList = new ArrayList<>();
+		
+		for(TNADTO tna : myTnaList) {
+			ajaxMyTnaList.add(new FullCalendarVO("출근", tna.getDate(), tna.getDate(), "false"));
+		}
+		
+		return ajaxMyTnaList;
 	}
 }
 
