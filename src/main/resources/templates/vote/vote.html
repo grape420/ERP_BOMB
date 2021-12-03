@@ -381,133 +381,146 @@
 	};
 	
 	/* 투표 디테일 부분 */
-	function voteDetail(num){
-		var date = new Date();
-		var detailnum = num;
-		const title = $("#titleVo");
-		const content = $("#contentVo");
-		const voteList = $("#voteList");
-		const buttonArea = $("#buttonArea");
-		
-		var candi = false;
-		var vvote = false;
-		var writer = false;
-		var bob = $("#bob").text();
-		
-		title.html("");
-		content.html("");
-		voteList.html("");
-		buttonArea.html("");			
-		
-		$.ajax({
-		url: "/vote/detail",
-		type: "get",
-		data: {
-			detailnum : detailnum
-		},
-		success: function(data){
-			var date1 = new Date(data.endDate);
-			var voteCheckFlag = false;
-			
-			if(date > date1){
-				vvote = true;
-				candi = true;
-				voteCheckFlag = true;
-			}
-			
-			for(var index in data.voteParticipationList){
-				if(bob == data.voteParticipationList[index].member.name){
-					vvote = true;
-					voteCheckFlag = true;
-				}	
-			}
-			
-			title.text("제목 : " + data.title);								
-			content.text("내용 : " + data.content);
-			
-			title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
-			
-			if(data.voteOptionList != ""){
-				
-				for(var index in data.voteOptionList){
-					$index = "vote" + index;
-					
-					if(voteCheckFlag){
-						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
-					} else {
-						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
-					}
-					
-					if(bob == data.voteOptionList[index].member.name ){
-						candi = true;
-					}
-					
-				}
-				
-				
-				
-				if(date > date1){
-					vvote = true;
-					candi = true;
-				}
-				
-				/* Controller로 보내기위한 임의적인 input */
-				voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
-				
-				if(!candi){
-					buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")	;	
-				}
-				if(!vvote){
-					buttonArea.append("<button type='button' style='margin-right: 5px;' class='blue_btn pop_close' onclick='vVote()'>투표하기</button>");
-				}
-				
-			} else {
-				voteList.text("후보가 없습니다.");
-				if(!candi){
-					buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>");
-				}
-			}
-			buttonArea.append("<button class='gray_btn pop_btn' data-button='vote-detail' id='closeVoteDetail'>닫기</button>");
-			
-			$("#candivote").html("");
-			$("#candivote").append("<button type='button' class='blue_btn pop_close' style='margin-right: 5px;' data-button='insertVote' id='insertCandi' onclick='plusCandi(" + data.serialNo + ")'>추가하기</button>");
-			$("#candivote").append("<button type='button' class='gray_btn pop_close' data-button='insertVote' id='candiClose'>닫기</button>");
-			$("#candiArea").html("");
-			$("#candiArea").append("<p>제목 : " + data.title + "</p>");
-			$("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
-			
-		},
-		error: function(xhr){
-			console.log(xhr);
-			 }
-		});
-	}
-	
-	/* 후보 추가 */
-	function plusCandi(num){
-		var candiInsert = $("#candiInsert").val();
-		var votenum = num;
-		if(candiInsert == ""){
-			alert("후보를 입력하세요");
-		} else {
-			
-		$.ajax({
-			url: "/vote/plusCandi",
-			type: "post",
-			data: {
-				candiInsert : candiInsert,
-				votenum : votenum
-			},
-			success: function(data){
-				voteDetail(votenum);
-			},
-			error: function(xhr){
-				console.log("에러임");
-				console.log(xhr);
-				 }
-		});
-		}
-	}
+	   function voteDetail(num){
+	      var date = new Date();
+	      var detailnum = num;
+	      const title = $("#titleVo");
+	      const content = $("#contentVo");
+	      const voteList = $("#voteList");
+	      const buttonArea = $("#buttonArea");
+	      
+	      var candi = false;
+	      var vvote = false;
+	      var writer = false;
+	      var bob = $("#bob").text();
+	      
+	      title.html("");
+	      content.html("");
+	      voteList.html("");
+	      buttonArea.html("");         
+	      
+	      $.ajax({
+	      url: "/vote/detail",
+	      type: "get",
+	      data: {
+	         detailnum : detailnum
+	      },
+	      success: function(data){
+	         var date1 = new Date(data.endDate);
+	         var voteCheckFlag = false;
+	         
+	         if(date > date1){
+	            vvote = true;
+	            candi = true;
+	            voteCheckFlag = true;
+	         }
+	         
+	         for(var index in data.voteParticipationList){
+	            if(bob == data.voteParticipationList[index].member.name){
+	               vvote = true;
+	               voteCheckFlag = true;
+	            }   
+	         }
+	         
+	         title.text("제목 : " + data.title);                        
+	         content.text("내용 : " + data.content);
+	         
+	         title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
+	         
+	         if(data.voteOptionList != ""){
+	            
+	            for(var index in data.voteOptionList){
+	               $index = "vote" + index;
+	               
+	               if(voteCheckFlag){
+	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
+	               } else {
+	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
+	               }
+	               
+	               if(bob == data.voteOptionList[index].member.name ){
+	                  candi = true;
+	               }
+	               
+	            }
+	            
+	            
+	            
+	            if(date > date1){
+	               vvote = true;
+	               candi = true;
+	            }
+	            
+	            /* Controller로 보내기위한 임의적인 input */
+	            voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
+	            
+	            if(!candi){
+	               buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")   ;   
+	            }
+	            if(!vvote){
+	               buttonArea.append("<button type='button' style='margin-right: 5px;' class='blue_btn pop_close' onclick='vVote()'>투표하기</button>");
+	            }
+	            
+	         } else {
+	            voteList.text("후보가 없습니다.");
+	            if(!candi){
+	               buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>");
+	            }
+	         }
+	         buttonArea.append("<button class='gray_btn pop_btn' data-button='vote-detail' id='closeVoteDetail'>닫기</button>");
+	         
+	         $("#candivote").html("");
+	         $("#candivote").append("<button type='button' class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='insertCandi' onclick='plusCandi(" + data.serialNo + ")'>추가하기</button>");
+	         $("#candivote").append("<button type='button' class='gray_btn pop_btn' data-button='insertVote' id='candiClose'>닫기</button>");
+	         $("#candiArea").html("");
+	         $("#candiArea").append("<p>제목 : " + data.title + "</p>");
+	         $("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
+	         
+	      },
+	      error: function(xhr){
+	         console.log(xhr);
+	          }
+	      });
+	   }
+	   
+	   /* 후보 추가 */
+	   function plusCandi(num){
+	      var candiInsert = $("#candiInsert").val();
+	      var votenum = num;
+	      var equalFlag = false;
+	      var candiLen = $("input[name=votes]").length;
+	      var candiEqual = new Array(candiLen);
+	      
+	      for(var i = 0 ; i < candiLen ; i++){
+	         candiEqual[i] = $("input[name=votes]").eq(i).val();
+	         
+	         if(candiEqual[i] == candiInsert){
+	            equalFlag = true;
+	         }
+	      }      
+	      
+	      if(candiInsert == ""){
+	         alert("후보를 입력하세요.");
+	      } else if(equalFlag) {
+	         alert("중복된 후보명입니다.")
+	      } else {
+	         
+	         $.ajax({
+	            url: "/vote/plusCandi",
+	            type: "post",
+	            data: {
+	               candiInsert : candiInsert,
+	               votenum : votenum
+	            },
+	            success: function(data){
+	               voteDetail(votenum);
+	            },
+	            error: function(xhr){
+	               console.log(xhr);
+	                }
+	         });
+	      }
+	   }
 	
 		/* 투표하기 */
 		function vVote(){

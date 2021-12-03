@@ -99,23 +99,23 @@
 					<div class="mt-4">
 
 						<ul class="tab ul-tab">
-						<th:block th:if="${#strings.equals(tab, 1)}">
-							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
-							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
-							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
-						</th:block>
-						<th:block th:if="${#strings.equals(tab, 2)}">
-							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
-							<li class="li-tab electronic_approval on" data-tab="myEaPathList"><span>결재 기안</span></li>
-							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
-						</th:block>
-						<th:block th:if="${#strings.equals(tab, 3)}">
-							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
-							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
-							<li class="li-tab electronic_approval on" data-tab="myEaCarbonList"><span>참조 기안</span></li>
-						</th:block>
+							<th:block th:if="${#strings.equals(tab, 1)}">
+								<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
+								<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+								<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+							</th:block>
+							<th:block th:if="${#strings.equals(tab, 2)}">
+								<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+								<li class="li-tab electronic_approval on" data-tab="myEaPathList"><span>결재 기안</span></li>
+								<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+							</th:block>
+							<th:block th:if="${#strings.equals(tab, 3)}">
+								<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+								<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+								<li class="li-tab electronic_approval on" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+							</th:block>
 						</ul>
-						<div id="myEaList" class="tab_contents electronic_approval current">
+						<div th:if="${#strings.equals(tab, 1)}" id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>내 기안 리스트</caption>
@@ -175,14 +175,124 @@
 							</div>
 						</div>
 						
-						<script>
-							$(".copy-approval").click(function() {
-								let copy_ea_no = $(this).attr("id").replace('copy_btn_', '');
-								
-							});
-						</script>
+						<div th:unless="${#strings.equals(tab, 1)}" id="myEaList" class="tab_contents electronic_approval">
+							<div class="tableArea">
+								<table class="Table">
+									<caption>내 기안 리스트</caption>
+									<colgroup>
+										<col style="width:7%" />
+										<col style="width:11%" />
+										<col style="width:44%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:11%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="list : ${ myEaList }">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:switch="${ list.eaStatus }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="4">
+													<td th:text="${ #authentication.principal.name }"></td>
+												</th:block>
+											</th:block>
+											<th:block th:switch="${ list.eaStatus }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 
-						<div id="myEaPathList" class="tab_contents electronic_approval">
+						<div th:if="${#strings.equals(tab, 2)}" id="myEaPathList" class="tab_contents electronic_approval current">
+							<div class="tableArea">
+								<table class="Table">
+									<caption>내 결재 리스트</caption>
+									<colgroup>
+										<col style="width:7%" />
+										<col style="width:11%" />
+										<col style="width:44%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:11%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4}">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:switch="${ list.eaStatus }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+											</th:block>
+											<th:block th:switch="${ list.eaStatus }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<div th:unless="${#strings.equals(tab, 2)}" id="myEaPathList" class="tab_contents electronic_approval">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>내 결재 리스트</caption>
@@ -239,7 +349,64 @@
 							</div>
 						</div>
 
-						<div id="myEaCarbonList" class="tab_contents electronic_approval">
+						<div th:if="${#strings.equals(tab, 3)}" id="myEaCarbonList" class="tab_contents electronic_approval current">
+							<div class="tableArea">
+								<table class="Table">
+									<caption>내 참조 리스트</caption>
+									<colgroup>
+										<col style="width:7%" />
+										<col style="width:11%" />
+										<col style="width:44%" />
+										<col style="width:8%" />
+										<col style="width:8%" />
+										<col style="width:11%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>기안일자</th>
+											<th>제목</th>
+											<th>기안자</th>
+											<th>결재자</th>
+											<th>결재 상태</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="list : ${ myEaCarbonList }">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:switch="${ list.eaStatus }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+											</th:block>
+											<th:block th:switch="${ list.eaStatus }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<div th:unless="${#strings.equals(tab, 3)}" id="myEaCarbonList" class="tab_contents electronic_approval">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>내 참조 리스트</caption>

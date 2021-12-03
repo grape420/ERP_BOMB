@@ -9,7 +9,7 @@
 <title>ERP BOMB</title>
 </head>
 <body>
-	<input type="hidden" id="userName" th:value="${userName}"/>
+	<input type="hidden" id="userName" th:value="${ #authentication.name }"/>
 	<nav class="navbar navbar-expand-sm navbar-light bg-light"
 		style="padding: 0;">
 		<div class="collapse navbar-collapse justify-content-end">
@@ -35,11 +35,7 @@
 			<h2>쪽지</h2>
 			<button type="button" class="pop_close" data-button="note_pop">닫기</button>
 		</div>
-		<div class="search_form">
-			<input type="text" placeholder="검색어 입력" />
-			<button type="button" class="blue_btn">Search</button>
-		</div>
-		<ul class="tab ul-tab">
+		<ul class="tab ul-tab mt-3">
 			<li class="on" data-tab="send_message" id="send_tab"><span>보낸쪽지</span></li>
 			<li data-tab="received_message" id="receive_tab"><span>받은쪽지</span></li>
 		</ul>
@@ -132,7 +128,8 @@
 <!-- 				<input type="text" placeholder="받는사람" id="receive_member"/> -->
 				<select name="receive_member" id="receive_member" class="form-control" required="required" style="width: 426px;">
 					<option>선택하세요</option>
-					<option th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+<!-- 					<option th:each="member : ${ memberList }" th:text="${ member.name }"></option> -->
+					
 				</select>
 			</div>
 			<textarea class="new_note_content" id="message_contents"></textarea>
@@ -232,6 +229,28 @@
 			}else{
 				getSendMessage(userName, pageNo);
 				getreceiveMessage(userName, pageNo);
+			}
+			
+			if($(this).data('button') == 'new_note_pop'){
+				$.ajax({
+					url : "/note/getReceiveMember",
+					type: 'post',
+					dataType: 'json',
+					success : function(result) {
+						$('#receive_member').html('');
+						var html = '';
+						for(var i=0; i<result.length; i++){
+							if(i == 0 ){
+								html += '<option>선택하세요</option>'
+							}
+							html += '<option valeu="'+result[i].name+'">'+result[i].name+'</option>';
+						}
+						$('#receive_member').html(html);
+					},
+					error : function(xhr) {
+						console.log("error ==> ", xhr);
+					}
+				});
 			}
 			$('#' + pop_name).stop().toggle();
 			pop_align();
@@ -613,7 +632,7 @@
 		
 	});
 	
-		$('.pop_btn').on('click', function () {
+/* 		$('.pop_btn').on('click', function () {
 			var pop_name = $(this).data('button');
 	
 			$('#' + pop_name).stop().toggle();
@@ -624,7 +643,7 @@
 			var pop_name = $(this).data('button');
 	
 			$('#' + pop_name).stop().toggle();
-		});
+		}); */
 	</script>
 
 </body>
