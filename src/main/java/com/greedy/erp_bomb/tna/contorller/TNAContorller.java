@@ -29,7 +29,9 @@ public class TNAContorller {
 	}
 	
 	@GetMapping("/regTna")
-	public void regTna() {}
+	public String regTna() {
+		return "/tna/regTna";
+	}
 	
 	@GetMapping("/tnaDetail")
 	public void tnaDetail() {}
