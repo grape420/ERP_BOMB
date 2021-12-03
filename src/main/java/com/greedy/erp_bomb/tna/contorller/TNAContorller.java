@@ -28,7 +28,7 @@ public class TNAContorller {
 		this.tnaService = tnaService;
 	}
 	
-	@GetMapping("/regTna")
+	@GetMapping("/tna")
 	public String regTna() {
 		return "/tna/regTna";
 	}
