@@ -81,4 +81,9 @@ public class EaService {
 		eaDAO.eaReturn(userName, eaNo);
 	}
 
+	@Transactional
+	public void deleteEa(String userName, int eaNo) {
+		eaDAO.deleteEa(userName, eaNo);
+	}
+
 }

@@ -1,6 +1,5 @@
 package com.greedy.erp_bomb.ea.contorller;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,8 +106,6 @@ public class EaContorller {
 		MemberDTO drafter = new MemberDTO();
 		drafter.setName(user.getName());
 		
-		System.out.println(request.getParameter("eaNo"));
-		
 		ea.setSerialNo(Integer.valueOf(request.getParameter("eaNo")));
 		ea.setMember(drafter);
 		ea.setTitle(request.getParameter("title"));
@@ -152,8 +148,6 @@ public class EaContorller {
 		ea.setEaApprovalPathList(eaPathList);
 		ea.setEaCarbonList(eaCarbonList);
 		
-		System.out.println("ea : " + ea);
-		
 		eaService.updateEa(ea);
 		
 		mv.setViewName("redirect:/ea/ea");
@@ -164,7 +158,7 @@ public class EaContorller {
 	@GetMapping("/approval")
 	public ModelAndView approval(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no) {
 		eaService.approval(user.getName(), no);
-		mv.setViewName("redirect:/ea/ea");
+		mv.setViewName("redirect:/ea/ea?tab=2");
 		
 		return mv;
 	}
@@ -172,7 +166,7 @@ public class EaContorller {
 	@GetMapping("/return")
 	public ModelAndView eaReturn(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no) {
 		eaService.eaReturn(user.getName(), no);
-		mv.setViewName("redirect:/ea/ea");
+		mv.setViewName("redirect:/ea/ea?tab=2");
 		
 		return mv;
 	}
@@ -180,6 +174,13 @@ public class EaContorller {
 	@GetMapping("/eaCancle")
 	public ModelAndView eaCancle(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no, @RequestParam(defaultValue = "0") int type) {
 		eaService.eaCancle(user.getName(), no, type);
+		mv.setViewName("redirect:/ea/ea");
+		return mv;
+	}
+	
+	@PostMapping("/deleteEa")
+	public ModelAndView deleteEa(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int eaNo) {
+		eaService.deleteEa(user.getName(), eaNo);
 		mv.setViewName("redirect:/ea/ea");
 		return mv;
 	}
@@ -296,8 +297,6 @@ public class EaContorller {
 		
 		Collections.sort(allEaList);
 		
-		System.out.println(tab);
-		
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
@@ -315,7 +314,7 @@ public class EaContorller {
 	
 	@GetMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO replyAd = new AddendumDTO();
 		AddendumDTO refAd = new AddendumDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -327,7 +326,7 @@ public class EaContorller {
 		replyAd.setDate(new java.sql.Date(System.currentTimeMillis()));
 		replyAd.setRequestYn("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		replyAd.setMember(drafter);
 		
 		replyAd = eaService.replyAddendum(replyAd);
@@ -352,7 +351,7 @@ public class EaContorller {
 	
 	@GetMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO addAd = new AddendumDTO();
 		EADTO ea = new EADTO();
 		MemberDTO drafter = new MemberDTO();
@@ -365,7 +364,7 @@ public class EaContorller {
 		addAd.setDate(new java.sql.Date(System.currentTimeMillis()));
 		addAd.setRequestYn("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		addAd.setMember(drafter);
 		
 		addAd = eaService.addAddendum(addAd);
