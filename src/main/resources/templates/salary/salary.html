@@ -18,6 +18,7 @@
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/salary/salary.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -35,29 +36,29 @@
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
-					</li>
-					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
-					</li>
+	                  <a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+	               </li>
+	               <li class="nav-item mr-3 tab-selected">
+	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+	               </li>
+	               <li class="nav-item mr-3">
+	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+	               </li>
 				</ul>
 			</div>
 		</nav>
@@ -94,72 +95,81 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 급여관리 리스트 -->
 					<div class="">
-
+					
 						<div class="search_form">
-							<input type="text" placeholder="검색어 입력" />
-							<button type="button" class="blue_btn">Search</button>
+						<!-- 
+							<form action="/salary/search" method="post">
+								<input type="text" placeholder="검색어 입력" name="keyword"/>
+								<button type="button" class="blue_btn">Search</button>
+							</form>
+						 -->
 						</div>
 
 						<div id="all_approval" class="tab_contents electronic_approval current">
 							<div class="tableArea">
-								<table>
+								<table class="Table">
 									<caption>급여관리</caption>
-									<!-- <colgroup>
-										<col style="width:4%" />
+									<colgroup>
 										<col style="width:10%" />
-										<col style="width:45%" />
-										<col style="width:15%" />
-										<col style="width:15%" />
-									</colgroup> -->
-									<thead>
-										<tr>
-											<th>귀속연월</th>
-											<th>급여구분</th>
-											<th>사번</th>
-											<th>사원명</th>
-											<th>지급총액</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td class="t_center pop_btn" data-button="payroll_detail_pop1">2021/11</td>
-											<td>급여</td>
-											<td>0001</td>
-											<td>김회계</td>
-											<td>1,650,000</td>
-										</tr>
-										<tr>
-											<td class="t_center pop_btn" data-button="payroll_detail_pop2">2021/11</td>
-											<td>급여</td>
-											<td>0007</td>
-											<td>홍길동</td>
-											<td>2,174,793</td>
-										</tr>
-										<tr>
-											<td class="t_center pop_btn" data-button="payroll_detail_pop3">2021/11</td>
-											<td>급여</td>
-											<td>0010</td>
-											<td>최코코</td>
-											<td>4,123,345</td>
-										</tr>	
-										<tr>
-											<td class="t_center pop_btn" data-button="payroll_detail_pop4">2021/10</td>
-											<td>급여</td>
-											<td>0023</td>
-											<td>김양말</td>
-											<td>2,134,793</td>
-										</tr>
-										<tr>
-											<td class="t_center pop_btn" data-button="payroll_detail_pop4">2021/11</td>
-											<td>급여</td>
-											<td>0033</td>
-											<td>최유정</td>
-											<td>1,210,000</td>
-										</tr>
-									</tbody>
+										<col style="width:14%" />
+										<col style="width:12%" />
+										<col style="width:19.5%" />
+										<col style="width:19.5%" />
+										<col style="width:25%" />
+									</colgroup> 
+									
+									<!-- 관리자 X -->
+									<th:block sec:authorize="!hasRole('ADMIN')">	
+										<thead>
+											<tr>
+												<th>귀속연월</th>
+												<th>사원명</th>
+												<th>월급</th>
+												<th>보너스</th>
+												<th>지급총액</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="salary : ${ salaryList }">
+												<td th:with="date=${#dates.format(salary.Date, 'yyyy-MM')}" th:text="${ #dates.format(salary.Date, 'yyyy-MM') }"></td>
+												<td th:text="${ salary.member.name }"></td>
+												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
+												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
+												<th:block th:with="total = ${ #numbers.formatInteger(salary.regularPay, 1)} +  ${ #numbers.formatInteger(salary.bonus, 1) }">
+													<td th:text="${ #numbers.formatInteger(total, 1, 'COMMA')}"></td>
+												</th:block>
+											</tr>
+										</tbody>
+									 </th:block>	
+									 
+									<!-- 관리자 O -->
+									<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+										<thead>
+											<tr>
+												<th>번호</th>	
+												<th>귀속연월</th>
+												<th>사원명</th>
+												<th>월급</th>
+												<th>보너스</th>
+												<th>지급총액</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="salary : ${ allSalaryList }">
+												<td th:text="${ salary.serialNo }"></td>
+												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" class="t_center pop_btn" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }"></td>
+												<td th:text="${ salary.member.name }"></td>
+												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
+												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
+												<th:block th:with="total = ${ #numbers.formatInteger(salary.regularPay, 1)} +  ${ #numbers.formatInteger(salary.bonus, 1) }">
+													<td th:text="${ #numbers.formatInteger(total, 1, 'COMMA')}"></td>
+												</th:block>
+											</tr>
+										</tbody>
+									</th:block>
 								</table>
 
-								<!-- 페이징 처리-->
+								<!-- 페이징 처리
 								<div class="paging">
 									<button type="button" class="first_btn">처음페이지</button>
 									<button type="button" class="prev_btn">이전페이지</button>
@@ -170,11 +180,13 @@
 									<button type="button" class="next_btn">다음페이지</button>
 									<button type="button" class="last_btn">마지막페이지</button>
 								</div>
-
+								-->
+								
 							</div>
 						</div>
 
-						<div class="btn_area">
+						<!-- 관리자 권한 설정 필요 -->
+						<div class="btn_area" sec:authorize="hasRole('ROLE_ADMIN')">
 							<a href="#n" class="blue_btn pop_btn" data-button="new_payroll_pop">신규등록</a>
 						</div>
 					</div>
@@ -184,177 +196,116 @@
 					<!-- 신규 등록하기 -->
 					<div id="new_payroll_pop" class="payroll_pop_layer">
 						<div class="top_area">
-							<h2>급여내역상세</h2>
+							<h2>신규급여등록</h2>
 							<button type="button" class="pop_close" data-button="new_payroll_pop">닫기</button>
 						</div>
-						<div class="pop_inner">
-							<div class="tableArea">
-								<table>
-									<caption>신규급여내역</caption>
-									<thead>
-										<th>귀속연월</th>
-										<th>사원명</th>
-										<th>기본급</th>
-										<th>보너스</th>
-										<th>연봉</th>
-									</thead>
-									<tbody>
-										<tr>										
-											<td><input type="text" value="2021/11" style="text-align: center;"></td>
-											<td><input type="text" value="최유정" style="text-align: center;"></td>
-											<td><input type="text" value="1,000,000" style="text-align: center;"></td>
-											<td><input type="text" value="210,000" style="text-align: center;"></td>
-											<td><input type="text" value="21,500,000" style="text-align: center;"></td>
-										</tr>
-									</tbody>
-								</table>
+						<form action="/salary/regist" method="post">										
+							<div class="pop_inner">
+								<div class="tableArea">
+									<table>
+										<caption>신규급여내역</caption>
+										<thead>
+											<th>귀속연월</th>
+											<th>사원명</th>
+											<th>기본급</th>
+											<th>보너스</th>
+										</thead>
+										<tbody>
+											<tr>
+												<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" name="Date" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
+												<td>
+													<select th:name="name" id="name" style="width: 80%;" class="form-control select2">
+														<option th:each="member : ${ memberList }" th:text="${ member.name }" th:value="${ member.name }"></option>
+													</select>
+												</td>
+												<td><input type="text" name="regularPay" id="regularPay" style="text-align: center;" required="required"></td>
+												<td><input type="text" name="bonus" id="bonus" style="text-align: center;"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="btn_area">
+									<!-- <a href="#n" class="blue_btn">등록</a> -->
+									<button type="submit" class="blue_btn" id="registBtn">등록</button>
+									<a href="#n" class="gray_btn pop_close" data-button="new_payroll_pop">닫기</a>
+								</div>
 							</div>
-							<div class="btn_area">
-								<a href="#n" class="blue_btn">등록</a>
-								<a href="#n" class="gray_btn pop_close" data-button="new_payroll_pop">닫기</a>
-							</div>
-						</div>
+						</form>
 					</div>
-					<!-- 상세보기 -->
-					<div id="payroll_detail_pop1" class="payroll_pop_layer">
-						<div class="top_area">
-							<h2>급여내역상세</h2>
-							<button type="button" class="pop_close" data-button="payroll_detail_pop1">닫기</button>
-						</div>
-						<div class="pop_inner">
-							<div class="tableArea">
-								<table>
-									<caption>급여내역상세</caption>
-									<thead>
-										<th>귀속연월</th>
-										<th>사원명</th>
-										<th>기본급</th>
-										<th>보너스</th>
-										<th>연봉</th>
-									</thead>
-									<tbody>
-										<tr>										
-											<td>2021/11 - 4</td>
-											<td>김회계</td>
-											<td><input type="text" value="1,000,000" style="text-align: center;"></td>
-											<td><input type="text" value="210,000" style="text-align: center;"></td>
-											<td><input type="text" value="21,500,000" style="text-align: center;"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn">수정</a>
-							<a href="#n" class="gray_btn pop_close" data-button="payroll_detail_pop1">닫기</a>
-						</div>
-					</div>
-				</div>
-				<div id="payroll_detail_pop2" class="payroll_pop_layer">
-					<div class="top_area">
-						<h2>급여내역상세</h2>
-						<button type="button" class="pop_close" data-button="payroll_detail_pop2">닫기</button>
-					</div>
-					<div class="pop_inner">
-						<div class="tableArea">
-							<table>
-								<caption>급여내역상세</caption>
-								<thead>
-									<th>귀속연월</th>
-									<th>사원명</th>
-									<th>기본급</th>
-									<th>보너스</th>
-									<th>연봉</th>
-								</thead>
-								<tbody>
-									<tr>										
-										<td>2021/11 - 3</td>
-										<td>홍길동</td>
-										<td><input type="text" value="1,000,000" style="text-align: center;"></td>
-										<td><input type="text" value="210,000" style="text-align: center;"></td>
-										<td><input type="text" value="21,500,000" style="text-align: center;"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn">수정</a>
-							<a href="#n" class="gray_btn pop_close" data-button="payroll_detail_pop2">닫기</a>
-						</div>
-					</div>
-				</div>
-				<div id="payroll_detail_pop3" class="payroll_pop_layer">
-					<div class="top_area">
-						<h2>급여내역상세</h2>
-						<button type="button" class="pop_close" data-button="payroll_detail_pop3">닫기</button>
-					</div>
-					<div class="pop_inner">
-						<div class="tableArea">
-							<table>
-								<caption>급여내역상세</caption>
-								<thead>
-									<th>귀속연월</th>
-									<th>사원명</th>
-									<th>기본급</th>
-									<th>보너스</th>
-									<th>연봉</th>
-								</thead>
-								<tbody>
-									<tr>										
-										<td>2021/11 - 2</td>
-										<td>최코코</td>
-										<td><input type="text" value="1,000,000" style="text-align: center;"></td>
-										<td><input type="text" value="210,000" style="text-align: center;"></td>
-										<td><input type="text" value="21,500,000" style="text-align: center;"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn">수정</a>
-							<a href="#n" class="gray_btn pop_close" data-button="payroll_detail_pop3">닫기</a>
-						</div>
-					</div>
-				</div>
-				<div id="payroll_detail_pop4" class="payroll_pop_layer">
-					<div class="top_area">
-						<h2>급여내역상세</h2>
-						<button type="button" class="pop_close" data-button="payroll_detail_pop4">닫기</button>
-					</div>
-					<div class="pop_inner">
-						<div class="tableArea">
-							<table>
-								<caption>급여내역상세</caption>
-								<thead>
-									<th>귀속연월</th>
-									<th>사원명</th>
-									<th>기본급</th>
-									<th>보너스</th>
-									<th>연봉</th>
-								</thead>
-								<tbody>
-									<tr>										
-										<td>2021/10 - 1</td>
-										<td>김양말</td>
-										<td><input type="text" value="1,000,000" style="text-align: center;"></td>
-										<td><input type="text" value="210,000" style="text-align: center;"></td>
-										<td><input type="text" value="21,500,000" style="text-align: center;"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn">수정</a>
-							<a href="#n" class="gray_btn pop_close" data-button="payroll_detail_pop4">닫기</a>
-						</div>
-					</div>
-				</div>
+					
+          	   <!-- 상세보기 및 수정 --> 
+               <!-- 관리자 아닌 경우 : 본인의 내역 조회만 가능 (수정 및 추가 불가) -->
+               <div class="payroll_pop_layer" th:each="salary : ${ allSalaryList }" th:attr="id=${ 'payroll_detail_pop' + salary.serialNo }">
+                  <div class="top_area">
+                     <h2>급여내역수정</h2>
+                     <button type="button" class="pop_close" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }">닫기</button>
+                  </div>
+                  <div class="pop_inner">
+                     <div class="tableArea">
+                        <table>
+                           <thead>
+                              <th>귀속연월</th>
+                              <th>사원명</th>
+                              <th>기본급</th>
+                              <th>보너스</th>
+                           </thead>
+                           <tbody>
+                              <tr>                              
+                                 <td th:text="${ #calendars.format(salary.Date, 'yyyy-MM')}" th:value="${ salary.Date }" style="text-align: center;"></td>
+							   	 <td id="name" th:text="${ salary.member.name }" style="text-align: center;"></td>
+								 <td><input type="text" id="regularPay" th:value="${ salary.regularPay }" style="text-align: center;"></td>
+								 <td><input type="text" id="bonus" th:value="${ salary.bonus }" style="text-align: center;"></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  <div class="btn_area">
+                    <a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }">닫기</a>
+                  </div>
+               </div>
+            </div>
+            <!-- 여기까지 급여관리 팝업 -->
 
-				<!-- 여기까지 급여관리 팝업 -->
 			</div>
+		</div>
 		</div>
 	</section>
 	
 	<script>
+		$(document).ready(function(){
+			$('.select2').select2({
+				placeholder: "선택해주세요",
+			});
+		});
+		
+		/* dataTable */
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "전자 결재가 존재하지 않습니다.",
+		            "info": "_PAGE_ / _PAGES_",
+		            "infoEmpty": "급여 항목이 존재하지 않습니다.",
+		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+	            "order" : [ [0, 'DESC'], [1, 'DESC'] ]
+	        });
+			
+			clearInterval(timer);
+		}, 100);
 	</script>
+	
+	<!-- dataTable -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	
 </body>
 </html>

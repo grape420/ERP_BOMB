@@ -24,17 +24,17 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 		sequenceName = "SEQ_COMMENT_CODE",
 		initialValue = 1, allocationSize = 1)
 @Table(name = "COMMENTS")
-public class CommentDTO implements Serializable {
+public class CommentDTO implements Serializable,Comparable<CommentDTO> {
 	private static final long serialVersionUID = 2552178329837419126L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 	generator = "COMMENT_SEQ_GENERATOR")
-	@Column(name = "COMMENT_NO")
+	@Column(name = "COMMENTS_NO")
 	private Integer no;
 	
 	@ManyToOne
-	@JoinColumn(name = "REF_COMMENT_NO", nullable = true)
+	@JoinColumn(name = "REF_COMMENTS_NO")
 	private CommentDTO refNo;
 	
 	@ManyToOne
@@ -45,19 +45,19 @@ public class CommentDTO implements Serializable {
 	@JoinColumn(name = "MEMBER_NAME")
 	private MemberDTO member;
 	
-	@Column(name = "COMMENT_CONTENT")
+	@Column(name = "COMMENTS_CONTENT")
 	private String content;
 	
-	@Column(name = "COMMENT_DATE")
+	@Column(name = "COMMENTS_DATE")
 	private java.sql.Date date;
 	
-	@Column(name = "COMMENT_DEPTH")
+	@Column(name = "COMMENTS_DEPTH")
 	private int depth;
 	
-	@Column(name = "COMMENT_LENGTH")
+	@Column(name = "COMMENTS_LENGTH")
 	private int length;
 	
-	@Column(name = "COMMENT_STATUS")
+	@Column(name = "COMMENTS_STATUS")
 	private String status;
 	
 	@OneToMany(mappedBy = "refNo")
@@ -145,7 +145,15 @@ public class CommentDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CommentDTO [no=" + no + ", refNo=" + refNo.getNo() + ", board=" + board.getTitle() + ", member=" + member.getName() + ", content="
+		return "CommentDTO [no=" + no + ", board=" + board.getTitle() + ", member=" + member.getName() + ", content="
 				+ content + ", date=" + date + ", depth=" + depth + ", length=" + length + ", status=" + status + "]";
+	}
+	@Override
+	public int compareTo(CommentDTO o) {
+		if (o.getLength() < this.length) {
+			return 1;
+		} else  {
+			return -1;
+		}
 	}
 }

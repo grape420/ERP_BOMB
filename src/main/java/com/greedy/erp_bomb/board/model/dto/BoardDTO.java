@@ -123,7 +123,7 @@ public class BoardDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "BoardDTO [no=" + no + ", member=" + member + ", content=" + content + ", regDate=" + regDate
+		return "BoardDTO [no=" + no + ", member=" + member.getName() + ", content=" + content + ", regDate=" + regDate
 				+ ", title=" + title + ", hit=" + hit + ", category=" + category + "]";
 	}
 }

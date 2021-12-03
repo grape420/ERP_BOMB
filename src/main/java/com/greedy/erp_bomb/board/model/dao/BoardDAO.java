@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
 import com.greedy.erp_bomb.board.model.dto.CommentDTO;
-import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Repository
@@ -38,6 +37,8 @@ public class BoardDAO {
 		   /* 조회수 증가 */ 
 		   int hit = boardDetail.getHit();
 		   boardDetail.setHit(hit+1);
+		   
+		   System.out.println("코멘트 사이즈 : " + boardDetail.getCommentList().size());
 			
 		   return boardDetail;
 	}
@@ -77,34 +78,36 @@ public class BoardDAO {
 
 	/* 사내게시판 대댓글 */ 
 	public CommentDTO replyComment(CommentDTO replyCm) {
-		CommentDTO eaCm = em.find(CommentDTO.class, replyCm.getRefNo().getNo());
+		System.out.println("들어가나?" + replyCm);
+		CommentDTO reCm = em.find(CommentDTO.class, replyCm.getRefNo().getNo());
 		
-		replyCm.setRefNo(eaCm);
-		replyCm.setBoard(eaCm.getBoard());
+		replyCm.setRefNo(reCm);
+		replyCm.setBoard(reCm.getBoard());
 		replyCm.setMember(em.find(MemberDTO.class, replyCm.getMember().getName()));
-		replyCm.setDepth(eaCm.getDepth() + 1);
-		replyCm.setLength(eaCm.getLength() + 1);
+		replyCm.setDepth(reCm.getDepth() + 1);
+		replyCm.setLength(reCm.getLength() + 1);
 		
-		String jpql = "SELECT a FROM CommentDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
-		List<CommentDTO> adList = em.createQuery(jpql, CommentDTO.class).setParameter("no", eaCm.getBoard().getNo()).getResultList();
+		String jpql = "SELECT a FROM CommentDTO as a WHERE a.board.no = :no ORDER BY a.length";
+		List<CommentDTO> adList = em.createQuery(jpql, CommentDTO.class).setParameter("no", reCm.getBoard().getNo()).getResultList();
 		
 		replyCm.getBoard().getMember().getName();
 		replyCm.getMember().getName();
 		
 		for(CommentDTO ad : adList) { 
-			if(eaCm.getLength() < ad.getLength()) { 
+			if(reCm.getLength() < ad.getLength()) { 
 				ad.setLength(ad.getLength() +1);
+				System.out.println("ad : " + ad);
 			}
 		}
 		em.persist(replyCm);
 		return replyCm;
 	}
-
+	/* 사내게시판 댓글 입력*/
 	public CommentDTO addComment(CommentDTO addAd) {
 		addAd.setBoard(em.find(BoardDTO.class, addAd.getBoard().getNo()));
 		addAd.setMember(em.find(MemberDTO.class, addAd.getMember().getName()));
 		
-		String jpql = "SELECT a FROM CommentDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
+		String jpql = "SELECT a FROM CommentDTO as a WHERE a.board.no = :no ORDER BY a.length";
 		List<CommentDTO> adList = em.createQuery(jpql, CommentDTO.class).setParameter("no", addAd.getBoard().getNo()).getResultList();
 		
 		addAd.setLength(adList.size() + 1);
@@ -125,5 +128,6 @@ public class BoardDAO {
 		ad.setMember(null);
 		ad.setBoard(null);
 		em.remove(ad);
+		
 	}
 }

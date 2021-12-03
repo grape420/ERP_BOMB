@@ -1,17 +1,18 @@
 package com.greedy.erp_bomb.board.controller;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.board.model.dto.BoardDTO;
@@ -47,16 +48,27 @@ public class BoardController {
 	@GetMapping(value = "detail")
 	public ModelAndView boardDetail(ModelAndView mv, @RequestParam int no) { 
 		BoardDTO boardDetail = boardService.selectBoardDetail(no);
-		System.out.println(boardDetail);
+		
+		System.out.println("코멘트 사이즈 : " + boardDetail.getCommentList().size());
+		
+		for(CommentDTO comment : boardDetail.getCommentList()) {
+			System.out.println(comment);
+		}
+		
+		Collections.sort(boardDetail.getCommentList());
+		
+		
 		mv.addObject("boardDetail", boardDetail);
 		mv.setViewName("/board/boardDetail"); 
 		return mv;
 	}
 	
-	/* 사내게시판 대댓글 시작 */ 
-	@GetMapping(value = "/replyComment", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public CommentDTO replyComment(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	/* 사내게시판 대댓글 */ 
+	@PostMapping(value = "/replyComment")
+	public ModelAndView replyComment(@RequestParam int no, @RequestParam String content,@AuthenticationPrincipal UserImpl user , ModelAndView mv) {
+		System.out.println("번호 : " + no);
+		System.out.println("내용 : " + content);
+		
 		CommentDTO replyCm = new CommentDTO();
 		CommentDTO refAd = new CommentDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -68,9 +80,10 @@ public class BoardController {
 		replyCm.setDate(new java.sql.Date(System.currentTimeMillis()));
 		replyCm.setStatus("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		replyCm.setMember(drafter);
 		
+		System.out.println("여기까지 오나?");
 		replyCm = boardService.replyComment(replyCm);
 		
 		BoardDTO ar = new BoardDTO();
@@ -88,12 +101,15 @@ public class BoardController {
 		refAd.setNo(replyCm.getRefNo().getNo());
 		replyCm.setRefNo(refAd);
 		
-		return replyCm;
+		
+		mv.addObject("no", no);
+		mv.setViewName("redirect:/board/detail");
+		return mv;
 	}
-	
-	@GetMapping(value = "/addComment", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public CommentDTO addComment(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	/* 새내게시판 댓글 추가 */
+	@PostMapping(value = "/addComment")
+	public ModelAndView addComment(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, ModelAndView mv) {
+		
 		CommentDTO addAd = new CommentDTO();
 		BoardDTO bt = new BoardDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -106,7 +122,7 @@ public class BoardController {
 		addAd.setDate(new java.sql.Date(System.currentTimeMillis()));
 		addAd.setStatus("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		addAd.setMember(drafter);
 		
 		addAd = boardService.addComment(addAd);
@@ -123,20 +139,24 @@ public class BoardController {
 		addAd.setMember(adMember);
 		addAd.setRefNo(null);
 		
-		return addAd;
+		mv.addObject("no", no);
+		mv.setViewName("redirect:/board/detail");
+		return mv;
 	}
-	
-	@GetMapping(value = "/deleteComment", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public void deleteAddendum(@RequestParam int no, Model model) {
+	/* 사내게시판 댓글 삭제 */
+	@GetMapping("deleteComment")
+	public ModelAndView deleteComment(@RequestParam int no, ModelAndView mv, @RequestParam int detail ) {
 		boardService.deleteComment(no);
+		
+		mv.addObject("no", detail);
+		mv.setViewName("redirect:/board/detail");
+		return mv;
 	}
 	
 	/* 사내게시판 등록 */ 
 	@GetMapping("regBoard")
 	public void regBoard() { 
 	}
-	
 	@PostMapping("insertBoard")
 	public ModelAndView insertBoard(ModelAndView mv, @RequestParam String title, 
 			 @RequestParam String content, Principal principal) { 
@@ -173,7 +193,6 @@ public class BoardController {
 		mv.setViewName("board/noticeList");
 		return mv;
 	}
-	
 	
 	/* 공지사항 디테일 */ 
 	@GetMapping(value = "nodetail") 

@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
-<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css"
+	rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
-<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}"
+	rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/board/boardDetail.css}">
 <!-- 여기에 페이지 css파일 적용 -->
@@ -30,35 +45,27 @@
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/main/main">
-				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			<a class="navbar-brand font-weight-bold" href="/main/main"> <img
+				th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
-					</li>
+					<li class="nav-item mr-3 tab-selected"><a
+						class="nav-link font-weight-bold" href="/main/main">메인 페이지</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/board/boardList">게시판</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/ea/ea">전자결재</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/salary/salary">급여관리</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/sp/sp">퇴직금</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/inventory/inventory">재고 관리</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/tna/tna">근태 관리</a></li>
+					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+						href="/inOut/inOut">입출고</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -83,118 +90,128 @@
 				<hr class="sidebar-divider">
 
 				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="/board/noticeList" data-target="#collapseUtilities"
-						aria-expanded="true" aria-controls="collapseUtilities">
-						<span>공지사항</span>
-					</a>
-				</li>
+				<li class="nav-item"><a class="nav-link collapsed"
+					href="/board/noticeList" data-target="#collapseUtilities"
+					aria-expanded="true" aria-controls="collapseUtilities"> <span>공지사항</span>
+				</a></li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="/board/boardList" data-target="#collapseUtilities"
-						aria-expanded="true" aria-controls="collapseUtilities">
-						<span>사내게시판</span>
-					</a>
-				</li>
+				<a class="nav-link on"
+					href="/board/boardList" data-target="#collapseUtilities"
+					aria-expanded="true" aria-controls="collapseUtilities"> <span>사내게시판</span>
+				</a></li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+	            <li class="nav-item">
+	               <a class="nav-link" href="/vote/vote" >
+	                  <span>투표 게시판</span>
+	               </a>
+	            </li>
+				
 				<hr class="sidebar-divider">
 			</ul>
 			<!-- End of Sidebar -->
 
 			<div id="boardDetail" class="container" style="width: 80%;">
 				<h3 style="font-weight: 900; display: inline;">사내게시판</h3>
-				<div class="btn btn-outline-secondary" id="listBtn" style="float: right;" >
-				<a type="button" style="color: black" href="/board/boardList" >목록보기</a></div>
-					
-				<hr style="clear: both;">
-				<div class="bonmun" >
-					<p th:text="${ boardDetail.regDate }"></p>
-					<p th:if="${ boardDetail.no } == 1" th:text="[공지]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
-					<p th:if="${ boardDetail.no } == 2" th:text="[사내게시판]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
-					<br>
-				<div class="realBonmun" >
-				<p th:text="${ boardDetail.content }"> </p>
+				<div class="btn btn-outline-secondary" id="listBtn"
+					style="float: right;">
+					<a type="button" style="color: black" href="/board/boardList">목록보기</a>
 				</div>
-			</div>
+
+				<hr style="clear: both;">
+				<div class="bonmun">
+					<p th:text="${ boardDetail.regDate }"></p>
+					<p th:if="${ boardDetail.no } == 1"
+						th:text="[공지]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
+					<p th:if="${ boardDetail.no } == 2"
+						th:text="[사내게시판]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
+					<br>
+					<div class="realBonmun">
+						<p th:text="${ boardDetail.content }"></p>
+					</div>
+				</div>
 				<hr style="clear: both;">
 
-			<!-- 댓글 시작 -->
-			
+				<!-- 댓글 시작 -->
+
 				<h5 class="comment_title" style="font-weight: bold">댓글</h5>
-						
-				<div class="comments" style="background-color: #b6e8fd;" th:each="ad : ${ List.commentList } " th:attr="id${'comment' + ad.no}" >
-					<th:block th:if="${ ad.depth != 0 } ">
-						<th:block th:each="num : ${#numbers.sequence(1, ad.depth)}">
-						
-					<p class="comment_nickname">
-					<span th:if="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name } + '&nbsp;(작성자)'"></span>
-					<span th:unless="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name }"></span>
-					</p>
-					
+
+				<div class="comments mb-2 pb-4" style="background-color: #b6e8fd;" th:each="ad : ${ boardDetail.commentList } " th:attr="id=${'comment' + ad.no}">
 					<p class="comment_info_date" style="float: right;" th:text="${ ad.date }"></p>
-					
-					<div th:if="${ numStat.last == false }" class="col-1"></div>
-					<div th:unless="${ numStat.last == false }" style="display: flex; align-items: center;" class="col-1 p-0">
-					<img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+					<div class="row"><!-- 댓글 내용만 들어가게 -->
+						<th:block th:if="${ ad.depth != 0 } ">
+							<th:block th:each="num : ${#numbers.sequence(1, ad.depth)}">
+								<div th:if="${ numStat.last == false }" class="col-1"></div>
+								<div th:unless="${ numStat.last == false }" style="display: flex; align-items: center;" class="col-1 p-0">
+									<img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;">
+								</div>
+							</th:block>
 						</th:block>
-					</th:block>
-					
-					<div class="comment_text_box" >
-						<p class="comment_text_view">
-							<span class="text_comment"  th:utext="${#strings.replace(ad.content,'','<br>')} ">앞으로 무한한 활동 기대합니다. 반갑습니다🤗</span>
-						</p>
-						<div class="comment_info_box">
-							<a href="#" role="button" class="comment_info_button"style="float: right;">답글쓰기</a>
-							<hr>
+						<div class="comment_text_box col">
+							<p class="comment_nickname">
+							<span th:if="${ boardDetail.member.name == ad.member.name }"
+								th:utext="${ ad.member.name } + '&nbsp;(작성자)'"></span> <span
+								th:unless="${ boardDetail.member.name == ad.member.name }"
+								th:utext="${ ad.member.name }"></span>
+							</p>
+							<p class="comment_text_view">
+								<span class="text_comment" th:utext="${#strings.replace(ad.content,'
+','<br>')} "></span>
+							</p>
 						</div>
 					</div>
-				</div>
-			
-				
-				<br>
-				<div class="CommentBox">
-					<ul class="comment_list">
-						<img th:src="@{/uses/pngwing.com.png}" class="wing">
-						<li id="75070218" class="CommentItem CommentItem--reply">
-							<div class="comment_area" style="background-color: #b6e8fd;">
-								<div class="comment_box">
-									<div class="comment_nick_box">
-										<span class="comment_info_date" style="float: right;">2021.11.03.16:25</span>
-										<div class="comment_nick_info">
-											<a id="cih75070218" href="#" role="button"
-												aria-haspopup="true" aria-expanded="false"
-												class="comment_nickname">가맹점: 남극1호점</a>
-										</div>
-										<div class="comment_text_box">
-											<p class="comment_text_view">
-												<span class="text_comment">날이 추운지 밖에 사람이 없네요...
-													감사합니다~!</span>
-											</p>
-										</div>
-										<div class="comment_info_box">
-											<a href="#" role="button" class="comment_info_button"
-												style="float: right;">답글쓰기</a>
-											<hr>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<br>
-				<div class="comment_inbox">
-					<br> <a id="cih75070218" href="#" role="button"
-						aria-haspopup="true" aria-expanded="false"
-						class="comment_nickname" style="margin-left: 20px;">본사: 런닝맨</a>
-					<button type="button" class="inbox_btn"
-						style="float: right; margin: 50px;">등록</button>
-					<div class="comment_text">
-						<textarea placeholder="댓글을 남겨보세요" class="comment_inbox_text"
-							style="margin-left: 10px; border: none; resize: none; width: 750px; height: 70px; margin: 20px; outline-style: none;"></textarea>
+					<hr class="mt-0">
+				    <button class="ml-3 reply_btn pop_btn" style="font-size: 13px; float: right; " data-button="reply_comment_pop" th:attr="name=${ ad.no }">답글</button>
+					<button type="button" class="ml-3 delete_btn" style="font-size: 13px; float: right;" th:attr="onclick=|location.href='/board/deleteComment?no=${ ad.no }&detail=${boardDetail.no}'|">삭제</button>
+		
 					</div>
+			<!-- 답글 쓰기 팝업 -->
+			<form id="reply_comment_pop" class="pop_layer new_comment_pop" action="/board/replyComment" method="post">
+				<div class="top_area">
+					<h2>답글</h2>
+					<button type="button" class="pop_close close_reply" data-button="reply_comment_pop">닫기</button>
 				</div>
-			</div>
+				<div class="pop_inner">
+					<textarea id="reply_content" class="commnet_content_text" name="content"></textarea>
+				</div>
+				<div class="btn_area">
+					<input name="no" type="hidden" value="1">
+					<button type="submit" class="blue_btn pop_close reply_comment" data-button="reply_comment_pop" onclick="replyComment()">작성</button>
+					<a class="gray_btn pop_close close_reply" data-button="reply_comment_pop">닫기</a>
+				</div>
+			</form>
+			
+			<!-- 신규 댓글 작성 -->
+				<br>
+				<form action="/board/addComment" method="post">
+					<div class="comment_inbox" th:each="ad : ${ boardDetail } ">
+						<br>
+						<a id="cih75070218" class="comment_nickname" style="margin-left: 20px;"
+							th:utext="${ ad.member.name }"></a>
+						<button type="submit" class="inbox_btn"	style="float: right; margin: 20px;">등록</button>
+					  	<div class="comment_text"> 
+					  		<input type="hidden" name="no" th:value="${ ad.no }">
+							<textarea placeholder="댓글을 남겨보세요" class="comment_inbox_text" name="content"
+								style="margin-left: 10px; border: none; resize: none; width: 750px; height: 70px; margin: 20px; outline-style: none;"></textarea>
+						</div>
+					</div>
+				</form>
 		</div>
 	</section>
+	
+	<script>
+	/* function replyComment(){ 
+		var textFlag = false; 
+		const textArea = $("#reply_content").val(); 
+		}
+		if(textArea != ""){
+			textFlag = true;
+		}
+		 else if(!textFlag){
+			alert("내용을 입력하세요!");
+		} else {
+			$("#replyComment").submit();
+		}; */
+	</script>
 </body>
 </html>

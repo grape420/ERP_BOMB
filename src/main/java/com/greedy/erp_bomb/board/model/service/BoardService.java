@@ -59,12 +59,15 @@ public class BoardService {
 	/* 사내게시판 대댓글 */
 	@Transactional
 	public CommentDTO replyComment(CommentDTO replyCm) {
+		System.out.println("여긴 보드서비스");
 		return boardDAO.replyComment(replyCm);
 	}
+	
 	@Transactional
 	public CommentDTO addComment(CommentDTO addAd) {
 		return boardDAO.addComment(addAd);
 	}
+	
 	@Transactional
 	public void deleteComment(int no) {
 		boardDAO.deleteComment(no);
