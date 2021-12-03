@@ -22,10 +22,10 @@ public class TNADAO {
 		List<TNADTO> data = null;
 		
 		if(find.equals("0")) {
-			jpql = "SELECT a FROM TNADTO as a";
+			jpql = "SELECT a FROM TNADTO as a ORDER BY a.date desc";
 			data = em.createQuery(jpql, TNADTO.class).getResultList();
 		} else {
-			jpql = "SELECT a FROM TNADTO as a WHERE a.date = :find";
+			jpql = "SELECT a FROM TNADTO as a WHERE a.date = :find ORDER BY a.date desc";
 			data = em.createQuery(jpql, TNADTO.class).setParameter("find", find).getResultList();
 		}
 		

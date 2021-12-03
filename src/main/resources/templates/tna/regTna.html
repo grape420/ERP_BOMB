@@ -53,29 +53,29 @@
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-                  		<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
-               		</li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
-	                </li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
-	                </li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
-	                </li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	                </li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	                </li>
-	                <li class="nav-item mr-3 tab-selected">
-	                    <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
-	                </li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
-	                </li>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="/tna/regTna">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -100,17 +100,7 @@
 
 				<li class="nav-item">
 					<a class="nav-link collapsed on" href="/tna/regTna">
-						<span>근태입력</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="/tna/tnaDetail">
 						<span>근태조회</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="/tna/searchTna">
-						<span>출퇴근/근태현황</span>
 					</a>
 				</li>
 
@@ -125,7 +115,7 @@
 						<div class="">
 						<br>
 							<ul class="tab ul-tab">
-								<li class="li-tab electronic_approval on" data-tab=""><span>근태 조회</span></li>
+								<li class="li-tab electronic_approval on"><span>근태 조회</span></li>
 							</ul>
 							
 						<div class="">
@@ -177,16 +167,71 @@
 		<script>
 		
 		$(document).ready(function () {
+			window.onload = function(){
+				find = 0;
+				var ttt = $.ajax({
+					url: "/tna/tnaList",
+					type: "get",
+					data: {
+						find : find
+					},
+					success: function(data){
+						$("#tnaTable").dataTable({
+							"pagingType": "full_numbers",
+							"language": {
+					            "lengthMenu": "페이지당 줄수 _MENU_",
+					            "zeroRecords": "내역이 존재하지 않습니다.",
+					            "search": "검색 : ",
+					            "paginate": {
+					                "previous": "이전",
+					                "next" : "다음",
+					                "first" : "처음",
+					                "last" : "마지막"
+					              }
+					        },
+							data: data,
+							columns: [
+								{ data : 'date'},
+								{ data : 'member.name'},
+								{ data : 'member.company.name'},
+								{ data : 'member.empNo'},
+								{ data : 'member.dept.name'},
+								{ data : 'member.rank.name'},
+								{ data : 'status'},
+								/* {data: 'member.name', defaultContent: "<button type='button' class='btn btn-primary' id='ta' value='" + data + "'onclick='ddd()'>상세정보</button>"}, */
+								{ data : "", render: function(data,type,row){ return "<button id='btn_info' name='ddd' type='button' value='"+row.member.name+"' class='gray_btn'>조회</button>"; } }
+
+							],
+							"order" : [],
+				            /* 보이는 갯수 설정 안보이게 */
+				            lengthChange: false,
+				            /* 페이지 전체수 나오던 부분 안보이게*/
+				            info : false,
+				            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+				            "dom": 't<"fDiv"f><"pDiv"p>',
+				            
+				            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+				            "aoColumnDefs": [
+				                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7 ] }
+				             ]
+						});
+					},
+					error: function(xhr){
+						console.log("에러임");
+						console.log(xhr);
+						 }
+				});
+			}
 				$("#abc, #allSelect").click(function(){
-								var find = $("#selectDate").val();
+						var find = $("#selectDate").val();
 					
 						if($(this).attr("name") == 'Allbut'){
 								find = 0;							
 						}					
-								
 								var table = $("#tnaTable").DataTable();
-								table.destroy();
-									
+								table.destroy();	
+								
+								
 								var ttt = $.ajax({
 										url: "/tna/tnaList",
 										type: "get",
@@ -216,20 +261,19 @@
 													{ data : 'member.dept.name'},
 													{ data : 'member.rank.name'},
 													{ data : 'status'},
-													/* {data: 'member.name', defaultContent: "<button type='button' class='btn btn-primary' id='ta' value='" + data + "'onclick='ddd()'>상세정보</button>"}, */
 													{ data : "", render: function(data,type,row){ return "<button id='btn_info' name='ddd' type='button' value='"+row.member.name+"' class='gray_btn'>조회</button>"; } }
 
 												],
 												"order" : [],
 									            /* 보이는 갯수 설정 안보이게 */
-									            lengthChange: false,
+									             lengthChange: false,
 									            /* 페이지 전체수 나오던 부분 안보이게*/
-									            info : false,
+									             info : false,
 									            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
-									            "dom": 't<"fDiv"f><"pDiv"p>',
+									             "dom": 't<"fDiv"f><"pDiv"p>',
 									            
 									            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
-									            "aoColumnDefs": [
+									             "aoColumnDefs": [
 									                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7 ] }
 									             ]
 											});
@@ -241,7 +285,7 @@
 									});
 								
 							
-				});
+				}); 
 							
 				$(document).on('click', 'button[name="ddd"]', function() {
 				     var name = $(this).attr('value');

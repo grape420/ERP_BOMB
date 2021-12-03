@@ -48,28 +48,28 @@
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+						<a class="nav-link font-weight-bold" href="/tna/regTna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -84,7 +84,7 @@
 				<a class="sidebar-brand" href="${ pageContext.servletContext.contextPath }/myPage/drawHistory">
 					<div class="sidebar-brand-icon rotate-n-15">
 					</div>
-					<div class="sidebar-brand-text mx-3">근태관리</div>
+					<div class="sidebar-brand-text mx-3">근태조회</div>
 				</a>
 
 				<!-- Divider -->
@@ -95,17 +95,7 @@
 
 				<li class="nav-item">
 					<a class="nav-link collapsed on" href="/tna/regTna">
-						<span>근태입력</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="/tna/tnaDetail">
 						<span>근태조회</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="/tna/searchTna">
-						<span>출퇴근/근태현황</span>
 					</a>
 				</li>
 
@@ -150,7 +140,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="detail : ${ member }">
-											<td th:text="${detail.date}"></td>
+											<td th:text="${detail.date}" name="dateLan" th:value="${detail.date}"></td>
 											<td th:text="${detail.member.name}" id="reginame"></td>
 											<td th:text="${detail.member.company.name}" id="comname"></td>
 											<td th:text="${detail.member.empNo}" id="memno"></td>
@@ -241,21 +231,30 @@
 							date = $("#regidate").text();
 							selectStat = $("#selectStat").val();
 							
-							console.log(name);
-							console.log(selectStat);
-							console.log(date);
-							
 							location.href="/tna/regiTna?name="+name+"&date="+date+"&selectStat="+selectStat;
 							
 						});
 						
 						$("#newWorkPlus").click(function(){
-							date = $("#newWorkDate").val();
-							name = $("#newWorkName").text();
-							selectStat = $("#newWorkSelect").val();
+							var date = $("#newWorkDate").val();
+							var name = $("#newWorkName").text();
+							var selectStat = $("#newWorkSelect").val();
+							var dateFlag = false;
+							var dateLen = $("td[name=dateLan]").length;
+							var dateEqual = new Array(dateLen);
+							
+							for(var i = 0 ; i < dateLen ; i++){
+								dateEqual[i] = $("td[name=dateLan]").eq(i).text();
+								
+								if(dateEqual[i] == date){
+									dateFlag = true;		
+								}
+							}
 							
 							if(date == ""){
 								alert("날짜를 선택하세요!");
+							} else if(dateFlag){
+								alert("기존 날짜가 있습니다.");
 							} else {
 								location.href="/tna/newWork?name="+name+"&date="+date+"&selectStat="+selectStat;		
 							}

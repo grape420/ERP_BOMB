@@ -28,12 +28,6 @@ public class TNAContorller {
 		this.tnaService = tnaService;
 	}
 	
-	@GetMapping("/searchTna")
-	public void searchTna() {}
-	
-	@GetMapping("/tnaStatus")
-	public void tnaStatus() {}
-	
 	@GetMapping("/regTna")
 	public void regTna() {}
 	
