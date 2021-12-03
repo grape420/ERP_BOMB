@@ -20,14 +20,19 @@ public class AuthorityService {
 	}
 
 	@Transactional
-	public List<MemberDTO> findAuthorityList() {
-		return authorityDAO.findAuthorityList();
+	public List<MemberDTO> findMemberList() {
+		return authorityDAO.findMemberList();
 	}
 
 	@Transactional
-	public MemberRoleDTO findAuthDetail(String detailName) {
+	public MemberDTO findAuthDetail(String detailName) {
 		return authorityDAO.findAuthDetail(detailName);
 	}
+	
+	@Transactional
+	public void updateAuth(String[] role, String name) {
+		authorityDAO.updateAuth(role, name);
+	}
 
-
+	
 }
