@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.admin.model.service.AuthorityService;
+import com.greedy.erp_bomb.member.model.dto.AuthorityDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
 @Controller
@@ -39,22 +40,22 @@ public class AuthorityController {
 	@GetMapping(value = "authDetail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public MemberDTO findAuthDetail(@RequestParam String detailName) {
-		MemberDTO member = authorityService.findAuthDetail(detailName);
+		MemberDTO member = authorityService.findMemberDetail(detailName);
+		
 		MemberDTO detailMember = new MemberDTO();
 		detailMember.setName(member.getName());
 
 		return detailMember;
 	}
 	
+	@GetMapping(value = "allAuth", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public List<AuthorityDTO> findAllAuth() {
+		return authorityService.findAllAuth();
+	}
+	
 	@PostMapping("updateAuth")
 	public String updateAuth(@RequestParam String name, HttpServletRequest request) {
-		/* 일반회원에서 일반 회원 체크 - 만들지마 */
-		/* 일반회원에서 일반 회원, 관리자 체크 - INSERT */
-		/* 일반회원에서 관리자 체크 - INSERT */
-		
-		/* 관리자에서 일반 회원 체크 - DELETE */
-		/* 관리자에서 일반 회원, 관리자 체크 - 만들지마 */
-		/* 관리자에서 관리자 체크 - 만들지마 */
 		authorityService.updateAuth(request.getParameterValues("role"), name);
 		
 		return "redirect:/admin/authority";

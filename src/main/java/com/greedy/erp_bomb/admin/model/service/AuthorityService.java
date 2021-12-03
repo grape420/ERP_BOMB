@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.greedy.erp_bomb.admin.model.dao.AuthorityDAO;
+import com.greedy.erp_bomb.member.model.dto.AuthorityDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberRoleDTO;
 
@@ -25,14 +26,20 @@ public class AuthorityService {
 	}
 
 	@Transactional
-	public MemberDTO findAuthDetail(String detailName) {
-		return authorityDAO.findAuthDetail(detailName);
+	public MemberDTO findMemberDetail(String detailName) {
+		return authorityDAO.findMemberDetail(detailName);
 	}
 	
 	@Transactional
 	public void updateAuth(String[] role, String name) {
 		authorityDAO.updateAuth(role, name);
 	}
+
+	@Transactional
+	public List<AuthorityDTO> findAllAuth() {
+		return authorityDAO.findAllAuth();
+	}
+
 
 	
 }
