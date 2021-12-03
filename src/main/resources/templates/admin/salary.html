@@ -164,7 +164,7 @@
 										<tbody>
 											<tr th:each="salary : ${ allSalaryList }">
 												<td th:text="${ salary.serialNo }"></td>
-												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" class="t_center pop_btn" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }"></td>
+												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" ></td>
 												<td th:text="${ salary.member.name }"></td>
 												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
 												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
