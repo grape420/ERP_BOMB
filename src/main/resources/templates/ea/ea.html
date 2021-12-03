@@ -99,9 +99,21 @@
 					<div class="mt-4">
 
 						<ul class="tab ul-tab">
+						<th:block th:if="${#strings.equals(tab, 1)}">
 							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
 							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
 							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
+						<th:block th:if="${#strings.equals(tab, 2)}">
+							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
+						<th:block th:if="${#strings.equals(tab, 3)}">
+							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
 						</ul>
 						<div id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">
@@ -421,7 +433,7 @@
 					<!-- 여기까지 전자 결재 디테일 팝업 -->
 					
 					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
-					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus == 4 }" class="pop_layer new_approval_pop temp_ea" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
 						<div class="top_area">
 							<h2>신규 결재</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
@@ -459,6 +471,7 @@
 							<div class="btn_area">
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/1'">결재</button>
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/2'">임시저장</button>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/deleteEa'">문서삭제</button>
 								<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 							</div>
 						</form>

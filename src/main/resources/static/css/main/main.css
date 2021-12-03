@@ -5,6 +5,11 @@
 	margin: 0;
 }
 
+.ent_work {
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
 .ul-tab>li {
 	list-style: none;
 }
