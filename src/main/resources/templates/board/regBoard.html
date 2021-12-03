@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +17,7 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/board/regBoard.css}">
 <!-- 여기에 페이지 css파일 적용 -->
@@ -92,9 +94,14 @@
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="/board/boardList" data-target="#collapseUtilities"
+					<a class="nav-link collapsed on" href="/board/boardList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사내게시판</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/vote/vote" >
+						<span>투표 게시판</span>
 					</a>
 				</li>
 				<hr class="sidebar-divider">
@@ -144,7 +151,7 @@
 			</div>
 		</div>
 	</section>
-
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
 </body>
 </html>

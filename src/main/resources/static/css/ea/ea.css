@@ -1,6 +1,7 @@
 @charset "UTF-8";
-.temp_ea {
-	margin-top: -150px !important;	
+
+.note-codable {
+	display: none !important;
 }
 
 .fDiv {

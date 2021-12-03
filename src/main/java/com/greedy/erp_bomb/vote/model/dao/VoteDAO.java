@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import com.greedy.erp_bomb.common.paging.SelectCriteria;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteDTO;
 import com.greedy.erp_bomb.vote.model.dto.VoteOptionDTO;

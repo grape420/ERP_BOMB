@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +17,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/retire/retire.css}">	<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -106,10 +107,11 @@
 							<input type="text" placeholder="검색어 입력" />
 							<button type="button" class="blue_btn">Search</button>
 						</div>-->
-						<ul class="tab ul-tab mt-3">
-							<li class="li-tab electronic_approval on" data-tab="all_retire"><span>퇴직금 목록</span></li>
+						<ul class="tab ul-tab">
+							<li class="li-tab retire on" data-tab="all_retire"><span>퇴직금 목록</span></li>
+							<!-- <li class="li-tab retire" data-tab="confirm_retire"><span>퇴직금 합계</span></li> -->
 						</ul>
-						<div id="all_retire" class="tab_contents electronic_approval current">
+						<div id="all_retire" class="tab_contents retire current">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>퇴직금 목록</caption>
@@ -340,7 +342,7 @@
 			
 		}, 100);
 	</script>
-	</script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 </body>
 </html>

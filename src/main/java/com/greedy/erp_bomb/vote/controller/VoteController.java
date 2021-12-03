@@ -1,11 +1,10 @@
 package com.greedy.erp_bomb.vote.controller;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class VoteController {
 	}
 	
 	@GetMapping(value = "vote")
-	public ModelAndView votePage(ModelAndView mv) {
+	public ModelAndView votePage(ModelAndView mv, @RequestParam(defaultValue = "1") String tab) {
 		
 		List<VoteDTO> voteList = voteService.selectALLVote();
 		
@@ -50,6 +49,7 @@ public class VoteController {
 			}
 		}
 		
+		mv.addObject("tab", tab);
 		mv.addObject("voteList", voteList);
 		mv.addObject("endVoteList", endVoteList);
 		mv.addObject("regVoteList", regVoteList);
@@ -62,11 +62,10 @@ public class VoteController {
 	@PostMapping("insertVote")
 	public ModelAndView insertVote(ModelAndView mv, @RequestParam String title, @RequestParam String insertMember,
 			@RequestParam java.sql.Date endDate, @RequestParam String content
-			, Principal principal) {
+			, @AuthenticationPrincipal UserImpl user) {
 		
 		/* 작성일 */
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
 		MemberDTO member = new MemberDTO();
 		member.setName(user.getName());
@@ -145,9 +144,7 @@ public class VoteController {
 	@PostMapping(value = "vvote", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public void vvote(@RequestParam int serialNo, @RequestParam String desc,
-			Principal principal) {
-		
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			@AuthenticationPrincipal UserImpl user) {
 		
 		MemberDTO member = new MemberDTO();
 		member.setName(user.getName());
@@ -178,8 +175,7 @@ public class VoteController {
 	@PostMapping(value = "plusCandi", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public void plusCandidate(@RequestParam String candiInsert, @RequestParam int votenum,
-			Principal principal) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			@AuthenticationPrincipal UserImpl user) {
 		
 		MemberDTO member = new MemberDTO();
 		member.setName(user.getName());

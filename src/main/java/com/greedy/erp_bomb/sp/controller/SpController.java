@@ -1,10 +1,9 @@
 package com.greedy.erp_bomb.sp.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +29,7 @@ public class SpController {
 	
 	/* 퇴직금 리스트 */
 	@GetMapping("/sp")
-	public ModelAndView findSpList(ModelAndView mv, Principal principal) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
+	public ModelAndView findSpList(ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		List<MemberDTO> member = spService.findEntryMember();
 		
 		List<SPDTO> spList = spService.findSpList();

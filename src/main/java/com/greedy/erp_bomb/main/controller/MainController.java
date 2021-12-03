@@ -51,7 +51,7 @@ public class MainController {
 		for(VoteDTO vote : voteList) {
 			java.sql.Date nowDate = new java.sql.Date(System.currentTimeMillis());
 			
-			if(vote.getEndDate().before(nowDate)) {
+			if(vote.getEndDate().after(nowDate)) {
 				voting++;
 			} else {
 				endVote++;

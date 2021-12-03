@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,11 +16,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
-<link th:href="@{/uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/vote/vote.css}">	<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <style>
 	.fDiv{
 		float: left;
@@ -96,7 +96,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="/board/nolist">
+					<a class="nav-link" href="/board/noticeList">
 						<span>공지사항</span>
 					</a>
 				</li>
@@ -108,7 +108,7 @@
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="/vote/vote" >
+					<a class="nav-link on" href="/vote/vote" >
 						<span>투표 게시판</span>
 					</a>
 				</li>
@@ -128,11 +128,57 @@
 								</div>
 								
 								<ul class="tab ul-tab">
+									<th:block th:if="${#strings.equals(tab, 1)}">
 									<li class="li-tab electronic_approval on" data-tab="total-vote"><span>전체</span></li>
 									<li class="li-tab electronic_approval" data-tab="vote-ing"><span>진행 중</span></li>
-									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>									
+									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>
+									</th:block>
+									<th:block th:if="${#strings.equals(tab, 2)}">
+									<li class="li-tab electronic_approval" data-tab="total-vote"><span>전체</span></li>
+									<li class="li-tab electronic_approval on" data-tab="vote-ing"><span>진행 중</span></li>
+									<li class="li-tab electronic_approval" data-tab="endvote"><span>종료</span></li>
+									</th:block>
+									<th:block th:if="${#strings.equals(tab, 3)}">
+									<li class="li-tab electronic_approval" data-tab="total-vote"><span>전체</span></li>
+									<li class="li-tab electronic_approval" data-tab="vote-ing"><span>진행 중</span></li>
+									<li class="li-tab electronic_approval on" data-tab="endvote"><span>종료</span></li>
+									</th:block>									
 								</ul>
-								<div id="total-vote" class="tab_contents electronic_approval current">
+								<div th:if="${#strings.equals(tab, 1)}" id="total-vote" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table class="Table">
+											<colgroup>
+												<col style="width:8%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:9%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="vote : ${ voteList }">
+													<td th:text="${ vote.serialNo }"></td>
+													<td th:text="${ vote.member.name }"></td>
+													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${vote.serialNo}')|" id="mainTitle"></td>
+													<td th:text="${ vote.regDate }"></td>
+													<td th:text="${ vote.endDate }"></td>
+													<td th:text="${ vote.hit }"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div th:unless="${#strings.equals(tab, 1)}" id="total-vote" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table class="Table">
 											<colgroup>
@@ -168,7 +214,42 @@
 								</div>
 								
 								<!-- 진행중인 투표 부분 -->
-								<div id="vote-ing" class="tab_contents electronic_approval">
+								<div th:if="${#strings.equals(tab, 2)}" id="vote-ing" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table class="Table">
+											<colgroup>
+												<col style="width:8%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:9%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="regvote : ${ regVoteList }">
+													<td th:text="${ regvote.serialNo }"></td>
+													<td th:text="${ regvote.member.name }"></td>
+													<td th:text="${ regvote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${regvote.serialNo}')|"></td>
+													<td th:text="${ regvote.regDate }"></td>
+													<td th:text="${ regvote.endDate }"></td>
+													<td th:text="${ regvote.hit }"></td>
+												</tr>													
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div th:unless="${#strings.equals(tab, 2)}" id="vote-ing" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table class="Table">
 											<colgroup>
@@ -204,7 +285,42 @@
 								</div>
 								
 								<!-- 투표 종료 부분 -->
-								<div id="endvote" class="tab_contents electronic_approval">
+								<div th:if="${#strings.equals(tab, 3)}" id="endvote" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table class="Table">
+											<colgroup>
+												<col style="width:8%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:9%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="endvote : ${ endVoteList }">
+													<td th:text="${ endvote.serialNo }"></td>
+													<td th:text="${ endvote.member.name }"></td>
+													<td th:text="${ endvote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${endvote.serialNo}')|"></td>
+													<td th:text="${ endvote.regDate }"></td>
+													<td th:text="${ endvote.endDate }"></td>
+													<td th:text="${ endvote.hit }"></td>
+												</tr>													
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div th:unless="${#strings.equals(tab, 3)}" id="endvote" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table class="Table">
 											<colgroup>
@@ -381,133 +497,146 @@
 	};
 	
 	/* 투표 디테일 부분 */
-	function voteDetail(num){
-		var date = new Date();
-		var detailnum = num;
-		const title = $("#titleVo");
-		const content = $("#contentVo");
-		const voteList = $("#voteList");
-		const buttonArea = $("#buttonArea");
-		
-		var candi = false;
-		var vvote = false;
-		var writer = false;
-		var bob = $("#bob").text();
-		
-		title.html("");
-		content.html("");
-		voteList.html("");
-		buttonArea.html("");			
-		
-		$.ajax({
-		url: "/vote/detail",
-		type: "get",
-		data: {
-			detailnum : detailnum
-		},
-		success: function(data){
-			var date1 = new Date(data.endDate);
-			var voteCheckFlag = false;
-			
-			if(date > date1){
-				vvote = true;
-				candi = true;
-				voteCheckFlag = true;
-			}
-			
-			for(var index in data.voteParticipationList){
-				if(bob == data.voteParticipationList[index].member.name){
-					vvote = true;
-					voteCheckFlag = true;
-				}	
-			}
-			
-			title.text("제목 : " + data.title);								
-			content.text("내용 : " + data.content);
-			
-			title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
-			
-			if(data.voteOptionList != ""){
-				
-				for(var index in data.voteOptionList){
-					$index = "vote" + index;
-					
-					if(voteCheckFlag){
-						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
-					} else {
-						voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
-					}
-					
-					if(bob == data.voteOptionList[index].member.name ){
-						candi = true;
-					}
-					
-				}
-				
-				
-				
-				if(date > date1){
-					vvote = true;
-					candi = true;
-				}
-				
-				/* Controller로 보내기위한 임의적인 input */
-				voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
-				
-				if(!candi){
-					buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")	;	
-				}
-				if(!vvote){
-					buttonArea.append("<button type='button' style='margin-right: 5px;' class='blue_btn pop_close' onclick='vVote()'>투표하기</button>");
-				}
-				
-			} else {
-				voteList.text("후보가 없습니다.");
-				if(!candi){
-					buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>");
-				}
-			}
-			buttonArea.append("<button class='gray_btn pop_btn' data-button='vote-detail' id='closeVoteDetail'>닫기</button>");
-			
-			$("#candivote").html("");
-			$("#candivote").append("<button type='button' class='blue_btn pop_close' style='margin-right: 5px;' data-button='insertVote' id='insertCandi' onclick='plusCandi(" + data.serialNo + ")'>추가하기</button>");
-			$("#candivote").append("<button type='button' class='gray_btn pop_close' data-button='insertVote' id='candiClose'>닫기</button>");
-			$("#candiArea").html("");
-			$("#candiArea").append("<p>제목 : " + data.title + "</p>");
-			$("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
-			
-		},
-		error: function(xhr){
-			console.log(xhr);
-			 }
-		});
-	}
-	
-	/* 후보 추가 */
-	function plusCandi(num){
-		var candiInsert = $("#candiInsert").val();
-		var votenum = num;
-		if(candiInsert == ""){
-			alert("후보를 입력하세요");
-		} else {
-			
-		$.ajax({
-			url: "/vote/plusCandi",
-			type: "post",
-			data: {
-				candiInsert : candiInsert,
-				votenum : votenum
-			},
-			success: function(data){
-				voteDetail(votenum);
-			},
-			error: function(xhr){
-				console.log("에러임");
-				console.log(xhr);
-				 }
-		});
-		}
-	}
+	   function voteDetail(num){
+	      var date = new Date();
+	      var detailnum = num;
+	      const title = $("#titleVo");
+	      const content = $("#contentVo");
+	      const voteList = $("#voteList");
+	      const buttonArea = $("#buttonArea");
+	      
+	      var candi = false;
+	      var vvote = false;
+	      var writer = false;
+	      var bob = $("#bob").text();
+	      
+	      title.html("");
+	      content.html("");
+	      voteList.html("");
+	      buttonArea.html("");         
+	      
+	      $.ajax({
+	      url: "/vote/detail",
+	      type: "get",
+	      data: {
+	         detailnum : detailnum
+	      },
+	      success: function(data){
+	         var date1 = new Date(data.endDate);
+	         var voteCheckFlag = false;
+	         
+	         if(date > date1){
+	            vvote = true;
+	            candi = true;
+	            voteCheckFlag = true;
+	         }
+	         
+	         for(var index in data.voteParticipationList){
+	            if(bob == data.voteParticipationList[index].member.name){
+	               vvote = true;
+	               voteCheckFlag = true;
+	            }   
+	         }
+	         
+	         title.text("제목 : " + data.title);                        
+	         content.text("내용 : " + data.content);
+	         
+	         title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
+	         
+	         if(data.voteOptionList != ""){
+	            
+	            for(var index in data.voteOptionList){
+	               $index = "vote" + index;
+	               
+	               if(voteCheckFlag){
+	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
+	               } else {
+	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
+	               }
+	               
+	               if(bob == data.voteOptionList[index].member.name ){
+	                  candi = true;
+	               }
+	               
+	            }
+	            
+	            
+	            
+	            if(date > date1){
+	               vvote = true;
+	               candi = true;
+	            }
+	            
+	            /* Controller로 보내기위한 임의적인 input */
+	            voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
+	            
+	            if(!candi){
+	               buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")   ;   
+	            }
+	            if(!vvote){
+	               buttonArea.append("<button type='button' style='margin-right: 5px;' class='blue_btn pop_close' onclick='vVote()'>투표하기</button>");
+	            }
+	            
+	         } else {
+	            voteList.text("후보가 없습니다.");
+	            if(!candi){
+	               buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>");
+	            }
+	         }
+	         buttonArea.append("<button class='gray_btn pop_btn' data-button='vote-detail' id='closeVoteDetail'>닫기</button>");
+	         
+	         $("#candivote").html("");
+	         $("#candivote").append("<button type='button' class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='insertCandi' onclick='plusCandi(" + data.serialNo + ")'>추가하기</button>");
+	         $("#candivote").append("<button type='button' class='gray_btn pop_btn' data-button='insertVote' id='candiClose'>닫기</button>");
+	         $("#candiArea").html("");
+	         $("#candiArea").append("<p>제목 : " + data.title + "</p>");
+	         $("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
+	         
+	      },
+	      error: function(xhr){
+	         console.log(xhr);
+	          }
+	      });
+	   }
+	   
+	   /* 후보 추가 */
+	   function plusCandi(num){
+	      var candiInsert = $("#candiInsert").val();
+	      var votenum = num;
+	      var equalFlag = false;
+	      var candiLen = $("input[name=votes]").length;
+	      var candiEqual = new Array(candiLen);
+	      
+	      for(var i = 0 ; i < candiLen ; i++){
+	         candiEqual[i] = $("input[name=votes]").eq(i).val();
+	         
+	         if(candiEqual[i] == candiInsert){
+	            equalFlag = true;
+	         }
+	      }      
+	      
+	      if(candiInsert == ""){
+	         alert("후보를 입력하세요.");
+	      } else if(equalFlag) {
+	         alert("중복된 후보명입니다.")
+	      } else {
+	         
+	         $.ajax({
+	            url: "/vote/plusCandi",
+	            type: "post",
+	            data: {
+	               candiInsert : candiInsert,
+	               votenum : votenum
+	            },
+	            success: function(data){
+	               voteDetail(votenum);
+	            },
+	            error: function(xhr){
+	               console.log(xhr);
+	                }
+	         });
+	      }
+	   }
 	
 		/* 투표하기 */
 		function vVote(){
@@ -648,8 +777,8 @@
 	</script>
 	
 	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	</section>
 
 </body>
