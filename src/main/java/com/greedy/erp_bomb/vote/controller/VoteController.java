@@ -31,7 +31,7 @@ public class VoteController {
 	}
 	
 	@GetMapping(value = "vote")
-	public ModelAndView votePage(ModelAndView mv) {
+	public ModelAndView votePage(ModelAndView mv, @RequestParam(defaultValue = "1") String tab) {
 		
 		List<VoteDTO> voteList = voteService.selectALLVote();
 		
@@ -49,6 +49,7 @@ public class VoteController {
 			}
 		}
 		
+		mv.addObject("tab", tab);
 		mv.addObject("voteList", voteList);
 		mv.addObject("endVoteList", endVoteList);
 		mv.addObject("regVoteList", regVoteList);
