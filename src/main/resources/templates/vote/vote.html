@@ -144,7 +144,41 @@
 									<li class="li-tab electronic_approval on" data-tab="endvote"><span>종료</span></li>
 									</th:block>									
 								</ul>
-								<div id="total-vote" class="tab_contents electronic_approval current">
+								<div th:if="${#strings.equals(tab, 1)}" id="total-vote" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table class="Table">
+											<colgroup>
+												<col style="width:8%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:9%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="vote : ${ voteList }">
+													<td th:text="${ vote.serialNo }"></td>
+													<td th:text="${ vote.member.name }"></td>
+													<td th:text="${ vote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${vote.serialNo}')|" id="mainTitle"></td>
+													<td th:text="${ vote.regDate }"></td>
+													<td th:text="${ vote.endDate }"></td>
+													<td th:text="${ vote.hit }"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div th:unless="${#strings.equals(tab, 1)}" id="total-vote" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table class="Table">
 											<colgroup>
@@ -180,7 +214,42 @@
 								</div>
 								
 								<!-- 진행중인 투표 부분 -->
-								<div id="vote-ing" class="tab_contents electronic_approval">
+								<div th:if="${#strings.equals(tab, 2)}" id="vote-ing" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table class="Table">
+											<colgroup>
+												<col style="width:8%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:9%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="regvote : ${ regVoteList }">
+													<td th:text="${ regvote.serialNo }"></td>
+													<td th:text="${ regvote.member.name }"></td>
+													<td th:text="${ regvote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${regvote.serialNo}')|"></td>
+													<td th:text="${ regvote.regDate }"></td>
+													<td th:text="${ regvote.endDate }"></td>
+													<td th:text="${ regvote.hit }"></td>
+												</tr>													
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div th:unless="${#strings.equals(tab, 2)}" id="vote-ing" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table class="Table">
 											<colgroup>
@@ -216,7 +285,42 @@
 								</div>
 								
 								<!-- 투표 종료 부분 -->
-								<div id="endvote" class="tab_contents electronic_approval">
+								<div th:if="${#strings.equals(tab, 3)}" id="endvote" class="tab_contents electronic_approval current">
+									<div class="tableArea">
+										<table class="Table">
+											<colgroup>
+												<col style="width:8%" />
+												<col style="width:10%" />
+												<col style="width:45%" />
+												<col style="width:10%" />
+												<col style="width:10%" />
+												<col style="width:9%" />
+											</colgroup>
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>작성자</th>
+													<th>제목</th>
+													<th>작성일</th>
+													<th>종료일</th>
+													<th>조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="endvote : ${ endVoteList }">
+													<td th:text="${ endvote.serialNo }"></td>
+													<td th:text="${ endvote.member.name }"></td>
+													<td th:text="${ endvote.title }" class="t_left pop_btn" data-button="vote-detail" th:onclick="|javascript:voteDetail('${endvote.serialNo}')|"></td>
+													<td th:text="${ endvote.regDate }"></td>
+													<td th:text="${ endvote.endDate }"></td>
+													<td th:text="${ endvote.hit }"></td>
+												</tr>													
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div th:unless="${#strings.equals(tab, 3)}" id="endvote" class="tab_contents electronic_approval">
 									<div class="tableArea">
 										<table class="Table">
 											<colgroup>

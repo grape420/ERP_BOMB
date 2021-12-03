@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +20,9 @@
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/ea/ea.css}">	<!-- 여기에 페이지 css파일 적용 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -496,7 +500,7 @@
 									</select>
 									<br>
 								</div>
-								<textarea id="new_approval_content" name="content" class="approval_content_text" required="required"></textarea>
+								<textarea style="overflow: scroll;" id="test" name="content" required="required" th:text="${ test }"></textarea>
 							</div>
 							<div class="btn_area">
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/1'">결재</button>
@@ -878,6 +882,27 @@
 			
 			clearInterval(timer);
 		}, 100);
+		
+		$('#test').summernote({
+			lang: "ko-KR",
+			tabsize: 1,
+			width : 666,
+			height : 315,
+			toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],	
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+		});
 	</script>
 	
 	<!-- dataTable -->

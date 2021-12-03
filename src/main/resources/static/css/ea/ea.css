@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.note-codable {
+	display: none !important;
+}
+
 .fDiv {
 	float: left;
 	text-align: left;
