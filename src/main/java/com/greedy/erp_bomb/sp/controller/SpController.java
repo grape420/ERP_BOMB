@@ -2,23 +2,16 @@ package com.greedy.erp_bomb.sp.controller;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.sp.model.dto.SPDTO;
@@ -29,12 +22,10 @@ import com.greedy.erp_bomb.sp.model.service.SpService;
 public class SpController {
 	
 	private SpService spService;
-	private ObjectMapper objectMapper;
 	
 	@Autowired
-	public SpController(SpService spService, ObjectMapper objectMapper) {
+	public SpController(SpService spService) {
 		this.spService = spService;
-		this.objectMapper = objectMapper;
 	}
 	
 	/* 퇴직금 리스트 */
@@ -44,7 +35,6 @@ public class SpController {
 		
 		List<MemberDTO> member = spService.findEntryMember();
 		
-		List<SPDTO> detailSp = spService.findDetailSp(user.getName());
 		List<SPDTO> spList = spService.findSpList();
 		
 		mv.addObject("entYn", member);

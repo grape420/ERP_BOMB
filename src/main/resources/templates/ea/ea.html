@@ -18,6 +18,7 @@
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/ea/ea.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -29,34 +30,34 @@
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/">
+			<a class="navbar-brand font-weight-bold" href="/main/main">
 				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
+						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
+						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -82,7 +83,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+					<a class="nav-link collapsed on" href="#" data-toggle="collapse" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>전자결재</span>
 					</a>
@@ -95,31 +96,36 @@
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 전자 결재 리스트 -->
-					<div class="">
+					<div class="mt-4">
 
-						<div class="search_form">
-							<input type="text" placeholder="검색어 입력" />
-							<button type="button" class="blue_btn">Search</button>
-						</div>
 						<ul class="tab ul-tab">
-							<li class="li-tab electronic_approval on" data-tab="all_approval"><span>전체</span></li>
-							<li class="li-tab electronic_approval" data-tab="before_approval"><span>기안 중</span></li>
-							<li class="li-tab electronic_approval" data-tab="approvaling"><span>결재 중</span></li>
-							<li class="li-tab electronic_approval" data-tab="confirm_approval"><span>결재 완료</span></li>
-							<li class="li-tab electronic_approval" data-tab="return_approval"><span>반려</span></li>
+						<th:block th:if="${#strings.equals(tab, 1)}">
+							<li class="li-tab electronic_approval on" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
+						<th:block th:if="${#strings.equals(tab, 2)}">
+							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
+						<th:block th:if="${#strings.equals(tab, 3)}">
+							<li class="li-tab electronic_approval" data-tab="myEaList"><span>내 기안</span></li>
+							<li class="li-tab electronic_approval" data-tab="myEaPathList"><span>결재 기안</span></li>
+							<li class="li-tab electronic_approval on" data-tab="myEaCarbonList"><span>참조 기안</span></li>
+						</th:block>
 						</ul>
-						<div id="all_approval" class="tab_contents electronic_approval current">
+						<div id="myEaList" class="tab_contents electronic_approval current">
 							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
+								<table class="Table">
+									<caption>내 기안 리스트</caption>
 									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
+										<col style="width:7%" />
+										<col style="width:11%" />
+										<col style="width:44%" />
 										<col style="width:8%" />
 										<col style="width:8%" />
+										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -129,66 +135,64 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop1">결재 중 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td>황성연</td>
-											<td>결재 중</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop2">결재 완료 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td>김가희</td>
-											<td>결재 완료</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop2">복사</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop3">기안 중 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td></td>
-											<td>기안 중</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop3">복사</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop4">반려 기안입니다.</td>
-											<td>황성연</td>
-											<td>김성민</td>
-											<td>반려</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop4">복사</td>
+										<tr th:each="list : ${ myEaList }">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:switch="${ list.eaStatus }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="4">
+													<td th:text="${ #authentication.principal.name }"></td>
+												</th:block>
+											</th:block>
+											<th:block th:switch="${ list.eaStatus }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
+						
+						<script>
+							$(".copy-approval").click(function() {
+								let copy_ea_no = $(this).attr("id").replace('copy_btn_', '');
+								
+							});
+						</script>
 
-						<div id="before_approval" class="tab_contents electronic_approval">
+						<div id="myEaPathList" class="tab_contents electronic_approval">
 							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
+								<table class="Table">
+									<caption>내 결재 리스트</caption>
 									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
+										<col style="width:7%" />
+										<col style="width:11%" />
+										<col style="width:44%" />
 										<col style="width:8%" />
 										<col style="width:8%" />
+										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -198,37 +202,54 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>3</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop3">기안 중 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td></td>
-											<td>기안 중</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop3">복사</td>
+										<tr th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4}">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:switch="${ list.eaStatus }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+											</th:block>
+											<th:block th:switch="${ list.eaStatus }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
 
-						<div id="approvaling" class="tab_contents electronic_approval">
+						<div id="myEaCarbonList" class="tab_contents electronic_approval">
 							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
+								<table class="Table">
+									<caption>내 참조 리스트</caption>
 									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
+										<col style="width:7%" />
+										<col style="width:11%" />
+										<col style="width:44%" />
 										<col style="width:8%" />
 										<col style="width:8%" />
+										<col style="width:11%" />
 									</colgroup>
 									<thead>
 										<tr>
@@ -238,106 +259,45 @@
 											<th>기안자</th>
 											<th>결재자</th>
 											<th>결재 상태</th>
-											<th>기안서 복사</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop1">결재 중 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td>황성연</td>
-											<td>결재 중</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop1">복사</td>
+										<tr th:each="list : ${ myEaCarbonList }">
+											<td th:text="${ list.serialNo }"></td>
+											<td th:text="${ list.date }"></td>
+											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+											<td th:text="${ list.member.name }"></td>
+											<th:block th:switch="${ list.eaStatus }">
+												<th:block th:case="1">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="2">
+													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+												<th:block th:case="3">
+													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+														<td th:text="${ path.member.name }"></td>
+													</th:block>
+												</th:block>
+											</th:block>
+											<th:block th:switch="${ list.eaStatus }">
+												<td th:case="1">결재 중</td>
+												<td th:case="2">결재 완료</td>
+												<td th:case="3">결재 반려</td>
+												<td th:case="4">임시 저장</td>
+											</th:block>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-
-						<div id="confirm_approval" class="tab_contents electronic_approval">
-							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
-									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>번호</th>
-											<th>기안일자</th>
-											<th>제목</th>
-											<th>기안자</th>
-											<th>결재자</th>
-											<th>결재 상태</th>
-											<th>기안서 복사</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>2</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop2">결재 완료 기안입니다.
-											</td>
-											<td>황성연</td>
-											<td>김가희</td>
-											<td>결재 완료</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop2">복사</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-						<div id="return_approval" class="tab_contents electronic_approval">
-							<div class="tableArea">
-								<table>
-									<caption>보낸쪽지 리스트</caption>
-									<colgroup>
-										<col style="width:10%" />
-										<col style="width:8%" />
-										<col style="width:50%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-										<col style="width:8%" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>번호</th>
-											<th>기안일자</th>
-											<th>제목</th>
-											<th>기안자</th>
-											<th>결재자</th>
-											<th>결재 상태</th>
-											<th>기안서 복사</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>4</td>
-											<td>2021/11/07</td>
-											<td class="t_left pop_btn" data-button="approval_detail_pop4">반려 기안입니다.</td>
-											<td>황성연</td>
-											<td>김성민</td>
-											<td>반려</td>
-											<td class="copy-approval pop_btn" data-button="approval_copy_pop4">복사</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
+						
 						<div class="btn_area">
-							<a href="#n" class="blue_btn pop_btn" data-button="new_approval_pop">신규</a>
+							<a  class="blue_btn pop_btn" data-button="new_approval_pop">신규</a>
 						</div>
 					</div>
 					<!-- 여기까지 전자 결재 리스트 -->
@@ -348,68 +308,64 @@
 							<h2>신규 결재</h2>
 							<button type="button" class="pop_close" data-button="new_approval_pop">닫기</button>
 						</div>
-						<div class="pop_inner">
-							<div class="line-div">
-								결재자&nbsp;
-								<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-									<option>황성연</option>
-									<option>최유정</option>
-									<option>김종현</option>
-									<option>김성민</option>
-									<option>최호진</option>
-									<option>김지혁</option>
-									<option>김가희</option>
-								</select>
-								<br>
+						<form id="new_approval_form" method="post" action="/ea/regNewEa">
+							<div class="pop_inner">
+								<div class="line-div">
+									제&nbsp; 목&nbsp;&nbsp;&nbsp;
+									<input id="new_approval_title" name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required">
+									<br>
+								</div>
+								<div class="mt-2 line-div">
+									결재자&nbsp;
+									<select name="approvaler" id="new_approvaler" style="width: 91.5%;" class="form-control select2" multiple="multiple" required="required">
+										<option class="approvaler_option" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+									</select>
+									<br>
+								</div>
+								<div class="mt-2 line-div">
+									참조자&nbsp;
+									<select name="carboner" id="new_carboner" style="width: 91.5%;" class="form-control select2" multiple="multiple" >
+										<option class="carboner_option" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
+									</select>
+									<br>
+								</div>
+								<textarea id="new_approval_content" name="content" class="approval_content_text" required="required"></textarea>
 							</div>
-							<div class="mt-2 line-div">
-								참조자&nbsp;
-								<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-									<option>황성연</option>
-									<option>최유정</option>
-									<option>김종현</option>
-									<option>김성민</option>
-									<option>최호진</option>
-									<option>김지혁</option>
-									<option>김가희</option>
-								</select>
-								<br>
+							<div class="btn_area">
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/1'">결재</button>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/2'">임시저장</button>
+								<a id="new_approval_pop_close_btn" class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
 							</div>
-							<textarea class="approval_content_text"></textarea>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn pop_close" data-button="new_approval_pop">보내기</a>
-							<a href="#n" class="gray_btn pop_close" data-button="new_approval_pop">닫기</a>
-						</div>
+						</form>
 					</div>
 					<!-- 여기까지 신규 전자 결재 팝업 -->
 
 					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop1" class="pop_layer approval_detail">
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus != 4 }" style="overflow: scroll; height: 700px; top: 50%;" th:attr="id=${ 'approval_detail_pop' + list.serialNo }" class="pop_layer approval_detail approval_detail_pop">
 						<div class="top_area">
 							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop1">닫기</button>
+							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
 						</div>
-						<h2 class="approval_title mt-3">결재 중 기안입니다.</h2>
+						<h2 class="approval_title mt-3" th:text="${ list.title }"></h2>
 						<table class="approval_line" border="1">
 							<tr>
-								<td rowspan="4">결재</td>
-								<td class="approval_person">사원<br>황성연</td>
-								<td class="approval_person">과장<br>최유정</td>
-								<td class="approval_person">이사<br>김성민</td>
-								<td class="approval_person">사장<br>김가희</td>
+								<td rowspan="3">결재</td>
+								<td th:utext="${list.member.rank.name}+'<br>'+${list.member.name}" class="approval_person"></td>
+								<td th:each="eaPath : ${list.eaApprovalPathList}" th:utext="${eaPath.member.rank.name}+'<br>'+${eaPath.member.name}" class="approval_person"></td>
 							</tr>
 							<tr class="approval_status">
-								<td>결재</td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td th:text="결재"></td>
+								<th:block th:each="eaPath : ${list.eaApprovalPathList}" th:switch="${ eaPath.status }">
+									<td th:case="1" class="approval_person"></td>
+									<td th:case="2" class="approval_person">반려</td>
+									<td th:case="3" class="approval_person">결재</td>
+									<td th:case="5" class="approval_person">결재</td>
+									<td th:case="*" class="approval_person"></td>
+								</th:block>
 							</tr>
 							<tr>
-								<td>21/11/09</td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td th:text="${ #dates.format(list.date, 'yyyy/MM/dd') }" class="approval_person"></td>
+								<td th:each="eaPath : ${list.eaApprovalPathList}" th:text="${ #dates.format(eaPath.date, 'yyyy/MM/dd') }"></td>
 							</tr>
 						</table>
 						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
@@ -417,299 +373,347 @@
 								참조자
 							</div>
 							<div style="display: inline-block;">
-								<span style="color: black;">김지혁, 최호진</span>
+								<span style="color: black;">
+									<th:block th:each="carbon : ${ list.eaCarbonList }">
+										<th:block th:utext="${carbonStat.first}?${carbon.member.name}:', '+${carbon.member.name}"><th:block>
+									</th:block>
+								</span>
 							</div>
 						</div>
 						<div class="pop_inner">
 							<div class="detail_note">
 								<div class="top">
 									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
+									<p th:utext="${ #dates.format(list.date, 'yyyy/MM/dd') } + '&nbsp;&nbsp' + ${ #dates.format(list.date, 'hh:mm:ss') }" class="date"></p>
 								</div>
 
 								<div class="approval_content">
-									<p>
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-									</p>
+									<p th:utext="${#strings.replace(list.content,'
+','<br>')} "></p>
 								</div>
 							</div>
 						</div>
 						<div class="comment_area" style="margin: 0px 10px; margin-bottom: 10px;">
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
+							<div th:each="ad : ${ list.addendumList }" class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;" th:attr="id=${ 'addendum' + ad.no}">
+								<th:block th:if="${ ad.depth != 0 }">
+									<th:block th:each="num : ${#numbers.sequence(1, ad.depth)}">
+										<div th:if="${ numStat.last == false }" class="col-1"></div>
+										<div th:unless="${ numStat.last == false }" style="display: flex; align-items: center;" class="col-1 p-0"><img th:src="@{/uses/pngwing.com.png}" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
+									</th:block>
+								</th:block>
 								<div style="height: auto;" class="col">
-									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px; clear: both;" class="m-0">이게 첨언인가 뭔가 하는 거임<br>이런거 처음 보지?</p>
-								</div>
-							</div>
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
-								<div style="height: auto;" class="col">
-									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px;" class="m-0">이게 답글인가 하는 그거야<br>이런거 처음 보지?</p>
-								</div>
-							</div>
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div class="col-1"></div>
-								<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>
-								<div style="height: auto;" class="col">
-									<span style="color: black;">황성연&nbsp;(기안자)</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px;" class="m-0">이건 대댓글이야<br>이런거 처음 보지?</p>
-								</div>
-							</div>
-							<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;">
-								<div style="height: auto;" class="col">
-									<span style="color: black;">김용승</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">2021-10-20</b>
-									<p style="font-size: 13px;" class="m-0">이게 첨언인가 뭔가 하는 거임<br>이런거 처음 보지?</p>
+									<span th:if="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name } + '&nbsp;(기안자)'" style="color: black;"></span>
+									<span th:unless="${ list.member.name == ad.member.name }" th:utext="${ ad.member.name }" style="color: black;"></span>
+									<th:block th:if="${ list.eaStatus == 1}">
+										<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" data-button="reply_comment_pop" th:attr="name=${ ad.no }">답글</button>
+										<button th:if="${#authentication.name} == ${ad.member.name}" class="ml-3 delete_btn" style="font-size: 13px;" th:attr="id=${'commentDelete' + ad.no}">삭제</button>
+									</th:block>
+									<b th:text="${ ad.date }" style="color: black; float: right;"></b>
+									<p  style="font-size: 13px;" class="m-0" th:utext="${#strings.replace(ad.content,'
+','<br>')} "></p>
 								</div>
 							</div>
 						</div>
 						<div class="btn_area">
-							<a href="#n" class="blue_btn">결재 취소</a>
-							<a href="#n" class="gray_btn pop_btn" data-button="new_comment_pop">첨언</a>
-							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop1">닫기</a>
+						<th:block th:if="${ list.saveNo == 1 }">
+							<a th:href="@{/ea/approval(no=${list.serialNo})}" class="blue_btn" style="cursor: pointer;">결재</a>
+							<a th:href="@{/ea/return(no=${list.serialNo})}" class="blue_btn" style="cursor: pointer;">반려</a>
+						</th:block>
+						<th:block th:if="${ list.saveNo == 2 }">
+							<a th:href="@{/ea/eaCancle(no=${list.serialNo})}" class="blue_btn" style="cursor: pointer;">결재 취소</a>
+						</th:block>
+						<th:block th:if="${ list.saveNo == 3 }">
+							<a th:href="@{/ea/eaCancle(no=${list.serialNo},type=1)}" class="blue_btn" style="cursor: pointer;">결재 취소</a>
+						</th:block>
+							<a class="gray_btn pop_btn new_ad" data-button="new_comment_pop" th:attr="name=${ list.serialNo }">첨언</a>
+							<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 						</div>
-						<!-- 여기부터 첨언 팝업 -->
-						<div id="new_comment_pop" class="pop_layer new_comment_pop">
-							<div class="top_area">
-								<h2>신규 첨언</h2>
-								<button type="button" class="pop_close" data-button="new_comment_pop">닫기</button>
-							</div>
+						
+					</div>
+					<!-- 여기까지 전자 결재 디테일 팝업 -->
+					
+					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
+					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus == 4 }" class="pop_layer new_approval_pop" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
+						<div class="top_area">
+							<h2>신규 결재</h2>
+							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
+						</div>
+						<form id="new_approval_form" method="post" action="/ea/updateEa">
+							<input name="eaNo" th:attr="value=${ list.serialNo }" hidden >
 							<div class="pop_inner">
-								<textarea class="commnet_content_text"></textarea>
+								<div class="line-div">
+									제&nbsp; 목&nbsp;&nbsp;&nbsp;
+									<input name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required" th:attr="value=${ list.title }">
+									<br>
+								</div>
+								<div class="mt-2 line-div">
+									결재자&nbsp;
+									<select name="approvaler" th:attr="id=${ 'new_approvaler' + list.serialNo }" style="width: 91.5%;" class="form-control select2" multiple="multiple" required="required">
+										<th:block th:each="member : ${ list.approvalerList }">
+											<option th:if="${ member.type } == 1" th:text="${ member.name }" th:attr="selected='selected'"></option>
+											<option th:unless="${ member.type } == 1" th:text="${ member.name }"></option>
+										</th:block>
+									</select>
+									<br>
+								</div>
+								<div class="mt-2 line-div">
+									참조자&nbsp;
+									<select name="carboner" th:attr="id=${ 'new_carboner' + list.serialNo }" style="width: 91.5%;" class="form-control select2" multiple="multiple" >
+										<th:block th:each="member : ${ list.carbonerList }">
+											<option th:if="${ member.type } == 1" th:text="${ member.name }" th:attr="selected='selected'"></option>
+											<option th:unless="${ member.type } == 1" th:text="${ member.name }"></option>
+										</th:block>
+									</select>
+									<br>
+								</div>
+								<textarea name="content" class="approval_content_text" required="required" th:utext="${ list.content }"></textarea>
 							</div>
 							<div class="btn_area">
-								<a href="#n" class="blue_btn pop_close add_comment" data-button="new_comment_pop">작성</a>
-								<a href="#n" class="gray_btn pop_close close_comment" data-button="new_comment_pop">닫기</a>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/1'">결재</button>
+								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/2'">임시저장</button>
+								<a class="gray_btn pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</a>
 							</div>
-						</div>
-						<!-- 여기까지 첨언 팝업 -->
+						</form>
 					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
-
-					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop2" class="pop_layer approval_detail">
-						<div class="top_area">
-							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop2">닫기</button>
-						</div>
-						<h2 class="approval_title mt-3">결재 완료 기안입니다.</h2>
-						<table class="approval_line" border="1">
-							<tr>
-								<td rowspan="4">결재</td>
-								<td class="approval_person">사원<br>황성연</td>
-								<td class="approval_person">과장<br>최유정</td>
-								<td class="approval_person">이사<br>김성민</td>
-								<td class="approval_person">사장<br>김가희</td>
-							</tr>
-							<tr class="approval_status">
-								<td>결재</td>
-								<td>결재</td>
-								<td>결재</td>
-								<td>결재</td>
-							</tr>
-							<tr>
-								<td>21/11/09</td>
-								<td>21/11/09</td>
-								<td>21/11/10</td>
-								<td>21/11/12</td>
-							</tr>
-						</table>
-						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
-							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
-								참조자
-							</div>
-							<div style="display: inline-block;">
-								<span style="color: black;">김지혁, 최호진</span>
-							</div>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
-								</div>
-								<div class="approval_content">
-									<p>
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="gray_btn">첨언</a>
-							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop2">닫기</a>
-						</div>
-					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
-
-					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop3" class="pop_layer approval_detail">
-						<div class="top_area">
-							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop3">닫기</button>
-						</div>
-						<h2 class="approval_title mt-3">기안 중 기안입니다.</h2>
-						<div class="line-div ml-2">
-							결재자&nbsp;
-							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-								<option selected>황성연</option>
-								<option>최유정</option>
-								<option>김종현</option>
-								<option selected>김성민</option>
-								<option selected>최호진</option>
-								<option>김지혁</option>
-								<option selected>김가희</option>
-							</select>
-							<br>
-						</div>
-						<div class="mt-2 line-div ml-2">
-							참조자&nbsp;
-							<select style="width: 91.5%;" class="form-control select2" multiple="multiple">
-								<option>황성연</option>
-								<option>최유정</option>
-								<option>김종현</option>
-								<option>김성민</option>
-								<option>최호진</option>
-								<option>김지혁</option>
-								<option>김가희</option>
-							</select>
-							<br>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
-								</div>
-								<div class="approval_content">
-									<textarea>테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트</textarea>
-								</div>
-							</div>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="blue_btn">결재</a>
-							<a href="#n" class="blue_btn">수정</a>
-							<a href="#n" class="blue_btn">삭제</a>
-							<a href="#n" class="gray_btn">첨언</a>
-							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop3">닫기</a>
-						</div>
-					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
-
-					<!-- 여기부터 전자 결재 디테일 팝업 -->
-					<div style="overflow: scroll; height: 700px; top: 50%;" id="approval_detail_pop4" class="pop_layer approval_detail">
-						<div class="top_area">
-							<h2>전자 결재</h2>
-							<button type="button" class="pop_close" data-button="approval_detail_pop4">닫기</button>
-						</div>
-						<h2 class="approval_title mt-3">반려 기안입니다.</h2>
-						<table class="approval_line" border="1">
-							<tr>
-								<td rowspan="4">결재</td>
-								<td class="approval_person">사원<br>황성연</td>
-								<td class="approval_person">과장<br>최유정</td>
-								<td class="approval_person">이사<br>김성민</td>
-								<td class="approval_person">사장<br>김가희</td>
-							</tr>
-							<tr class="approval_status">
-								<td>결재</td>
-								<td>결재</td>
-								<td>반려</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>21/11/09</td>
-								<td>21/11/09</td>
-								<td>21/11/10</td>
-								<td></td>
-							</tr>
-						</table>
-						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">
-							<div style="display: inline-block; color: white; background-color: #8cceea; height: 31px; width: 80px; text-align: center; line-height: 30px;">
-								참조자
-							</div>
-							<div style="display: inline-block;">
-								<span style="color: black;">김지혁, 최호진</span>
-							</div>
-						</div>
-						<div class="pop_inner">
-							<div class="detail_note">
-								<div class="top">
-									<p class="name">기안 일자</p>
-									<p class="date">2021/11/07 11:17:01</p>
-								</div>
-								<div class="approval_content">
-									<p>
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-										테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="btn_area">
-							<a href="#n" class="gray_btn">첨언</a>
-							<a href="#n" class="gray_btn pop_close" data-button="approval_detail_pop4">닫기</a>
-						</div>
-					</div>
-					<!-- 여기까지 전자 결재 디테일 팝업 -->
+					<!-- 여기까지 임시저장 전자 결재 디테일 팝업 -->
 				</div>
 			</div>
 		</div>
+		
+		<!-- 여기부터 신규 첨언 팝업 -->
+		<div id="new_comment_pop" class="pop_layer new_comment_pop">
+			<div class="top_area">
+				<h2>신규 첨언</h2>
+				<button type="button" class="pop_close" data-button="new_comment_pop">닫기</button>
+			</div>
+			<div class="pop_inner">
+				<textarea id="add_ad_content" class="commnet_content_text"></textarea>
+			</div>
+			<div class="btn_area">
+				<a style="cursor: pointer;" class="blue_btn pop_close add_comment" data-button="new_comment_pop">작성</a>
+				<a class="gray_btn pop_close close_comment" data-button="new_comment_pop">닫기</a>
+			</div>
+		</div>
+		<!-- 여기까지 신규 첨언 팝업 -->
+		
+		<!-- 여기부터 답글 첨언 팝업 -->
+		<div id="reply_comment_pop" class="pop_layer new_comment_pop">
+			<div class="top_area">
+				<h2>답글 첨언</h2>
+				<button type="button" class="pop_close close_reply" data-button="new_comment_pop">닫기</button>
+			</div>
+			<div class="pop_inner">
+				<textarea id="reply_content" class="commnet_content_text"></textarea>
+			</div>
+			<div class="btn_area">
+				<a class="blue_btn pop_close reply_comment" data-button="reply_comment_pop">작성</a>
+				<a class="gray_btn pop_close close_reply" data-button="reply_comment_pop">닫기</a>
+			</div>
+		</div>
+		<!-- 여기까지 답글 첨언 팝업 -->
 	</section>
+	
 	<script>
-		// select2 초기화
-		$('.select2').select2({
-			placeholder: '선택하여 주십시오.'
-		});
-
-		$(".delete_btn").click(function() {
-			$(this).parent().parent(".comment").remove();
-		});
-
-		$(".close_comment").click(function() {
-			$(this).parent().prev().children().val("");
-		});
-
-		$(".add_comment").click(function() {
-			let nowDate = new Date();
-			let $writer = "작성자";
-			let $content = $(this).parent().prev().children().val();
-			let newDate = nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) + "-" + nowDate.getDate();
-			let $div = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;"><div style="height: auto;" class="col"><span style="color: black;">' + $writer + '</span><button class="ml-3 reply_btn" style="font-size: 13px;">답글</button><button class="ml-3 delete_btn" style="font-size: 13px;">삭제</button><b style="color: black; float: right;">' + newDate + '</b><p style="font-size: 13px;" class="m-0">' + $content + '</p></div></div>'
-
-			$(this).parent().prev().children().val("");
-
-			$(this).parent().parent().prevAll(".comment_area").last().append($div);
-			console.log($(this).parent().parent(".comment_area").after(".comment"));
+		$(document).ready(function () {
+			var $reply;
+			var $eaNo;
 			
-			$(".delete_btn").click(function() {
-				$(this).parent().parent(".comment").remove();
+			$("#new_approval_pop_close_btn").click(function() {
+				$("#new_approval_content").val("");
+				$("#new_approval_title").val("");
+				$('#new_approvaler').val(null).trigger('change');
+				$('#new_carboner').val(null).trigger('change');
+			});
+			
+			$(".new_ad").click(function() {
+				$eaNo = $(this).attr("name");
+			});
+			
+			$(".reply_btn").click(function() {
+				$reply = $(this).attr("name");
+			});
+		
+			$("#new_approval").click(function() {
+				$("#new_approval_form").submit();
+			});
+			
+			$(".select2").on("select2:select", function (evt) {
+				var element = evt.params.data.element;
+				var $element = $(element);
+				
+				if ($(this).find(":selected").length > 1) {
+				  var $second = $(this).find(":selected").eq(-1);
+				  $second.after($element);
+				} else {
+				  $element.detach();
+				  $(this).prepend($element);
+				}
+				
+				$(this).trigger("change");
+	        });
+			
+			$('.select2').select2({
+				placeholder: "선택 해주세요",
+			});
+			
+			var replyAd = function() {
+				let $reply_content = $("#reply_content").val();
+				$.ajax({
+					url: "/ea/replyAddendum",
+					data: {no : $reply,
+						   content : $reply_content},
+					success:function(data) {
+						let $refAd = $("#addendum" + data.refNo.no);
+						data.content = data.content.replace(/(?:\r\n|\r|\n)/g, "<br>");
+						
+						let $text = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;" id=addendum' + data.no + '>';
+						for(let i = 1 ; i <= data.depth ; i++) {
+							if(i == data.depth) {
+								$text += '<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="/uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>';
+							} else {
+								$text += '<div class="col-1"></div>';
+							}
+						}
+						$text += '<div style="height: auto;" class="col">';
+						if(data.ea.member.name == data.member.name) {
+							$text += '<span style="color: black;">' + data.member.name + '&nbsp;(기안자)' + '</span>';
+						} else {
+							$text += '<span style="color: black;">' + data.member.name + '</span>';
+						}
+						$text += '<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" id="adReplyBtn' + data.no + '" data-button="reply_comment_pop" name="' + data.no + '">답글</button>';
+						$text += '<button class="ml-3 delete_btn" style="font-size: 13px;" id="commentDelete' + data.no + '">삭제</button>';
+						$text += '<b style="color: black; float: right;">' + data.date + '</b>';
+						$text += '<p  style="font-size: 13px;" class="m-0">' + data.content + '</p>';
+						$text += '</div>';
+						
+						$refAd.after($text);
+						$("#commentDelete" + data.no).click( deleteAd );
+						$("#adReplyBtn" + data.no).click(function() {
+							var pop_name = $(this).data('button');
+							
+							$reply = $(this).attr("name");
+
+						});
+						$("#reply_content").val('');
+					},
+					error:function(error){
+						alert('답글 작성에 실패하셨습니다.');
+					}
+				});
+			}
+			$(".reply_comment").click(replyAd);
+			
+			var deleteAd = function() {
+				let $this = $(this);
+				console.log($this);
+				let data = $this.attr('id').replace('commentDelete', '');
+				$.ajax({
+					url: "/ea/deleteAddendum",
+					data: {no : data},
+					success:function(data) {
+						$this.parent().parent(".comment").remove('');
+					},
+					error:function(error){
+						alert("답글이 달런 첨언은 삭제할 수 없습니다.");
+					}
+				});
+			}
+			$(".delete_btn").click( deleteAd );
+			
+			$(".close_reply").click(function(){
+				$(this).parent().prev().children().val("");
+			});
+	
+			$(".close_comment").click(function() {
+				$(this).parent().prev().children().val("");
+			});
+			
+			$(".add_comment").click(function() {
+				let eaNo = $eaNo;
+				let $content = $("#add_ad_content").val();
+				console.log($content);
+				$.ajax({
+					url: "/ea/addAddendum",
+					data: {no : eaNo,
+						   content : $content},
+					success:function(data) {
+						let $ea = $("#approval_detail_pop" + data.ea.serialNo);
+						data.content = data.content.replace(/(?:\r\n|\r|\n)/g, "<br>");
+						
+						let $text = '<div class="row m-0 comment" style="padding: 2px 10px; border: solid #ccc 1px; border-radius: 1em; margin-bottom: 5px !important;" id=addendum' + data.no + '>';
+						for(let i = 1 ; i <= data.depth ; i++) {
+							if(i == data.depth) {
+								$text += '<div style="display: flex; align-items: center;" class="col-1 p-0"><img src="/uses/pngwing.com.png" style="max-height: 20px; margin-left: auto; margin-right: auto;"></div>';
+							} else {
+								$text += '<div class="col-1"></div>';
+							}
+						}
+						$text += '<div style="height: auto;" class="col">';
+						if(data.ea.member.name == data.member.name) {
+							$text += '<span style="color: black;">' + data.member.name + '&nbsp;(기안자)' + '</span>';
+						} else {
+							$text += '<span style="color: black;">' + data.member.name + '</span>';
+						}
+						$text += '<button class="ml-3 reply_btn pop_btn" style="font-size: 13px;" id="adReplyBtn' + data.no + '" data-button="reply_comment_pop" name="' + data.no + '">답글</button>';
+						$text += '<button class="ml-3 delete_btn" style="font-size: 13px;" id="commentDelete' + data.no + '">삭제</button>';
+						$text += '<b style="color: black; float: right;">' + data.date + '</b>';
+						$text += '<p  style="font-size: 13px;" class="m-0">' + data.content + '</p>';
+						$text += '</div>';
+						
+						$ea.children(".comment_area").append($text);
+						$("#commentDelete" + data.no).click( deleteAd );
+						$("#adReplyBtn" + data.no).click(function() {
+							var pop_name = $(this).data('button');
+							
+							$reply = $(this).attr("name");
+
+						});
+						$("#add_ad_content").val('');
+					},
+					error:function(error){
+						alert("첨언에 실패하였습니다.");
+					}
+				});
 			});
 		});
+		
+		/* dataTable */
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 5;
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "전자 결재가 존재하지 않습니다.",
+		            "info": "_PAGE_ / _PAGES_",
+		            "infoEmpty": "결재 항목이 존재하지 않습니다.",
+		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+		        "order" : [],
+	               /* 보이는 갯수 설정 안보이게 */
+	               lengthChange: false,
+	               /* 페이지 전체수 나오던 부분 안보이게*/
+	               info : false,
+	               /* 구조 설정 태그 안에 글자는 div클래스명 */
+	               "dom": 't<"fDiv"f><"pDiv"p>',
+	               "aoColumnDefs": [
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5 ] }
+	                ]
+	        });
+			
+			clearInterval(timer);
+		}, 100);
 	</script>
+	
+	<!-- dataTable -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 </body>

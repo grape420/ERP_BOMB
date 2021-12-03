@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -83,7 +84,7 @@ public class MemberDTO implements Serializable {
 	@Column(name = "ENT_YN")
 	private String entYn;
 	
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	private List<MemberRoleDTO> memberRoleList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "member")
@@ -357,6 +358,6 @@ public class MemberDTO implements Serializable {
 		return "MemberDTO [name=" + name + ", coSerialNo=" + company.getName() + ", deptNo=" + dept.getName() + ", rankNo=" + rank.getName()
 				+ ", pwd=" + pwd + ", empNo=" + empNo + ", birth=" + birth + ", phone=" + phone + ", joinDate="
 				+ joinDate + ", quitDate=" + quitDate + ", regularPay=" + regularPay + ", bonus=" + bonus
-				+ ", annualIncome=" + annualIncome + ", email=" + email + ", entYn=" + entYn + ", sp=" + sp.getServerancePay() + "]";
+				+ ", annualIncome=" + annualIncome + ", email=" + email + ", entYn=" + entYn + "]";
 	}
 }

@@ -58,7 +58,7 @@
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
-					`</li>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -82,7 +82,8 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="/sp">
+					<a class="nav-link collapsed on" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>퇴직금</span>
 					</a>
 				</li>
@@ -102,15 +103,11 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 퇴직금 리스트 -->
 					<div>
-						<!-- <div class="search_form">
-							<input type="text" placeholder="검색어 입력" />
-							<button type="button" class="blue_btn">Search</button>
-						</div>-->
 						<ul class="tab ul-tab">
-							<li class="li-tab retire on" data-tab="all_retire"><span>퇴직금 목록</span></li>
+							<li class="li-tab electronic_approval on" data-tab="all_retire"><span>퇴직금 목록</span></li>
 							<!-- <li class="li-tab retire" data-tab="confirm_retire"><span>퇴직금 합계</span></li> -->
 						</ul>
-						<div id="all_retire" class="tab_contents retire current">
+						<div id="all_retire" class="tab_contents electronic_approval current">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>퇴직금 목록</caption>
@@ -145,7 +142,7 @@
 											<td th:text="${ sp.member.rank.name }"></td>
 											<td th:text="${ sp.member.joinDate }"></td>
 											<td th:text="${ sp.empYear }"></td>
-											<td class="t_left pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">조회</td>
+											<td class="pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">조회</td>
 										</tr>
 									</tbody>
 								</table>
@@ -197,9 +194,6 @@
 							</div>
 						</div>
 						<div class="btn_area">
-							<!-- <a href="#n" class="blue_btn">삭제</a> -->
-							<a href="# n" class="gray_btn">이전</a>
-							<a href="#n" class="gray_btn">다음</a>
 							<a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</a>
 						</div>
 					</div>
@@ -249,7 +243,7 @@
 					</form>
 					<div class="btn_area">
 						<!-- <a href="#n" class="blue_btn">삭제</a> -->
-						<button class="blue_btn" >등록</button>
+						<button class="blue_btn mr-2" >등록</button>
 						<a href="#n" class="gray_btn pop_close" data-button="new_retire_pop">닫기</a>
 					</div>
 				</div>
@@ -298,8 +292,7 @@
 							</div>
 						</div>
 					<div class="btn_area">
-						<!-- <a href="#n" class="blue_btn">삭제</a> -->
-						<button class="blue_btn">수정</button>
+						<button class="blue_btn mr-2">수정</button>
 						<a href="#n" class="gray_btn pop_close" data-button="update_retire_pop">닫기</a>
 					</div>
 				</div>
@@ -337,7 +330,7 @@
 	            
 	            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
 	            "aoColumnDefs": [
-	                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5 ] }
+	                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7 ] }
 	             ]
 	        });
 			

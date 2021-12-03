@@ -2,7 +2,6 @@ package com.greedy.erp_bomb.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -43,15 +42,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		/* csrf : 토큰 위조 공격을 막기 위한 것(default가 'on'인 상태) */
 		http.csrf().disable()					// 구현의 편리를 위해 disable로 함
 			.authorizeRequests()				// 요청에 대한 권한 체크를 어떻게 할 것인지
-				.antMatchers("/menu/**").authenticated()					// /menu/**에 대해서는 하나하나 권한을 등록하겠다.
-				.antMatchers(HttpMethod.GET, "/menu/**").hasRole("MEMBER")	// hasRole은 ROLE_를 달아주며 ROLE_MEMBER와 일치하면 허용하겠다는 뜻
-				.antMatchers(HttpMethod.POST, "/menu/**").hasRole("ADMIN")
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				.anyRequest().permitAll()									// 등록되지 않은 경로는 누구나 접근 가능
+				.antMatchers("/member/login").permitAll()
+				.anyRequest().authenticated()
 			.and()
 			    .formLogin()												// 로그인 form을 따로 이용해 로그인 처리를 할 것이다.
 			    .loginPage("/member/login")									// 기본적으로 스프링 시큐리티에서 제공하는 로그인 화면 외에 로그인 화면을 따로 적용할 것이다.(권한이 획득되지 않아 로그인이 필요한 상황에도 사용할 수 있게 함)
-			    .successForwardUrl("/")
+			    .successForwardUrl("/member/login")
 			    .failureUrl("/member/login?error=fail")
 			.and()
 			    .logout()													// 로그아웃 설정

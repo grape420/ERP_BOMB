@@ -29,40 +29,34 @@
 
 	<section>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<a class="navbar-brand font-weight-bold" href="/ea/test">
+			<a class="navbar-brand font-weight-bold" href="/main/main">
 				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">판매현황</a>
+						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">사내 투표</a>
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
+						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
 					</li>
 				</ul>
 			</div>
@@ -78,44 +72,14 @@
 						<div class="notice">
 							<p class="titleM">공지사항</p>
 							<ul class="notice_list">
-								<li>
-									<a href="#n">
-										<p>[공지]2021년 4월 인사발령</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]신규 거래식당 추가의 건</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]사내 심장제세동기 설치 및 사용방법안내</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]불법 SW 사용 금지 관련 공지 사항</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]옥상 휴게공간 개선 공사 완료의건</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]외국어 교육과정 실시 안내</p>
-										<span class="date">2021.11.10 14:39</span>
+								<li th:each="board : ${ boardList }">
+									<a th:href="@{/board/detail(no=${board.no})}">
+										<p th:text="${ board.title }">[공지]2021년 4월 인사발령</p>
+										<span class="date" th:text="${ board.regDate }">2021.11.10 14:39</span>
 									</a>
 								</li>
 							</ul>
-							<a href="#n" class="link_arrow">공지사항 바로가기</a>
+							<a href="/board/noticeList" class="link_arrow">공지사항 바로가기</a>
 						</div>
 						<div class="calendar">
 							<div id='calendar'></div>
@@ -138,15 +102,15 @@
 							<div class="flex_div">
 								<div>
 									<p>결재대기문서</p>
-									<span>0</span>
+									<a href="/ea/ea"><span th:text="${ myApprovalingDocumentCount }"></span></a>
 								</div>
 								<div>
 									<p>결재진행문서</p>
-									<span>3</span>
+									<a href="/ea/ea?tab=2"><span th:text="${ myApprovalingCount }"></span></a>
 								</div>
 								<div>
-									<p>수신대기문서</p>
-									<span>0</span>
+									<p>참조결재문서</p>
+									<a href="/ea/ea?tab=3"><span th:text="${ myCarbonCount }"></span></a>
 								</div>
 							</div>
 							<a href="#n" class="link_arrow">결재 바로가기</a>
@@ -156,11 +120,11 @@
 							<div class="flex_div">
 								<div>
 									<p>투표 진행중</p>
-									<span>0</span>
+									<a href="/vote/vote?tab=2"><span th:text="${ voting }">0</span></a>
 								</div>
 								<div>
 									<p>투표 완료</p>
-									<span>3</span>
+									<a href="/vote/vote?tab=3"><span th:text="${ endVote }">3</span></a>
 								</div>
 							</div>
 							<a href="#n" class="link_arrow">결재 바로가기</a>
@@ -179,7 +143,7 @@
 	<!--캘린더-->
 	<link th:href="@{/uses/vendor/fullcalendar/main.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/uses/vendor/fullcalendar/main.js}"></script> 
-    <script th:src="@{uses/vendor/fullcalendar/ko.js}"></script> 
+    <script th:src="@{/uses/vendor/fullcalendar/ko.js}"></script> 
     
     <script>
 	    function changeHandler(e){
