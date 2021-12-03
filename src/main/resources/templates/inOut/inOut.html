@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,13 +116,13 @@
 				    </script>
 
 					<ul class="tab ul-tab">
-						<li class="li-tab product on" data-tab="all_product"><span>전체</span></li>
-						<li class="li-tab product" data-tab="in_product"><span>입고</span></li>
-						<li class="li-tab product" data-tab="out_product"><span>출고</span></li>
-						<li class="li-tab product" data-tab="sales_product"><span>판매</span></li>
+						<li class="li-tab electronic_approval on" data-tab="all_product"><span>전체</span></li>
+						<li class="li-tab electronic_approval" data-tab="in_product"><span>입고</span></li>
+						<li class="li-tab electronic_approval" data-tab="out_product"><span>출고</span></li>
+						<li class="li-tab electronic_approval" data-tab="sales_product"><span>판매</span></li>
 					</ul>
 					<!-- 전체 테이블 -->
-					<div id="all_product" class="tab_contents product current">
+					<div id="all_product" class="tab_contents electronic_approval current">
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
@@ -162,7 +163,7 @@
 					<!-- 전체 테이블 -->
 
 					<!-- 입고 테이블 -->
-					<div id="in_product" class="tab_contents product">
+					<div id="in_product" class="tab_contents electronic_approval">
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
@@ -201,7 +202,7 @@
 					<!-- 입고 테이블 -->
 
 					<!-- 출고 테이블 -->
-					<div id="out_product" class="tab_contents product">
+					<div id="out_product" class="tab_contents electronic_approval">
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
@@ -240,7 +241,7 @@
 					<!-- 출고 테이블 -->
 
 					<!-- 판매 테이블 -->
-					<div id="sales_product" class="tab_contents product">
+					<div id="sales_product" class="tab_contents electronic_approval">
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
@@ -319,7 +320,7 @@
 								</tbody>
 							</table>
 						
-						<div class="btm_area mt-2" style="text-align: center;">
+						<div class="btn_area mt-2" style="text-align: center;">
 							<button type="button" class="blue_btn" data-button="new_product_pop" id="submitBtn">추가</button> 
 							<a class="gray_btn pop_close" data-button="new_product_pop" style="cursor: pointer;">닫기</a>
 						</div>
@@ -327,7 +328,7 @@
 						</div>
 					</div>
 					<!-- 입출고 추가 -->
-					<div class="btm_area" style="margin-left: 10px;">
+					<div class="btn_area" style="margin-left: 10px;">
 						<a class="blue_btn pop_btn" data-button="new_product_pop" id="plusBtn" style="cursor: pointer;">추가</a> 
 					</div>
 				</div>

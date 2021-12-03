@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,10 +16,27 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
-<link th:href="@{uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/jquery/jquery-ui.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/tna/regTna.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<style>
+	.fDiv{
+		float: left;
+		text-align: left;
+		margin-left: 5px;
+	}
+	.pDiv{
+		float: right;
+		text-align: right;
+	}
+	.databutton{
+		margin: 5px 5px 0px 8px;
+	    background-color: #f3f3f3;
+	    align-items: center;
+	}
+</style>
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -36,29 +54,29 @@
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="shoes/list">메인 페이지</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">게시판</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">전자결재</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">급여관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3 tab-selected">
-						<a class="nav-link font-weight-bold" href="resell/resellList">근태 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="resell/resellList">입출고</a>
-					</li>
+                  		<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+               		</li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+	                </li>
+	                <li class="nav-item mr-3 tab-selected">
+	                    <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+	                </li>
+	                <li class="nav-item mr-3">
+	                    <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+	                </li>
 				</ul>
 			</div>
 		</nav>
@@ -82,18 +100,8 @@
 				<hr class="sidebar-divider">
 
 				<li class="nav-item">
-					<a class="nav-link collapsed on" href="input.html">
-						<span>근태입력</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="reference.html">
+					<a class="nav-link collapsed on" href="/tna/regTna">
 						<span>근태조회</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link collapsed" href="status.html">
-						<span>출퇴근/근태현황</span>
 					</a>
 				</li>
 
@@ -104,336 +112,192 @@
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div style="width: 80%;" class="">
 					<!--hhj_내용추가-->
-					<div class="content_area">
-						<div class="top">
-							<div class="title">
-								<p>근태입력</p>
-							</div>
-							<div class="search_form">
-								<input type="text" placeholder="검색어 입력">
-								<button type="button" class="blue_btn">Search</button>
-							</div>
-						</div>
+					<div id="content-wrapper" class="d-flex flex-column">
 						<div class="">
-							<div class="data_line">
-								<p>일자</p>
-								<div class="data_info">
-								
-									<select id="select1" onchange="changeHandler(this)">
-										<option value="2022">2022</option>
-										<option value="2021">2021</option>
-										<option value="2020">2020</option>
-										<option value="2019">2019</option>
-										<option value="직접입력">직접입력</option>
-									</select>
-								
-									
-									
-									<select>
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-										<option>6</option>
-										<option>7</option>
-										<option>8</option>
-										<option>9</option>
-										<option>10</option>
-										<option>11</option>
-										<option>12</option>
-									</select>/
-									<input type="text" value="08" />
-									<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
-								</div>
+						<br>
+							<ul class="tab ul-tab">
+								<li class="li-tab electronic_approval on"><span>근태 조회</span></li>
+							</ul>
+							
+						<div class="">
+							<div class="databutton">
+								<p>일자 : 
+									<input type="date" id="selectDate">
+									<button type="button" class="gray_btn" style="margin-left: 5px;" id="abc">조회</button>
+									<button id="allSelect" type="button" name="Allbut" class="blue_btn" style="float: right !important; margin-right: 5px;">전체조회</button>
+									</p>
 							</div>
+							<br clear="all" style="display: none">
+							
+							
 							<div class="tableArea">
-								<table class="input_table">
-									<caption>근태수정</caption>
+								<table class="" id="tnaTable">
 									<colgroup>
-										<col style="width:3%">
-										<col style="width:27%">
+										<col style="width:8%">
 										<col style="width:10%">
+										<col style="width:10%">
+										<col style="width:8%">
 										<col style="width:10%">
 										<col style="width:10%">
 										<col style="width:9%">
-										<col style="width:28%">
+										<col style="width:8%">
 									</colgroup>
 									<thead>
 										<tr>
-											<th>
-												<input type="checkbox" class="check_box" id="total_num04">
-												<label for="total_num04"></label>
-											</th>
-											<th>근태일자</th>
-											<th>사원</th>
+											<th>날짜</th>
+											<th>이름</th>
+											<th>지점</th>
+											<th>사번</th>
+											<th>부서</th>
+											<th>직급</th>
 											<th>근태</th>
-											<th>휴가</th>
-											<th>근태(일/시간)</th>
-											<th>새로운 항목 추가</th>
+											<th>조회</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>
-												<input type="checkbox" id="total04_num_01" class="check_box">
-												<label for="total04_num_01" data-num="1"></label>
-											</td>
-											<td>
-												<div class="data_info">
-													<select id="select2" onchange="changeHandler(this)" value="2021">
-														<option>====</option>
-														<option value="2022">2022</option>
-														<option value="2021">2021</option>
-														<option value="2020">2020</option>
-														<option value="2019">2019</option>
-														<option value="직접입력">직접입력</option>
-													</select>/
-													<select>
-														<option>====</option>
-														<option>1</option>
-														<option>2</option>
-														<option>3</option>
-														<option>4</option>
-														<option>5</option>
-														<option>6</option>
-														<option>7</option>
-														<option>8</option>
-														<option>9</option>
-														<option>10</option>
-														<option>11</option>
-														<option>12</option>
-													</select>/
-													<input type="text" />
-													<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
-												</div>
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<input type="checkbox" id="total04_num_02" class="check_box">
-												<label for="total04_num_02" data-num="2"></label>
-											</td>
-											<td>
-												<div class="data_info">
-													<select id="select3" onchange="changeHandler(this)">
-														<option>====</option>
-														<option>2022</option>
-														<option>2021</option>
-														<option>2020</option>
-														<option>2019</option>
-														<option>직접입력</option>
-													</select>/
-													<select>
-														<option>====</option>
-														<option>1</option>
-														<option>2</option>
-														<option>3</option>
-														<option>4</option>
-														<option>5</option>
-														<option>6</option>
-														<option>7</option>
-														<option>8</option>
-														<option>9</option>
-														<option>10</option>
-														<option>11</option>
-														<option>12</option>
-													</select>/
-													<input type="text" />
-													<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
-												</div>
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<input type="checkbox" id="total04_num_03" class="check_box">
-												<label for="total04_num_03" data-num="3"></label>
-											</td>
-											<td>
-												<div class="data_info">
-													<select id="select4" onchange="changeHandler(this)">
-														<option>====</option>
-														<option>2022</option>
-														<option>2021</option>
-														<option>2020</option>
-														<option>2019</option>
-														<option>직접입력</option>
-													</select>/
-													<select>
-														<option>====</option>
-														<option>1</option>
-														<option>2</option>
-														<option>3</option>
-														<option>4</option>
-														<option>5</option>
-														<option>6</option>
-														<option>7</option>
-														<option>8</option>
-														<option>9</option>
-														<option>10</option>
-														<option>11</option>
-														<option>12</option>
-													</select>/
-													<input type="text" />
-													<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
-												</div>
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<input type="checkbox" id="total04_num_04" class="check_box">
-												<label for="total04_num_04" data-num="4"></label>
-											</td>
-											<td>
-												<div class="data_info">
-													<select id="select5" onchange="changeHandler(this)">
-														<option>====</option>
-														<option>2022</option>
-														<option>2021</option>
-														<option>2020</option>
-														<option>2019</option>
-														<option>직접입력</option>
-													</select>/
-													<select>
-														<option>====</option>
-														<option>1</option>
-														<option>2</option>
-														<option>3</option>
-														<option>4</option>
-														<option>5</option>
-														<option>6</option>
-														<option>7</option>
-														<option>8</option>
-														<option>9</option>
-														<option>10</option>
-														<option>11</option>
-														<option>12</option>
-													</select>/
-													<input type="text" />
-													<input type="text" name="date" class="datepicker-new" data-position="right top" size="12" />
-												</div>
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-											<td>
-												<input type="text" />
-											</td>
-										</tr>
-										<tr class="last_tr">
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-						<div class="btm_area">
-							<a href="#n" class="blue_btn">저장</a>
-							<a href="#n" class="gray_btn">다시 작성</a>
-							<a href="#n" class="gray_btn">리스트</a>
-						</div>
 					</div>
-					<!--//근태수정 팝업-->
-					<!--//hhj_내용추가-->
-					
+					</div>
 				</div>
 			</div>
 		</div>
+		
+		<script>
+		
+		$(document).ready(function () {
+			window.onload = function(){
+				find = 0;
+				var ttt = $.ajax({
+					url: "/tna/tnaList",
+					type: "get",
+					data: {
+						find : find
+					},
+					success: function(data){
+						$("#tnaTable").dataTable({
+							"pagingType": "full_numbers",
+							"language": {
+					            "lengthMenu": "페이지당 줄수 _MENU_",
+					            "zeroRecords": "내역이 존재하지 않습니다.",
+					            "search": "검색 : ",
+					            "paginate": {
+					                "previous": "이전",
+					                "next" : "다음",
+					                "first" : "처음",
+					                "last" : "마지막"
+					              }
+					        },
+							data: data,
+							columns: [
+								{ data : 'date'},
+								{ data : 'member.name'},
+								{ data : 'member.company.name'},
+								{ data : 'member.empNo'},
+								{ data : 'member.dept.name'},
+								{ data : 'member.rank.name'},
+								{ data : 'status'},
+								/* {data: 'member.name', defaultContent: "<button type='button' class='btn btn-primary' id='ta' value='" + data + "'onclick='ddd()'>상세정보</button>"}, */
+								{ data : "", render: function(data,type,row){ return "<button id='btn_info' name='ddd' type='button' value='"+row.member.name+"' class='gray_btn'>조회</button>"; } }
+
+							],
+							"order" : [],
+				            /* 보이는 갯수 설정 안보이게 */
+				            lengthChange: false,
+				            /* 페이지 전체수 나오던 부분 안보이게*/
+				            info : false,
+				            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+				            "dom": 't<"fDiv"f><"pDiv"p>',
+				            
+				            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+				            "aoColumnDefs": [
+				                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7 ] }
+				             ]
+						});
+					},
+					error: function(xhr){
+						console.log("에러임");
+						console.log(xhr);
+						 }
+				});
+			}
+				$("#abc, #allSelect").click(function(){
+						var find = $("#selectDate").val();
+					
+						if($(this).attr("name") == 'Allbut'){
+								find = 0;							
+						}					
+								var table = $("#tnaTable").DataTable();
+								table.destroy();	
+								
+								
+								var ttt = $.ajax({
+										url: "/tna/tnaList",
+										type: "get",
+										data: {
+											find : find
+										},
+										success: function(data){
+											$("#tnaTable").dataTable({
+												"pagingType": "full_numbers",
+												"language": {
+										            "lengthMenu": "페이지당 줄수 _MENU_",
+										            "zeroRecords": "내역이 존재하지 않습니다.",
+										            "search": "검색 : ",
+										            "paginate": {
+										                "previous": "이전",
+										                "next" : "다음",
+										                "first" : "처음",
+										                "last" : "마지막"
+										              }
+										        },
+												data: data,
+												columns: [
+													{ data : 'date'},
+													{ data : 'member.name'},
+													{ data : 'member.company.name'},
+													{ data : 'member.empNo'},
+													{ data : 'member.dept.name'},
+													{ data : 'member.rank.name'},
+													{ data : 'status'},
+													{ data : "", render: function(data,type,row){ return "<button id='btn_info' name='ddd' type='button' value='"+row.member.name+"' class='gray_btn'>조회</button>"; } }
+
+												],
+												"order" : [],
+									            /* 보이는 갯수 설정 안보이게 */
+									             lengthChange: false,
+									            /* 페이지 전체수 나오던 부분 안보이게*/
+									             info : false,
+									            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+									             "dom": 't<"fDiv"f><"pDiv"p>',
+									            
+									            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+									             "aoColumnDefs": [
+									                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7 ] }
+									             ]
+											});
+										},
+										error: function(xhr){
+											console.log("에러임");
+											console.log(xhr);
+											 }
+									});
+								
+							
+				}); 
+							
+				$(document).on('click', 'button[name="ddd"]', function() {
+				     var name = $(this).attr('value');
+				     
+				     location.href="/tna/detail?name=" + name;
+				});
+		})
+							</script>
 	</section>
 	
-	<link th:href="@{/uses/vendor/jquery/datepicker.min.css}" rel="stylesheet" type="text/css">
-    <script th:src="@{/uses/vendor/jquery/datepicker.min.js}"></script> 
-    <script th:src="@{/uses/vendor/jquery/datepicker.ko.js}"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 	
-	<script>
-		function changeHandler(e){
-			const input = document.createElement("input");
-			input.setAttribute('onblur', 'blurHandler(this)' );
-			input.setAttribute('id', `${e.id}`);		
-			
-			if(e.value == "직접입력"){
-				document.getElementById(`${e.id}`).replaceWith(input);
-				document.getElementById(`${e.id}`).focus();
-			}
-		}
-	
-		function blurHandler(e){
-			if(e.value == ""){
-				const select = document.createElement("select");
-				select.setAttribute('onchange', 'changeHandler(this)');
-				select.setAttribute('id', `${e.id}`);
-	
-				select.innerHTML = `<option value="2022">2022</option>
-											<option value="2021">2021</option>
-											<option value="2020">2020</option>
-											<option value="2019">2019</option>
-											<option value="직접입력">직접입력</option>`;
-				document.getElementById(`${e.id}`).replaceWith(select);
-			}	
-		}
-		$('.datepicker-new').datepicker({
-			language: 'ko'
-		})
-	</script>
 </body>
 </html>

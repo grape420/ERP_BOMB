@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,44 +73,14 @@
 						<div class="notice">
 							<p class="titleM">공지사항</p>
 							<ul class="notice_list">
-								<li>
-									<a href="#n">
-										<p>[공지]2021년 4월 인사발령</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]신규 거래식당 추가의 건</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]사내 심장제세동기 설치 및 사용방법안내</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]불법 SW 사용 금지 관련 공지 사항</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]옥상 휴게공간 개선 공사 완료의건</p>
-										<span class="date">2021.11.10 14:39</span>
-									</a>
-								</li>
-								<li>
-									<a href="#n">
-										<p>[공지]외국어 교육과정 실시 안내</p>
-										<span class="date">2021.11.10 14:39</span>
+								<li th:each="board : ${ boardList }">
+									<a th:href="@{/board/detail(no=${board.no})}">
+										<p th:text="${ board.title }"></p>
+										<span class="date" th:text="${ board.regDate }"></span>
 									</a>
 								</li>
 							</ul>
-							<a href="#n" class="link_arrow">공지사항 바로가기</a>
+							<a href="/board/noticeList" class="link_arrow">공지사항 바로가기</a>
 						</div>
 						<div class="calendar">
 							<div id='calendar'></div>
@@ -118,11 +89,12 @@
 					<div class="main_right">
 						<div class="status">
 							<p class="titleM">근태현황</p>
-							<span class="time_p">출근허용시간 : 시 - 시</span>
-							<p class="text">출/퇴근시 아래 버튼을 클릭하세요.</p>
+							<span class="time_p"></span>
+							<p th:if="${ todayWorkFlag }" class="text">출근시 아래 버튼을 클릭하세요.</p>
+							<p th:unless="${ todayWorkFlag }" class="text">금일 이미 출근을 하셨습니다.</p>
 							<div class="btn_area">
-								<button type="button">출근</button>
-								<button type="button">퇴근</button>
+								<button th:if="${ todayWorkFlag }" class="ent_work" type="button" th:attr="onclick=|location.replace('/main/entWork')|">출근</button>
+								<button th:unless="${ todayWorkFlag }" class="ent_work" type="button" disabled="disabled">출근</button>
 							</div>
 
 							<a href="#n" class="link_arrow">근태현황 바로가기</a>
@@ -132,15 +104,15 @@
 							<div class="flex_div">
 								<div>
 									<p>결재대기문서</p>
-									<span>0</span>
+									<a href="/ea/ea"><span th:text="${ myApprovalingDocumentCount }"></span></a>
 								</div>
 								<div>
 									<p>결재진행문서</p>
-									<span>3</span>
+									<a href="/ea/ea?tab=2"><span th:text="${ myApprovalingCount }"></span></a>
 								</div>
 								<div>
 									<p>참조결재문서</p>
-									<span>0</span>
+									<a href="/ea/ea?tab=3"><span th:text="${ myCarbonCount }"></span></a>
 								</div>
 							</div>
 							<a href="#n" class="link_arrow">결재 바로가기</a>
@@ -150,11 +122,11 @@
 							<div class="flex_div">
 								<div>
 									<p>투표 진행중</p>
-									<span>0</span>
+									<a href="/vote/vote?tab=2"><span th:text="${ voting }">0</span></a>
 								</div>
 								<div>
 									<p>투표 완료</p>
-									<span>3</span>
+									<a href="/vote/vote?tab=3"><span th:text="${ endVote }">3</span></a>
 								</div>
 							</div>
 							<a href="#n" class="link_arrow">결재 바로가기</a>
@@ -173,50 +145,27 @@
 	<!--캘린더-->
 	<link th:href="@{/uses/vendor/fullcalendar/main.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/uses/vendor/fullcalendar/main.js}"></script> 
-    <script th:src="@{/uses/vendor/fullcalendar/ko.js}"></script> 
-    
-    <script>
-	    function changeHandler(e){
-			const input = document.createElement("input");
-			input.setAttribute('onblur', 'blurHandler(this)' )
-			input.setAttribute('id', `${e.id}`);		
-			
-			if(e.value == "직접입력"){
-				document.getElementById(`${e.id}`).replaceWith(input);
-				document.getElementById(`${e.id}`).focus();
+    <script th:src="@{/uses/vendor/fullcalendar/ko.js}"></script>
+
+	<script>
+		$.ajax({
+			url : "/main/fullCalendar",
+			success : function(data) {
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					initialView : 'dayGridMonth',
+					editable : true,
+					eventLimit : false,
+					aspectRatio : 1.8,
+					locale : 'ko',
+					events : data
+				});
+				calendar.render();
+			},
+			error : function(error) {
+				alert("출근 기록을 가져오는데 실패하였습니다.");
 			}
-		}
-	
-		function blurHandler(e){
-			if(e.value == ""){
-				const select = document.createElement("select");
-				select.setAttribute('onchange', 'changeHandler(this)');
-				select.setAttribute('id', `${e.id}`);
-	
-				select.innerHTML = `<option value="2022">2022</option>
-											<option value="2021">2021</option>
-											<option value="2020">2020</option>
-											<option value="2019">2019</option>
-											<option value="직접입력">직접입력</option>`;
-				document.getElementById(`${e.id}`).replaceWith(select);
-			}	
-		}
-	
-		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl = document.getElementById('calendar');
-		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		      initialView: 'dayGridMonth',
-			  editable : true,
-		    	eventLimit : true,
-				aspectRatio: 1.8,
-			  	locale: 'ko'
-		    });
-		    calendar.render();
 		});
-		$('.datepicker-new').datepicker({
-			language: 'ko',
-			minDate: new Date() // Now can select only dates, which goes after today
-		})
-    </script>
+	</script>
 </body>
 </html>

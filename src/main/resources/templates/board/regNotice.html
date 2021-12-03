@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,7 +83,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="/board/noticeList" data-target="#collapseUtilities"
+					<a class="nav-link collapsed on" href="/board/noticeList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>공지사항</span>
 					</a>
@@ -92,6 +93,11 @@
 					<a class="nav-link collapsed" href="/board/boardList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사내게시판</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/vote/vote" >
+						<span>투표 게시판</span>
 					</a>
 				</li>
 				<hr class="sidebar-divider">
