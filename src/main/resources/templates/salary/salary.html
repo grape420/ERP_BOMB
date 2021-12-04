@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +17,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/salary/salary.css}">	<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -83,7 +84,7 @@
 
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+					<a class="nav-link collapsed on" href="#" data-toggle="collapse" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사원별급여조회</span>
 					</a>
@@ -95,143 +96,61 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 급여관리 리스트 -->
 					<div class="">
-					
+					<br>
+					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">급여 관리</h1>
 						<div class="search_form">
-						<!-- 
-							<form action="/salary/search" method="post">
-								<input type="text" placeholder="검색어 입력" name="keyword"/>
-								<button type="button" class="blue_btn">Search</button>
-							</form>
-						 -->
+						
 						</div>
 
 						<div id="all_approval" class="tab_contents electronic_approval current">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>급여관리</caption>
-									<colgroup>
-										<col style="width:10%" />
-										<col style="width:14%" />
-										<col style="width:12%" />
-										<col style="width:19.5%" />
-										<col style="width:19.5%" />
-										<col style="width:25%" />
-									</colgroup> 
 									
 									<!-- 관리자 X -->
-									<th:block sec:authorize="!hasRole('ADMIN')">	
-										<thead>
-											<tr>
-												<th>귀속연월</th>
-												<th>사원명</th>
-												<th>월급</th>
-												<th>보너스</th>
-												<th>지급총액</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="salary : ${ salaryList }">
-												<td th:with="date=${#dates.format(salary.Date, 'yyyy-MM')}" th:text="${ #dates.format(salary.Date, 'yyyy-MM') }"></td>
-												<td th:text="${ salary.member.name }"></td>
-												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
-												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
-												<th:block th:with="total = ${ #numbers.formatInteger(salary.regularPay, 1)} +  ${ #numbers.formatInteger(salary.bonus, 1) }">
-													<td th:text="${ #numbers.formatInteger(total, 1, 'COMMA')}"></td>
-												</th:block>
-											</tr>
-										</tbody>
-									 </th:block>	
-									 
-									<!-- 관리자 O -->
-									<th:block sec:authorize="hasRole('ROLE_ADMIN')">
-										<thead>
-											<tr>
-												<th>번호</th>	
-												<th>귀속연월</th>
-												<th>사원명</th>
-												<th>월급</th>
-												<th>보너스</th>
-												<th>지급총액</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="salary : ${ allSalaryList }">
-												<td th:text="${ salary.serialNo }"></td>
-												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" class="t_center pop_btn" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }"></td>
-												<td th:text="${ salary.member.name }"></td>
-												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
-												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
-												<th:block th:with="total = ${ #numbers.formatInteger(salary.regularPay, 1)} +  ${ #numbers.formatInteger(salary.bonus, 1) }">
-													<td th:text="${ #numbers.formatInteger(total, 1, 'COMMA')}"></td>
-												</th:block>
-											</tr>
-										</tbody>
-									</th:block>
-								</table>
-
-								<!-- 페이징 처리
-								<div class="paging">
-									<button type="button" class="first_btn">처음페이지</button>
-									<button type="button" class="prev_btn">이전페이지</button>
-									<a href="#n" class="num on">1</a>
-									<a href="#n" class="num">2</a>
-									<a href="#n" class="num">3</a>
-									<a href="#n" class="num">4</a>
-									<button type="button" class="next_btn">다음페이지</button>
-									<button type="button" class="last_btn">마지막페이지</button>
-								</div>
-								-->
+											<colgroup>
+												<col style="width:15%" />
+												<col style="width:10%" />
+												<col style="width:25%" />
+												<col style="width:25%" />
+												<col style="width:25%" />
+											</colgroup> 
+											<thead>
+												<tr>
+													<th align="center">귀속연월</th>
+													<th>사원명</th>
+													<th>월급</th>
+													<th>보너스</th>
+													<th>지급총액</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="salary : ${ salaryList }">
+													<td th:with="date=${#dates.format(salary.Date, 'yyyy-MM')}" th:text="${ #dates.format(salary.Date, 'yyyy-MM') }"></td>
+													<td th:text="${ salary.member.name }"></td>
+													<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
+													<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>
+													<th:block th:with="total = ${ #numbers.formatInteger(salary.regularPay, 1)} +  ${ #numbers.formatInteger(salary.bonus, 1) }">
+														<td th:text="${ #numbers.formatInteger(total, 1, 'COMMA')}"></td>
+													</th:block>
+												</tr>
+											</tbody>
 								
+								</table>
 							</div>
 						</div>
 
-						<!-- 관리자 권한 설정 필요 -->
+						<!-- 관리자 권한 설정 필요
 						<div class="btn_area" sec:authorize="hasRole('ROLE_ADMIN')">
 							<a href="#n" class="blue_btn pop_btn" data-button="new_payroll_pop">신규등록</a>
 						</div>
+						 -->
 					</div>
 					<!-- 여기까지 급여관리 리스트 -->
 
 					<!-- 여기부터 급여관리 팝업 -->
 					<!-- 신규 등록하기 -->
-					<div id="new_payroll_pop" class="payroll_pop_layer">
-						<div class="top_area">
-							<h2>신규급여등록</h2>
-							<button type="button" class="pop_close" data-button="new_payroll_pop">닫기</button>
-						</div>
-						<form action="/salary/regist" method="post">										
-							<div class="pop_inner">
-								<div class="tableArea">
-									<table>
-										<caption>신규급여내역</caption>
-										<thead>
-											<th>귀속연월</th>
-											<th>사원명</th>
-											<th>기본급</th>
-											<th>보너스</th>
-										</thead>
-										<tbody>
-											<tr>
-												<td th:text="${ #calendars.format(#calendars.createNow(), 'yyyy-MM')}" name="Date" id="Date" value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}">귀속연월</td>
-												<td>
-													<select th:name="name" id="name" style="width: 80%;" class="form-control select2">
-														<option th:each="member : ${ memberList }" th:text="${ member.name }" th:value="${ member.name }"></option>
-													</select>
-												</td>
-												<td><input type="text" name="regularPay" id="regularPay" style="text-align: center;" required="required"></td>
-												<td><input type="text" name="bonus" id="bonus" style="text-align: center;"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="btn_area">
-									<!-- <a href="#n" class="blue_btn">등록</a> -->
-									<button type="submit" class="blue_btn" id="registBtn">등록</button>
-									<a href="#n" class="gray_btn pop_close" data-button="new_payroll_pop">닫기</a>
-								</div>
-							</div>
-						</form>
-					</div>
+			
 					
           	   <!-- 상세보기 및 수정 --> 
                <!-- 관리자 아닌 경우 : 본인의 내역 조회만 가능 (수정 및 추가 불가) -->
@@ -285,7 +204,7 @@
 				"pagingType": "full_numbers",
 				"language": {
 		            "lengthMenu": "페이지당 줄수 _MENU_",
-		            "zeroRecords": "전자 결재가 존재하지 않습니다.",
+		            "zeroRecords": "급여 검색 결과가 존재하지 않습니다.",
 		            "info": "_PAGE_ / _PAGES_",
 		            "infoEmpty": "급여 항목이 존재하지 않습니다.",
 		            "infoFiltered": "(총 _MAX_ 개의 항목이 제외 되었습니다.)",
@@ -297,7 +216,18 @@
 		                "last" : "마지막"
 		              }
 		        },
-	            "order" : [ [0, 'DESC'], [1, 'DESC'] ]
+	            "order" : [ [0, 'DESC'], [1, 'DESC'] ],
+	            /* 보이는 갯수 설정 안보이게 */
+	            lengthChange: false,
+	            /* 페이지 전체수 나오던 부분 안보이게*/
+	            info : false,
+	            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+	            "dom": 't<"fDiv"f><"pDiv"p>',
+	            
+	            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+	            "aoColumnDefs": [
+	                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4] }
+	             ]
 	        });
 			
 			clearInterval(timer);

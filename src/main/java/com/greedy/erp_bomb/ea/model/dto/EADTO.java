@@ -54,7 +54,7 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 	@Transient
 	private int saveNo;
 	
-	@OneToMany(mappedBy = "ea")
+	@OneToMany(mappedBy = "ea", cascade = CascadeType.ALL)
 	private List<AddendumDTO> addendumList = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "ea", cascade = CascadeType.ALL)

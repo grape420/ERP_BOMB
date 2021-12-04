@@ -1,6 +1,5 @@
 package com.greedy.erp_bomb.ea.contorller;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,8 +106,6 @@ public class EaContorller {
 		MemberDTO drafter = new MemberDTO();
 		drafter.setName(user.getName());
 		
-		System.out.println(request.getParameter("eaNo"));
-		
 		ea.setSerialNo(Integer.valueOf(request.getParameter("eaNo")));
 		ea.setMember(drafter);
 		ea.setTitle(request.getParameter("title"));
@@ -152,8 +148,6 @@ public class EaContorller {
 		ea.setEaApprovalPathList(eaPathList);
 		ea.setEaCarbonList(eaCarbonList);
 		
-		System.out.println("ea : " + ea);
-		
 		eaService.updateEa(ea);
 		
 		mv.setViewName("redirect:/ea/ea");
@@ -164,7 +158,7 @@ public class EaContorller {
 	@GetMapping("/approval")
 	public ModelAndView approval(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no) {
 		eaService.approval(user.getName(), no);
-		mv.setViewName("redirect:/ea/ea");
+		mv.setViewName("redirect:/ea/ea?tab=2");
 		
 		return mv;
 	}
@@ -172,7 +166,7 @@ public class EaContorller {
 	@GetMapping("/return")
 	public ModelAndView eaReturn(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no) {
 		eaService.eaReturn(user.getName(), no);
-		mv.setViewName("redirect:/ea/ea");
+		mv.setViewName("redirect:/ea/ea?tab=2");
 		
 		return mv;
 	}
@@ -184,8 +178,15 @@ public class EaContorller {
 		return mv;
 	}
 	
+	@PostMapping("/deleteEa")
+	public ModelAndView deleteEa(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int eaNo) {
+		eaService.deleteEa(user.getName(), eaNo);
+		mv.setViewName("redirect:/ea/ea");
+		return mv;
+	}
+	
 	@GetMapping("/ea")
-	public void ea(@AuthenticationPrincipal UserImpl user, Model model) {
+	public void ea(@AuthenticationPrincipal UserImpl user, Model model, @RequestParam(defaultValue = "1") int tab) {
 		String userName = user.getName();
 		
 		List<MemberDTO> memberList = eaService.findMemberList();
@@ -294,6 +295,8 @@ public class EaContorller {
 			}
 		}
 		
+		model.addAttribute("test", "<TABLE border=\"1\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;border:none;\"><TR><TD colspan=\"6\" width=\"900\" height=\"150\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre STYLE=\"text-align:center;\"><SPAN STYLE=\"font-size:20.0pt; line-height:150%;\">업  무  보  고  서</SPAN></pre></TD></TR><TR><TD width=\"64\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\">  작성일 </SPAN></pre></TD><TD colspan=\"2\" width=\"280\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD><TD width=\"64\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\">  작성자  </SPAN></pre></TD><TD colspan=\"2\" width=\"280\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR><TR><TD width=\"64\" height=\"176\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\"> 업무내용 </SPAN></pre></TD><TD colspan=\"5\" width=\"613\" height=\"400\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR><TR><TD width=\"64\" height=\"81\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\"> 특이사항 </SPAN></pre></TD><TD colspan=\"5\" width=\"613\" height=\"150\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR><TR><TD width=\"64\" height=\"81\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\">  비  고</SPAN></pre></TD><TD colspan=\"5\" width=\"613\" height=\"150\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR></TABLE>");
+		
 		Collections.sort(allEaList);
 		
 		model.addAttribute("myEaList", myEaList);
@@ -301,6 +304,7 @@ public class EaContorller {
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
 		model.addAttribute("allEaList", allEaList);
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("tab", tab);
 		
 	}
 	
@@ -312,7 +316,7 @@ public class EaContorller {
 	
 	@GetMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO replyAd = new AddendumDTO();
 		AddendumDTO refAd = new AddendumDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -324,7 +328,7 @@ public class EaContorller {
 		replyAd.setDate(new java.sql.Date(System.currentTimeMillis()));
 		replyAd.setRequestYn("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		replyAd.setMember(drafter);
 		
 		replyAd = eaService.replyAddendum(replyAd);
@@ -349,7 +353,7 @@ public class EaContorller {
 	
 	@GetMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO addAd = new AddendumDTO();
 		EADTO ea = new EADTO();
 		MemberDTO drafter = new MemberDTO();
@@ -362,7 +366,7 @@ public class EaContorller {
 		addAd.setDate(new java.sql.Date(System.currentTimeMillis()));
 		addAd.setRequestYn("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		addAd.setMember(drafter);
 		
 		addAd = eaService.addAddendum(addAd);
