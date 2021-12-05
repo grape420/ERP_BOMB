@@ -99,6 +99,7 @@ public class InOutDAO {
 		selectedInven.setInvenRemainStock(headInven.getInvenRemainStock());
 	}
 
+
 //	public List<InOutDTO> searchInOutList(String keyword, String name) {
 //		MemberDTO member = em.find(MemberDTO.class, name);
 //		

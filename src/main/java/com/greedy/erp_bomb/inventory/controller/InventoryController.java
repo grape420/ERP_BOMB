@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
 import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
@@ -52,7 +53,7 @@ public class InventoryController {
 	
 	@PostMapping("/regist")
 	public ModelAndView registInven(ModelAndView mv, @RequestParam int companyCode,  @RequestParam int icecreamCode,
-			                        @RequestParam int invenRemainStock) {
+			                        @RequestParam int invenRemainStock, RedirectAttributes rttr) {
 		
 		/* 회사 테이블 */
 		CompanyDTO com = new CompanyDTO();
@@ -68,30 +69,19 @@ public class InventoryController {
 		inven.setIceCream(ice);
 		inven.setInvenRemainStock(invenRemainStock);
 		
-		/* Service로 값 넘기기 */
-		inventoryService.registInven(inven);
+		InventoryDTO insertInven = inventoryService.findInsertInven(inven);
+		
+		if (insertInven == null) {
+			inventoryService.registInven(inven);
+		} else {
+			rttr.addFlashAttribute("errorMessage", "해당 회사에 해당 아이스크림은 이미 존재합니다");
+		}
 		
 		mv.setViewName("redirect:/inventory/inventory");
 		
 		return mv;
+		
 	}
 	
-	@PostMapping("/newIce")
-	public ModelAndView registNewIce(ModelAndView mv, @ModelAttribute IceCreamDTO ice) {
-		inventoryService.registNewIce(ice);
-		
-		mv.setViewName("redirect:/inventory/inventory");
-		
-		return mv;
-	}
-	
-//	@PostMapping("/search")
-//	public String searchInven(Model model, @RequestParam String keyword) {
-//		List<InventoryDTO> inventoryList = inventoryService.searchInven(keyword);
-//		
-//		model.addAttribute("inventoryList", inventoryList);
-//		
-//		return "/inventory/inventory";
-//	}
 	
 }
