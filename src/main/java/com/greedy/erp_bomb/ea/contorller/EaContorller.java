@@ -304,7 +304,7 @@ public class EaContorller {
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
-		model.addAttribute("allEaList", allEaList);
+		model.addAttribute("allEaList", allEaList.stream().distinct().toList());
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("tab", tab);
 		

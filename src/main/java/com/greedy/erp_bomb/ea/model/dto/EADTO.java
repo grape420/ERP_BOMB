@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -202,5 +203,19 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 		} else  {
 			return -1;
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this.getSerialNo() == ((EADTO)obj).getSerialNo()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(serialNo);
 	}
 }
