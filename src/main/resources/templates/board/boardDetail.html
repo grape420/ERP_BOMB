@@ -151,12 +151,12 @@
 						</div>
 					</div>
 					<hr class="mt-0">
-				    <button class="ml-3 reply_btn pop_btn" style="font-size: 13px; float: right; " data-button="reply_comment_pop" th:attr="name=${ ad.no }">답글</button>
+				    <button class="ml-3 reply_btn pop_btn" style="font-size: 13px; float: right; " data-button="reply_comment_pop" id="comment" th:value="${ad.no}">답글</button>
 					<button type="button" class="ml-3 delete_btn" style="font-size: 13px; float: right;" th:attr="onclick=|location.href='/board/deleteComment?no=${ ad.no }&detail=${boardDetail.no}'|">삭제</button>
 		
 					</div>
 			<!-- 답글 쓰기 팝업 -->
-			<form id="reply_comment_pop" class="pop_layer new_comment_pop" action="/board/replyComment" method="post">
+			<div id="reply_comment_pop" class="pop_layer new_comment_pop">
 				<div class="top_area">
 					<h2>답글</h2>
 					<button type="button" class="pop_close close_reply" data-button="reply_comment_pop">닫기</button>
@@ -164,12 +164,12 @@
 				<div class="pop_inner">
 					<textarea id="reply_content" class="commnet_content_text" name="content"></textarea>
 				</div>
-				<div class="btn_area">
-					<input name="no" type="hidden" value="1">
-					<button type="submit" class="blue_btn pop_close reply_comment" data-button="reply_comment_pop" onclick="replyComment()">작성</button>
+				<div class="btn_area ac">
+					<input name="no" type="hidden" >
+					<button id="recoment" type="button" class="blue_btn pop_close reply_comment" data-button="reply_comment_pop" >작성</button>
 					<a class="gray_btn pop_close close_reply" data-button="reply_comment_pop">닫기</a>
 				</div>
-			</form>
+			</div>
 			
 			<!-- 신규 댓글 작성 -->
 				<br>
@@ -185,23 +185,20 @@
 								style="margin-left: 10px; border: none; resize: none; width: 750px; height: 70px; margin: 20px; outline-style: none;"></textarea>
 						</div>
 					</div>
-				</form>
+			</form>
 		</div>
 	</section>
 	
 	<script>
-	/* function replyComment(){ 
-		var textFlag = false; 
-		const textArea = $("#reply_content").val(); 
-		}
-		if(textArea != ""){
-			textFlag = true;
-		}
-		 else if(!textFlag){
-			alert("내용을 입력하세요!");
-		} else {
-			$("#replyComment").submit();
-		}; */
+ 		let refid;
+ 		$(".reply_btn").click(function(){ 
+ 			refid=$(this).val();
+ 			console.log(refid);
+ 		});
+ 		$("#recoment").click(function(){ 
+ 			location.href="/board/replyComment?no="+refid+"&content="+$("#reply_content").val();
+ 		});
+ 	
 	</script>
 </body>
 </html>

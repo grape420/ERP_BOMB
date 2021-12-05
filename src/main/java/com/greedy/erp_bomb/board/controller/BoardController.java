@@ -37,7 +37,6 @@ public class BoardController {
 	public ModelAndView findBoardList(ModelAndView mv) { 
 		List<BoardDTO> boardList = boardService.findBoardList();
 		for(BoardDTO board : boardList) { 
-			System.out.println(board);
 		}
 		mv.addObject("boardList", boardList);
 		mv.setViewName("board/boardList"); 
@@ -49,14 +48,14 @@ public class BoardController {
 	public ModelAndView boardDetail(ModelAndView mv, @RequestParam int no) { 
 		BoardDTO boardDetail = boardService.selectBoardDetail(no);
 		
-		System.out.println("코멘트 사이즈 : " + boardDetail.getCommentList().size());
-		
 		for(CommentDTO comment : boardDetail.getCommentList()) {
 			System.out.println(comment);
 		}
 		
 		Collections.sort(boardDetail.getCommentList());
 		
+		for (CommentDTO bo : boardDetail.getCommentList()) {
+		}
 		
 		mv.addObject("boardDetail", boardDetail);
 		mv.setViewName("/board/boardDetail"); 
@@ -64,10 +63,8 @@ public class BoardController {
 	}
 	
 	/* 사내게시판 대댓글 */ 
-	@PostMapping(value = "/replyComment")
+	@GetMapping(value = "/replyComment")
 	public ModelAndView replyComment(@RequestParam int no, @RequestParam String content,@AuthenticationPrincipal UserImpl user , ModelAndView mv) {
-		System.out.println("번호 : " + no);
-		System.out.println("내용 : " + content);
 		
 		CommentDTO replyCm = new CommentDTO();
 		CommentDTO refAd = new CommentDTO();
@@ -83,26 +80,9 @@ public class BoardController {
 		drafter.setName(user.getName());
 		replyCm.setMember(drafter);
 		
-		System.out.println("여기까지 오나?");
 		replyCm = boardService.replyComment(replyCm);
 		
-		BoardDTO ar = new BoardDTO();
-		MemberDTO emMember = new MemberDTO();
-		emMember.setName(replyCm.getBoard().getMember().getName());
-		ar.setMember(emMember);
-		
-		MemberDTO adMember = new MemberDTO();
-		adMember.setName(replyCm.getMember().getName());
-		
-		replyCm.setCommentList(null);
-		replyCm.setBoard(ar);
-		replyCm.setMember(adMember);
-		
-		refAd.setNo(replyCm.getRefNo().getNo());
-		replyCm.setRefNo(refAd);
-		
-		
-		mv.addObject("no", no);
+		mv.addObject("no", replyCm.getBoard().getNo());
 		mv.setViewName("redirect:/board/detail");
 		return mv;
 	}
@@ -208,7 +188,6 @@ public class BoardController {
 	@GetMapping("regNotice")
 	public void regNotice() { 
 	}
-	
 	@PostMapping("insertNotice")
 	public ModelAndView insertNotice(ModelAndView mv, @RequestParam String title, 
 			 @RequestParam String content, Principal principal) { 

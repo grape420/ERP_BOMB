@@ -78,9 +78,9 @@ public class BoardDAO {
 
 	/* 사내게시판 대댓글 */ 
 	public CommentDTO replyComment(CommentDTO replyCm) {
-		System.out.println("들어가나?" + replyCm);
 		CommentDTO reCm = em.find(CommentDTO.class, replyCm.getRefNo().getNo());
 		
+		System.out.println("돌아가냐?");
 		replyCm.setRefNo(reCm);
 		replyCm.setBoard(reCm.getBoard());
 		replyCm.setMember(em.find(MemberDTO.class, replyCm.getMember().getName()));
@@ -100,6 +100,7 @@ public class BoardDAO {
 			}
 		}
 		em.persist(replyCm);
+		
 		return replyCm;
 	}
 	/* 사내게시판 댓글 입력*/

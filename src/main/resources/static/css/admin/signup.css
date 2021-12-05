@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+.agree-textarea {
+	height: 200px;
+}
+
+.section-main-div {
+	width: 400px;
+	margin-bottom: 5em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.signup-text {
+	text-align: center;
+	font-weight: bold;
+}
+
+.logo-form {
+	width: 200px !important;
+	height: auto !important;
+}
+
+.id-result, .password-result, .name-result, .phone-result, .email-result,
+	.birth-result, .empNo-result, .regularPay-result, .annualIncome-result {
+	margin-top: 2px;
+	font-size: 11px;
+}
+
+.double-check-btn, .code-send-btn {
+	height: 38px !important;
+	font-size: 15px !important;
+}
+
+.count-down {
+	color: red;
+	height: 38px;
+	text-align: center;
+	font-size: 15px;
+	padding-top: 7px;
+}
+
+.privacy policy {
+	height: 10em;
+}
+
+.signup-form>textarea {
+	width: 100%;
+	height: 10em;
+}
+
+.signup-form>h5 {
+	text-align: center;
+	font-weight: bold;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before
+	{
+	background-color: black !important;
+}
+
+.custom-checkbox .custom-control-input:checked:focus ~
+	.custom-control-label::before {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25)
+}
+
+.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before
+	{
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25)
+}
+
+.custom-checkbox .custom-control-input:active ~ .custom-control-label::before
+	{
+	background-color: #535353e8;
+}

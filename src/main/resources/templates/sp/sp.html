@@ -1,0 +1,348 @@
+	<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="shortcut icon" th:href="@{/uses/Logo.png}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/css/select2.min.css" rel="stylesheet" />
+<link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/retire/retire.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<title>ERP BOMB</title>
+</head>
+<body>
+
+	<!-- header -->
+	<header id="top">
+		<th:block th:include="common/header"/>
+	</header>
+
+	<section>
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a class="navbar-brand font-weight-bold" href="/">
+				<img th:src="@{/uses/logo_new.png}" alt="" class="logo">
+			</a>
+			<div class="collapse navbar-collapse function-tab">
+				<ul class="navbar-nav mr-3 top-tap">
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
+					</li>
+					<li class="nav-item mr-3 tab-selected">
+						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<hr class="m-0">
+		<div id="wrapper">
+
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand" href="/sp">
+					<div class="sidebar-brand-icon rotate-n-15"></div>
+					<div class="sidebar-brand-text mx-3">퇴직금 목록</div>
+				</a>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="/sp">
+						<span>퇴직금</span>
+					</a>
+				</li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<!-- <li class="nav-item">
+					<a class="nav-link collapsed" href="">
+						<span>퇴직금 합계</span>
+					</a>
+				</li> -->
+
+				<hr class="sidebar-divider">
+			</ul>
+		
+			<!-- End of Sidebar -->
+
+			<div id="content-wrapper" class="d-flex flex-column">
+				<div style="width: 80%;" class="">
+					<!-- 여기부터 퇴직금 리스트 -->
+					<div>
+						<!-- <div class="search_form">
+							<input type="text" placeholder="검색어 입력" />
+							<button type="button" class="blue_btn">Search</button>
+						</div>-->
+						<ul class="tab ul-tab">
+							<li class="li-tab retire on" data-tab="all_retire"><span>퇴직금 목록</span></li>
+							<!-- <li class="li-tab retire" data-tab="confirm_retire"><span>퇴직금 합계</span></li> -->
+						</ul>
+						<div id="all_retire" class="tab_contents retire current">
+							<div class="tableArea">
+								<table class="Table">
+									<caption>퇴직금 목록</caption>
+									<colgroup>
+										<col style="width:4%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+								 		<col style="width:10%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>사원 번호</th>
+											<th>이름</th>
+											<th>부서</th>
+											<th>지위/직급</th>
+											<th>입사일</th>
+											<th>재직년수</th>
+											<th>계산내역</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="sp: ${ spList }">
+											<td th:text="${ sp.spNo }"></td>
+											<td th:text="${ sp.member.empNo }"></td>
+											<td th:text="${ sp.member.name }"></td>
+											<td th:text="${ sp.member.dept.name }"></td>
+											<td th:text="${ sp.member.rank.name }"></td>
+											<td th:text="${ sp.member.joinDate }"></td>
+											<td th:text="${ sp.empYear }"></td>
+											<td class="pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">조회</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="blue_btn pop_btn" data-button="new_retire_pop">신규</a>
+							<a href="#n" class="gray_btn pop_btn" data-button="update_retire_pop">수정</a>
+						</div>
+					</div>
+					<!-- 여기까지 퇴직금 리스트 -->
+
+					<!-- 여기부터 퇴직금 팝업 -->
+					<div class="pop_layer" th:each="sp : ${ spList }" th:attr="id=${ 'retire_detail_pop' + sp.spNo }">
+						<div class="top_area">
+							<h2>퇴직금</h2>
+							<button type="button" class="pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</button>
+						</div>
+						<div class="pop_inner">
+							<div class="retire_detail">
+								<div class="top">
+									<p class="name" th:text="${'['+sp.member.name+']' + '님의 퇴직금 내역' }"></p>
+								</div>
+								<div class="tableArea">
+									<table>
+									<colgroup>
+										<col style="width:19%" />
+										<col style="width:19%" />
+										<col style="width:19%" />
+										<col style="width:19%" />
+									</colgroup>
+									<thead class="spDetailList">
+										<tr>
+											<th>이름</th>
+											<th>퇴직일자</th>
+											<th>지급일자</th>
+											<th>퇴직금</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td th:text="${ sp.member.name }"></td>
+											<td th:text="${#dates.format(sp.member.quitDate, 'yyyy-MM-dd')}"></td>
+											<td th:text="${#dates.format(sp.member.quitDate, 'yyyy-MM-dd')}"></td>
+											<td th:text="${ sp.serverancePay }"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="btn_area">
+							<a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</a>
+						</div>
+					</div>
+				</div>
+				
+					<!-- 퇴직금 추가 팝업 -->
+				<div id="new_retire_pop" class="pop_layer">
+					<div class="top_area">
+						<h2>퇴직자 퇴직금 등록</h2>
+						<button type="button" class="pop_close" data-button="new_retire_pop">닫기</button>
+					</div>
+					<form action="/sp/regSp" method="post">
+					<div class="pop_inner">
+						<div class="new_retire">
+							<div class="top">
+								<p class="name">퇴직 정보 등록</p>
+							</div>
+							<div class="tableArea">
+								<table>
+									<colgroup>
+										<col style="width:30%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>재직년수</th>
+											<th>급여</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><select name="name" id="name" required="required">
+												<option th:each="sp : ${ entYn }" th:text="${ sp.name }"></option>
+											</select></td>
+											<td><input type="text" id="empYear" name="empYear" required="required"></td>
+											<td><input type="text" id="serverancePay" name="serverancePay" ></td>
+											<!-- <th:block th:with="serverancePay = ${ #numbers.formatInteger(sp.member.regularPay) / 22 * 30 }">
+											<td id="serverancePay" name="serverancePay" th:text="${ numbers.formatInteger(serverancePay) }"></td>
+											</th:block> -->
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</form>
+					<div class="btn_area">
+						<!-- <a href="#n" class="blue_btn">삭제</a> -->
+						<button class="blue_btn mr-2" >등록</button>
+						<a href="#n" class="gray_btn pop_close" data-button="new_retire_pop">닫기</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 여기까지 퇴직금 팝업 -->
+		</div>
+		<div id="update_retire_pop" class="pop_layer">
+					<div class="top_area">
+						<h2>퇴직자 퇴직금 수정</h2>
+						<button type="button" class="pop_close" data-button="update_retire_pop">닫기</button>
+					</div>
+					<form action="/sp/updateSp" method="post">
+					<div class="pop_inner">
+						<div class="update_retire">
+							<div class="top">
+								<p class="name">퇴직 정보 수정</p>
+							</div>
+							<div class="tableArea">
+								<table>
+									<colgroup>
+										<col style="width:30%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>재직년수</th>
+											<th>퇴직금</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<select required="required" name="name" id="name1">
+													<option th:each="sp : ${ spList }" th:text="${ sp.member.name }"></option>
+												</select>
+											</td>
+											<!-- <td><input type="text" id="name1" name="name"></td> -->
+											<td><input type="text" id="empYear1" name="empYear" required="required"></td>
+											<td><input type="text" id="serverancePay1" name="serverancePay" required="required"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<div class="btn_area">
+						<button class="blue_btn mr-2">수정</button>
+						<a href="#n" class="gray_btn pop_close" data-button="update_retire_pop">닫기</a>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	
+	<script>
+		
+		/* data table */
+		var timer = setInterval(function() {
+			$.fn.DataTable.ext.pager.numbers_length = 6;
+			
+			$('.Table').DataTable({
+				"pagingType": "full_numbers",
+				"language": {
+		            "lengthMenu": "페이지당 줄수 _MENU_",
+		            "zeroRecords": "투표가 존재하지 않습니다.",
+		            "search": "검색 : ",
+		            "paginate": {
+		                "previous": "이전",
+		                "next" : "다음",
+		                "first" : "처음",
+		                "last" : "마지막"
+		              }
+		        },
+	            "order" : [],
+	            /* 보이는 갯수 설정 안보이게 */
+	            lengthChange: false,
+	            /* 페이지 전체수 나오던 부분 안보이게*/
+	            info : false,
+	            /* 구조 설정 태그 안에 글자는 div클래스명 <style>에서 float 주고싶은대로 주면됨*/
+	            "dom": 't<"fDiv"f><"pDiv"p>',
+	            
+	            /* 컬럼 옆에 정렬표시 제거 2번째꺼부터가 0번 인덱스임 row부분은 order를 []처리하면됨*/
+	            "aoColumnDefs": [
+	                { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7 ] }
+	             ]
+	        });
+			
+			clearInterval(timer);
+			
+		}, 100);
+	</script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+</body>
+</html>
