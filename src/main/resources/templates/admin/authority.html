@@ -2,6 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,9 +17,10 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -166,7 +168,7 @@
 			            </div>
 			            <div class="pop_inner">
 			              <div class="tableArea">
-				              <form action="/admin/updateAuth" method="post" onsubmit="return CheckForm(this)">
+				              <form action="/admin/updateAuth" method="post">
 				                <table>
 				                  <colgroup>
 				                    <col style="width:20%" />
@@ -181,9 +183,8 @@
 				                  <tbody>
 									<tr>
 										<td id="authName"></td>
-										<td>
-											<input type="checkbox" id="roleMember" name="role" value="1"><label for="roleMember">일반회원</label>
-											<input type="checkbox" id="roleAdmin" name="role" value="2"><label for="roleAdmin">관리자</label>
+										<td id="allAuth">
+											<!-- ajax로 처리 -->
 										</td>
 									</tr>
 				                  </tbody>
@@ -199,30 +200,6 @@
 					<!-- 권한 변경 팝업 -->
 					
 					<script>
-					function CheckForm(Join) {
-						var isRoleCheck = false;
-						var arr_Role = document.getElementsByName("role");
-						
-						for (var i = 0; i < arr_Role.length; i++) {
-							if (arr_Role[i].checked == true) {
-								isRoleCheck = true;
-								break;
-							}
-						}
-						
-						/* if(arr_Role[0].checked == true && arr_Role[1].checked == true) {
-							$("input[type=checkbox]").prop("checked", false);
-							alert("권한은 하나만 체크하세요");
-							return false;
-						} */
-						
-						/* if(!isRoleCheck) {
-							alert("권한 종류를 한 개 이상 선택해주세요");
-							return false;
-						} */
-					}
-					
-					
 					/* 디테일 페이지에서 이름 가져옴 */
 					function authDetail(name){
 						var detailName = name;
@@ -246,59 +223,6 @@
 						});
 					}
 					</script>
-					
-					<!-- 권한 추가 -->
-<!-- 					<div id="new_inventory_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>재고관리</h2>
-							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/admin/" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 20%" />
-									<col style="width: 20%" />
-									<col style="width: 20%" />
-									<col style="width: 20%" />
-									<col style="width: 20%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>사원명</th>
-										<th>회사</th>
-										<th>부서</th>
-										<th>직급</th>
-										<th>권한</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<select id="companyCode" name="companyCode">
-												ajax로 처리
-											</select>
-										</td>
-										<td>
-											<select id="icecreamCode" name="icecreamCode">
-												ajax로 처리
-											</select>
-										</td>
-										<td>
-											<input type="number" name="invenRemainStock">
-										</td> 
-									</tr>
-								</tbody>
-							</table>
-							<div class="btn_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
-							</div>
-						</form>
-						</div>
-					</div> -->
-					<!-- 권한 추가 -->
-					
 
 					<div class="btm_area" style="margin-left: 10px;">
 						<!-- <a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a>  -->
@@ -309,35 +233,26 @@
 	</section>
 	
 	<script>
-		/* $.ajax({
-			url: "/inventory/company",
+		 $.ajax({
+			url: "/admin/allAuth",
 			success: function(data){
-				const $companyCode = $("#companyCode");
-				$companyCode.html("");
+				console.table(data);
+				const $allAuth = $("#allAuth");
+				$allAuth.html("");
 				
 				for (let i in data){
-					$companyCode.append($("<option>").val(data[i].serialNo).text(data[i].name));
-				}
+					$allAuth.append("<input type='checkbox' id='role" + data[i].code + "' name='role' value='" + data[i].code + "'><label for='role" + data[i].code + "'>" + data[i].desc + "</label>");
+				} 
+				
+				$("#role2").click(function() {
+					if($("#role2").is(":checked")) $("input[name=role]").prop("checked", true);
+					else $("input[name=role]").prop("checked", false);
+				});
 			},
 			error: function(xhr){
 				console.log(xhr);
 			}
 		});
-		
-		$.ajax({
-			url: "/inventory/icecream",
-			success: function(data){
-				const $icecreamCode = $("#icecreamCode");
-				$icecreamCode.html("");
-				
-				for (let i in data){
-					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		}); */
 		
 		/* dataTable */
 		var timer = setInterval(function() {

@@ -18,8 +18,13 @@
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/board/noticeList.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+
 <style>
 	
 	.fDiv{
@@ -49,10 +54,10 @@
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3">
+					<li class="nav-item mr-3 tab-selected">
 						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
-					<li class="nav-item mr-3 tab-selected">
+					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
@@ -97,7 +102,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed on" href="/board/noticeList" data-target="#collapseUtilities"
+					<a class="nav-link on" href="/board/noticeList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>공지사항</span>
 					</a>
@@ -110,11 +115,11 @@
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link" href="/vote/vote" >
-						<span>투표 게시판</span>
-					</a>
-				</li>
+	            <li class="nav-item">
+	               <a class="nav-link" href="/vote/vote" >
+	                  <span>투표 게시판</span>
+	               </a>
+	            </li>				
 				<hr class="sidebar-divider">
 			</ul>
 			<!-- End of Sidebar -->

@@ -12,6 +12,7 @@ import com.greedy.erp_bomb.member.model.dto.AuthorityDTO;
 import com.greedy.erp_bomb.member.model.dto.DeptDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberRoleDTO;
+import com.greedy.erp_bomb.member.model.dto.MemberRolePk;
 import com.greedy.erp_bomb.member.model.dto.RankDTO;
 
 @Repository
@@ -80,25 +81,6 @@ public class AdminMemberDAO {
 
 	public MemberDTO memDetail(String detailName) {
 		MemberDTO member = em.find(MemberDTO.class, detailName);
-		
-		member.getCompany().setInventoryList(null);
-		member.getCompany().setMemberList(null);
-		member.getDept().setMemberList(null);
-		member.getRank().setMemberList(null);
-		member.setAddendumList(null);
-		member.setBoardList(null);
-		member.setCommentList(null);
-		member.setEaBonDTOList(null);
-		member.setEaList(null);
-		member.setEaPathList(null);
-		member.setMemberRoleList(null);
-		member.setReceiveMemberList(null);
-		member.setSalaryList(null);
-		member.setSentNoteList(null);
-		member.setTnaList(null);
-		member.setVoteList(null);
-		member.setVoteOptionList(null);
-		member.setVoteParticipationList(null);
 		
 		return member;
 	}

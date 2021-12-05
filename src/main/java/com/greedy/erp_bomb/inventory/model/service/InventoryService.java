@@ -37,14 +37,20 @@ public class InventoryService {
 		return inventoryDAO.findIcecreamList();
 	}
 
-	@Transactional
-	public void registNewIce(IceCreamDTO ice) {
-		inventoryDAO.registNewIce(ice);
-	}
 
 	@Transactional
 	public void registInven(InventoryDTO inven) {
 		inventoryDAO.registInven(inven);
+	}
+
+	@Transactional
+	public List<InventoryDTO> findPresentInvenList() {
+		return inventoryDAO.findPresentInvenList();
+	}
+
+	@Transactional
+	public InventoryDTO findInsertInven(InventoryDTO inven) {
+		return inventoryDAO.findInsertInven(inven);
 	}
 
 //	@Transactional

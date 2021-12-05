@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.erp_bomb.ea.model.dao.EaDAO;
 import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
+import com.greedy.erp_bomb.ea.model.dto.DocumentFormDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
@@ -84,6 +85,10 @@ public class EaService {
 	@Transactional
 	public void deleteEa(String userName, int eaNo) {
 		eaDAO.deleteEa(userName, eaNo);
+	}
+
+	public List<DocumentFormDTO> findeDocumentFormList() {
+		return eaDAO.findeDocumentFormList();
 	}
 
 }

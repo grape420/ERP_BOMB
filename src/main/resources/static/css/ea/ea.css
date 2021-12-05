@@ -17,6 +17,7 @@
 
 a {
 	cursor: pointer;
+	text-decoration: none !important;
 }
 
 button {
@@ -114,7 +115,7 @@ button {
 
 #new_approval_pop {
 	width: 700px;
-	height: 630px;
+	height: 700px;
 	min-width: auto;
 	min-height: auto;
 	top: 45%;
@@ -156,7 +157,7 @@ button {
 
 .new_approval_pop {
 	width: 700px;
-	height: 630px;
+	height: 700px;
 	min-width: auto;
 	min-height: auto;
 	top: 45%;

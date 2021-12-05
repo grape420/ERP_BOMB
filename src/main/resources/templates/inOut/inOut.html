@@ -17,9 +17,10 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inOut/inOut.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -380,6 +381,10 @@
 						} else if(data == 3) {
 							alert("재고가 부족해 판매할 수 없습니다");
 							
+						} else if(data == 5) {
+							alert("본사에서는 출고할 수 없습니다");
+						} else if(data == 6) {
+							alert("본사에서는 판매할 수 없습니다");
 						} else {
 							$("#inOutForm").submit();
 						}

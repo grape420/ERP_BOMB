@@ -17,9 +17,10 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -168,13 +169,13 @@
 											</select>
 										</td>
 										<td>
-											<input type="number" name="invenRemainStock">
+											<input type="number" name="invenRemainStock" required="required">
 										</td> 
 									</tr>
 								</tbody>
 							</table>
 							<div class="btn_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
+								<button type="submit" class="blue_btn" data-button="new_inventory_pop" id="submitBtn">추가</button> 
 								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
 							</div>
 						</form>
@@ -220,6 +221,12 @@
 			}
 		});
 		
+		$("#submitBtn").click(function() {
+			if($("input[type=number]").val() < 1) {
+				alert("1보다 큰 숫자를 입력하세요");
+			}
+		});	
+		
 		/* dataTable */
 		var timer = setInterval(function() {
 			$.fn.DataTable.ext.pager.numbers_length = 5;
@@ -253,6 +260,12 @@
 			
 			clearInterval(timer);
 		}, 100);
+		
+		const errorMessage = "[[${ errorMessage }]]";	
+				
+		if(errorMessage){
+			alert(errorMessage);
+		}
 	</script>
 	
 	<!-- dataTable -->

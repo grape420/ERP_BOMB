@@ -468,11 +468,13 @@
 						</div>
 						
 						<div class="btn_area">
-							<a  class="blue_btn pop_btn" data-button="new_approval_pop">신규</a>
+							<a id="new_approval_pop_open_btn" class="blue_btn pop_btn" data-button="new_approval_pop">신규</a>
 						</div>
 					</div>
 					<!-- 여기까지 전자 결재 리스트 -->
-
+					
+					<input th:each="document : ${ documentFormList }" th:attr="id=${ 'document' + document.no }, value=${ document.form }" hidden="hidden">
+					
 					<!-- 여기부터 신규 전자 결재 팝업 -->
 					<div id="new_approval_pop" class="pop_layer">
 						<div class="top_area">
@@ -483,7 +485,11 @@
 							<div class="pop_inner">
 								<div class="line-div">
 									제&nbsp; 목&nbsp;&nbsp;&nbsp;
-									<input id="new_approval_title" name="title" placeholder="제목을 입력해주세요." style="width: 91.5%;" type="text" required="required">
+									<input id="new_approval_title" name="title" placeholder="제목을 입력해주세요." style="width: 70%;" type="text" required="required">
+									&nbsp;&nbsp;&nbsp;
+									<select id="documentForm" style="width: 18.5%;">
+										<option th:each="document : ${ documentFormList }" th:text="${ document.name }" th:attr="value=${ document.no }"></option>
+									</select>
 									<br>
 								</div>
 								<div class="mt-2 line-div">
@@ -499,8 +505,9 @@
 										<option class="carboner_option" th:each="member : ${ memberList }" th:text="${ member.name }"></option>
 									</select>
 									<br>
+									<br>
 								</div>
-								<textarea style="overflow: scroll;" id="test" name="content" required="required" th:text="${ test }"></textarea>
+								<textarea style="overflow: scroll;" class="summer_note summer_note_new_approval" id="test" name="content" required="required"></textarea>
 							</div>
 							<div class="btn_area">
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/regNewEa/1'">결재</button>
@@ -559,8 +566,7 @@
 								</div>
 
 								<div class="approval_content">
-									<p th:utext="${#strings.replace(list.content,'
-','<br>')} "></p>
+									<p th:utext="${ list.content } "></p>
 								</div>
 							</div>
 						</div>
@@ -606,7 +612,7 @@
 					<!-- 여기부터 임시저장 전자 결재 디테일 팝업 -->
 					<div th:each="list : ${ allEaList }" th:if="${ list.eaStatus == 4 }" class="pop_layer new_approval_pop temp_ea" th:attr="id=${ 'approval_detail_pop' + list.serialNo }">
 						<div class="top_area">
-							<h2>신규 결재</h2>
+							<h2>임시 저장</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }">닫기</button>
 						</div>
 						<form id="new_approval_form" method="post" action="/ea/updateEa">
@@ -636,8 +642,9 @@
 										</th:block>
 									</select>
 									<br>
+									<br>
 								</div>
-								<textarea name="content" class="approval_content_text" required="required" th:utext="${ list.content }"></textarea>
+								<textarea name="content" class="approval_content_text summer_note" required="required" th:utext="${ list.content }"></textarea>
 							</div>
 							<div class="btn_area">
 								<button type="submit" class="blue_btn pop_close mr-1" onclick="javascript: form.action='/ea/updateEa/1'">결재</button>
@@ -685,16 +692,29 @@
 		<!-- 여기까지 답글 첨언 팝업 -->
 	</section>
 	
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+	
 	<script>
 		$(document).ready(function () {
 			var $reply;
 			var $eaNo;
 			
+			$("#documentForm").on("change", function() {
+				$(".summer_note_new_approval").summernote('code', $("#document" + $(this).val()).val());
+			});
+			
+			$(".summer_note_new_approval").summernote('code', $("#document1").val());
+			
+			$("#new_approval_pop_open_btn").click(function() {
+				$(".summer_note_new_approval").summernote('code', $("#document1").val());
+			});
+			
 			$("#new_approval_pop_close_btn").click(function() {
-				$("#new_approval_content").val("");
-				$("#new_approval_title").val("");
 				$('#new_approvaler').val(null).trigger('change');
 				$('#new_carboner').val(null).trigger('change');
+				$('#new_approval_title').val('');
+				$(".summer_note_new_approval").summernote('code', "");
 			});
 			
 			$(".new_ad").click(function() {
@@ -883,11 +903,11 @@
 			clearInterval(timer);
 		}, 100);
 		
-		$('#test').summernote({
+		$('.summer_note').summernote({
 			lang: "ko-KR",
 			tabsize: 1,
-			width : 666,
-			height : 315,
+			width : 675,
+			height : 360,
 			toolbar: [
 			    // [groupName, [list of button]]
 			    ['fontname', ['fontname']],
@@ -905,8 +925,5 @@
 		});
 	</script>
 	
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 </body>
 </html>

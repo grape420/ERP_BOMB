@@ -17,9 +17,13 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
-<link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
+<link rel="stylesheet" th:href="@{/css/admin/document.css}">
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -136,20 +140,17 @@
 								<colgroup>
 									<col style="width: 20%" />
 									<col style="width: 40%" />
-									<col style="width: 40%" />
 								</colgroup>
 								<thead>
 									<tr>
 										<th>문서 번호</th>
 										<th>문서 이름</th>
-										<th>문서 서식</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="docu : ${ documentList }">
 										<td class="t_center pop_btn" th:text="${ docu.no }"></td>
 										<td class="t_center pop_btn" th:text="${ docu.name }"></td>
-										<td class="t_center pop_btn" th:text="${ docu.form }"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -163,29 +164,15 @@
 						</div>
 						<div class="tableArea">
 						<form action="/admin/newDocu" method="post">
-							<table>
-								<colgroup>
-								</colgroup>
-								<thead>
-									<tr>
-										<th>문서 이름</th>
-										<th>문서 서식</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="name">
-										</td>
-										<td>
-											<textarea rows="5" cols="70" name="form"></textarea>
-										</td>
-										
-									</tr>
-								</tbody>
-							</table>
+							<div class="pop_inner">
+								문서 이름 :  <input type="text" name="name">
+							</div>
+							<div class="pop_inner">
+								<span>문서 서식</span>
+								<textarea class="summer_note" name="form"></textarea>
+							</div>
 							<div class="btn_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_document_pop">추가</button> 
+								<button type="submit" class="blue_btn pop_close mr-1" data-button="new_document_pop">추가</button> 
 								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_document_pop">닫기</a>
 							</div>
 						</form>
@@ -234,6 +221,27 @@
 			
 			clearInterval(timer);
 		}, 100);
+		
+		$('.summer_note').summernote({
+			lang: "ko-KR",
+			tabsize: 1,
+			width : 800,
+			height : 360,
+			toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],	
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+		});
 	</script>
 	
 	<!-- dataTable -->

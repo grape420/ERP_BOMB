@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
+import com.greedy.erp_bomb.ea.model.dto.DocumentFormDTO;
 import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
@@ -201,6 +202,8 @@ public class EaContorller {
 		List<EADTO> myEaPathList = eaService.findMyEaPathList(userName);
 		List<EADTO> myEaCarbonList = eaService.findMyEaCarbonList(userName);
 		
+		List<DocumentFormDTO> documentFormList = eaService.findeDocumentFormList();
+		
 		myEaList = eaSort(myEaList);
 		myEaPathList = eaSort(myEaPathList);
 		myEaCarbonList = eaSort(myEaCarbonList);
@@ -295,10 +298,9 @@ public class EaContorller {
 			}
 		}
 		
-		model.addAttribute("test", "<TABLE border=\"1\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;border:none;\"><TR><TD colspan=\"6\" width=\"900\" height=\"150\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre STYLE=\"text-align:center;\"><SPAN STYLE=\"font-size:20.0pt; line-height:150%;\">업  무  보  고  서</SPAN></pre></TD></TR><TR><TD width=\"64\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\">  작성일 </SPAN></pre></TD><TD colspan=\"2\" width=\"280\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD><TD width=\"64\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\">  작성자  </SPAN></pre></TD><TD colspan=\"2\" width=\"280\" height=\"50\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR><TR><TD width=\"64\" height=\"176\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\"> 업무내용 </SPAN></pre></TD><TD colspan=\"5\" width=\"613\" height=\"400\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR><TR><TD width=\"64\" height=\"81\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\"> 특이사항 </SPAN></pre></TD><TD colspan=\"5\" width=\"613\" height=\"150\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR><TR><TD width=\"64\" height=\"81\" valign=\"middle\" style=\"border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"><pre><SPAN style=\"font-size: 16px;\">  비  고</SPAN></pre></TD><TD colspan=\"5\" width=\"613\" height=\"150\" valign=\"middle\" style=\"border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt\"></TD></TR></TABLE>");
-		
 		Collections.sort(allEaList);
 		
+		model.addAttribute("documentFormList", documentFormList);
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
