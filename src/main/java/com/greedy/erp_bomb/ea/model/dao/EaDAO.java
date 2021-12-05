@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.greedy.erp_bomb.ea.model.dto.AddendumDTO;
+import com.greedy.erp_bomb.ea.model.dto.DocumentFormDTO;
 import com.greedy.erp_bomb.ea.model.dto.EACarbonDTO;
 import com.greedy.erp_bomb.ea.model.dto.EADTO;
 import com.greedy.erp_bomb.ea.model.dto.EAPathDTO;
@@ -235,6 +236,7 @@ public class EaDAO {
 
 	public void eaReturn(String userName, int eaNo) {
 		String jpql = "SELECT a FROM EAPathDTO as a WHERE a.ea.serialNo = :eaNo AND a.member.name = :userName";
+		
 		EAPathDTO eaPath = em.createQuery(jpql, EAPathDTO.class)
 							 .setParameter("eaNo", eaNo)
 							 .setParameter("userName", userName)
@@ -247,6 +249,11 @@ public class EaDAO {
 
 	public void deleteEa(String userName, int eaNo) {
 		em.remove(em.find(EADTO.class, eaNo));
+	}
+
+	public List<DocumentFormDTO> findeDocumentFormList() {
+		String jpql = "SELECT a FROM DocumentFormDTO as a";
+		return em.createQuery(jpql, DocumentFormDTO.class).getResultList();
 	}
 	
 }
