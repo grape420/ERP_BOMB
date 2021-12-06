@@ -1,11 +1,10 @@
 package com.greedy.erp_bomb.board.controller;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +64,7 @@ public class BoardController {
 	/* 사내게시판 대댓글 시작 */ 
 	@GetMapping(value = "/replyComment", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public CommentDTO replyComment(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public CommentDTO replyComment(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		CommentDTO replyCm = new CommentDTO();
 		CommentDTO refAd = new CommentDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -77,7 +76,7 @@ public class BoardController {
 		replyCm.setDate(new java.sql.Date(System.currentTimeMillis()));
 		replyCm.setStatus("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		replyCm.setMember(drafter);
 		
 		replyCm = boardService.replyComment(replyCm);
@@ -102,7 +101,7 @@ public class BoardController {
 	
 	@GetMapping(value = "/addComment", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public CommentDTO addComment(@RequestParam int no, @RequestParam String content, Principal principal, Model model) {
+	public CommentDTO addComment(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		CommentDTO addAd = new CommentDTO();
 		BoardDTO bt = new BoardDTO();
 		MemberDTO drafter = new MemberDTO();
@@ -115,7 +114,7 @@ public class BoardController {
 		addAd.setDate(new java.sql.Date(System.currentTimeMillis()));
 		addAd.setStatus("N");
 		
-		drafter.setName(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		drafter.setName(user.getName());
 		addAd.setMember(drafter);
 		
 		addAd = boardService.addComment(addAd);
@@ -148,10 +147,9 @@ public class BoardController {
 	
 	@PostMapping("insertBoard")
 	public ModelAndView insertBoard(ModelAndView mv, @RequestParam String title, 
-			 @RequestParam String content, Principal principal) { 
+			 @RequestParam String content, @AuthenticationPrincipal UserImpl user) { 
 		
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
 		System.out.println(user.getName());
 		
@@ -201,14 +199,13 @@ public class BoardController {
 	
 	@PostMapping("insertNotice")
 	public ModelAndView insertNotice(ModelAndView mv, @RequestParam String title, 
-			 @RequestParam String content, Principal principal) { 
+			 @RequestParam String content, @AuthenticationPrincipal UserImpl user) { 
 		java.sql.Date nodate = new java.sql.Date(System.currentTimeMillis());
-		UserImpl us = (UserImpl)((Authentication)principal).getPrincipal();
 		
-		System.out.println(us.getName());
+		System.out.println(user.getName());
 		
 		MemberDTO member = new MemberDTO();
-		member.setName(us.getName());
+		member.setName(user.getName());
 		
 		BoardDTO notice = new BoardDTO();
 		notice.setMember(member);

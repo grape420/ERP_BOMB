@@ -141,6 +141,8 @@ CREATE TABLE "NOTE" (
 	"NOTE_SEND_DATE"	DATE		NOT NULL,
 	"NOTE_RECEPTION"	VARCHAR2(1)	DEFAULT 'N'	NOT NULL,
 	"NOTE_CONTENT"	CLOB		NOT NULL,
+	"SEND_DEL_YN"	VARCHAR2(1)	DEFAULT 'N'	NULL,
+	"RECEIVE_DEL_YN"	VARCHAR2(1)	DEFAULT 'N'	NULL,
     CONSTRAINT UK_NOTE_RECEPTION CHECK("NOTE_RECEPTION" IN ('Y', 'N'))
 );
 
@@ -150,6 +152,8 @@ COMMENT ON COLUMN "NOTE"."RECEIVE_MEMBER_NAME" IS '수신자';
 COMMENT ON COLUMN "NOTE"."NOTE_SEND_DATE" IS '발신일';
 COMMENT ON COLUMN "NOTE"."NOTE_RECEPTION" IS '수신상태';
 COMMENT ON COLUMN "NOTE"."NOTE_CONTENT" IS '내용';
+COMMENT ON COLUMN "NOTE"."SEND_DEL_YN" IS '보낸 쪽지 삭제 여부';
+COMMENT ON COLUMN "NOTE"."RECEIVE_DEL_YN" IS '받은 쪽지 삭제 여부';
 
 -- 전자 결재 테이블
 DROP TABLE "ELECTRONIC_APPROVAL" CASCADE CONSTRAINTS;
@@ -1205,9 +1209,9 @@ INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, '김지혁', '내요오오오�
                          
 -- 쪽지 테이블 INSERT
 INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, '김종현', '김지혁', SYSDATE,
-                         'Y', '내요오오오오오오옹');
+                         'Y', '내요오오오오오오옹', 'N', 'N');
 INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, '김지혁', '김종현', SYSDATE,
-                         'Y', '내요오오오오오오오오오옹');   
+                         'Y', '내요오오오오오오오오오옹', 'N', 'N');   
                          
 -- 댓글 테이블 INSERT
 INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 1, '김종현',

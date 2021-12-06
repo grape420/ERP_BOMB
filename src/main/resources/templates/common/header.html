@@ -2,8 +2,6 @@
 <html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" th:href="@{/css/common/header.css}">
 <script type="text/javascript" th:src="@{/uses/js/pagination.js}"></script>
 <title>ERP BOMB</title>
 </head>
@@ -405,14 +403,22 @@
 				receive_member[i] = $(this).data("receive");
 			});
 			
+			var type = "";
+			if($('#send_tab').hasClass('on')){
+				type = "send";
+			}else{
+				type = "receive";
+			}
+			
 			var userName = $('#userName').val();
 			var data = {};
 			data.serialNo = serialNo;
 			data.send_member = send_member;
 			data.receive_member = receive_member;
 			data.userName = userName;
+			data.type = type;
 			
-			delete_message(userName, data);
+			delete_message(userName, data, type);
 		});
 		
 		// 쪽지 개별삭제 버튼 클릭 이벤트
@@ -534,6 +540,34 @@
 				}
 			});
 		}
+		
+		// 받은 쪽지 여부 확인(1초 간격으로 확인)
+		function message() {
+			$.ajax({
+				url : "/note/getReceiveMessageCount",
+				type: 'post',
+				dataType: 'json',
+				success : function(result) {
+					if(result > 0){
+						if($('.send_note').hasClass('active')){
+					  		$('.send_note').css({'opacity': '0.5'});
+					  		$('.send_note').removeClass('active');
+				  		}else{
+				  			$('.send_note').css({'opacity': '1'});
+				  			$('.send_note').addClass('active');
+				  		}
+					}else{
+						$('.send_note').css({'opacity': '1'});
+			  			$('.send_note').addClass('active');
+					}
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+	  		
+		}
+		setInterval(message, 1000);
 		
 		// 받은쪽지 목록
 		function getreceiveMessage(name, pageNo) {
