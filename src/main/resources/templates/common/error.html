@@ -16,33 +16,19 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" th:href="@{/css/member/login.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" th:href="@{/css/common/denied.css}">	<!-- 여기에 페이지 css파일 적용 -->
 <title>ERP BOMB</title>
 </head>
 <body>
-	<header style="width: 100%; height: 20vh; background-color: #8cceea;">
+	<header id="top" style="width: 100%; height: 20vh; background-color: #8cceea;">
+		<th:block th:include="common/header"/>
 	</header>
 	
 	<section>
 		<div id="wrapper" style="height: 50vh;">
             <div class="login_div row" style="display: flex; align-items: center;">
-				<div class="col-8 login">
-					<form action="/member/login" method="POST">
-						<div class="row">
-							<div class="col-8">
-								<input type="text" name="username" id="username" class="form-control" placeholder="아이디" autofocus>
-								<br>
-								<input type="password" name="password" id="password" class="form-control" placeholder="비밀번호">
-							</div>
-							<div class="col-3">
-								<button type="submit" class="hsy-btn btn btn-lg btn-block btn-outline-dark" value="로그인">로그인</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="col-2 logo_div">
-					<img th:src="@{/uses/logo_new.png}" class="big_logo">
-				</div>
+				<h2 class="headline-2"><strong>Page Error</strong></h2>
+				<h5 class="error-info" style="width: 100%;">요청하신 페이지에 오류가 발생하였습니다.<br><br><u>입력값</u> 또는 <u>주소</u>가 잘못되어 해당 페이지를 찾을 수 없습니다.</h5>
 			</div>
 		</div>
 	</section>
@@ -50,16 +36,20 @@
 	<footer style="width: 100%; height: 30vh; background-color: #8cceea;">
 		<div class="footer-main-div row m-0">
 			<div class="footer-intro-div col">
-				<p class="group-intro-1"></p>
-				<p class="group-intro-2"></p>
+				<p class="group-intro-1">ERP BOMB · 대표 김용승 사업장소재지: 서울시 서초구 강남대로
+					441 4층 개인정보관리책임자: 김용승</p>
+				<p class="group-intro-2">
+					Copyright 2021. ERP BOMB all rights reserved.
+				</p>
 			</div>
 			<div class="footer-contact-div col-4">
-				<h5></h5>
-				<p></p>
+				<h5>고객센터 010-9288-0100</h5>
+				<p>
+					운영시간 평일 13:00 - 13:00(토 ∙ 일, 공휴일 휴무) <br> 점심시간 평일 00:00 -
+					24:00
+				</p>
 			</div>
 		</div>
 	</footer>
-	
-
 </body>
 </html>
