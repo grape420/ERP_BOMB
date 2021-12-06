@@ -33,12 +33,12 @@ public class NoteDAO {
 	}
 	
 	public void remove(NoteDTO noteDto) {	
-		noteDto = em.find(NoteDTO.class, noteDto.getSerialNo()); // 영속성 컨테스트에 저장
+		noteDto = em.find(NoteDTO.class, noteDto.getSerialNo()); // 영속성 컨텍스트에 저장
 		em.remove(noteDto); // 쪽지 삭제 
 	}
 	
 	public List<HashMap<String, Object>> getSendNoteList(String name) {
-		String jpql = "SELECT m FROM NoteDTO m WHERE m.sentMember.name = :name ORDER BY m.serialNo DESC";
+		String jpql = "SELECT m FROM NoteDTO m WHERE m.sentMember.name = :name AND m.sendDelYn = 'N' ORDER BY m.serialNo DESC";
 		
 		TypedQuery<NoteDTO> query = em.createQuery(jpql, NoteDTO.class);
 		query.setParameter("name", name);
@@ -64,7 +64,7 @@ public class NoteDAO {
 	}
 	
 	public List<HashMap<String, Object>> getSendNoteList(String name, int pageNumber) {
-		String jpql = "SELECT m FROM NoteDTO m WHERE m.sentMember.name = :name ORDER BY m.serialNo DESC";
+		String jpql = "SELECT m FROM NoteDTO m WHERE m.sentMember.name = :name AND m.sendDelYn = 'N' ORDER BY m.serialNo DESC";
 		
 		TypedQuery<NoteDTO> query = em.createQuery(jpql, NoteDTO.class);
 		int pageSize = 10; /* 페이지당 데이터 수 */
@@ -113,7 +113,7 @@ public class NoteDAO {
 	}
 	
 	public List<HashMap<String, Object>> getreceiveNoteList(String name) {
-		String jpql = "SELECT m FROM NoteDTO m WHERE m.receiveMember.name = :name ORDER BY m.serialNo DESC";
+		String jpql = "SELECT m FROM NoteDTO m WHERE m.receiveMember.name = :name AND m.receiveDelYn = 'N' ORDER BY m.serialNo DESC";
 		
 		TypedQuery<NoteDTO> query = em.createQuery(jpql, NoteDTO.class);
 		query.setParameter("name", name);
@@ -139,7 +139,7 @@ public class NoteDAO {
 	}
 	
 	public List<HashMap<String, Object>> getreceiveNoteList(String name, int pageNumber) {
-		String jpql = "SELECT m FROM NoteDTO m WHERE m.receiveMember.name = :name ORDER BY m.serialNo DESC";
+		String jpql = "SELECT m FROM NoteDTO m WHERE m.receiveMember.name = :name AND m.receiveDelYn = 'N' ORDER BY m.serialNo DESC";
 		
 		TypedQuery<NoteDTO> query = em.createQuery(jpql, NoteDTO.class);
 		int pageSize = 10; /* 페이지당 데이터 수 */
@@ -177,6 +177,26 @@ public class NoteDAO {
 		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList();
 		
 		return memberList;
+	}
+	
+	public int getReceiveMessageCount(String name) {
+		String jpql = "SELECT m FROM NoteDTO m WHERE m.receiveMember.name = :name AND m.reception = 'N'";
+		
+		TypedQuery<NoteDTO> query = em.createQuery(jpql, NoteDTO.class);
+		query.setParameter("name", name);
+		
+		List<NoteDTO> totalCount = query.getResultList();
+		
+		return totalCount.size();
+	}
+	
+	public void updateNoteDelYn(int serialNo, String type) {
+		NoteDTO noteDto = em.find(NoteDTO.class, serialNo);
+		if(type.equals("send")) {
+			noteDto.setSendDelYn("Y");
+		}else {
+			noteDto.setReceiveDelYn("Y");
+		}
 	}
 	
 }

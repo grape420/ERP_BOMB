@@ -418,7 +418,7 @@ caption {
 
 #new_note_pop, #note_detail_pop {
 	width: 514px;
-	height: 465px;
+	height: 470px !important;
 	min-width: auto;
 	min-height: auto;
 	top: 40%;

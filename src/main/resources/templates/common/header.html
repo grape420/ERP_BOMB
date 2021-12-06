@@ -55,7 +55,7 @@
 							<th>보낸/받는사람</th>
 							<th>내용</th>
 							<th>발송일자</th>
-							<th>상태</th>
+							<th>읽음 상태</th>
 						</tr>
 					</thead>
 					<tbody id="msg_send"></tbody>
@@ -89,7 +89,7 @@
 							<th>보낸/받는사람</th>
 							<th>내용</th>
 							<th>발송일자</th>
-							<th>상태</th>
+							<th>읽음 상태</th>
 						</tr>
 					</thead>
 					<tbody id="msg_receive"></tbody>
@@ -106,7 +106,6 @@
 		<!--//받은쪽지 내용-->
 		<div class="btn_area">
 			<a href="#n" class="blue_btn pop_btn" data-button="new_note_pop">신규</a>
-			<a href="#n" class="gray_btn">확인</a> 
 			<a href="#n" class="gray_btn" id="delete_message_list_btn">선택삭제</a>
 			<a href="#n" class="gray_btn pop_close" data-button="note_pop">닫기</a>
 		</div>
@@ -148,7 +147,6 @@
 			<div class="detail_note"></div>
 		</div>
 		<div class="btn_area">
-			<a href="#n" class="blue_btn" id="delete_message_btn" data-no="" data-send="" data-receive="">삭제</a>
 			<a href="#n" class="gray_btn" id="de_prev_btn" data-prev="">이전</a>
 			<a href="#n" class="gray_btn" id="de_next_btn" data-next="">다음</a>
 			<a href="#n" class="gray_btn pop_close" data-button="note_detail_pop">닫기</a>
@@ -403,14 +401,22 @@
 				receive_member[i] = $(this).data("receive");
 			});
 			
+			var type = "";
+			if($('#send_tab').hasClass('on')){
+				type = "send";
+			}else{
+				type = "receive";
+			}
+			
 			var userName = $('#userName').val();
 			var data = {};
 			data.serialNo = serialNo;
 			data.send_member = send_member;
 			data.receive_member = receive_member;
 			data.userName = userName;
+			data.type = type;
 			
-			delete_message(userName, data);
+			delete_message(userName, data, type);
 		});
 		
 		// 쪽지 개별삭제 버튼 클릭 이벤트
@@ -532,6 +538,34 @@
 				}
 			});
 		}
+		
+		// 받은 쪽지 여부 확인(1초 간격으로 확인)
+		function message() {
+			$.ajax({
+				url : "/note/getReceiveMessageCount",
+				type: 'post',
+				dataType: 'json',
+				success : function(result) {
+					if(result > 0){
+						if($('.send_note').hasClass('active')){
+					  		$('.send_note').css({'opacity': '0.5'});
+					  		$('.send_note').removeClass('active');
+				  		}else{
+				  			$('.send_note').css({'opacity': '1'});
+				  			$('.send_note').addClass('active');
+				  		}
+					}else{
+						$('.send_note').css({'opacity': '1'});
+			  			$('.send_note').addClass('active');
+					}
+				},
+				error : function(xhr) {
+					console.log("error ==> ", xhr);
+				}
+			});
+	  		
+		}
+		setInterval(message, 1000);
 		
 		// 받은쪽지 목록
 		function getreceiveMessage(name, pageNo) {

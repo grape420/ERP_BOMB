@@ -141,6 +141,8 @@ CREATE TABLE "NOTE" (
 	"NOTE_SEND_DATE"	DATE		NOT NULL,
 	"NOTE_RECEPTION"	VARCHAR2(1)	DEFAULT 'N'	NOT NULL,
 	"NOTE_CONTENT"	CLOB		NOT NULL,
+	"SEND_DEL_YN"	VARCHAR2(1)	DEFAULT 'N'	NULL,
+	"RECEIVE_DEL_YN"	VARCHAR2(1)	DEFAULT 'N'	NULL,
     CONSTRAINT UK_NOTE_RECEPTION CHECK("NOTE_RECEPTION" IN ('Y', 'N'))
 );
 
@@ -150,6 +152,8 @@ COMMENT ON COLUMN "NOTE"."RECEIVE_MEMBER_NAME" IS '수신자';
 COMMENT ON COLUMN "NOTE"."NOTE_SEND_DATE" IS '발신일';
 COMMENT ON COLUMN "NOTE"."NOTE_RECEPTION" IS '수신상태';
 COMMENT ON COLUMN "NOTE"."NOTE_CONTENT" IS '내용';
+COMMENT ON COLUMN "NOTE"."SEND_DEL_YN" IS '보낸 쪽지 삭제 여부';
+COMMENT ON COLUMN "NOTE"."RECEIVE_DEL_YN" IS '받은 쪽지 삭제 여부';
 
 -- 전자 결재 테이블
 DROP TABLE "ELECTRONIC_APPROVAL" CASCADE CONSTRAINTS;
@@ -364,11 +368,13 @@ COMMENT ON COLUMN "LA_ADDENDUM"."COMMENT_LENGTH" IS '댓글 길이';
 DROP TABLE "DOCUMENT_FORM" CASCADE CONSTRAINTS;
 CREATE TABLE "DOCUMENT_FORM" (
 	"DF_NO"	NUMBER		NOT NULL,
-	"DF_FORM"	CLOB		NOT NULL
+	"DF_FORM"	CLOB		NOT NULL,
+	"DF_NAME"	VARCHAR2(250)		NOT NULL
 );
 
 COMMENT ON COLUMN "DOCUMENT_FORM"."DF_NO" IS '양식 번호';
 COMMENT ON COLUMN "DOCUMENT_FORM"."DF_FORM" IS '서식';
+COMMENT ON COLUMN "DOCUMENT_FORM"."DF_NAME" IS '문서 이름';
 
 -- 투표 선택지 테이블
 DROP TABLE "VOTE_OPTION" CASCADE CONSTRAINTS;
@@ -1140,129 +1146,2813 @@ INSERT
   , '김종현'
   );
   
--- 아이스크림 테이블 INSERT
-INSERT
-  INTO "ICECREAM"
-  (
-    ICE_NO
-  , ICE_NAME
-  )
-  VALUES
-  (
-    SEQ_ICECREAM_CODE.NEXTVAL
-  , '베리베리 스트로베리'
-  );
-INSERT
-  INTO "ICECREAM"
-  (
-    ICE_NO
-  , ICE_NAME
-  )
-  VALUES
-  (
-    SEQ_ICECREAM_CODE.NEXTVAL
-  , '닐라닐라 바닐라'
-  );
-INSERT
-  INTO "ICECREAM"
-  (
-    ICE_NO
-  , ICE_NAME
-  )
-  VALUES
-  (
-    SEQ_ICECREAM_CODE.NEXTVAL
-  , '아빠도 외계인'
-  );
-INSERT
-  INTO "ICECREAM"
-  (
-    ICE_NO
-  , ICE_NAME
-  )
-  VALUES
-  (
-    SEQ_ICECREAM_CODE.NEXTVAL
-  , '민트초코초코'
-  );
-INSERT
-  INTO "ICECREAM"
-  (
-    ICE_NO
-  , ICE_NAME
-  )
-  VALUES
-  (
-    SEQ_ICECREAM_CODE.NEXTVAL
-  , '브루베링베링'
-  );
-  
--- 게시판 테이블 INSERT
-INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, '김종현', '내요오오오오오옹옹', SYSDATE,
-                         '제모오오오옥', 0, 1);
-INSERT INTO BOARD VALUES(SEQ_BOARD_CODE.NEXTVAL, '김지혁', '내요오오오오오옹옹옹', SYSDATE,
-                         '제모오오오오옥', 0, 2);
-                         
--- 쪽지 테이블 INSERT
-INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, '김종현', '김지혁', SYSDATE,
-                         'Y', '내요오오오오오오옹');
-INSERT INTO NOTE VALUES(SEQ_NOTE_CODE.NEXTVAL, '김지혁', '김종현', SYSDATE,
-                         'Y', '내요오오오오오오오오오옹');   
-                         
--- 댓글 테이블 INSERT
-INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 1, '김종현',
-                         '내요오오오오오옹', SYSDATE, 1, 1, 'Y');
-INSERT INTO "COMMENTS" VALUES(SEQ_COMMENT_CODE.NEXTVAL, SEQ_COMMENT_CODE.CURRVAL, 2, '김지혁',
-                         '내요오오오오오오오오옹', SYSDATE, 2, 1, 'Y');
+REM INSERTING into ERP_BOMB.DOCUMENT_FORM
+SET DEFINE OFF;
+Insert into ERP_BOMB.DOCUMENT_FORM (DF_NO,DF_FORM,DF_NAME) values (1,TO_CLOB(q'[<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
 
--- 투표 테이블 INSERT
-INSERT INTO VOTE VALUES(SEQ_VOTE_CODE.NEXTVAL, '김종현', '제모오오오오옥', '내요오오오오옹',
-                         1, SYSDATE, SYSDATE, 0);
-INSERT INTO VOTE VALUES(SEQ_VOTE_CODE.NEXTVAL, '김지혁', '제모오오오오오옥', '내요오오오오오옹',
-                         2, SYSDATE, SYSDATE, 0);
-                         
--- 투표 선택지 테이블 INSERT
-INSERT INTO VOTE_OPTION VALUES(SEQ_VOTE_CODE.CURRVAL, '김종현', '내요오오오오옹', 12);
-INSERT INTO VOTE_OPTION VALUES(SEQ_VOTE_CODE.CURRVAL, '김지혁', '내요오오오오옹', 25);
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 15">
+<meta name=Originator content="Microsoft Word 15">
+<link rel=File-List href="59c829d2154bfe]')
+|| TO_CLOB(q'[d1a7b029f6bb376a3d.files/filelist.xml">
+<title>기안서(회사용)</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>(주)예스폼 관리자 - 이강혁</o:Author>
+  <o:Keywords>본 문서의 저작권은 예스폼(yesform)에 있으며</o:Keywords>
+  <o:Description>무단 복제 및 배포시 법적인 제재를 받을 수 있습니다.</o:Description>
+  <o:Template>59c829d2154bfed1a7b029f6bb376a3d.html</o:Template>
+  <o:LastAuthor>황 성연</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>4</o:TotalTime>
+  <o:Created>2021-12-06T12:54:00Z</o:Created>
+  <o:LastSaved>2021-]')
+|| TO_CLOB(q'[12-06T12:54:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>51</o:Words>
+  <o:Characters>295</o:Characters>
+  <o:Lines>2</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:CharactersWithSpaces>345</o:CharactersWithSpaces>
+  <o:Version>16.00</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:TargetScreenSize>800x600</o:TargetScreenSize>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel=themeData href="59c829d2154bfed1a7b029f6bb376a3d.files/themedata.thmx">
+<link rel=co]')
+|| TO_CLOB(q'[lorSchemeMapping
+href="59c829d2154bfed1a7b029f6bb376a3d.files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridHorizontalSpacing>6 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>6 pt</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDraw]')
+|| TO_CLOB(q'[ingGridEvery>3</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:ValidateAgainstSchemas>false</w:ValidateAgainstSchemas>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotUnderlineInvalidXML/>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>KO</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThem]')
+|| TO_CLOB(q'[eComplexScript>
+  <w:DoNotShadeFormData/>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:AdjustLineHeightInTable/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+   <w:SelectEntireFieldWithStartOrEnd/>
+   <w:UseWord2002TableStyleRules/>
+   <w:UseWord]')
+|| TO_CLOB(q'[2010TableStyleRules/>
+   <w:DontUseIndentAsNumberingTabStop/>
+   <w:FELineBreak11/>
+   <w:WW11IndentRules/>
+   <w:DontAutofitConstrainedTables/>
+   <w:AutofitLikeWW11/>
+   <w:HangulWidthLikeWW11/>
+   <w:UseNormalStyleForList/>
+   <w:DontVertAlignCellWithSp/>
+   <w:DontBreakConstrainedForcedTables/>
+   <w:DontVertAlignInTxbx/>
+   <w:Word11KerningPairs/>
+   <w:CachedColBalance/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+  <m:mathPr>
+   <]')
+|| TO_CLOB(q'[m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="false"
+  DefSemiHidden="false" DefQFormat="fa]')
+|| TO_CLOB(q'[lse" LatentStyleCount="376">
+  <w:LsdException Locked="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 4"/>
+  <w:LsdEx]')
+|| TO_CLOB(q'[ception Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="tru]')
+|| TO_CLOB(q'[e"
+   QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="99" SemiHidden="true"
+   Name="Placeholder Text"/>]')
+|| TO_CLOB(q'[
+  <w:LsdException Locked="false" Priority="1" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1"/]')
+|| TO_CLOB(q'[>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List"/>
+  <w:LsdE]')
+|| TO_CLOB(q'[xception Locked="false" Priority="73" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="6]')
+|| TO_CLOB(q'[5" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="99" SemiHidden="true" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" QFormat="true"
+   Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" QFormat="true"
+   Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" Na]')
+|| TO_CLOB(q'[me="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 1"]')
+|| TO_CLOB(q'[/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locke]')
+|| TO_CLOB(q'[d="false" Priority="66" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" Nam]')
+|| TO_CLOB(q'[e="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 3"]')
+|| TO_CLOB(q'[/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="f]')
+|| TO_CLOB(q'[alse" Priority="71" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" Name="Med]')
+|| TO_CLOB(q'[ium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 4"]')
+|| TO_CLOB(q'[/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 5"/>
+  <w:LsdException Locked="f]')
+|| TO_CLOB(q'[alse" Priority="62" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" Nam]')
+|| TO_CLOB(q'[e="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 6"/]')
+|| TO_CLOB(q'[>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked]')
+|| TO_CLOB(q'[="false" Priority="67" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" Name]')
+|| TO_CLOB(q'[="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" QFormat="true"
+   Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" QFormat="true"
+   Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" QFormat="true"
+   Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" QFormat="true"
+   Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="]')
+|| TO_CLOB(q'[false" Priority="37" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="TOC Heading"/>
+  <w:LsdException Locked="false" Priority="41" Name="Plain Table 1"/>
+  <w:LsdException Locked="false" Priority="42" Name="Plain Table 2"/>
+  <w:LsdException Locked="false" Priority="43" Name="Plain Table 3"/>
+  <w:LsdException Locked="false" Priority="44" Name="Plain Table 4"/>
+  <w:Lsd]')
+|| TO_CLOB(q'[Exception Locked="false" Priority="45" Name="Plain Table 5"/>
+  <w:LsdException Locked="false" Priority="40" Name="Grid Table Light"/>
+  <w:LsdException Locked="false" Priority="46" Name="Grid Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark"/>
+  <w:LsdE]')
+|| TO_CLOB(q'[xception Locked="false" Priority="51" Name="Grid Table 6 Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="Grid Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 1"/>
+  <w:LsdException Locked="false"]')
+|| TO_CLOB(q'[ Priority="50" Name="Grid Table 5 Dark Accent 1"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 2"/>
+  <w:LsdException Locked="]')
+|| TO_CLOB(q'[false" Priority="49" Name="Grid Table 4 Accent 2"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 3"/>
+  <w:LsdException Lo]')
+|| TO_CLOB(q'[cked="false" Priority="48" Name="Grid Table 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 4"/>
+  <w:LsdExcept]')
+|| TO_CLOB(q'[ion Locked="false" Priority="47" Name="Grid Table 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 4"/>
+  <w:LsdException]')
+|| TO_CLOB(q'[ Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 5"/>
+  <w:LsdException Locke]')
+|| TO_CLOB(q'[d="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="fal]')
+|| TO_CLOB(q'[se" Priority="51"
+   Name="Grid Table 6 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="46" Name="List Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 D]')
+|| TO_CLOB(q'[ark"/>
+  <w:LsdException Locked="false" Priority="51" Name="List Table 6 Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="List Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 1"/>
+  <w:LsdExceptio]')
+|| TO_CLOB(q'[n Locked="false" Priority="50" Name="List Table 5 Dark Accent 1"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 2"/>
+  <w:LsdEx]')
+|| TO_CLOB(q'[ception Locked="false" Priority="49" Name="List Table 4 Accent 2"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 3"/>
+  <w]')
+|| TO_CLOB(q'[:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 4"/]')
+|| TO_CLOB(q'[>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 4"/>
+ ]')
+|| TO_CLOB(q'[ <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 5"/>
+  <w:Ls]')
+|| TO_CLOB(q'[dException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 6"/>
+  <w:LsdExcep]')
+|| TO_CLOB(q'[tion Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="99" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Mention"/>
+  <w:LsdException Locked="false" Priority="99" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Smart Hyperlink"/>
+  <w:LsdException Locked="false" Priority="99" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Hashtag"/>
+  <w]')
+|| TO_CLOB(q'[:LsdException Locked="false" Priority="99" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Unresolved Mention"/>
+  <w:LsdException Locked="false" Priority="99" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Smart Link"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:바탕;
+	panose-1:2 3 6 0 0 1 1 1 1 1;
+	mso-font-alt:Batang;
+	mso-font-charset:129;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1342176593 17757]')
+|| TO_CLOB(q'[29915 48 0 524447 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:"맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;
+	mso-font-charset:129;
+	mso-generic-font-family:modern;
+	mso-font-pitch:variable;
+	mso-font-signature:-1879048145 701988091 18 0 524289 0;}
+@font-face
+	{font-family:"\@맑은 고딕";
+	mso-font-charset:129;
+	mso-generic-font-family:mod]')
+|| TO_CLOB(q'[ern;
+	mso-font-pitch:variable;
+	mso-font-signature:-1879048145 701988091 18 0 524289 0;}
+@font-face
+	{font-family:"\@바탕";
+	panose-1:2 3 6 0 0 1 1 1 1 1;
+	mso-font-charset:129;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1342176593 1775729915 48 0 524447 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-p]')
+|| TO_CLOB(q'[agination:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-unhide:no;
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	tab-stops:center 212.6pt right 425.2pt;
+	layout-grid-mode:char;
+	text-autospace:none;
+	word-break:break]')
+|| TO_CLOB(q'[-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-unhide:no;
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	tab-stops:center 212.6pt right 425.2pt;
+	layout-grid-mode:char;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;]')
+|| TO_CLOB(q'[
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{mso-style-unhide:no;
+	margin-top:4.2pt;
+	margin-right:17.5pt;
+	margin-bottom:4.2pt;
+	margin-left:17.5pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:127%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0]')
+|| TO_CLOB(q'[pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+a:link, span.MsoHyperlink
+	{mso-style-unhide:no;
+	color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited,]')
+|| TO_CLOB(q'[ span.MsoHyperlinkFollowed
+	{mso-style-unhide:no;
+	color:#954F72;
+	mso-themecolor:followedhyperlink;
+	text-decoration:underline;
+	text-underline:single;}
+p.a, li.a, div.a
+	{mso-style-name:바탕글;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.]')
+|| TO_CLOB(q'[0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.1, li.1, div.1
+	{mso-style-name:"개요 1";
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:7.4pt;
+	t]')
+|| TO_CLOB(q'[ext-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",]')
+|| TO_CLOB(q'[serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.2, li.2, div.2
+	{mso-style-name:"개요 2";
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:17.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0]')
+|| TO_CLOB(q'[pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.3, li.3, div.3
+	{mso-style-name:"개요 3";
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	ma]')
+|| TO_CLOB(q'[rgin-bottom:0cm;
+	margin-left:27.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangu]')
+|| TO_CLOB(q'[l;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.4, li.4, div.4
+	{mso-style-name:"개요 4";
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:37.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0]')
+|| TO_CLOB(q'[pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.5, li.5, div.5
+	{mso-style-name:"개요 5";
+	mso-style-unhide:no;
+	mso-style-parent:"";]')
+|| TO_CLOB(q'[
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:47.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text]')
+|| TO_CLOB(q'[-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.6, li.6, div.6
+	{mso-style-name:"개요 6";
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:57.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0]')
+|| TO_CLOB(q'[pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.7, li.7, div.7
+	{mso-style-name:"개요 7";
+	ms]')
+|| TO_CLOB(q'[o-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:67.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-7.4pt;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280]')
+|| TO_CLOB(q'[.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a0, li.a0, div.a0
+	{mso-style-name:"쪽 번호";
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt]')
+|| TO_CLOB(q'[ 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a1, li.a1, div.a1
+	{mso-style-name:머리말;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	]')
+|| TO_CLOB(q'[margin-top:3.6pt;
+	margin-right:10.0pt;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	text-align:right;
+	line-height:115%;
+	mso-pagination:none;
+	tab-stops:40.3pt 80.6pt 120.95pt 161.25pt 201.6pt 241.9pt 282.2pt 322.55pt 362.85pt 403.2pt 443.5pt 524.15pt 564.45pt 604.8pt 645.1pt 685.4pt 725.75pt 766.05pt 806.4pt 846.7pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:]')
+|| TO_CLOB(q'[black;}
+p.a2, li.a2, div.a2
+	{mso-style-name:각주;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:13.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-13.2pt;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0]')
+|| TO_CLOB(q'[pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:9.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a3, li.a3, div.a3
+	{mso-style-name:그림캡션;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt ]')
+|| TO_CLOB(q'[240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:9.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a4, li.a4, div.a4
+	{mso-style-name:표캡션;
+	mso-style-unhi]')
+|| TO_CLOB(q'[de:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:9.0]')
+|| TO_CLOB(q'[pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a5, li.a5, div.a5
+	{mso-style-name:수식캡션;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt 240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880]')
+|| TO_CLOB(q'[.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:9.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a6, li.a6, div.a6
+	{mso-style-name:찾아보기;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:n]')
+|| TO_CLOB(q'[one;
+	tab-stops:16.05pt dotted 186.45pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:9.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.a7, li.a7, div.a7
+	{mso-style-name:예스폼;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:123%;
+	mso-pagination:none;
+	tab-stops:40.0pt 80.0pt 120.0pt 160.0pt 200.0pt ]')
+|| TO_CLOB(q'[240.0pt 280.0pt 320.0pt 360.0pt 400.0pt 440.0pt 480.0pt 520.0pt 560.0pt 600.0pt 640.0pt 680.0pt 720.0pt 760.0pt 800.0pt 840.0pt 880.0pt 920.0pt 960.0pt 1000.0pt 1040.0pt 1080.0pt 1120.0pt 1160.0pt 1200.0pt 1240.0pt 1280.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:9.0pt;
+	font-family:"바탕",serif;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+.MsoChp]')
+|| TO_CLOB(q'[Default
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	mso-fareast-font-family:바탕;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;
+	mso-footnote-separator:url("59c829d2154bfed1a7b029f6bb376a3d.files/header.html") fs;
+	mso-footnote-continuation-separator:url("59c829d2154bfed1a7b029f6bb376a3d.files/header.html") fcs;
+	mso-endnote-separator:url("59c829d2154bfed1a7b029f6bb376a3d.files/header.html") es;
+	mso-endnote-continuation-separ]')
+|| TO_CLOB(q'[ator:url("59c829d2154bfed1a7b029f6bb376a3d.files/header.html") ecs;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:55.3pt 70.85pt 55.3pt 70.85pt;
+	mso-header-margin:1.0cm;
+	mso-footer-margin:1.0cm;
+	mso-page-numbers:1;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"표준 표";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-unhide:no;
+]')
+|| TO_CLOB(q'[	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman",serif;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="2"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
 
--- 투표 참여 테이블 INSERT
-INSERT INTO VOTE_PARTICIPATION VALUES(SEQ_VOTE_CODE.CURRVAL, '김종현');
-INSERT INTO VOTE_PARTICIPATION VALUES(SEQ_VOTE_CODE.CURRVAL, '김지혁');
+<body lang=KO link=blue vlink="#954F72" style='tab-interval:40.0pt;word-wrap:
+break]')
+|| TO_CLOB(q'[-word;text-justify-trim:punctuation'>
 
--- 근태관리 테이블 INSERT
-INSERT INTO TNA VALUES(SYSDATE, '김종현', NULL);
-INSERT INTO TNA VALUES(SYSDATE, '김지혁', NULL);
+<div class=WordSection1>
 
--- 문서 양식 테이블 INSERT
-INSERT INTO DOCUMENT_FORM VALUES(SEQ_DOCUMENT_CODE.NEXTVAL, '기안서');
-INSERT INTO DOCUMENT_FORM VALUES(SEQ_DOCUMENT_CODE.NEXTVAL, '휴가계');
+<div align=center>
 
--- 퇴직금 관리 INSERT
-INSERT INTO "SP_MANAGEMENT" VALUES (SEQ_SP_CODE.NEXTVAL,'김종현', 1000000000, 18);
-INSERT INTO "SP_MANAGEMENT" VALUES (SEQ_SP_CODE.NEXTVAL,'김지혁', 5000, 18);
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .75pt;
+ mso-padding-alt:0cm .6pt 0cm .6pt;mso-border-insideh:.75pt solid windowtext;
+ mso-border-insidev:.75pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:17.1pt'>
+  <td width=361 rowspan=2 style='width:270.9pt;border:none;border-right:solid]')
+|| TO_CLOB(q'[ #6AA810 1.0pt;
+  mso-border-right-alt:solid #6AA810 .75pt;padding:0cm .6pt 0cm .6pt;
+  height:17.1pt'>
+  <p class=a7 style='line-height:normal'><b><span lang=EN-US style='font-size:
+  20.0pt;font-family:"맑은 고딕";mso-bidi-font-family:"맑은 고딕"'><a
+  href="http://www.yesform.com/z_n/forms/search.php?mrown=IT&amp;free_search=&amp;focus_count=0&amp;focus_cus=0&amp;focus_prev=0&amp;is_show_lvch=1&amp;skwid=&amp;bq=%25B9%25DF%25BC%25DB%25B4%25EB%25C0%25E5&amp;isc=&amp;q=%B1%E2%BE%C8%BC%AD&amp;x=0&amp;y=]')
+|| TO_CLOB(q'[0"><span
+  lang=EN-US style='color:black;text-decoration:none;text-underline:none'><span
+  lang=EN-US>기안서(</span></span><span lang=EN-US style='color:black;text-decoration:
+  none;text-underline:none'><span lang=EN-US>회사용)</span></span></a><o:p></o:p></span></b></p>
+  </td>
+  <td width=60 style='width:45.05pt;border:solid #6AA810 1.0pt;border-left:
+  none;mso-border-left-alt:solid #6AA810 .75pt;mso-border-alt:solid #6AA810 .75pt;
+  padding:0cm .6pt 0cm .6pt;height:17.1pt'>
+  <p class=a7 align=ce]')
+|| TO_CLOB(q'[nter style='text-align:center;line-height:normal'><span
+  class=GramE><span style='font-family:"맑은 고딕";mso-bidi-font-family:"맑은 고딕"'>담<span
+  lang=EN-US><span style='mso-spacerun:yes'>  </span></span>당</span></span><span
+  lang=EN-US style='font-family:"맑은 고딕";mso-bidi-font-family:"맑은 고딕"'><o:p></o:p></span></p>
+  </td>
+  <td width=59 style='width:44.45pt;border:solid #6AA810 1.0pt;border-left:
+  none;mso-border-left-alt:solid #6AA810 .75pt;mso-border-alt:solid #6AA810 .75pt;
+  padding:0cm .6pt ]')
+|| TO_CLOB(q'[0cm .6pt;height:17.1pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal'><span
+  lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=59 style='width:44.5pt;border:solid #6AA810 1.0pt;border-left:none;
+  mso-border-left-alt:solid #6AA810 .75pt;mso-border-alt:solid #6AA810 .75pt;
+  padding:0cm .6pt 0cm .6pt;height:17.1pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal'><span
+  lang=EN-US style='font-family:"맑은 고딕"]')
+|| TO_CLOB(q'['><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=59 style='width:44.45pt;border:solid #6AA810 1.0pt;border-left:
+  none;mso-border-left-alt:solid #6AA810 .75pt;mso-border-alt:solid #6AA810 .75pt;
+  padding:0cm .6pt 0cm .6pt;height:17.1pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal'><span
+  lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:39.8pt'>
+  <td width=60 style='width:45]')
+|| TO_CLOB(q'[.05pt;border-top:none;border-left:none;
+  border-bottom:solid #6AA810 1.0pt;border-right:solid #6AA810 1.0pt;
+  mso-border-top-alt:solid #6AA810 .75pt;mso-border-left-alt:solid #6AA810 .75pt;
+  mso-border-alt:solid #6AA810 .75pt;padding:0cm .6pt 0cm .6pt;height:39.8pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=59 style='width:44.45pt;border-top:none;]')
+|| TO_CLOB(q'[border-left:none;
+  border-bottom:solid #6AA810 1.0pt;border-right:solid #6AA810 1.0pt;
+  mso-border-top-alt:solid #6AA810 .75pt;mso-border-left-alt:solid #6AA810 .75pt;
+  mso-border-alt:solid #6AA810 .75pt;padding:0cm .6pt 0cm .6pt;height:39.8pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=59 style='width:44.5pt;border-top:none;border-left:none;border]')
+|| TO_CLOB(q'[-bottom:
+  solid #6AA810 1.0pt;border-right:solid #6AA810 1.0pt;mso-border-top-alt:solid #6AA810 .75pt;
+  mso-border-left-alt:solid #6AA810 .75pt;mso-border-alt:solid #6AA810 .75pt;
+  padding:0cm .6pt 0cm .6pt;height:39.8pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=59 style='width:44.45pt;border-top:none;border-left:none;
+  border-bottom:solid #6AA8]')
+|| TO_CLOB(q'[10 1.0pt;border-right:solid #6AA810 1.0pt;
+  mso-border-top-alt:solid #6AA810 .75pt;mso-border-left-alt:solid #6AA810 .75pt;
+  mso-border-alt:solid #6AA810 .75pt;padding:0cm .6pt 0cm .6pt;height:39.8pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</table>
 
--- 급여 관리 INSERT
-INSERT INTO "SALARY" VALUES(SEQ_SALARY_CODE.NEXTVAL, '김종현', SYSDATE, '5000000', 2.0);
-INSERT INTO "SALARY" VALUES(SEQ_SALARY_CODE.NEXTVAL, '김지혁', SYSDATE, '50000', 0.5);
+</div>
 
--- 재고 테이블 INSERT
-INSERT INTO INVENTORY VALUES(1, 1, 200);
-INSERT INTO INVENTORY VALUES(2, 1, 200);
-INSERT INTO INVENTORY VALUES(3, 1, 300);
-INSERT INTO INVENTORY VALUES(4, 1, 400);
-INSERT INTO INVENTORY VALUES(1, 2, 100);
-INSERT INTO INVENTORY VALUES(2, 2, 200);
-INSERT INTO INVENTORY VALUES(3, 2, 200);
-INSERT INTO INVENTORY VALUES(4, 2, 300);
-INSERT INTO INVENTORY VALUES(5, 2, 400);
-INSERT INTO INVENTORY VALUES(3, 3, 300);
-INSERT INTO INVENTORY VALUES(4, 4, 400);
-INSERT INTO INVENTORY VALUES(5, 5, 500);
+<p class=a7 style='line-height:127%'><span lang=EN-US style='font-size:1.0pt;
+line-height:127%]')
+|| TO_CLOB(q'['><o:p>&nbsp;</o:p></span></p>
 
--- 입출고 내역 테이블 INSERT
-INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 1, 1, SYSDATE, 1, 100);
-INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 2, 2, SYSDATE, 2, 200);
-INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 3, 3, SYSDATE, 3, 300);
-INSERT INTO IN_OUT VALUES(SEQ_IN_OUT_CODE.NEXTVAL, 4, 4, SYSDATE, 1, 400);
+<p class=a7 style='line-height:127%'><a name=예스폼></a><span lang=EN-US
+style='font-family:"맑은 고딕";mso-hansi-font-family:"Times New Roman";mso-bidi-font-family:
+"맑은 고딕";color:white'>y<o:p></o:p></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .75pt;
+ mso-padding-alt:0cm .6pt 0cm .6pt;mso-border-insideh:.75pt solid windowtext;
+ mso-border-insi]')
+|| TO_CLOB(q'[dev:.75pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:20.3pt'>
+  <td width=39 rowspan=4 style='width:29.05pt;border:solid #A0A0A0 1.0pt;
+  mso-border-alt:solid #A0A0A0 .75pt;background:#E8F9D1;mso-shading:windowtext;
+  mso-pattern:solid #E8F9D1;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>기<span lang=EN-US><o]')
+|| TO_CLOB(q'[:p></o:p></span></span></p>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>안<span lang=EN-US><o:p></o:p></span></span></p>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>자<span lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=109 style='width:82.1pt;border:sol]')
+|| TO_CLOB(q'[id #A0A0A0 1.0pt;border-left:
+  none;mso-border-left-alt:solid #A0A0A0 .75pt;mso-border-alt:solid #A0A0A0 .75pt;
+  background:#E8F9D1;mso-shading:windowtext;mso-pattern:solid #E8F9D1;
+  padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>회<span lang=EN-US><span style='mso-spacerun:yes'>    </span></span>사<span
+  lang=EN-US><o:p></o:p></span></span]')
+|| TO_CLOB(q'[></p>
+  </td>
+  <td width=450 colspan=3 style='width:337.65pt;border:solid #A0A0A0 1.0pt;
+  border-left:none;mso-border-left-alt:solid #A0A0A0 .75pt;mso-border-alt:solid #A0A0A0 .75pt;
+  padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 style='margin-top:0cm;margin-right:5.0pt;margin-bottom:0cm;
+  margin-left:5.0pt;margin-bottom:.0001pt;line-height:normal'><span lang=EN-US
+  style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;height:20.3pt'>
+]')
+|| TO_CLOB(q'[  <td width=109 style='width:82.1pt;border-top:none;border-left:none;
+  border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;background:#E8F9D1;mso-shading:windowtext;
+  mso-pattern:solid #E8F9D1;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";]')
+|| TO_CLOB(q'[mso-bidi-font-family:
+  "맑은 고딕"'>팀<span lang=EN-US><span style='mso-spacerun:yes'>    </span></span>명<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=450 colspan=3 style='width:337.65pt;border-top:none;border-left:
+  none;border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 style='margin-t]')
+|| TO_CLOB(q'[op:0cm;margin-right:5.0pt;margin-bottom:0cm;
+  margin-left:5.0pt;margin-bottom:.0001pt;line-height:normal'><span lang=EN-US
+  style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;height:20.3pt'>
+  <td width=109 style='width:82.1pt;border-top:none;border-left:none;
+  border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt]')
+|| TO_CLOB(q'[;background:#E8F9D1;mso-shading:windowtext;
+  mso-pattern:solid #E8F9D1;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>담<span lang=EN-US><span style='mso-spacerun:yes'>    </span></span>당<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=450 colspan=3 style='width:337.65pt;border-top:none;border-left:
+  none;border-bottom:so]')
+|| TO_CLOB(q'[lid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 style='margin-top:0cm;margin-right:5.0pt;margin-bottom:0cm;
+  margin-left:5.0pt;margin-bottom:.0001pt;line-height:normal'><span lang=EN-US
+  style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;height:22.1pt'>
+  <td width=109 ]')
+|| TO_CLOB(q'[style='width:82.1pt;border-top:none;border-left:none;
+  border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;background:#E8F9D1;mso-shading:windowtext;
+  mso-pattern:solid #E8F9D1;padding:0cm .6pt 0cm .6pt;height:22.1pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-fa]')
+|| TO_CLOB(q'[mily:
+  "맑은 고딕"'>일<span lang=EN-US><span style='mso-spacerun:yes'>    </span></span>자<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=450 colspan=3 style='width:337.65pt;border-top:none;border-left:
+  none;border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;padding:0cm .6pt 0cm .6pt;height:22.1pt'>
+  <p class=a7 style='margin-top:0cm;margin-ri]')
+|| TO_CLOB(q'[ght:5.0pt;margin-bottom:0cm;
+  margin-left:5.0pt;margin-bottom:.0001pt;line-height:normal'><span
+  class=GramE><span lang=EN-US style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>20<span style='mso-spacerun:yes'>  </span></span><span
+  style='font-family:"맑은 고딕";mso-bidi-font-family:"맑은 고딕"'>년</span></span><span
+  lang=EN-US style='font-family:"맑은 고딕";mso-bidi-font-family:"맑은 고딕"'><span
+  style='mso-spacerun:yes'>  </span></span><span style='font-family:"맑은 고딕";
+  mso-bidi-font-family:"]')
+|| TO_CLOB(q'[맑은 고딕"'>월<span lang=EN-US><span
+  style='mso-spacerun:yes'>  </span></span>일<span lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;height:20.3pt'>
+  <td width=148 colspan=2 style='width:111.15pt;border:solid #A0A0A0 1.0pt;
+  border-top:none;mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-alt:solid #A0A0A0 .75pt;
+  background:#E8F9D1;mso-shading:windowtext;mso-pattern:solid #E8F9D1;
+  padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style=']')
+|| TO_CLOB(q'[text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi-font-family:
+  "맑은 고딕"'>수 신 참 조<span lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=150 style='width:112.55pt;border-top:none;border-left:none;
+  border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p cla]')
+|| TO_CLOB(q'[ss=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=150 style='width:112.5pt;border-top:none;border-left:none;
+  border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;background:#E8F9D1;mso-shading:windowtext;
+  mso-pattern:solid #E8F9D1;]')
+|| TO_CLOB(q'[padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span class=GramE><span style='font-family:"맑은 고딕";
+  mso-bidi-font-family:"맑은 고딕"'>협<span lang=EN-US><span
+  style='mso-spacerun:yes'>  </span></span>조</span></span><span lang=EN-US
+  style='font-family:"맑은 고딕";mso-bidi-font-family:"맑은 고딕"'><span
+  style='mso-spacerun:yes'>  </span></span><span style='font-family:"맑은 고딕";
+  mso-bidi-font-family:"맑은 고딕"'>팀<span]')
+|| TO_CLOB(q'[ lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=150 style='width:112.6pt;border-top:none;border-left:none;
+  border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nb]')
+|| TO_CLOB(q'[sp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;height:20.3pt'>
+  <td width=148 colspan=2 style='width:111.15pt;border:solid #A0A0A0 1.0pt;
+  border-top:none;mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-alt:solid #A0A0A0 .75pt;
+  background:#E8F9D1;mso-shading:windowtext;mso-pattern:solid #E8F9D1;
+  padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span style='font-family:"맑은 고딕";mso-bidi]')
+|| TO_CLOB(q'[-font-family:
+  "맑은 고딕"'>기안서 제목<span lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=450 colspan=3 style='width:337.65pt;border-top:none;border-left:
+  none;border-bottom:solid #A0A0A0 1.0pt;border-right:solid #A0A0A0 1.0pt;
+  mso-border-top-alt:solid #A0A0A0 .75pt;mso-border-left-alt:solid #A0A0A0 .75pt;
+  mso-border-alt:solid #A0A0A0 .75pt;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 style='margin-top:0cm;margin-right:5.0pt;margin-bottom:0cm;
+  margin-left:5.0pt;margin-]')
+|| TO_CLOB(q'[bottom:.0001pt;line-height:normal'><span lang=EN-US
+  style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;height:20.3pt'>
+  <td width=598 colspan=5 style='width:448.8pt;border:none;mso-border-top-alt:
+  solid #66A810 .75pt;padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 align=center style='text-align:center;line-height:normal;
+  word-break:keep-all'><span lang=EN-US style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <t]')
+|| TO_CLOB(q'[r style='mso-yfti-irow:7;height:20.3pt'>
+  <td width=598 colspan=5 style='width:448.8pt;border:none;border-bottom:solid #66A810 1.5pt;
+  padding:0cm .6pt 0cm .6pt;height:20.3pt'>
+  <p class=a7 style='line-height:normal'><b><span style='font-family:"맑은 고딕";
+  mso-bidi-font-family:바탕'>■</span></b><b><span style='font-family:"맑은 고딕";
+  mso-bidi-font-family:"맑은 고딕"'> 기안내용<span lang=EN-US><o:p></o:p></span></span></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8;mso-yfti-lastrow:yes;height:17.0cm'>]')
+|| TO_CLOB(q'[
+  <td width=598 colspan=5 style='width:448.8pt;border:none;border-bottom:solid #66A810 1.0pt;
+  mso-border-top-alt:solid #66A810 1.5pt;mso-border-top-alt:solid #66A810 1.5pt;
+  mso-border-bottom-alt:solid #66A810 .75pt;padding:0cm .6pt 0cm .6pt;
+  height:17.0cm'>
+  <p class=a7 style='margin-top:0cm;margin-right:5.0pt;margin-bottom:0cm;
+  margin-left:5.0pt;margin-bottom:.0001pt;line-height:normal'><span lang=EN-US
+  style='font-family:"맑은 고딕"'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</table>]')
+|| TO_CLOB(q'[
+
+</div>
+
+<p class=a7 align=center style='text-align:center;line-height:127%;word-break:
+keep-all'><span lang=EN-US style='font-size:1.0pt;line-height:127%'><o:p>&nbsp;</o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
+]'),'기안서');
+Insert into ERP_BOMB.DOCUMENT_FORM (DF_NO,DF_FORM,DF_NAME) values (2,TO_CLOB(q'[<TABLE border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none;"><TR><TD colspan="5" width="900" height="150" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre STYLE="text-align:center;"><SPAN STYLE="font-size:20.0pt; line-height:150%;">휴   가   계   획   서</SPAN></pre><TR><TD width="64" height="50" valign="middle" style="border-]')
+|| TO_CLOB(q'[left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 작성일 </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD><TD width="64" height="50" valign="middle" style="bord]')
+|| TO_CLOB(q'[er-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 성  명 </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="50" valign="middle]')
+|| TO_CLOB(q'[" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 부  서</SPAN></pre></TD><TD colspan="5" width="613" height="57" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="89" va]')
+|| TO_CLOB(q'[lign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 기  간</SPAN></pre></TD><TD colspan="5"  width="305" height="89" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><br><pre><SPAN style="font-siz]')
+|| TO_CLOB(q'[e: 16px;">               년          월          일부터</SPAN></pre><pre><SPAN style="font-size: 16px;">               년          월          일까지 </SPAN></pre><pre><SPAN style="font-size: 16px;">                                                              (     )일간</SPAN></pre><br></TD></TR><TR><TD width="64" height="176" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.]')
+|| TO_CLOB(q'[1pt"><pre><SPAN style="font-size: 16px;"> 사  유</SPAN></pre></TD><TD colspan="5" width="613" height="300" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="81" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5]')
+|| TO_CLOB(q'[.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 비  고</SPAN></pre></TD><TD colspan="5" width="613" height="81" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD colspan="6" width="677" height="93" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000]')
+|| TO_CLOB(q'[000 1.1pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><br><pre><SPAN style="font-size: 16px;">  주  의</SPAN></pre><pre><SPAN>1. 신고서는 휴가의 전일까지 제출하여 주십시오.</SPAN></pre><pre><SPAN>2. 신고서는 자기 소속장의 승인을 얻어 담당부과에 제출하여 주십시오.</SPAN></pre><br></TD></TR></TABLE>]'),'휴가계획서');
+Insert into ERP_BOMB.DOCUMENT_FORM (DF_NO,DF_FORM,DF_NAME) values (3,TO_CLOB(q'[<TABLE border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none;"><TR><TD colspan="6" width="900" height="150" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre STYLE="text-align:center;"><SPAN STYLE="font-size:20.0pt; line-height:150%;">시   말   서</SPAN></pre></TD></TR><TR><TD width="64" height="50" valign="middle" style="borde]')
+|| TO_CLOB(q'[r-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  작성일 </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD><TD width="64" height="50" valign="middle" style="b]')
+|| TO_CLOB(q'[order-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  성  명  </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="50" valign="m]')
+|| TO_CLOB(q'[iddle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  부  서</SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD><TD width="64" height="50" valig]')
+|| TO_CLOB(q'[n="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  직  위  </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" he]')
+|| TO_CLOB(q'[ight="176" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  사  유  </SPAN></pre></TD><TD colspan="5" width="613" height="176" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><div style="he]')
+|| TO_CLOB(q'[ight: 300;"><br><br><br><br><br><br><br><br></div><br><pre STYLE="text-align:center;"><SPAN style="font-size: 16px;">상기기록 사실에 허위가 없습니다.</SPAN></pre><br><br><pre STYLE="text-align:right;"><SPAN style="font-size: 16px;">작성자 :          (인)       </SPAN></pre><br><br><br></TD></TR></TABLE>]'),'시말서');
+Insert into ERP_BOMB.DOCUMENT_FORM (DF_NO,DF_FORM,DF_NAME) values (4,TO_CLOB(q'[<TABLE border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none;"><TR><TD colspan="6" width="900" height="150" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre STYLE="text-align:center;"><SPAN STYLE="font-size:20.0pt; line-height:150%;">회   의   록</SPAN></pre></TD></TR><TR><TD width="64" height="50" valign="middle" style="borde]')
+|| TO_CLOB(q'[r-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  일  자</SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD><TD width="64" height="50" valign="middle" style="b]')
+|| TO_CLOB(q'[order-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  장  소  </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="50" valign="m]')
+|| TO_CLOB(q'[iddle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  작성일 </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD><TD width="64" height="50" valig]')
+|| TO_CLOB(q'[n="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  작성자  </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" hei]')
+|| TO_CLOB(q'[ght="50" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  참석자</SPAN></pre></TD><TD colspan="5" width="613" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD wi]')
+|| TO_CLOB(q'[dth="64" height="50" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  안  건</SPAN></pre></TD><TD colspan="5" width="613" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></]')
+|| TO_CLOB(q'[TR><TR><TD width="64" height="176" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 회의내용 </SPAN></pre></TD><TD colspan="5" width="613" height="400" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt]')
+|| TO_CLOB(q'[ 5.1pt"></TD></TR><TR><TD width="64" height="130" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 결정사항 </SPAN></pre></TD><TD colspan="5" width="613" height="81" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4]')
+|| TO_CLOB(q'[pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="130" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 특이사항 </SPAN></pre></TD><TD colspan="5" width="613" height="81" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4]')
+|| TO_CLOB(q'[pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR></TABLE>]'),'회의록');
+Insert into ERP_BOMB.DOCUMENT_FORM (DF_NO,DF_FORM,DF_NAME) values (5,TO_CLOB(q'[<TABLE border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none;"><TR><TD colspan="6" width="900" height="150" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 1.1pt;border-top:solid #000000 1.1pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre STYLE="text-align:center;"><SPAN STYLE="font-size:20.0pt; line-height:150%;">업  무  보  고  서</SPAN></pre></TD></TR><TR><TD width="64" height="50" valign="middle" style="b]')
+|| TO_CLOB(q'[order-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  작성일 </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD><TD width="64" height="50" valign="middle" styl]')
+|| TO_CLOB(q'[e="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  작성자  </SPAN></pre></TD><TD colspan="2" width="280" height="50" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" height="176" valig]')
+|| TO_CLOB(q'[n="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 업무내용 </SPAN></pre></TD><TD colspan="5" width="613" height="400" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD width="64" hei]')
+|| TO_CLOB(q'[ght="81" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;"> 특이사항 </SPAN></pre></TD><TD colspan="5" width="613" height="150" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD></TR><TR><TD ]')
+|| TO_CLOB(q'[width="64" height="81" valign="middle" style="border-left:solid #000000 1.1pt;border-right:solid #000000 0.4pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"><pre><SPAN style="font-size: 16px;">  비  고</SPAN></pre></TD><TD colspan="5" width="613" height="150" valign="middle" style="border-left:solid #000000 0.4pt;border-right:solid #000000 1.1pt;border-top:solid #000000 0.4pt;border-bottom:solid #000000 0.4pt;padding:1.4pt 5.1pt 1.4pt 5.1pt"></TD]')
+|| TO_CLOB(q'[></TR></TABLE>]'),'업무보고서');
+Insert into ERP_BOMB.DOCUMENT_FORM (DF_NO,DF_FORM,DF_NAME) values (6,TO_CLOB(q'[<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 15">
+<meta name=Originator content="Microsoft Word 15">
+<link rel=File-List href="사직서%2001.files]')
+|| TO_CLOB(q'[/filelist.xml">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>hoon</o:Author>
+  <o:LastAuthor>황 성연</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>317</o:TotalTime>
+  <o:Created>2021-12-06T12:59:00Z</o:Created>
+  <o:LastSaved>2021-12-06T12:59:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>32</o:Words>
+  <o:Characters>186</o:Characters>
+  <o:Lines>1</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:CharactersWithSpaces>217</o:CharactersWithSpaces>
+  <o:Version>16.00</]')
+|| TO_CLOB(q'[o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:RelyOnVML/>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel=dataStoreItem href="사직서%2001.files/item0001.xml"
+target="사직서%2001.files/props002.xml">
+<link rel=themeData href="사직서%2001.files/themedata.thmx">
+<link rel=colorSchemeMapping href="사직서%2001.files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:HideSpellingErrors/>
+  <w:HideGrammaticalErrors/>
+  <w:SpellingState>Clean</w]')
+|| TO_CLOB(q'[:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:Lid]')
+|| TO_CLOB(q'[ThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>KO</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseWord2010TableStyleRules/>
+   <w:DontGrowAutofit/>
+   <]')
+|| TO_CLOB(q'[w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  ]')
+|| TO_CLOB(q'[</m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="false"
+  DefSemiHidden="false" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="376">
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 2]')
+|| TO_CLOB(q'["/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 6"/>
+  <w]')
+|| TO_CLOB(q'[:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 1"/>
+  <w:LsdException Locked="false" SemiHidde]')
+|| TO_CLOB(q'[n="true" UnhideWhenUsed="true"
+   Name="index 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   N]')
+|| TO_CLOB(q'[ame="index 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 9"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true]')
+|| TO_CLOB(q'[" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true]')
+|| TO_CLOB(q'["
+   UnhideWhenUsed="true" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footnote text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation text"/>
+  <w:LsdException Locked="false" SemiHidden="true" Unh]')
+|| TO_CLOB(q'[ideWhenUsed="true"
+   Name="header"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footer"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index heading"/>
+  <w:LsdException Locked="false" Priority="35" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="table of figures"/>
+  <w:LsdException Locked="false" SemiHidden="tr]')
+|| TO_CLOB(q'[ue" UnhideWhenUsed="true"
+   Name="envelope address"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="envelope return"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footnote reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="line number"/>
+  <w:LsdException Locked="false" Semi]')
+|| TO_CLOB(q'[Hidden="true" UnhideWhenUsed="true"
+   Name="page number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="endnote reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="endnote text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="table of authorities"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="macro"/>
+  <w:LsdException Locked="false" SemiHidde]')
+|| TO_CLOB(q'[n="true" UnhideWhenUsed="true"
+   Name="toa heading"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="tr]')
+|| TO_CLOB(q'[ue"
+   Name="List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 4]')
+|| TO_CLOB(q'["/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 5"/>
+ ]')
+|| TO_CLOB(q'[ <w:LsdException Locked="false" Priority="10" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Closing"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Signature"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text"/>
+  <w:LsdException Lo]')
+|| TO_CLOB(q'[cked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 4"/>
+  <w:LsdExceptio]')
+|| TO_CLOB(q'[n Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Message Header"/>
+  <w:LsdException Locked="false" Priority="11" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Salutation"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Date"/>
+  <w:LsdException Locked="false" SemiHidden="true]')
+|| TO_CLOB(q'[" UnhideWhenUsed="true"
+   Name="Body Text First Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text First Indent 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Heading"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text 3"/>
+  <w:LsdException Locked="false" SemiHi]')
+|| TO_CLOB(q'[dden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Block Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Hyperlink"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="FollowedHyperlink"/>
+  <w:LsdException Locked="false" Prio]')
+|| TO_CLOB(q'[rity="22" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Document Map"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Plain Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="E-mail Signature"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="H]')
+|| TO_CLOB(q'[TML Top of Form"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Bottom of Form"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal (Web)"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Acronym"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Address"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="]')
+|| TO_CLOB(q'[HTML Cite"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Code"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Definition"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Keyboard"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Preformatted"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Sa]')
+|| TO_CLOB(q'[mple"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Typewriter"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Variable"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation subject"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="No List"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List ]')
+|| TO_CLOB(q'[1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple ]')
+|| TO_CLOB(q'[3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Col]')
+|| TO_CLOB(q'[orful 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="T]')
+|| TO_CLOB(q'[able Columns 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Ta]')
+|| TO_CLOB(q'[ble Grid 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 8]')
+|| TO_CLOB(q'["/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 5"/>
+  <w:L]')
+|| TO_CLOB(q'[sdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 2"/>
+  <w]')
+|| TO_CLOB(q'[:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Contemporary"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Elegant"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Professional"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Subtl]')
+|| TO_CLOB(q'[e 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Balloon Text"/>
+  <w:LsdException Locked="false" Priority="59" Name="Table Grid"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Theme"/>
+  <w:LsdException Locked="false" SemiHidden="true" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" QFormat="tr]')
+|| TO_CLOB(q'[ue" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" Name="Med]')
+|| TO_CLOB(q'[ium List 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid"]')
+|| TO_CLOB(q'[/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locke]')
+|| TO_CLOB(q'[d="false" SemiHidden="true" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" QFormat="true"
+   Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" QFormat="true"
+   Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority=]')
+|| TO_CLOB(q'["68" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Ac]')
+|| TO_CLOB(q'[cent 2"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 2"/>
+  <w:LsdExceptio]')
+|| TO_CLOB(q'[n Locked="false" Priority="67" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="]')
+|| TO_CLOB(q'[73" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Ac]')
+|| TO_CLOB(q'[cent 3"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 3"/>
+  <w:LsdException]')
+|| TO_CLOB(q'[ Locked="false" Priority="72" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64"]')
+|| TO_CLOB(q'[ Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent]')
+|| TO_CLOB(q'[ 4"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 5"/>
+  <w:LsdException Locke]')
+|| TO_CLOB(q'[d="false" Priority="63" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="]')
+|| TO_CLOB(q'[69" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent]')
+|| TO_CLOB(q'[ 6"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException]')
+|| TO_CLOB(q'[ Locked="false" Priority="68" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="1]')
+|| TO_CLOB(q'[9" QFormat="true"
+   Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" QFormat="true"
+   Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" QFormat="true"
+   Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" QFormat="true"
+   Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Bi]')
+|| TO_CLOB(q'[bliography"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="TOC Heading"/>
+  <w:LsdException Locked="false" Priority="41" Name="Plain Table 1"/>
+  <w:LsdException Locked="false" Priority="42" Name="Plain Table 2"/>
+  <w:LsdException Locked="false" Priority="43" Name="Plain Table 3"/>
+  <w:LsdException Locked="false" Priority="44" Name="Plain Table 4"/>
+  <w:LsdException Locked="false" Priority="45" Name="Plain Table 5"/>
+  <w:LsdEx]')
+|| TO_CLOB(q'[ception Locked="false" Priority="40" Name="Grid Table Light"/>
+  <w:LsdException Locked="false" Priority="46" Name="Grid Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark"/>
+  <w:LsdException Locked="false" Priority="51" Name="Grid Table 6 Colorful"/>
+  <]')
+|| TO_CLOB(q'[w:LsdException Locked="false" Priority="52" Name="Grid Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 1"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 1"/>
+  <w:LsdException Loc]')
+|| TO_CLOB(q'[ked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 2"/>
+  <w:LsdException Lo]')
+|| TO_CLOB(q'[cked="false" Priority="50" Name="Grid Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 3"/>
+  <w:LsdExcept]')
+|| TO_CLOB(q'[ion Locked="false" Priority="49" Name="Grid Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 4"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 4"/>
+  <w:Lsd]')
+|| TO_CLOB(q'[Exception Locked="false" Priority="48" Name="Grid Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 5"/>
+  ]')
+|| TO_CLOB(q'[<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 5"/>
+  <w:]')
+|| TO_CLOB(q'[LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 6"/>
+  <w:LsdExc]')
+|| TO_CLOB(q'[eption Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="46" Name="List Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark"/>
+  <w:LsdException Locked="false" Priority="51" Name="List Table 6]')
+|| TO_CLOB(q'[ Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="List Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 1"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 1"/>
+  <w:]')
+|| TO_CLOB(q'[LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 2"/>
+  <w]')
+|| TO_CLOB(q'[:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 3"/]')
+|| TO_CLOB(q'[>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 4"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Acce]')
+|| TO_CLOB(q'[nt 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Ligh]')
+|| TO_CLOB(q'[t Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful A]')
+|| TO_CLOB(q'[ccent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent ]')
+|| TO_CLOB(q'[6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Mention"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Smart Hyperlink"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Hashtag"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Unresolved Mention"/>
+  <w:LsdExcept]')
+|| TO_CLOB(q'[ion Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Smart Link"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:"맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;
+	mso-font-charset:129;
+	mso-generic-font-family:modern;
+	mso-font-pitch:variable;
+	mso-font]')
+|| TO_CLOB(q'[-signature:-1879048145 701988091 18 0 524289 0;}
+@font-face
+	{font-family:"\@맑은 고딕";
+	mso-font-charset:129;
+	mso-generic-font-family:modern;
+	mso-font-pitch:variable;
+	mso-font-signature:-1879048145 701988091 18 0 524289 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-heig]')
+|| TO_CLOB(q'[ht:115%;
+	mso-pagination:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"맑은 고딕";
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"맑은 고딕";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"맑은 고딕";
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{ms]')
+|| TO_CLOB(q'[o-style-priority:99;
+	mso-style-link:"머리글 Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:115%;
+	mso-pagination:none;
+	tab-stops:center 225.65pt right 451.3pt;
+	layout-grid-mode:char;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"맑은 고딕";
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"맑은 고딕]')
+|| TO_CLOB(q'[";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"맑은 고딕";
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-priority:99;
+	mso-style-link:"바닥글 Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:115%;
+	mso-pagination:none;
+	tab-stops:center 225.65pt ]')
+|| TO_CLOB(q'[right 451.3pt;
+	layout-grid-mode:char;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"맑은 고딕";
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"맑은 고딕";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"맑은 고딕";
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+p.MsoListParagraph, li.MsoListParagra]')
+|| TO_CLOB(q'[ph, div.MsoListParagraph
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:40.0pt;
+	mso-para-margin-top:0cm;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:4.0gd;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:115%;
+	mso-pagination:none;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"맑은 고딕";]')
+|| TO_CLOB(q'[
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"맑은 고딕";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"맑은 고딕";
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-font-kerning:1.0pt;}
+span.Char
+	{mso-style-name:"머리글 Char";
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:머리글;}
+span.Char0
+	{mso-style-name:"바닥글 Char";
+	mso-style-priority:99]')
+|| TO_CLOB(q'[;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:바닥글;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-family:"맑은 고딕";
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:10.0pt;
+	text-align:justify;
+	text-jus]')
+|| TO_CLOB(q'[tify:inter-ideograph;
+	line-height:115%;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;
+	mso-footnote-separator:url("사직서%2001.files/header.html") fs;
+	mso-footnote-continuation-separator:url("사직서%2001.files/header.html") fcs;
+	mso-endnote-separator:url("사직서%2001.files/header.html") es;
+	mso-endnote-continuation-separator:url("사직서%2001.files/header.html") ecs;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:36.0pt 36.0pt 36.0pt 36.0p]')
+|| TO_CLOB(q'[t;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1961033870;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1720252288 41867806 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-text:"%1\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:23.25pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-f]')
+|| TO_CLOB(q'[ormat:alpha-upper;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:45.25pt;
+	text-indent:-20.0pt;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:65.25pt;
+	text-indent:-20.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:85.25pt;
+	text-indent:-20.0pt;}
+@list l0:level5
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:none;
+	mso-level-numb]')
+|| TO_CLOB(q'[er-position:left;
+	margin-left:105.25pt;
+	text-indent:-20.0pt;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:125.25pt;
+	text-indent:-20.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:145.25pt;
+	text-indent:-20.0pt;}
+@list l0:level8
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:165.25pt;
+	text-indent:-20]')
+|| TO_CLOB(q'[.0pt;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:185.25pt;
+	text-indent:-20.0pt;}
+@list l1
+	{mso-list-id:2134863589;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-634469840 1763489434 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:38.0pt;
+	text-indent:-18.0pt;}
+@list l1:level2
+	{mso-level-number-]')
+|| TO_CLOB(q'[format:alpha-upper;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:60.0pt;
+	text-indent:-20.0pt;}
+@list l1:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:80.0pt;
+	text-indent:-20.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:100.0pt;
+	text-indent:-20.0pt;}
+@list l1:level5
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:none;
+	mso-level-numbe]')
+|| TO_CLOB(q'[r-position:left;
+	margin-left:120.0pt;
+	text-indent:-20.0pt;}
+@list l1:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:140.0pt;
+	text-indent:-20.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:160.0pt;
+	text-indent:-20.0pt;}
+@list l1:level8
+	{mso-level-number-format:alpha-upper;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:180.0pt;
+	text-indent:-20.0pt;]')
+|| TO_CLOB(q'[}
+@list l1:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:200.0pt;
+	text-indent:-20.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"표준 표";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-m]')
+|| TO_CLOB(q'[argin-top:0cm;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"맑은 고딕";
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"맑은 고딕";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"맑은 고딕";
+	mso-hansi-theme-font:minor-latin;
+	mso-font-kerning:1.0]')
+|| TO_CLOB(q'[pt;}
+table.MsoTableGrid
+	{mso-style-name:"표 구분선";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-priority:59;
+	mso-style-unhide:no;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	f]')
+|| TO_CLOB(q'[ont-family:"맑은 고딕";
+	mso-ascii-font-family:"맑은 고딕";
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"맑은 고딕";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"맑은 고딕";
+	mso-hansi-theme-font:minor-latin;
+	mso-font-kerning:1.0pt;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="2"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+]')
+|| TO_CLOB(q'[<body lang=KO style='tab-interval:40.0pt;word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+  height:42.4pt'>
+  <td width=454 style='width:340.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid w]')
+|| TO_CLOB(q'[indowtext .5pt;padding:0cm 5.4pt 2.85pt 5.4pt;height:42.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:22.0pt'>사 <span lang=EN-US><span
+  style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'> </span></span>직
+  <span lang=EN-US><span style='mso-spacerun:yes'>  </span><span
+  style='mso-spacerun:yes'> </span></span>서<span lang=EN-US><o:p></o:p></span></span></b></p]')
+|| TO_CLOB(q'[>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal style='margin-bottom:6.0pt;mso-para-margin-bottom:.5gd;
+line-height:normal'><span lang=EN-US style='mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:6.0pt;mso-para-margin-bottom:.5gd;
+line-height:normal'><span lang=EN-US style='mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<div align=right>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collaps]')
+|| TO_CLOB(q'[e;border:none;mso-border-alt:solid windowtext 1.5pt;
+ mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-border-insideh:
+ .75pt solid windowtext;mso-border-insidev:.75pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:7.95pt'>
+  <td width=28 rowspan=2 style='width:21.25pt;border:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.0pt;mso-border-alt:solid windowtext 1.5pt;
+  mso-border-right-alt:solid windowtext .75pt;padding:0cm 0cm 0cm 0cm;
+  height:]')
+|| TO_CLOB(q'[7.95pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><span style='mso-bidi-font-size:10.0pt'>결<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><span style='mso-bidi-font-size:10.0pt'>제<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=66 style='width:49.6pt;border-top:solid windowtext 1.5pt;
+  border-left:none;border-bottom:]')
+|| TO_CLOB(q'[solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-top-alt:solid windowtext 1.5pt;padding:0cm 0cm 0cm 0cm;height:
+  7.95pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><span style='mso-bidi-font-size:10.0pt'>담당자<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=66 style='width:49.6pt;border-top:solid windowtext 1.5pt;]')
+|| TO_CLOB(q'[
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-top-alt:solid windowtext 1.5pt;padding:0cm 0cm 0cm 0cm;height:
+  7.95pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><span style='mso-bidi-font-size:10.0pt'>팀 장<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+  <td width=66 style='width:49.65pt]')
+|| TO_CLOB(q'[;border-top:solid windowtext 1.5pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-top-alt:solid windowtext 1.5pt;padding:0cm 0cm 0cm 0cm;height:
+  7.95pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><span style='mso-bidi-font-size:10.0pt'>이 사<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+]')
+|| TO_CLOB(q'[  <td width=65 style='width:48.4pt;border-top:solid windowtext 1.5pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:.75pt;mso-border-bottom-alt:.75pt;mso-border-right-alt:
+  1.5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:
+  0cm 0cm 0cm 0cm;height:7.95pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+]')
+|| TO_CLOB(q'[  line-height:normal'><span style='mso-bidi-font-size:10.0pt'>대표이사<span
+  lang=EN-US><o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:40.05pt'>
+  <td width=66 style='width:49.6pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.5pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;mso-border-alt:
+  solid windowtext .75pt;mso-border-bottom-alt:solid win]')
+|| TO_CLOB(q'[dowtext 1.5pt;
+  padding:0cm 0cm 0cm 0cm;height:40.05pt'>
+  <p class=MsoNormal align=center style='margin-bottom:6.0pt;mso-para-margin-bottom:
+  .5gd;text-align:center;line-height:normal'><span lang=EN-US style='mso-bidi-font-size:
+  10.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=66 style='width:49.6pt;border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.5pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .75pt;mso-border-left-alt:solid window]')
+|| TO_CLOB(q'[text .75pt;mso-border-alt:
+  solid windowtext .75pt;mso-border-bottom-alt:solid windowtext 1.5pt;
+  padding:0cm 0cm 0cm 0cm;height:40.05pt'>
+  <p class=MsoNormal align=center style='margin-bottom:6.0pt;mso-para-margin-bottom:
+  .5gd;text-align:center;line-height:normal'><span lang=EN-US style='mso-bidi-font-size:
+  10.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=66 style='width:49.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.5pt;border-right:solid windowtext]')
+|| TO_CLOB(q'[ 1.0pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;
+  mso-border-alt:solid windowtext .75pt;mso-border-bottom-alt:solid windowtext 1.5pt;
+  padding:0cm 0cm 0cm 0cm;height:40.05pt'>
+  <p class=MsoNormal align=center style='margin-bottom:6.0pt;mso-para-margin-bottom:
+  .5gd;text-align:center;line-height:normal'><span lang=EN-US style='mso-bidi-font-size:
+  10.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=65 style='width:48.4pt;border-top:none;bor]')
+|| TO_CLOB(q'[der-left:none;border-bottom:
+  solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;mso-border-top-alt:
+  solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;padding:
+  0cm 0cm 0cm 0cm;height:40.05pt'>
+  <p class=MsoNormal align=center style='margin-bottom:6.0pt;mso-para-margin-bottom:
+  .5gd;text-align:center;line-height:normal'><span lang=EN-US style='mso-bidi-font-size:
+  10.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal style='margin]')
+|| TO_CLOB(q'[-bottom:6.0pt;mso-para-margin-bottom:.5gd;
+line-height:normal'><span lang=EN-US style='font-size:1.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:5.4pt;border-collapse:collapse;border:none;mso-border-alt:
+ solid windowtext 1.5pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+ mso-border-insideh:.75pt solid windowtext;mso-border-insidev:.75pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;heig]')
+|| TO_CLOB(q'[ht:1.0cm;mso-height-rule:
+  exactly'>
+  <td width=132 style='width:99.25pt;border-top:1.5pt;border-left:1.5pt;
+  border-bottom:1.0pt;border-right:1.0pt;border-color:windowtext;border-style:
+  solid;mso-border-top-alt:1.5pt;mso-border-left-alt:1.5pt;mso-border-bottom-alt:
+  .75pt;mso-border-right-alt:.75pt;mso-border-color-alt:windowtext;mso-border-style-alt:
+  solid;background:#E6EEFA;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:
+  exactly'>
+  <p class=MsoNormal align=center style='m]')
+|| TO_CLOB(q'[argin-bottom:0cm;text-align:center;
+  line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt'>부<span lang=EN-US style='color:black;mso-color-alt:
+  windowtext'><span style='mso-spacerun:yes'>    </span></span><span
+  style='color:black;mso-color-alt:windowtext'>서</span><span lang=EN-US><o:p></o:p></span></span></b></p>
+  </td>
+  <td width=567 style='width:15.0cm;border-top:solid windowtext 1.5pt;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-r]')
+|| TO_CLOB(q'[ight:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext .75pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:.75pt;mso-border-bottom-alt:.75pt;mso-border-right-alt:
+  1.5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:
+  0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;hei]')
+|| TO_CLOB(q'[ght:1.0cm;mso-height-rule:exactly'>
+  <td width=132 style='width:99.25pt;border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-left-alt:solid windowtext 1.5pt;background:#E6EEFA;padding:0cm 5.4pt 0cm 5.4pt;
+  height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  li]')
+|| TO_CLOB(q'[ne-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;color:black;mso-color-alt:windowtext'>직<span
+  lang=EN-US><span style='mso-spacerun:yes'>    </span></span>위</span></b><b
+  style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
+  </td>
+  <td width=567 style='width:15.0cm;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-top-alt:solid w]')
+|| TO_CLOB(q'[indowtext .75pt;mso-border-left-alt:solid windowtext .75pt;
+  mso-border-alt:solid windowtext .75pt;mso-border-right-alt:solid windowtext 1.5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;height:1.0cm;mso-height-rule:exactly'>
+  <td width=132 style='width:99.25pt;border-top:none;border-left:]')
+|| TO_CLOB(q'[solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-left-alt:solid windowtext 1.5pt;background:#E6EEFA;padding:0cm 5.4pt 0cm 5.4pt;
+  height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;color:black;]')
+|| TO_CLOB(q'[mso-color-alt:windowtext'>성 <span
+  lang=EN-US><span style='mso-spacerun:yes'>   </span></span>명</span></b><b
+  style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
+  </td>
+  <td width=567 style='width:15.0cm;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;
+  mso-border-alt:solid windowtext .75pt;m]')
+|| TO_CLOB(q'[so-border-right-alt:solid windowtext 1.5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;height:1.0cm;mso-height-rule:exactly'>
+  <td width=132 style='width:99.25pt;border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+ ]')
+|| TO_CLOB(q'[ mso-border-top-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-left-alt:solid windowtext 1.5pt;background:#E6EEFA;padding:0cm 5.4pt 0cm 5.4pt;
+  height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;color:black;mso-color-alt:windowtext'>연 <span
+  class=SpellE>락</span> 처</span></b><b style='mso-bidi-font-weight:]')
+|| TO_CLOB(q'[normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
+  </td>
+  <td width=567 style='width:15.0cm;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;
+  mso-border-alt:solid windowtext .75pt;mso-border-right-alt:solid windowtext 1.5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal styl]')
+|| TO_CLOB(q'[e='margin-bottom:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;height:1.0cm;mso-height-rule:exactly'>
+  <td width=132 style='width:99.25pt;border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-alt:solid windowtext .75pt;
+  mso-border-left-alt:solid windowtext 1.5pt;background:]')
+|| TO_CLOB(q'[#E6EEFA;padding:0cm 5.4pt 0cm 5.4pt;
+  height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;color:black;mso-color-alt:windowtext'>주<span
+  lang=EN-US><span style='mso-spacerun:yes'>    </span></span>소</span></b><b
+  style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
+  </td>
+  <td width=56]')
+|| TO_CLOB(q'[7 style='width:15.0cm;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;
+  mso-border-alt:solid windowtext .75pt;mso-border-right-alt:solid windowtext 1.5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p>&nbsp;</o:p]')
+|| TO_CLOB(q'[></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes;height:1.0cm;mso-height-rule:
+  exactly'>
+  <td width=132 style='width:99.25pt;border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-top-alt:.75pt;
+  mso-border-left-alt:1.5pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:
+  .75pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;b]')
+|| TO_CLOB(q'[ackground:
+  #E6EEFA;padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+  line-height:normal'><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:11.0pt;color:black;mso-color-alt:windowtext'>퇴사희망일</span></b><b
+  style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
+  </td>
+  <td width=567 style='width:15.0cm;border-top:none;border-left:none;]')
+|| TO_CLOB(q'[
+  border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;
+  mso-border-top-alt:solid windowtext .75pt;mso-border-left-alt:solid windowtext .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm;mso-height-rule:exactly'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><span
+  lang=EN-US style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=M]')
+|| TO_CLOB(q'[soNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><span
+style='font-size:14.0pt;line-height:115%'>상기 본인은 개인적인 사정으로 인]')
+|| TO_CLOB(q'[하여<span lang=EN-US><o:p></o:p></span></span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><span
+style='font-size:14.0pt;line-height:115%'>상기 퇴사희망일 부로 사직하고자 <span class=SpellE>하오니</span>
+재가하여 주시기 바랍니다<span lang=EN-US>.<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin]')
+|| TO_CLOB(q'[-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><span
+class=GramE><u><span lang=EN-US style='font-size:11.0pt;line-height:115%'>20<span
+style='mso-spacerun:yes'>  </span></span></u><u><span style='font-size:11.0pt;
+line-height:1]')
+|| TO_CLOB(q'[15%'>년</span></u></span><span style='font-size:11.0pt;line-height:
+115%'> <u><span lang=EN-US><span style='mso-spacerun:yes'>  </span></span>월</u>
+<u><span style='mso-spacerun:yes'> </span><span
+style='mso-spacerun:yes'> </span>일</u><span lang=EN-US><o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=right styl]')
+|| TO_CLOB(q'[e='margin-bottom:0cm;text-align:right'><b
+style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt;line-height:
+115%'>작성자 </span></b><span style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'> </span><u><span lang=EN-US><span
+style='mso-spacerun:yes'>                 </span></span></u><span lang=EN-US>(</span>인<span
+lang=EN-US>)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal align=left style='margin-bottom:0cm;text-align:left'><span
+lang=EN-US style='mso-bidi-font-]')
+|| TO_CLOB(q'[size:10.0pt;line-height:115%'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=left style='margin-bottom:0cm;text-align:left'><span
+lang=EN-US style='mso-bidi-font-size:10.0pt;line-height:115%'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=left style='margin-bottom:0cm;text-align:left'><span
+lang=EN-US style='mso-bidi-font-size:10.0pt;line-height:115%'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><b
+style='mso-bidi-font-]')
+|| TO_CLOB(q'[weight:normal'><span style='font-size:14.0pt;line-height:
+115%'>주식회사 회사명</span></b></p>
+
+</div>
+
+</body>
+
+</html>
+]'),'사직서');
+
 
 COMMIT;

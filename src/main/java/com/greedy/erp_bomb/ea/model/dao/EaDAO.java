@@ -241,7 +241,7 @@ public class EaDAO {
 	}
 
 	public List<DocumentFormDTO> findeDocumentFormList() {
-		String jpql = "SELECT a FROM DocumentFormDTO as a";
+		String jpql = "SELECT a FROM DocumentFormDTO as a ORDER BY a.no";
 		return em.createQuery(jpql, DocumentFormDTO.class).getResultList();
 	}
 	
