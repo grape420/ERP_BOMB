@@ -9,6 +9,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 
@@ -33,16 +34,22 @@ public class VoteOptionDTO implements Serializable {
 	
 	@Column(name = "NUMBER_VOTE")
 	private int voteCount;
+	
+	@Transient
+	private int topVote;
 
 	public VoteOptionDTO() {
 	}
-	public VoteOptionDTO(VoteDTO vote, MemberDTO member, String desc, int voteCount) {
+	
+	public VoteOptionDTO(VoteDTO vote, MemberDTO member, String desc, int voteCount, int topVote) {
+		super();
 		this.vote = vote;
 		this.member = member;
 		this.desc = desc;
 		this.voteCount = voteCount;
+		this.topVote = topVote;
 	}
-	
+
 	public VoteDTO getVote() {
 		return vote;
 	}
@@ -71,9 +78,20 @@ public class VoteOptionDTO implements Serializable {
 		return serialVersionUID;
 	}
 	
+	public int getTopVote() {
+		return topVote;
+	}
+
+	public void setTopVote(int topVote) {
+		this.topVote = topVote;
+	}
+
 	@Override
 	public String toString() {
 		return "VoteOptionDTO [vote=" + vote.getTitle() + ", member=" + member.getName() + ", desc=" + desc + ", voteCount=" + voteCount
-				+ "]";
+				+ ", topVote=" + topVote + "]";
 	}
+
+	
+	
 }

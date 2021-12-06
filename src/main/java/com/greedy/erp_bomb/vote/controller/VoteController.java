@@ -100,6 +100,15 @@ public class VoteController {
 	public VoteDTO voteDetail(@RequestParam int detailnum) {
 		
 		VoteDTO voteDetail = voteService.selectVoteDetail(detailnum);
+		int[] voteEqual = new int[voteDetail.getVoteOptionList().size()];
+		int max = 0;
+		
+		for(int i = 0; i < voteEqual.length; i++) {
+			voteEqual[i] = voteDetail.getVoteOptionList().get(i).getVoteCount();
+			if(max < voteEqual[i]){
+                max = voteEqual[i];
+            }
+		}
 		
 		/* json 문자열 반환을 위해 DTO안의 List들을 끊어냄 */
 		for (VoteOptionDTO vote : voteDetail.getVoteOptionList()) {
@@ -112,6 +121,10 @@ public class VoteController {
 			mem.setName(member);
 			
 			vote.setMember(mem);
+			
+			if(max == vote.getVoteCount()) {
+				vote.setTopVote(1);
+			}
 		}
 		
 		for (VoteParticipationDTO votePa : voteDetail.getVoteParticipationList()) {
@@ -169,7 +182,6 @@ public class VoteController {
 		result.setMember(null);
 		
 		return result;
-		
 	}
 	
 	@PostMapping(value = "plusCandi", produces = "application/json; charset=UTF-8")
@@ -189,6 +201,5 @@ public class VoteController {
 		voteOption.setDesc(candiInsert);
 		
 		voteService.insertCandidate(voteOption);
-		
 	}
 }

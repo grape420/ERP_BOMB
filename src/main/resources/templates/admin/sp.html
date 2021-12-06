@@ -17,10 +17,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
-<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -130,150 +129,194 @@
 					</div>
 
 					<!-- 테이블 -->
-					<div id="all_product" class="tab_contents inventory current">
-						<div class="tableArea">
-							<table class="Table">
-								<colgroup>
-									<col style="width: 30%" />
-									<col style="width: 40%" />
-									<col style="width: 25%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="inventory : ${ inventoryList }">
-										<td class="t_center pop_btn" th:text="${ inventory.company.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.iceCream.name }"></td>
-										<td class="t_center pop_btn" th:text="${ inventory.invenRemainStock }"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<div id="new_inventory_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>재고관리</h2>
-							<button type="button" class="pop_close" data-button="new_inventory_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/inventory/regist" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-									<col style="width: 33%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>회사 구분</th>
-										<th>아이스크림</th>
-										<th>수량</th> 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<select id="companyCode" name="companyCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<select id="icecreamCode" name="icecreamCode">
-												<!-- ajax로 처리 -->
-											</select>
-										</td>
-										<td>
-											<input type="number" name="invenRemainStock">
-										</td> 
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
+					<div id="all_retire" class="tab_contents retire current">
+							<div class="tableArea">
+								<table class="Table">
+									<caption>퇴직금 목록</caption>
+									<colgroup>
+										<col style="width:4%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+								 		<col style="width:10%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>사원 번호</th>
+											<th>이름</th>
+											<th>부서</th>
+											<th>지위/직급</th>
+											<th>재직년수</th>
+											<th>계산내역</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="sp: ${ spList }">
+											<td th:text="${ sp.spNo }"></td>
+											<td th:text="${ sp.member.empNo }"></td>
+											<td th:text="${ sp.member.name }"></td>
+											<td th:text="${ sp.member.dept.name }"></td>
+											<td th:text="${ sp.member.rank.name }"></td>
+											<td th:text="${ sp.empYear }"></td>
+											<td style="cursor: pointer;" class="pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">조회</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-						</form>
 						</div>
-					</div>
-					<!-- 입출고 추가 -->
-					<!-- 아이스크림 추가 -->
-					<div id="new_icecream_pop" class="pop_layer">
+					<!-- 퇴직금 상세 -->
+					<div class="pop_layer" th:each="sp : ${ spList }" th:attr="id=${ 'retire_detail_pop' + sp.spNo }">
 						<div class="top_area">
-							<h2>신규 아이스크림 추가</h2>
-							<button type="button" class="pop_close" data-button="new_icecream_pop">닫기</button>
+							<h2>퇴직금</h2>
+							<button type="button" class="pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</button>
 						</div>
-						<div class="tableArea">
-						<form action="/inventory/newIce" method="post">
-							<table>
-								<colgroup>
-									<col style="width: 50%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>아이스크림 이름</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="name">
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_icecream_pop">추가</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_icecream_pop">닫기</a>
+						<div class="pop_inner">
+							<div class="retire_detail">
+								<div class="top">
+									<p class="name" th:text="${'['+sp.member.name+']' + '님의 퇴직금 내역' }"></p>
+								</div>
+								<div class="tableArea">
+									<table>
+									<colgroup>
+										<col style="width:19%" />
+										<col style="width:19%" />
+										<col style="width:19%" />
+										<col style="width:19%" />
+									</colgroup>
+									<thead class="spDetailList">
+										<tr>
+											<th>이름</th>
+											<th>퇴직일자</th>
+											<th>지급일자</th>
+											<th>퇴직금</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td th:text="${ sp.member.name }"></td>
+											<td th:text="${#dates.format(sp.member.quitDate, 'yyyy-MM-dd')}"></td>
+											<td th:text="${#dates.format(sp.member.quitDate, 'yyyy-MM-dd')}"></td>
+											<td th:text="${ sp.serverancePay }"></td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-						</form>
 						</div>
-					</div>
-					<!-- 아이스크림 추가 -->
-					<div class="btm_area" style="margin-left: 10px;">
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a> 
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_icecream_pop">신규 아이스크림</a>
+						<div class="btn_area">
+							<a href="#n" class="gray_btn pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</a>
+						</div>
 					</div>
 				</div>
+					<!-- 퇴직금 추가 -->
+				<div id="new_retire_pop" class="pop_layer">
+					<div class="top_area">
+						<h2>퇴직자 퇴직금 등록</h2>
+						<button type="button" class="pop_close" data-button="new_retire_pop">닫기</button>
+					</div>
+					<form action="/admin/regSp" method="post">
+					<div class="pop_inner">
+						<div class="new_retire">
+							<div class="top">
+								<p class="name">퇴직 정보 등록</p>
+							</div>
+							<div class="tableArea">
+								<table>
+									<colgroup>
+										<col style="width:30%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>재직년수</th>
+											<th>급여</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<!-- select로 entYn이 Y인 사람만 선택되도록 변경 -->
+											<td><select name="name" id="name" required="required">
+												<option th:each="sp : ${ entYn }" th:text="${ sp.name }"></option>
+											</select></td>
+											<td><input type="text" id="empYear" name="empYear" required="required"></td>
+											<td><input type="text" id="serverancePay" name="serverancePay" ></td>
+											<!-- <th:block th:with="serverancePay = ${ #numbers.formatInteger(sp.member.regularPay) / 22 * 30 }">
+											<td id="serverancePay" name="serverancePay" th:text="${ numbers.formatInteger(serverancePay) }"></td>
+											</th:block> -->
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</form>
+					<div class="btn_area">
+						<!-- <a href="#n" class="blue_btn">삭제</a> -->
+						<button class="blue_btn mr-2" >등록</button>
+						<a href="#n" class="gray_btn pop_close" data-button="new_retire_pop">닫기</a>
+					</div>
+				</div>
+					<!-- 퇴직금 추가 -->
+				</div>
+			</div>
+			<div id="update_retire_pop" class="pop_layer">
+					<div class="top_area">
+						<h2>퇴직자 퇴직금 수정</h2>
+						<button type="button" class="pop_close" data-button="update_retire_pop">닫기</button>
+					</div>
+					<form action="/sp/updateSp" method="post">
+					<div class="pop_inner">
+						<div class="update_retire">
+							<div class="top">
+								<p class="name">퇴직 정보 수정</p>
+							</div>
+							<div class="tableArea">
+								<table>
+									<colgroup>
+										<col style="width:30%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>재직년수</th>
+											<th>퇴직금</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<select required="required" name="name" id="name1">
+													<option th:each="sp : ${ spList }" th:text="${ sp.member.name }"></option>
+												</select>
+											</td>
+											<!-- <td><input type="text" id="name1" name="name"></td> -->
+											<td><input type="text" id="empYear1" name="empYear" required="required"></td>
+											<td><input type="text" id="serverancePay1" name="serverancePay" required="required"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<div class="btn_area">
+						<button class="blue_btn mr-2">수정</button>
+						<a href="#n" class="gray_btn pop_close" data-button="update_retire_pop">닫기</a>
+					</div>
+				</div>
+				</form>
+			</div>
+			<div class="btn_area" style="margin-left: 10px;">
+				<a href="#n" class="blue_btn pop_btn" data-button="new_retire_pop">신규</a>
+				<a href="#n" class="gray_btn pop_btn" data-button="update_retire_pop">수정</a>
 			</div>
 		</div>
 	</section>
 	
 	<script>
-		$.ajax({
-			url: "/inventory/company",
-			success: function(data){
-				const $companyCode = $("#companyCode");
-				$companyCode.html("");
-				
-				for (let i in data){
-					$companyCode.append($("<option>").val(data[i].serialNo).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		});
-		
-		$.ajax({
-			url: "/inventory/icecream",
-			success: function(data){
-				const $icecreamCode = $("#icecreamCode");
-				$icecreamCode.html("");
-				
-				for (let i in data){
-					$icecreamCode.append($("<option>").val(data[i].no).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		});
 		
 		/* dataTable */
 		var timer = setInterval(function() {

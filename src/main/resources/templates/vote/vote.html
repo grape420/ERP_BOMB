@@ -30,6 +30,10 @@
 		float: right;
 		text-align: right;
 	}
+	
+	#topVote{
+		color: green;
+	}
 </style>
 
 <title>ERP BOMB</title>
@@ -402,7 +406,7 @@
 				<button type="button" class="pop_close" data-button="vote-detail">닫기</button>
 			</div>
 			<div class="pop_inner">
-				<button type="button" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;" onclick="resultVote()">결과보기</button>
+				<button type="button" id="ddd" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;" onclick="resultVote()">중간결과</button>
 				<p id="titleVo"></p>
 				<hr>
 				<p id="contentVo"></p> 
@@ -456,6 +460,8 @@
 	
 	
 	<script>
+	let exT;
+	
 	/* 신규 투표작성 */
 	function insertVote(){
 		var titleFlag = false;
@@ -524,11 +530,16 @@
 	      success: function(data){
 	         var date1 = new Date(data.endDate);
 	         var voteCheckFlag = false;
+	         var topMath = Math.max(date.voteOptionList);
 	         
 	         if(date > date1){
 	            vvote = true;
 	            candi = true;
 	            voteCheckFlag = true;
+	            
+	            $("#ddd").css("display","none");
+	         } else {
+	        	 $("#ddd").css("display","block");
 	         }
 	         
 	         for(var index in data.voteParticipationList){
@@ -541,14 +552,20 @@
 	         title.text("제목 : " + data.title);                        
 	         content.text("내용 : " + data.content);
 	         
-	         title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
+	         exT = data.serialNo;
 	         
 	         if(data.voteOptionList != ""){
 	            
 	            for(var index in data.voteOptionList){
 	               $index = "vote" + index;
 	               
-	               if(voteCheckFlag){
+	               if(date > date1){
+	            	   if(data.voteOptionList[index].topVote == 1){
+	            		   voteList.append("<li id='topVote'><h6>" + data.voteOptionList[index].desc + "<label style='float:right; margin-right:5px'>" + data.voteOptionList[index].voteCount + " 표" + "</label></h6></li>")	   
+	            	   } else {
+	            		   voteList.append("<li><h6>" + data.voteOptionList[index].desc + "<label style='float:right; margin-right:5px'>" + data.voteOptionList[index].voteCount + " 표" + "</label></h6></li>")   
+	            	   }
+	               } else if(voteCheckFlag){
 	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
 	               } else {
 	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
@@ -557,18 +574,12 @@
 	               if(bob == data.voteOptionList[index].member.name ){
 	                  candi = true;
 	               }
-	               
 	            }
-	            
-	            
 	            
 	            if(date > date1){
 	               vvote = true;
 	               candi = true;
 	            }
-	            
-	            /* Controller로 보내기위한 임의적인 input */
-	            voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
 	            
 	            if(!candi){
 	               buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")   ;   
@@ -641,7 +652,6 @@
 		/* 투표하기 */
 		function vVote(){
 			var voteFlag = false;
-			const serialNo = $(".serialNo").val();
 			var desc = $(":input:radio[name=votes]:checked").val();
 			
 			if($(".vote").is(":checked")){
@@ -655,11 +665,11 @@
 					url: "/vote/vvote",
 					type: "post",
 					data: {
-						serialNo : serialNo,
+						serialNo : exT,
 						desc : desc
 					},
 					success: function(data){
-						voteDetail(serialNo);
+						voteDetail(exT);
 					},
 					error: function(xhr){
 						console.log("에러임");
@@ -671,7 +681,6 @@
 		
 		/* 투표결과조회 */
 		function resultVote(){
-			var voteNumber = $("#pareNum").val();
 			const resultVoteBody = $("#resultVoteBody");
 			const voteResultTable = $("#voteResultTable");
 			
@@ -682,7 +691,7 @@
 				url: "/vote/resultVote",
 				type: "get",
 				data: {
-					voteNumber : voteNumber
+					voteNumber : exT
 				},
 				success: function(data){
 					
