@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +17,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
-<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -243,7 +243,7 @@
 			                  </tbody>
 			                </table>
 			              
-			              <div class="btm_area mt-2" style="text-align: center;">
+			              <div class="btn_area mt-2" style="text-align: center;">
 			              	<input type="hidden" name="name" id="newName">
 			              	<button type="submit" class="blue_btn pop_close" data-button="mem_detail_pop">수정</button>
 			              </div>
@@ -285,7 +285,7 @@
 						});
 					}
 					</script>
-					<div class="btm_area" style="margin-left: 10px;">
+					<div class="btn_area" style="margin-left: 10px;">
 						<a style="cursor: pointer;" class="blue_btn pop_btn" href="/admin/registMember">추가</a> 
 					</div>
 				</div>

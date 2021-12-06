@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +17,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
-<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -123,87 +123,52 @@
 					<h1 class="h2 text-gray-900" style="padding: 30px; display: inline;">퇴직금 관리</h1>
 					<div class="search_form">
 						<form action="/inventory/search" method="post">
+<!-- 							<input type="text" placeholder="검색어 입력" name="keyword"/>
+							<button type="submit" class="blue_btn">Search</button> -->
 						</form>
 					</div>
 
 					<!-- 테이블 -->
-					<div id="all_retire" class="tab_contents inventory current">
-						<div class="tableArea">
-							<table class="Table">
-								<colgroup>
-									<col style="width:4%" />
-									<col style="width:10%" />
-									<col style="width:10%" />
-									<col style="width:10%" />
-									<col style="width:10%" />
-									<col style="width:10%" />
-									<col style="width:10%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>번호</th>
-										<th>사원 번호</th>
-										<th>이름</th>
-										<th>부서</th>
-										<th>지위/직급</th>
-										<th>재직년수</th>
-										<th>계산내역</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="sp : ${ spList }">
-										<td class="t_center pop_btn" th:text="${ sp.spNo }"></td>
-										<td class="t_center pop_btn" th:text="${ sp.member.empNo }"></td>
-										<td class="t_center pop_btn" th:text="${ sp.member.name }"></td>
-										<td class="t_center pop_btn" th:text="${ sp.member.dept.name }"></td>
-										<td class="t_center pop_btn" th:text="${ sp.member.rank.name }"></td>
-										<td class="t_center pop_btn" th:text="${ sp.empYear }"></td>
-										<td class="t_center pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">계산 내역</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<!-- 퇴직금 추가 -->
-					<div id="new_retire_pop" class="pop_layer">
-						<div class="top_area">
-							<h2>퇴직금 관리</h2>
-							<button type="button" class="pop_close" data-button="new_retire_pop">닫기</button>
-						</div>
-						<div class="tableArea">
-						<form action="/admin/regSp" method="post">
-							<table>
-								<colgroup>
-									<col style="width:30%" />
-									<col style="width:30%" />
-									<col style="width:30%" />
-								</colgroup>
-								<thead>
-									<tr>
-										<th>이름</th>
-										<th>재직년수</th>
-										<th>급여</th> 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><select name="name" id="name" required="required">
-											<option th:each="sp : ${ entYn }" th:text="${ sp.name }"></option>
-										</select></td>
-										<td><input type="text" id="empYear" name="empYear" required="required"></td>
-										<td><input type="text" id="serverancePay" name="serverancePay" ></td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="btn_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_retire_pop">등록</button> 
-								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_retire_pop">닫기</a>
+					<div id="all_retire" class="tab_contents retire current">
+							<div class="tableArea">
+								<table class="Table">
+									<caption>퇴직금 목록</caption>
+									<colgroup>
+										<col style="width:4%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+										<col style="width:10%" />
+								 		<col style="width:10%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>사원 번호</th>
+											<th>이름</th>
+											<th>부서</th>
+											<th>지위/직급</th>
+											<th>재직년수</th>
+											<th>계산내역</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="sp: ${ spList }">
+											<td th:text="${ sp.spNo }"></td>
+											<td th:text="${ sp.member.empNo }"></td>
+											<td th:text="${ sp.member.name }"></td>
+											<td th:text="${ sp.member.dept.name }"></td>
+											<td th:text="${ sp.member.rank.name }"></td>
+											<td th:text="${ sp.empYear }"></td>
+											<td style="cursor: pointer;" class="pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">조회</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-						</form>
 						</div>
-					</div>
-					<!-- 퇴직금 상세 조회 -->
-					<div  class="pop_layer" th:each="sp : ${ spList }" th:attr="id=${ 'retire_detail_pop' + sp.spNo }">
+					<!-- 퇴직금 상세 -->
+					<div class="pop_layer" th:each="sp : ${ spList }" th:attr="id=${ 'retire_detail_pop' + sp.spNo }">
 						<div class="top_area">
 							<h2>퇴직금</h2>
 							<button type="button" class="pop_close" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">닫기</button>
@@ -245,7 +210,59 @@
 						</div>
 					</div>
 				</div>
-				<div id="update_retire_pop" class="pop_layer">
+					<!-- 퇴직금 추가 -->
+				<div id="new_retire_pop" class="pop_layer">
+					<div class="top_area">
+						<h2>퇴직자 퇴직금 등록</h2>
+						<button type="button" class="pop_close" data-button="new_retire_pop">닫기</button>
+					</div>
+					<form action="/admin/regSp" method="post">
+					<div class="pop_inner">
+						<div class="new_retire">
+							<div class="top">
+								<p class="name">퇴직 정보 등록</p>
+							</div>
+							<div class="tableArea">
+								<table>
+									<colgroup>
+										<col style="width:30%" />
+										<col style="width:30%" />
+										<col style="width:30%" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>재직년수</th>
+											<th>급여</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<!-- select로 entYn이 Y인 사람만 선택되도록 변경 -->
+											<td><select name="name" id="name" required="required">
+												<option th:each="sp : ${ entYn }" th:text="${ sp.name }"></option>
+											</select></td>
+											<td><input type="text" id="empYear" name="empYear" required="required"></td>
+											<td><input type="text" id="serverancePay" name="serverancePay" ></td>
+											<!-- <th:block th:with="serverancePay = ${ #numbers.formatInteger(sp.member.regularPay) / 22 * 30 }">
+											<td id="serverancePay" name="serverancePay" th:text="${ numbers.formatInteger(serverancePay) }"></td>
+											</th:block> -->
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</form>
+					<div class="btn_area">
+						<!-- <a href="#n" class="blue_btn">삭제</a> -->
+						<button class="blue_btn mr-2" >등록</button>
+						<a href="#n" class="gray_btn pop_close" data-button="new_retire_pop">닫기</a>
+					</div>
+				</div>
+					<!-- 퇴직금 추가 -->
+				</div>
+			</div>
+			<div id="update_retire_pop" class="pop_layer">
 					<div class="top_area">
 						<h2>퇴직자 퇴직금 수정</h2>
 						<button type="button" class="pop_close" data-button="update_retire_pop">닫기</button>
@@ -292,10 +309,11 @@
 				</div>
 				</form>
 			</div>
-				<div class="btm_area" style="margin-left: 10px;">
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_retire_pop">등록</a> 
-						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="update_retire_pop">수정</a>
-				</div>
+			<div class="btn_area" style="margin-left: 10px;">
+				<a href="#n" class="blue_btn pop_btn" data-button="new_retire_pop">신규</a>
+				<a href="#n" class="gray_btn pop_btn" data-button="update_retire_pop">수정</a>
+			</div>
+		</div>
 	</section>
 	
 	<script>
@@ -327,7 +345,7 @@
 	               /* 구조 설정 태그 안에 글자는 div클래스명 */
 	               "dom": 't<"fDiv"f><"pDiv"p>',
 	               "aoColumnDefs": [
-	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3 ] }
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2 ] }
 	                ]
 	        });
 			

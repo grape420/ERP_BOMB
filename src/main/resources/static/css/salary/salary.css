@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
+.fDiv {
+	float: left;
+	text-align: left;
+	margin-left: 5px;
+}
+
+.pDiv {
+	float: right;
+	text-align: right;
+}
+
 *, .ul-tab {
 	padding: 0;
 	margin: 0;

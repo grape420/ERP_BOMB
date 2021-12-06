@@ -2,7 +2,6 @@
 <html xmlns:th="https://www.thymeleaf.org"	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/css/common/header.css}">
 <script type="text/javascript" th:src="@{/uses/js/pagination.js}"></script>
 <title>ERP BOMB</title>
 </head>
@@ -33,11 +32,7 @@
 			<h2>쪽지</h2>
 			<button type="button" class="pop_close" data-button="note_pop">닫기</button>
 		</div>
-		<!-- <div class="search_form">
-			<input type="text" placeholder="검색어 입력" />
-			<button type="button" class="blue_btn">Search</button>
-		</div> -->
-		<ul class="tab ul-tab mt-5">
+		<ul class="tab ul-tab mt-3">
 			<li class="on" data-tab="send_message" id="send_tab"><span>보낸쪽지</span></li>
 			<li data-tab="received_message" id="receive_tab"><span>받은쪽지</span></li>
 		</ul>
@@ -111,6 +106,7 @@
 		<!--//받은쪽지 내용-->
 		<div class="btn_area">
 			<a href="#n" class="blue_btn pop_btn" data-button="new_note_pop">신규</a>
+			<a href="#n" class="gray_btn">확인</a> 
 			<a href="#n" class="gray_btn" id="delete_message_list_btn">선택삭제</a>
 			<a href="#n" class="gray_btn pop_close" data-button="note_pop">닫기</a>
 		</div>
@@ -162,12 +158,8 @@
 
 	<hr class="m-0">
 
-	<script th:src="@{/uses/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/uses/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/uses/vendor/jquery-easing/jquery.easing.min.js}"></script>
 	<script th:src="@{/uses/js/sb-admin-2.min.js}"></script>
-	<script th:src="@{/uses/vendor/datatables/jquery.dataTables.min.js}"></script>
-	<script th:src="@{/uses/js/demo/datatables-demo.js}"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 
@@ -523,7 +515,7 @@
 							html += '<tr>';
 							html += '<td><input type="checkbox" class="send_box" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-receive="'+result.list[i].receiveMember+'"></td>';
 							html += '<td>'+result.list[i].sendMember+'/'+result.list[i].receiveMember+'</td>';
-							html += '<td class="pop_btn pointer" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-button="note_detail_pop" data-type="send">'+result.list[i].content+'</td>';
+							html += '<td class="pop_btn" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-button="note_detail_pop" data-type="send">'+result.list[i].content+'</td>';
 							html += '<td>'+result.list[i].sendDate+'</td>';
 							html += '<td>'+result.list[i].status+'</td>';
 							html += '</tr>';
@@ -560,7 +552,7 @@
 							html += '<tr>';
 							html += '<td><input type="checkbox" class="receive_box" data-no="'+result.list[i].serialNo+'" data-send="'+result.list[i].sendMember+'" data-receive="'+result.list[i].receiveMember+'"></td>';
 							html += '<td>'+result.list[i].sendMember+'/'+result.list[i].receiveMember+'</td>';
-							html += '<td class="pop_btn pointer" data-no="'+result.list[i].serialNo+'" data-button="note_detail_pop" data-type="receive">'+result.list[i].content+'</td>';
+							html += '<td class="pop_btn" data-no="'+result.list[i].serialNo+'" data-button="note_detail_pop" data-type="receive">'+result.list[i].content+'</td>';
 							html += '<td>'+result.list[i].sendDate+'</td>';
 							html += '<td>';
 							html += '<div class="status" id="status_'+result.list[i].serialNo+'">';

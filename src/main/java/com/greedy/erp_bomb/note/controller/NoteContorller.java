@@ -1,15 +1,12 @@
 package com.greedy.erp_bomb.note.controller;
 
-import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +20,6 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.note.model.dto.NoteDTO;
 import com.greedy.erp_bomb.note.model.service.NoteService;
-
 
 @Controller
 @RequestMapping("/note")
@@ -205,14 +201,14 @@ public class NoteContorller {
 	
 	@PostMapping(value = "getReceiveMember", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<HashMap<String, Object>> getReceiveMember(Principal principal) {
+	public List<HashMap<String, Object>> getReceiveMember(@AuthenticationPrincipal UserImpl user) {
 		
 		List<HashMap<String, Object>> memberList = new ArrayList<HashMap<String,Object>>();
 		
 		List<MemberDTO> findAllMember = noteService.findAllMember();
 		
 		for(MemberDTO member : findAllMember) {
-			if(!((UserImpl)((Authentication)principal).getPrincipal()).getName().equals(member.getName().toString())) {
+			if(!user.getName().equals(member.getName().toString())) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("name", member.getName());
 				memberList.add(map);

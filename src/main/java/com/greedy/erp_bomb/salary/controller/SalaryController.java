@@ -1,12 +1,9 @@
 package com.greedy.erp_bomb.salary.controller;
 
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +27,7 @@ public class SalaryController {
 	
 	/* 본인 및 모든 급여 목록 조회 */
 	@GetMapping("/salary")
-	public ModelAndView findAllMySalary(Principal principal, ModelAndView mv) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		
+	public ModelAndView findAllMySalary(@AuthenticationPrincipal UserImpl user, ModelAndView mv) {
 		List<SalaryDTO> salaryList = salaryService.findAllMySalary(user.getName());
 		List<MemberDTO> memberList = salaryService.findMemberList();
 		

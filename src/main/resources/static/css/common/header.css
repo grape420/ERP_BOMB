@@ -2,10 +2,6 @@
 	font-family: 'Noto Sans', sans-serif;
 }
 
-.pointer {
-	cursor: pointer;
-}
-
 .new_comment_pop {
 	top: 50% !important;
 }

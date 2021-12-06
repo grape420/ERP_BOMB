@@ -32,15 +32,15 @@ public class TNADTO implements Serializable {
 	private int code;
 	
 	@Transient
-	private java.util.Date utilDate;
+	private String status;
 
 	public TNADTO() {
 	}
-	public TNADTO(String date, MemberDTO member, int code, java.util.Date utilDate) {
+	public TNADTO(String date, MemberDTO member, int code, String status) {
 		this.date = date;
 		this.member = member;
 		this.code = code;
-		this.utilDate = utilDate;
+		this.status = status;
 	}
 	public String getDate() {
 		return date;
@@ -60,17 +60,18 @@ public class TNADTO implements Serializable {
 	public void setCode(int code) {
 		this.code = code;
 	}
-	public java.util.Date getUtilDate() {
-		return utilDate;
+	public String getStatus() {
+		return status;
 	}
-	public void setUtilDate(java.util.Date utilDate) {
-		this.utilDate = utilDate;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public String toString() {
-		return "TNADTO [date=" + date + ", member=" + member.getName() + ", code=" + code + ", utilDate=" + utilDate + "]";
+		return "TNADTO [date=" + date + ", member=" + member.getName() + ", code=" + code + ", status=" + status + "]";
 	}
 }

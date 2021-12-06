@@ -41,13 +41,13 @@
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
-					<li class="nav-item mr-3">
+					<li class="nav-item mr-3 tab-selected">
 						<a class="nav-link font-weight-bold" href="/ea/ea">전자결재</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
-					<li class="nav-item mr-3 tab-selected">
+					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
 					</li>
 					<li class="nav-item mr-3">
@@ -82,8 +82,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link collapsed on" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-						aria-expanded="true" aria-controls="collapseUtilities">
+					<a class="nav-link collapsed" href="/sp">
 						<span>퇴직금</span>
 					</a>
 				</li>
@@ -103,17 +102,20 @@
 				<div style="width: 80%;" class="">
 					<!-- 여기부터 퇴직금 리스트 -->
 					<div>
+						<!-- <div class="search_form">
+							<input type="text" placeholder="검색어 입력" />
+							<button type="button" class="blue_btn">Search</button>
+						</div>-->
 						<ul class="tab ul-tab">
-							<li class="li-tab electronic_approval on" data-tab="all_retire"><span>퇴직금 목록</span></li>
+							<li class="li-tab retire on" data-tab="all_retire"><span>퇴직금 목록</span></li>
 							<!-- <li class="li-tab retire" data-tab="confirm_retire"><span>퇴직금 합계</span></li> -->
 						</ul>
-						<div id="all_retire" class="tab_contents electronic_approval current">
+						<div id="all_retire" class="tab_contents retire current">
 							<div class="tableArea">
 								<table class="Table">
 									<caption>퇴직금 목록</caption>
 									<colgroup>
 										<col style="width:4%" />
-										<col style="width:10%" />
 										<col style="width:10%" />
 										<col style="width:10%" />
 										<col style="width:10%" />
@@ -128,7 +130,6 @@
 											<th>이름</th>
 											<th>부서</th>
 											<th>지위/직급</th>
-											<th>입사일</th>
 											<th>재직년수</th>
 											<th>계산내역</th>
 										</tr>
@@ -140,7 +141,6 @@
 											<td th:text="${ sp.member.name }"></td>
 											<td th:text="${ sp.member.dept.name }"></td>
 											<td th:text="${ sp.member.rank.name }"></td>
-											<td th:text="${ sp.member.joinDate }"></td>
 											<td th:text="${ sp.empYear }"></td>
 											<td class="pop_btn" th:attr="data-button=${ 'retire_detail_pop' + sp.spNo }">조회</td>
 										</tr>
@@ -148,7 +148,7 @@
 								</table>
 							</div>
 						</div>
-						<div class="btn_area">
+						<div class="btn_area" style="margin-left: 10px;>
 							<a href="#n" class="blue_btn pop_btn" data-button="new_retire_pop">신규</a>
 							<a href="#n" class="gray_btn pop_btn" data-button="update_retire_pop">수정</a>
 						</div>

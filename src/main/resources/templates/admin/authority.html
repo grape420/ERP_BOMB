@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +16,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
-<!-- 여기에 페이지 css파일 적용 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -109,9 +108,6 @@
 					<a class="nav-link mt-1" href="/admin/document">
 						<span>문서 관리</span>
 					</a>
-					<a class="nav-link mt-1" href="/admin/salary">
-						<span>급여 관리</span>
-					</a>
 				</li>
 
 
@@ -136,88 +132,102 @@
 							<table class="Table">
 								<colgroup>
 									<col style="width: 20%" />
-									<col style="width: 20%" />
-									<col style="width: 20%" />
-									<col style="width: 20%" />
-									<col style="width: 20%" />
+									<col style="width: 80%" />
 								</colgroup>
 								<thead>
 									<tr>
 										<th>사원명</th>
-										<th>회사</th>
-										<th>부서</th>
-										<th>직급</th>
 										<th>권한</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="auth : ${ authorityList }">
-										<td class="t_center pop_btn" th:text="${ auth.member.name }"></td>
-										<td class="t_center pop_btn" th:text="${ auth.member.company.name }"></td>
-										<td class="t_center pop_btn" th:text="${ auth.member.dept.name }"></td>
-										<td class="t_center pop_btn" th:text="${ auth.member.rank.name }"></td>
-										<td th:text="${ auth.authority.desc }" data-button="auth_detail_pop" style="font-weight: bold;" class="t_center pop_btn" th:attr="onclick=|authDetail('${ auth.member.name }')|"></td>
-									</tr>
+									<tr th:each="mem : ${ memberList }">
+										<td class="t_center pop_btn" th:text="${ mem.name }"></td>
+										<td class="t_center pop_btn" style="font-weight: bold;" th:attr="onclick=|authDetail('${ mem.name }')|" data-button="auth_detail_pop">
+											<th:block th:each="role : ${ mem.memberRoleList }">
+											
+												<!-- 현재 반복이 첫 번째일 경우 (값이 하나일 경우) -->
+												<th:block th:if="${ roleStat.first }" th:text="${ role.authority.desc }"/>
+												
+												<!-- 현재 반복이 첫 번째가 아닐 경우 (값이 여러개일 경우) -->
+												<th:block th:unless="${ roleStat.first }" th:text="${ ', ' + role.authority.desc }"/>
+											</th:block>
+										</td>
+									</tr> 
 								</tbody>
 							</table>
 						</div>
 					</div>
-										<!-- 권한 변경 팝업 -->
+					<!-- 권한 변경 팝업 -->
 			          <div id="auth_detail_pop" class="pop_layer">
 			            <div class="top_area">
-			              <h2>입출고 관리</h2>
+			              <h2>권한 관리</h2>
 			              <button type="button" class="pop_close" data-button="auth_detail_pop">닫기</button>
 			            </div>
 			            <div class="pop_inner">
 			              <div class="tableArea">
-			                <table>
-			                  <colgroup>
-			                    <col style="width:20%" />
-			                    <col style="width:20%" />
-			                    <col style="width:20%" />
-			                    <col style="width:20%" />
-			                    <col style="width:20%" />
-			                  </colgroup>
-			                  <thead>
-			                    <tr>
-									<th>사원명</th>
-									<th>회사</th>
-									<th>부서</th>
-									<th>직급</th>
-									<th>권한</th>
-			                    </tr>
-			                  </thead>
-			                  <tbody>
-								<tr>
-									<td id="authName">김종현</td>
-									<td id="authCompany">본사</td>
-									<td id="authDept">영업부</td>
-									<td id="authRank">과장</td>
-									<td>
-										<select>
-											<option value="1">일반회원</option>
-											<option value="2">관리자</option>
-										</select>
-									</td>
-								</tr>
-			                  </tbody>
-			                </table>
+				              <form action="/admin/updateAuth" method="post" onsubmit="return CheckForm(this)">
+				                <table>
+				                  <colgroup>
+				                    <col style="width:20%" />
+				                    <col style="width:20%" />
+				                  </colgroup>
+				                  <thead>
+				                    <tr>
+										<th>사원명</th>
+										<th>권한</th>
+				                    </tr>
+				                  </thead>
+				                  <tbody>
+									<tr>
+										<td id="authName"></td>
+										<td>
+											<input type="checkbox" id="roleMember" name="role" value="1"><label for="roleMember">일반회원</label>
+											<input type="checkbox" id="roleAdmin" name="role" value="2"><label for="roleAdmin">관리자</label>
+										</td>
+									</tr>
+				                  </tbody>
+				                </table>
+					            <div class="btn_area" style="text-align: center;">
+					            	<input type="hidden" name="name" id="newName">
+					              <button type="submit" class="blue_btn" data-button="auth_detail_pop">수정</button>
+					            </div>
+				            </form>
 			              </div>
-			            </div>
-			            <div class="btm_area" style="text-align: center;">
-			              <a href="#n" class="blue_btn pop_close" data-button="auth_detail_pop">수정</a>
 			            </div>
 			          </div>
 					<!-- 권한 변경 팝업 -->
 					
 					<script>
+					function CheckForm(Join) {
+						var isRoleCheck = false;
+						var arr_Role = document.getElementsByName("role");
+						
+						for (var i = 0; i < arr_Role.length; i++) {
+							if (arr_Role[i].checked == true) {
+								isRoleCheck = true;
+								break;
+							}
+						}
+						
+						/* if(arr_Role[0].checked == true && arr_Role[1].checked == true) {
+							$("input[type=checkbox]").prop("checked", false);
+							alert("권한은 하나만 체크하세요");
+							return false;
+						} */
+						
+						/* if(!isRoleCheck) {
+							alert("권한 종류를 한 개 이상 선택해주세요");
+							return false;
+						} */
+					}
+					
+					
+					/* 디테일 페이지에서 이름 가져옴 */
 					function authDetail(name){
-						console.log(name);
 						var detailName = name;
 						const authName = $("#authName");
-						const authCompany = $("#authCompany");
-						const authDept = $("#authDept");
-						const authRank = $("#authRank");
+						const newName = $("#newName");
 						
 						$.ajax({
 						url: "/admin/authDetail",
@@ -226,16 +236,13 @@
 							detailName : detailName
 						},
 						success: function(data){
-							console.log(data);
-							/* authName.text(data.member.name); */
-							/* authCompany.text(data.member.company.name); */
-							/* authDept.text(data.member.dept.name); */
-							/* authRank.text(data.member.rank.name); */
+							authName.text(data.name);
+							
+							newName.attr('value', data.name);
 						},
 						error: function(xhr){
-							console.log("에러임");
 							console.log(xhr);
-							 }
+						}
 						});
 					}
 					</script>
@@ -283,7 +290,7 @@
 									</tr>
 								</tbody>
 							</table>
-							<div class="btm_area mt-2" style="text-align: center;">
+							<div class="btn_area mt-2" style="text-align: center;">
 								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
 								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
 							</div>

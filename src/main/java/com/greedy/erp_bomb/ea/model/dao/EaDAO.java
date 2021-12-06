@@ -172,8 +172,6 @@ public class EaDAO {
 		addAd.getEa().getMember().getName();
 		addAd.getMember().getName();
 		
-		System.out.println(addAd);
-		
 		em.persist(addAd);
 		return addAd;
 	}
@@ -245,6 +243,10 @@ public class EaDAO {
 		eaPath.setStatus(2);
 		eaPath.setDate(new java.sql.Date(System.currentTimeMillis()));
 		eaPath.getEa().setEaStatus(3);
+	}
+
+	public void deleteEa(String userName, int eaNo) {
+		em.remove(em.find(EADTO.class, eaNo));
 	}
 	
 }

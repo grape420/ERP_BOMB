@@ -32,6 +32,7 @@ public class AdminSpController {
 		
 		List<SPDTO> spList = adminSpService.findSpList();
 		
+		/* member의 entYn이 Y인 사람만 퇴직금 등록 가능하게 변경 */
 		mv.addObject("entYn", member);
 		mv.addObject("spList", spList);
 		
