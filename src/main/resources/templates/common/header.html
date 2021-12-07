@@ -21,7 +21,7 @@
 				<li class="nav-item mr-2 ml-2 send_note"><a href="#n"
 					class="pop_btn" data-button="note_pop">쪽지</a></li>
 				<!--1107 쪽지 추가-->
-				<li class="nav-item mr-2 ml-2 mypage"><a href="/admin/authority">마이페이지</a></li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item mr-2 ml-2 mypage"><a href="/admin/authority">관리자페이지</a></li>
 			</ul>
 		</div>
 	</nav>

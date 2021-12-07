@@ -88,8 +88,35 @@
 				<hr class="sidebar-divider">
 
 				<li class="nav-item">
-					<a class="nav-link collapsed on" href="/tna/regTna">
-						<span>근태조회</span>
+					<a class="nav-link " href="/admin/authority">
+						<span>권한 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/member">
+						<span>회원 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/company">
+						<span>회사 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/rank">
+						<span>직급 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/dept">
+						<span>부서 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/icecream">
+						<span>아이스크림 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/sp">
+						<span>퇴직금 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/document">
+						<span>문서 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/salary">
+						<span>급여 관리</span>
+					</a>
+					<a class="nav-link mt-1 on" href="/admin/tna">
+						<span>근태 관리</span>
 					</a>
 				</li>
 
@@ -142,7 +169,7 @@
 											<td th:text="${detail.member.rank.name}" id="rankname"></td>
 											<td th:text="${detail.status}"></td>
 											<td><a class="blue_btn pop_btn regibut" style="margin-right: 5px; text-decoration: none;" data-button="regist_edit_pop" th:value="${detail.date}">수정</a>
-											<a class="gray_btn delWork" th:href="@{/tna/deleteWork(name=${detail.member.name},date=${detail.date})}">삭제</a>
+											<a class="gray_btn delWork" th:href="@{/admin/deleteWork(name=${detail.member.name},date=${detail.date})}">삭제</a>
 											</td>
 										</tr>
 									</tbody>
@@ -225,7 +252,7 @@
 							date = $("#regidate").text();
 							selectStat = $("#selectStat").val();
 							
-							location.href="/tna/regiTna?name="+name+"&date="+date+"&selectStat="+selectStat;
+							location.href="/admin/regiTna?name="+name+"&date="+date+"&selectStat="+selectStat;
 							
 						});
 						
@@ -250,7 +277,7 @@
 							} else if(dateFlag){
 								alert("기존 날짜가 있습니다.");
 							} else {
-								location.href="/tna/newWork?name="+name+"&date="+date+"&selectStat="+selectStat;		
+								location.href="/admin/newWork?name="+name+"&date="+date+"&selectStat="+selectStat;		
 							}
 						});
 						

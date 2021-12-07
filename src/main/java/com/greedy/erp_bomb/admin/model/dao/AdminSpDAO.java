@@ -29,7 +29,7 @@ public class AdminSpDAO {
 	}
 
 	public List<MemberDTO> findEntryMember() {
-		String jpql = "SELECT a FROM MemberDTO as a";
+		String jpql = "SELECT a FROM MemberDTO as a WHERE a.entYn = 'Y'";
 		
 		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList();
 		

@@ -39,10 +39,10 @@
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3 tab-selected">
+					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/main/main">메인 페이지</a>
 					</li>
-					<li class="nav-item mr-3">
+					<li class="nav-item mr-3 tab-selected">
 						<a class="nav-link font-weight-bold" href="/board/boardList">게시판</a>
 					</li>
 					<li class="nav-item mr-3">
@@ -52,13 +52,7 @@
 						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -85,18 +79,18 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 
-				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link on" href="/board/noticeList" data-target="#collapseUtilities"
-						aria-expanded="true" aria-controls="collapseUtilities">
-						<span>공지사항</span>
-					</a>
-				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="/board/boardList" data-target="#collapseUtilities"
 						aria-expanded="true" aria-controls="collapseUtilities">
 						<span>사내게시판</span>
+					</a>
+				</li>
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link on" href="/board/noticeList" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>공지사항</span>
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
@@ -117,7 +111,8 @@
 				<p th:if="${ noticeDetail.no } == 1" th:text="[공지]  + '&nbsp;&nbsp' + ${ noticeDetail.title } "></p>
 				<p th:if="${ noticeDetail.no } == 2" th:text="[사내게시판]  + '&nbsp;&nbsp' + ${ noticeDetail.title } "></p>
 				<div class="realBonmun">
-				<p th:text="${ noticeDetail.content }"> </p>
+				<p th:utext="${ #strings.replace(noticeDetail.content,'
+','<br>') }"> </p>
 				</div>
 				<div class="btn btn-outline-secondary" id="listBtn">
 				<a type="button" style="color: black" href="/board/noticeList">목록보기</a></div>

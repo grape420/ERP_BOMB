@@ -2,6 +2,10 @@
 	font-family: 'Noto Sans', sans-serif;
 }
 
+a {
+	cursor: pointer !important;
+}
+
 .new_comment_pop {
 	top: 50% !important;
 }

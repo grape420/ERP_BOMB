@@ -24,7 +24,7 @@ public class BoardDAO {
 	
 	/* 사내게시판 리스트 */ 
 	public List<BoardDTO> findBoardList() {
-		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 2 ORDER BY m.no ASC";	
+		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 2 ORDER BY m.no DESC";	
 		   TypedQuery<BoardDTO> query = em.createQuery(jpql,BoardDTO.class);
 		   List<BoardDTO> boardList = query.getResultList();
 		   return boardList;
@@ -52,7 +52,7 @@ public class BoardDAO {
 	
 	/* 공지사항 리스트 */ 
 	public List<BoardDTO> findNoticeList() {
-		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 1 ORDER BY m.no ASC";
+		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 1 ORDER BY m.no DESC";
 		   TypedQuery<BoardDTO> query = em.createQuery(jpql,BoardDTO.class); 
 		   List<BoardDTO> noticeList = query.getResultList();
 		   return noticeList;

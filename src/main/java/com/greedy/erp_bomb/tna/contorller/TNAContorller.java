@@ -18,7 +18,7 @@ import com.greedy.erp_bomb.tna.model.dto.TNADTO;
 import com.greedy.erp_bomb.tna.model.service.TNAService;
 
 @Controller
-@RequestMapping("/tna")
+@RequestMapping("/admin")
 public class TNAContorller {
 	
 	private TNAService tnaService;
@@ -30,7 +30,7 @@ public class TNAContorller {
 	
 	@GetMapping("/tna")
 	public String regTna() {
-		return "/tna/regTna";
+		return "/admin/regTna";
 	}
 	
 	@GetMapping("/tnaDetail")
@@ -109,7 +109,7 @@ public class TNAContorller {
 		mv.addObject("member", member);
 		mv.addObject("mem", member1);
 		
-		mv.setViewName("/tna/tnaDetail");
+		mv.setViewName("/admin/tnaDetail");
 		
 		return mv;
 	}
@@ -129,7 +129,7 @@ public class TNAContorller {
 		
 		mv.addObject("name", name);
 		
-		mv.setViewName("redirect:/tna/detail");
+		mv.setViewName("redirect:/admin/detail");
 		
 		return mv;
 	}
@@ -148,7 +148,7 @@ public class TNAContorller {
 		
 		mv.addObject("name", name);
 		
-		mv.setViewName("redirect:/tna/detail");
+		mv.setViewName("redirect:/admin/detail");
 		
 		return mv;
 	}
@@ -170,7 +170,7 @@ public class TNAContorller {
 		
 		mv.addObject("name", name);
 		
-		mv.setViewName("redirect:/tna/detail");
+		mv.setViewName("redirect:/admin/detail");
 		
 		return mv;
 	}

@@ -50,13 +50,7 @@
 	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	               </li>
-	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	               </li>
 	               <li class="nav-item mr-3 tab-selected">
 	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -126,7 +120,7 @@
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
-									<col style="width: 5%" />
+									<col style="width: 8%" />
 									<col style="width: 20%" />
 									<col style="width: 35%" />
 									<col style="width: 15%" />
@@ -167,7 +161,7 @@
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
-									<col style="width: 5%" />
+									<col style="width: 8%" />
 									<col style="width: 20%" />
 									<col style="width: 35%" />
 									<col style="width: 15%" />
@@ -206,7 +200,7 @@
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
-									<col style="width: 5%" />
+									<col style="width: 8%" />
 									<col style="width: 20%" />
 									<col style="width: 35%" />
 									<col style="width: 15%" />
@@ -245,7 +239,7 @@
 						<div class="tableArea">
 							<table class="Table">
 								<colgroup>
-									<col style="width: 5%" />
+									<col style="width: 8%" />
 									<col style="width: 20%" />
 									<col style="width: 35%" />
 									<col style="width: 15%" />
@@ -329,7 +323,7 @@
 					</div>
 					<!-- 입출고 추가 -->
 					<div class="btn_area" style="margin-left: 10px;">
-						<a class="blue_btn pop_btn" data-button="new_product_pop" id="plusBtn" style="cursor: pointer;">추가</a> 
+						<a sec:authorize="hasRole('ROLE_CAPTAIN')" class="blue_btn pop_btn" data-button="new_product_pop" id="plusBtn" style="cursor: pointer;">추가</a> 
 					</div>
 				</div>
 			</div>
@@ -435,7 +429,7 @@
 	               /* 구조 설정 태그 안에 글자는 div클래스명 */
 	               "dom": 't<"fDiv"f><"pDiv"p>',
 	               "aoColumnDefs": [
-	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4 ] }
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5	 ] }
 	                ]
 	        });
 			

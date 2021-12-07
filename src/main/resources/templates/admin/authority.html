@@ -50,13 +50,7 @@
 	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	               </li>
-	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -110,6 +104,12 @@
 					<a class="nav-link mt-1" href="/admin/document">
 						<span>문서 관리</span>
 					</a>
+					<a class="nav-link mt-1" href="/admin/salary">
+						<span>급여 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/tna">
+						<span>근태 관리</span>
+					</a>
 				</li>
 
 
@@ -145,7 +145,7 @@
 								<tbody>
 									<tr th:each="mem : ${ memberList }">
 										<td class="t_center pop_btn" th:text="${ mem.name }"></td>
-										<td class="t_center pop_btn" style="font-weight: bold;" th:attr="onclick=|authDetail('${ mem.name }')|" data-button="auth_detail_pop">
+										<td class="t_center pop_btn" style="font-weight: bold; cursor: pointer;" th:attr="onclick=|authDetail('${ mem.name }')|" data-button="auth_detail_pop">
 											<th:block th:each="role : ${ mem.memberRoleList }">
 											
 												<!-- 현재 반복이 첫 번째일 경우 (값이 하나일 경우) -->
@@ -236,17 +236,18 @@
 		 $.ajax({
 			url: "/admin/allAuth",
 			success: function(data){
-				console.table(data);
 				const $allAuth = $("#allAuth");
 				$allAuth.html("");
 				
 				for (let i in data){
-					$allAuth.append("<input type='checkbox' id='role" + data[i].code + "' name='role' value='" + data[i].code + "'><label for='role" + data[i].code + "'>" + data[i].desc + "</label>");
+					$allAuth.append("<input class='role' type='checkbox' id='role" + data[i].code + "' name='role' value='" + data[i].code + "'><label for='role" + data[i].code + "'>" + data[i].desc + "</label>");
 				} 
 				
-				$("#role2").click(function() {
-					if($("#role2").is(":checked")) $("input[name=role]").prop("checked", true);
-					else $("input[name=role]").prop("checked", false);
+				$(".role").click(function() {
+					if($(this).is(":checked")) {
+						let index = $(this).val();
+						$(".role:lt(" + index + ")").prop("checked", true);
+					}
 				});
 			},
 			error: function(xhr){

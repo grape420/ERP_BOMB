@@ -52,13 +52,7 @@
 						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -752,6 +746,7 @@
 				let $reply_content = $("#reply_content").val();
 				$.ajax({
 					url: "/ea/replyAddendum",
+					type: "POST",
 					data: {no : $reply,
 						   content : $reply_content},
 					success:function(data) {
@@ -826,6 +821,7 @@
 				console.log($content);
 				$.ajax({
 					url: "/ea/addAddendum",
+					type : "POST",
 					data: {no : eaNo,
 						   content : $content},
 					success:function(data) {

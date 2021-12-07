@@ -316,7 +316,7 @@ public class EaContorller {
 		eaService.deleteAddendum(no);
 	}
 	
-	@GetMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO replyAd = new AddendumDTO();
@@ -353,7 +353,7 @@ public class EaContorller {
 		return replyAd;
 	}
 	
-	@GetMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO addAd = new AddendumDTO();

@@ -50,7 +50,7 @@ public class SalaryDAO {
 
 	/* member 전체 조회하기 */
 	public List<MemberDTO> findMemberList() {
-		String jpql = "SELECT a FROM MemberDTO as a ORDER BY a.rank.no DESC";
+		String jpql = "SELECT a FROM MemberDTO as a WHERE a.entYn = 'N' ORDER BY a.rank.no DESC";
 		return em.createQuery(jpql, MemberDTO.class).getResultList();
 	}
 	

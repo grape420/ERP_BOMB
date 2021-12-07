@@ -12,7 +12,6 @@ import com.greedy.erp_bomb.member.model.dto.AuthorityDTO;
 import com.greedy.erp_bomb.member.model.dto.DeptDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.MemberRoleDTO;
-import com.greedy.erp_bomb.member.model.dto.MemberRolePk;
 import com.greedy.erp_bomb.member.model.dto.RankDTO;
 
 @Repository
@@ -90,9 +89,12 @@ public class AdminMemberDAO {
 		mem.setCompany(member.getCompany());
 		mem.setDept(member.getDept());
 		mem.setRank(member.getRank());
-		mem.setPwd(member.getPwd());
 		mem.setEmail(member.getEmail());
 		mem.setEntYn(member.getEntYn());
 		mem.setPhone(member.getPhone());
+		mem.setQuitDate(member.getQuitDate());
+		if(!member.getPwd().equals("")) {
+			mem.setPwd(member.getPwd());
+		}
 	}
 }

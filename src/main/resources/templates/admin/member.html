@@ -50,13 +50,7 @@
 	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	               </li>
-	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -109,6 +103,12 @@
 					</a>
 					<a class="nav-link mt-1" href="/admin/document">
 						<span>문서 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/salary">
+						<span>급여 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/tna">
+						<span>근태 관리</span>
 					</a>
 				</li>
 
@@ -265,6 +265,73 @@
 						const newName = $("#newName");
 						
 						$.ajax({
+							url: "/admin/companyCode",
+							data: {
+								detailName : detailName
+							},
+							success: function(data){
+								const $companyCode = $("#companyCode");
+								$companyCode.html("");
+								
+								for (let i in data){
+									if(data[i].status == 'A') {
+										console.table(data[i]);
+										$companyCode.append($("<option selected>").val(data[i].serialNo).text(data[i].name));
+									} else {
+										$companyCode.append($("<option>").val(data[i].serialNo).text(data[i].name));
+									}
+								}
+							},
+							error: function(xhr){
+								console.log(xhr);
+							}
+						});
+						
+						$.ajax({
+							url: "/admin/deptCode",
+							data: {
+								detailName : detailName
+							},
+							success: function(data){
+								const $deptCode = $("#deptCode");
+								$deptCode.html("");
+								
+								for (let i in data){
+									if(data[i].memberList != null) {
+										$deptCode.append($("<option selected>").val(data[i].no).text(data[i].name));
+									} else {
+										$deptCode.append($("<option>").val(data[i].no).text(data[i].name));
+									}
+								}
+							},
+							error: function(xhr){
+								console.log(xhr);
+							}
+						}); 
+						
+						$.ajax({
+							url: "/admin/rankCode",
+							data: {
+								detailName : detailName
+							},
+							success: function(data){
+								const $rankCode = $("#rankCode");
+								$rankCode.html("");
+								
+								for (let i in data){
+									if(data[i].memberList != null) {
+										$rankCode.append($("<option selected>").val(data[i].no).text(data[i].name));
+									} else {
+										$rankCode.append($("<option>").val(data[i].no).text(data[i].name));
+									}
+								}
+							},
+							error: function(xhr){
+								console.log(xhr);
+							}
+						}); 
+						
+						$.ajax({
 						url: "/admin/memDetail",
 						type: "get",
 						data: {
@@ -295,52 +362,6 @@
 	</section>
 	
 	<script>
- 		$.ajax({
-			url: "/admin/companyCode",
-			success: function(data){
-				const $companyCode = $("#companyCode");
-				$companyCode.html("");
-				
-				for (let i in data){
-					$companyCode.append($("<option>").val(data[i].serialNo).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		});
-		
-		$.ajax({
-			url: "/admin/deptCode",
-			success: function(data){
-				const $deptCode = $("#deptCode");
-				$deptCode.html("");
-				
-				for (let i in data){
-					$deptCode.append($("<option>").val(data[i].no).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		}); 
-		
-		$.ajax({
-			url: "/admin/rankCode",
-			success: function(data){
-				const $rankCode = $("#rankCode");
-				$rankCode.html("");
-				
-				for (let i in data){
-					$rankCode.append($("<option>").val(data[i].no).text(data[i].name));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
-			}
-		}); 
-		
-		
 		/* dataTable */
 		var timer = setInterval(function() {
 			$.fn.DataTable.ext.pager.numbers_length = 5;
@@ -368,36 +389,13 @@
 	               /* 구조 설정 태그 안에 글자는 div클래스명 */
 	               "dom": 't<"fDiv"f><"pDiv"p>',
 	               "aoColumnDefs": [
-	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ] }
+	                   { 'bSortable': false, 'aTargets': [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] }
 	                ]
 	        });
 			
 			clearInterval(timer);
 		}, 100);
 		
-		var phoneFlag = false;
-		
-		$("#submit-btn").click(function() {
-			if(phoneFlag == false) {
-				$("#phone-result").text("휴대폰 번호를 다시 확인 해주세요").css("color", "red");
-				$("#phone").val("").focus();
-			}
-			
-			if(passwordFlag == false) {
-				$("#password-result").text("비밀번호를 다시 확인 해주세요.").css("color", "red");
-				$("#passowrd").val("").focus();
-			}
-			
-			if(emailFlag == false) {
-				$("#email-result").text("이메일을 다시 확인해주세요.").css("color", "red");
-				$("#email").val("").focus();
-			}
-			
-			if((phoneFlag == true) && (passwordFlag == true) && (emailFlag == true)) {
-				alert("회원 추가가 성공적으로 완료되었습니다");
-				 $("#signup-form").submit(); 
-			}
-		});
 	</script>
 	
 	<!-- dataTable -->

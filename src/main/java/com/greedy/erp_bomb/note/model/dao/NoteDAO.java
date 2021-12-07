@@ -172,7 +172,7 @@ public class NoteDAO {
 	}
 	
 	public List<MemberDTO> findAllMember() {
-		String jpql = "SELECT m FROM MemberDTO m";
+		String jpql = "SELECT m FROM MemberDTO m WHERE m.entYn = 'N'";
 
 		List<MemberDTO> memberList = em.createQuery(jpql, MemberDTO.class).getResultList();
 		

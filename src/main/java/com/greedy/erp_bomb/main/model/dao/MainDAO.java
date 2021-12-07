@@ -20,7 +20,7 @@ public class MainDAO {
 	private EntityManager em;
 
 	public List<BoardDTO> selectMainPageBoardList() {
-		String jpql = "SELECT a FROM BoardDTO as a ORDER BY a.no DESC";
+		String jpql = "SELECT a FROM BoardDTO as a WHERE a.category = 1 ORDER BY a.no DESC";
 		return em.createQuery(jpql, BoardDTO.class).setMaxResults(5).getResultList();
 	}
 
