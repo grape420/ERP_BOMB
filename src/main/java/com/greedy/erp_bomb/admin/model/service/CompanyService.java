@@ -33,16 +33,16 @@ public class CompanyService {
 		companyDAO.registNewCompany(company);
 	}
 
-
 	@Transactional
-	public List<IceCreamDTO> findIceList() {
-		return companyDAO.findIceList();
+	public CompanyDTO comDetail(int detailNum) {
+		return companyDAO.comDetail(detailNum);
 	}
 
 	@Transactional
-	public void registNewInven(InventoryDTO inven, List<IceCreamDTO> iceList) {
-		companyDAO.registNewInven(inven, iceList);
+	public void updateCompany(CompanyDTO company) {
+		companyDAO.updateCompany(company);
 	}
+
 
 
 }

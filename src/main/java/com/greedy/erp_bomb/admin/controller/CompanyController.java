@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.admin.model.service.CompanyService;
 import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
-import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
-import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
-import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,18 +44,24 @@ public class CompanyController {
 		
 		companyService.registNewCompany(company);
 		
-		List<IceCreamDTO> iceList = companyService.findIceList();
-		
-		InventoryDTO inven = new InventoryDTO();
-		inven.setCompany(company);
-		for (IceCreamDTO ice : iceList) {
-			inven.setIceCream(ice);
-		}
-		companyService.registNewInven(inven, iceList);
-
 		mv.setViewName("redirect:/admin/company");
 		
 		return mv;
+	}
+	
+	@GetMapping(value = "comDetail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public CompanyDTO comDetail(@RequestParam int detailNum) {
+		CompanyDTO com = companyService.comDetail(detailNum);
+		
+		return com;
+	}
+	
+	@PostMapping("/updateCom")
+	public String updateCompany(@ModelAttribute CompanyDTO company) {
+		companyService.updateCompany(company);
+		
+		return "redirect:/admin/company";
 	}
 	
 
