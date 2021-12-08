@@ -84,8 +84,8 @@
 					<div class="main_right">
 						<div class="status">
 							<p class="titleM">근태현황</p>
-							<span class="time_p"></span>
-							<p th:if="${ todayWorkFlag }" class="text">출근시 아래 버튼을 클릭하세요.</p>
+							<span class="time_p">오전 09:00 후에 출근 시 자동으로 지각 처리됩니다.</span>
+							<p th:if="${ todayWorkFlag }" class="text">출근 시 아래 버튼을 클릭하세요.</p>
 							<p th:unless="${ todayWorkFlag }" class="text">금일 이미 출근을 하셨습니다.</p>
 							<div class="btn_area">
 								<button th:if="${ todayWorkFlag }" class="ent_work" type="button" th:attr="onclick=|location.replace('/main/entWork')|">출근</button>

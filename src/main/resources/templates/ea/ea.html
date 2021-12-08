@@ -256,35 +256,66 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4}">
-											<td th:text="${ list.serialNo }"></td>
-											<td th:text="${ list.date }"></td>
-											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
-											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.eaStatus }">
-												<th:block th:case="1">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-														<td th:text="${ path.member.name }"></td>
+										<th:block th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4 }" >
+											<tr th:if="${ list.saveNo == 1 }" style="background: #ecf8ff !important;">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="2">
-													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
-														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
+												</th:block>
+											</tr>
+											<tr th:unless="${ list.saveNo == 1 }">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="3">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
-														<td th:text="${ path.member.name }"></td>
-													</th:block>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
 												</th:block>
-											</th:block>
-											<th:block th:switch="${ list.eaStatus }">
-												<td th:case="1">결재 중</td>
-												<td th:case="2">결재 완료</td>
-												<td th:case="3">결재 반려</td>
-												<td th:case="4">임시 저장</td>
-											</th:block>
-										</tr>
+											</tr>
+										</th:block>
 									</tbody>
 								</table>
 							</div>
@@ -313,35 +344,66 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4}">
-											<td th:text="${ list.serialNo }"></td>
-											<td th:text="${ list.date }"></td>
-											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
-											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.eaStatus }">
-												<th:block th:case="1">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-														<td th:text="${ path.member.name }"></td>
+										<th:block th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4 }" >
+											<tr th:if="${ list.saveNo == 1 }" style="background: #ecf8ff !important;">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="2">
-													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
-														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
+												</th:block>
+											</tr>
+											<tr th:unless="${ list.saveNo == 1 }">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="3">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
-														<td th:text="${ path.member.name }"></td>
-													</th:block>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
 												</th:block>
-											</th:block>
-											<th:block th:switch="${ list.eaStatus }">
-												<td th:case="1">결재 중</td>
-												<td th:case="2">결재 완료</td>
-												<td th:case="3">결재 반려</td>
-												<td th:case="4">임시 저장</td>
-											</th:block>
-										</tr>
+											</tr>
+										</th:block>
 									</tbody>
 								</table>
 							</div>
@@ -370,35 +432,66 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaCarbonList }">
-											<td th:text="${ list.serialNo }"></td>
-											<td th:text="${ list.date }"></td>
-											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
-											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.eaStatus }">
-												<th:block th:case="1">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-														<td th:text="${ path.member.name }"></td>
+										<th:block th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4 }" >
+											<tr th:if="${ list.saveNo == 1 }" style="background: #ecf8ff !important;">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="2">
-													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
-														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
+												</th:block>
+											</tr>
+											<tr th:unless="${ list.saveNo == 1 }">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="3">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
-														<td th:text="${ path.member.name }"></td>
-													</th:block>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
 												</th:block>
-											</th:block>
-											<th:block th:switch="${ list.eaStatus }">
-												<td th:case="1">결재 중</td>
-												<td th:case="2">결재 완료</td>
-												<td th:case="3">결재 반려</td>
-												<td th:case="4">임시 저장</td>
-											</th:block>
-										</tr>
+											</tr>
+										</th:block>
 									</tbody>
 								</table>
 							</div>
@@ -427,35 +520,66 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="list : ${ myEaCarbonList }">
-											<td th:text="${ list.serialNo }"></td>
-											<td th:text="${ list.date }"></td>
-											<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
-											<td th:text="${ list.member.name }"></td>
-											<th:block th:switch="${ list.eaStatus }">
-												<th:block th:case="1">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
-														<td th:text="${ path.member.name }"></td>
+										<th:block th:each="list : ${ myEaPathList }" th:if="${ list.eaStatus != 4 }" >
+											<tr th:if="${ list.saveNo == 1 }" style="background: #ecf8ff !important;">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="2">
-													<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
-														<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
+												</th:block>
+											</tr>
+											<tr th:unless="${ list.saveNo == 1 }">
+												<td th:text="${ list.serialNo }"></td>
+												<td th:text="${ list.date }"></td>
+												<td th:text="${ list.title}" class="t_left pop_btn" th:attr="data-button=${ 'approval_detail_pop' + list.serialNo }"></td>
+												<td th:text="${ list.member.name }"></td>
+												<th:block th:switch="${ list.eaStatus }">
+													<th:block th:case="1">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 4}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="2">
+														<th:block th:each="path, stat : ${ list.eaApprovalPathList }">
+															<td th:if="${ stat.last }" th:text="${ path.member.name }"></td>
+														</th:block>
+													</th:block>
+													<th:block th:case="3">
+														<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
+															<td th:text="${ path.member.name }"></td>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:case="3">
-													<th:block th:each="path : ${ list.eaApprovalPathList }" th:if="${ path.status == 2}">
-														<td th:text="${ path.member.name }"></td>
-													</th:block>
+												<th:block th:switch="${ list.eaStatus }">
+													<td th:case="1">결재 중</td>
+													<td th:case="2">결재 완료</td>
+													<td th:case="3">결재 반려</td>
+													<td th:case="4">임시 저장</td>
 												</th:block>
-											</th:block>
-											<th:block th:switch="${ list.eaStatus }">
-												<td th:case="1">결재 중</td>
-												<td th:case="2">결재 완료</td>
-												<td th:case="3">결재 반려</td>
-												<td th:case="4">임시 저장</td>
-											</th:block>
-										</tr>
+											</tr>
+										</th:block>
 									</tbody>
 								</table>
 							</div>

@@ -83,9 +83,16 @@ public class MainController {
 		MemberDTO member = new MemberDTO();
 		member.setName(user.getName());
 		
-		tna.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()));
+		java.util.Date nowDate = new java.util.Date();
+		
+		tna.setDate(new SimpleDateFormat("yyyy-MM-dd").format(nowDate));
 		tna.setMember(member);
-		tna.setCode(1);
+		
+		if(Integer.valueOf(new SimpleDateFormat("HH").format(nowDate)) > 9) {
+			tna.setCode(2);
+		} else {
+			tna.setCode(1);
+		}
 		
 		mainService.regEntWork(tna);
 		
@@ -102,7 +109,18 @@ public class MainController {
 		List<FullCalendarVO> ajaxMyTnaList = new ArrayList<>();
 		
 		for(TNADTO tna : myTnaList) {
-			ajaxMyTnaList.add(new FullCalendarVO("출근", tna.getDate(), tna.getDate(), "false"));
+			int tnaCode = tna.getCode();
+			String tnaText;
+			if(tnaCode == 1) {
+				tnaText = "출근";
+			} else if(tnaCode == 2) {
+				tnaText = "지각";
+			} else if(tnaCode == 3) {
+				tnaText = "조퇴";
+			} else {
+				tnaText = "결근";
+			}
+			ajaxMyTnaList.add(new FullCalendarVO(tnaText, tna.getDate(), tna.getDate(), "false"));
 		}
 		
 		return ajaxMyTnaList;
