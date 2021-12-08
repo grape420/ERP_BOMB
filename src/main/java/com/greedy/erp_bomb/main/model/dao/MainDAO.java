@@ -35,7 +35,7 @@ public class MainDAO {
 	}
 
 	public Long myCarbonCount(String userName) {
-		String jpql = "SELECT COUNT(a) FROM EACarbonDTO as a WHERE a.ea.eaStatus = 4 AND a.member.name = :userName";
+		String jpql = "SELECT COUNT(a) FROM EACarbonDTO as a WHERE a.ea.eaStatus != 4 AND a.member.name = :userName";
 		return em.createQuery(jpql, Long.class).setParameter("userName", userName).getSingleResult();
 	}
 

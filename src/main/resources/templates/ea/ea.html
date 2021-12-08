@@ -536,8 +536,8 @@
 								</th:block>
 							</tr>
 							<tr>
-								<td th:text="${ #dates.format(list.date, 'yyyy/MM/dd') }" class="approval_person"></td>
-								<td th:each="eaPath : ${list.eaApprovalPathList}" th:text="${ #dates.format(eaPath.date, 'yyyy/MM/dd') }"></td>
+								<td th:text="${ #dates.format(list.date, 'yy/MM/dd') }" class="approval_person"></td>
+								<td th:each="eaPath : ${list.eaApprovalPathList}" th:text="${ #dates.format(eaPath.date, 'yy/MM/dd') }"></td>
 							</tr>
 						</table>
 						<div style="border: solid #ccc 1px; margin: 0px 10px; padding: 0px 1px;">

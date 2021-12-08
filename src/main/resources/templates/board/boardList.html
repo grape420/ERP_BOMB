@@ -122,26 +122,26 @@
 					<button type="button" class="btn btn-outline-secondary" id="listBtn" style="float: right;">신규</button>
 					<h3 style="font-weight: 900;">사내게시판</h3>
 					<colgroup>
-								<col style="width:20%" />
+								<col style="width:10%" />
 								<col style="width:65%" />
 								<col style="width:15%" />
-								<col style="width:9%" />
+								<col style="width:10%" />
 					</colgroup>
 					 	<thead >
 								<tr>
-								<th></th>
-								<th  style="text-align: left;"></th>
-								<th  style="text-align: right;"></th>
-								<th  style="text-align: right;"></th>
+									<th style="text-align: center;">작성자</th>
+									<th style="text-align: left;">제목</th>
+									<th style="text-align: center;">작성일</th>
+									<th style="text-align: center;">조회수</th>
 								</tr>
 						</thead> 
 					
 					<tbody>
 					  <tr th:each="board : ${ boardList }" >
-					  	<td  th:if="${ board.category } == 2" th:text="[사내게시판]" style="color: black"></td>
+					  	<td  th:text="${ board.member.name }" style="color: black; text-align: center;"></td>
 						<td><a th:text="${ board.title }" th:href="@{/board/detail(no=${board.no})}" style="color: black"></a></td>
-						<td  th:text="${ board.regDate }"style="text-align: right; color:black;" ></td>
-						<td  th:text="${ board.hit}"style="text-align: right; color:black;"></td>
+						<td th:text="${ board.regDate }"style="text-align: center; color:black;" ></td>
+						<td th:text="${ board.hit}"style="text-align: center; color:black;"></td>
 					  </tr>
 					</tbody>
 				  </table>

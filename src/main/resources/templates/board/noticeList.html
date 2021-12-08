@@ -126,22 +126,22 @@
 								<col style="width:10%" />
 								<col style="width:65%" />
 								<col style="width:15%" />
-								<col style="width:9%" />
+								<col style="width:10%" />
 					</colgroup>
 					 	<thead >
 								<tr>
-								<th></th>
-								<th  style="text-align: left;"></th>
-								<th  style="text-align: right;"></th>
-								<th  style="text-align: right;"></th>
+									<th style="text-align: center;">작성자</th>
+									<th style="text-align: left;">제목</th>
+									<th style="text-align: center;">작성일</th>
+									<th style="text-align: center;">조회수</th>
 								</tr>
 						</thead> 
 						<tbody>
 						  <tr th:each="notice : ${ noticeList }" >
-							<td  th:if="${ notice.category } == 1" th:text="[공지]" style="color: black"></td>
+							<td th:text="${ notice.member.name }" style="color: black; text-align: center;"></td>
 							<td ><a th:text="${ notice.title }" th:href="@{/board/nodetail(no=${notice.no})}" style="color:black"></a></td>
-							<td  th:text="${ notice.regDate }" style="text-align: right; color: black;"> </td>
-							<td  th:text="${ notice.hit }" style="text-align: right; color:black;"></td>
+							<td th:text="${ notice.regDate }" style="text-align: center; color: black;"> </td>
+							<td th:text="${ notice.hit }" style="text-align: center; color:black;"></td>
 						  </tr>
 						</tbody>
 					  </table>

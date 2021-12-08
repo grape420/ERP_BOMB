@@ -175,7 +175,7 @@ public class EaContorller {
 	@GetMapping("/eaCancle")
 	public ModelAndView eaCancle(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no, @RequestParam(defaultValue = "0") int type) {
 		eaService.eaCancle(user.getName(), no, type);
-		mv.setViewName("redirect:/ea/ea");
+		mv.setViewName("redirect:/ea/ea?tab=2");
 		return mv;
 	}
 	
