@@ -140,8 +140,7 @@
 								th:utext="${ ad.member.name }"></span>
 							</p>
 							<p class="comment_text_view">
-								<span class="text_comment" th:utext="${#strings.replace(ad.content,'
-','<br>')} "></span>
+								<span class="text_comment" th:utext="${#strings.replace(ad.content,'&#10;','&lt;br&gt;')} "></span>
 							</p>
 						</div>
 					</div>
