@@ -19,7 +19,7 @@ public class InventoryDAO {
 	private EntityManager em;
 
 	public List<InventoryDTO> findInvenList() {
-		String jpql = "SELECT m FROM InventoryDTO as m ORDER BY m.company.serialNo, m.iceCream.name";
+		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.company.status = 'Y' ORDER BY m.company.serialNo, m.iceCream.name";
 		
 		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class).getResultList();
 		

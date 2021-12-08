@@ -1,13 +1,10 @@
 package com.greedy.erp_bomb.inventory.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +33,12 @@ public class InOutController {
 	@GetMapping("/inOut")
 	public ModelAndView findInOutList(ModelAndView mv, @AuthenticationPrincipal UserImpl user) {
 		List<InOutDTO> inOutList = inOutService.findInOutList(user.getName());
+		
+		if(user.getCompany().getDivision().equals("본사")) {
+			mv.addObject("division", 1);
+		} else {
+			mv.addObject("division", 2);
+		}
 		
 		mv.addObject("inOutList", inOutList);
 		mv.setViewName("inOut/inOut");

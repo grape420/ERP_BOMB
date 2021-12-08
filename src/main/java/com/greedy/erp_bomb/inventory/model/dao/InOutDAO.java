@@ -1,7 +1,5 @@
 package com.greedy.erp_bomb.inventory.model.dao;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -69,6 +67,15 @@ public class InOutDAO {
 	public void registInOut(InOutDTO inOut) {
 		inOut.getInventory().setCompany(em.find(CompanyDTO.class, inOut.getInventory().getCompany().getSerialNo()));
 		inOut.getInventory().setIceCream(em.find(IceCreamDTO.class, inOut.getInventory().getIceCream().getNo()));
+		
+		if(inOut.getInventory().getCompany().getDivision().equals("가맹점")) {
+			InOutDTO head = new InOutDTO();
+			head.setDate(new java.sql.Date(System.currentTimeMillis()));
+			head.setDivision(2);
+			head.setAmount(inOut.getAmount());
+			head.setInventory(em.find(InventoryDTO.class, new InventoryPk(inOut.getInventory().getIceCream().getNo(), 1)));
+			em.persist(head);
+		}
 		
 		em.persist(inOut);
 	}

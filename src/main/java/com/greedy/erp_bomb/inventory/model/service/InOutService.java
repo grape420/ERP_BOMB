@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greedy.erp_bomb.inventory.model.dao.InOutDAO;
-import com.greedy.erp_bomb.inventory.model.dto.CompanyDTO;
-import com.greedy.erp_bomb.inventory.model.dto.IceCreamDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InOutDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryDTO;
 import com.greedy.erp_bomb.inventory.model.dto.InventoryPk;

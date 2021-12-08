@@ -80,7 +80,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-				<a class="nav-link" href="/inOut">
+				<a class="nav-link on" href="/inOut">
 					<span>입출고 관리</span>
 				</a>
 				</li>
@@ -303,8 +303,7 @@
 										<td>
 											<select name="division" id="division" style="text-align: center; text-align-last: center">
 												<option value="1">입고</option>
-												<option value="2">출고</option>
-												<option value="3">판매</option>
+												<option th:if="${ division == 2 }" value="3">판매</option>
 											</select>
 										</td>
 										<td>
