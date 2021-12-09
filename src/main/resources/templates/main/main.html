@@ -69,7 +69,7 @@
 							<p class="titleM">공지사항</p>
 							<ul class="notice_list">
 								<li th:each="board : ${ boardList }">
-									<a th:href="@{/board/detail(no=${board.no})}">
+									<a th:href="@{/board/nodetail(no=${board.no})}">
 										<p th:text="${ board.title }"></p>
 										<span class="date" th:text="${ board.regDate }"></span>
 									</a>
