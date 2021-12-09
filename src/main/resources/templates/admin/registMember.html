@@ -200,6 +200,7 @@
 	<script>
  		$.ajax({
 			url: "/admin/companyCode",
+			data: {detailName : '김종현'},
 			success: function(data){
 				const $companyCode = $("#companyCode");
 				$companyCode.html("");
@@ -215,6 +216,7 @@
 		
 		$.ajax({
 			url: "/admin/deptCode",
+			data: {detailName : '김종현'},
 			success: function(data){
 				const $deptCode = $("#deptCode");
 				$deptCode.html("");
@@ -230,6 +232,7 @@
 		
 		$.ajax({
 			url: "/admin/rankCode",
+			data: {detailName : '김종현'},
 			success: function(data){
 				const $rankCode = $("#rankCode");
 				$rankCode.html("");

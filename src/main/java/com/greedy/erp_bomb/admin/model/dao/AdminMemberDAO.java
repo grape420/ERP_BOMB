@@ -29,7 +29,7 @@ public class AdminMemberDAO {
 	}
 
 	public List<CompanyDTO> findCompanyList() {
-		String jpql = "SELECT m FROM CompanyDTO as m ORDER BY m.serialNo";
+		String jpql = "SELECT m FROM CompanyDTO as m WHERE m.status = 'Y' ORDER BY m.serialNo";
 		
 		List<CompanyDTO> companyList = em.createQuery(jpql, CompanyDTO.class).getResultList();
 		
