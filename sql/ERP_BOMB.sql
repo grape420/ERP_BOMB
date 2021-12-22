@@ -1037,49 +1037,49 @@ INSERT
   INTO MEMBER
   VALUES
   (
-    '김종현', 1, 1, 1, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi', 1676037393, 960420, '010-8905-7678', SYSDATE, SYSDATE, 3000000,
+    '김종현', 1, 1, 1, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi', 1676037393, 99960420, '01089057678', SYSDATE, SYSDATE, 3000000,
     600000, 42000000, 'grape420@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '김지혁', 2, 2, 2, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    '김지혁', 2, 2, 2, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345678, 99930101, '01012345678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '김가희', 2, 2, 3, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1543215678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    '김가희', 2, 2, 3, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1543215678, 99930101, '01012345678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '최호진', 2, 2, 4, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345228, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    '최호진', 2, 2, 4, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1512345228, 99930101, '01012345678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '김성민', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1812125678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    '김성민', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1812125678, 99930101, '01012345678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '최유정', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1789225678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    '최유정', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1789225678, 99930101, '01012345678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
 INSERT
   INTO MEMBER
   VALUES
   (
-    '황성연', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1789225678, 930101, '010-1234-5678', SYSDATE, SYSDATE, 1000,
+    '황성연', 2, 2, 5, '$2a$10$MkdT31pLLNHkZ7fUGmxzxekKMaUeCbVe2nwMSmDrXQSeyyp.0GNEi',1789225678, 99930101, '01012345678', SYSDATE, SYSDATE, 1000,
     500, 30000, 'jihyeakKing@naver.com', DEFAULT
   );
   
@@ -1107,17 +1107,32 @@ INSERT
   VALUES
   (
     2
+  , 'ROLE_CAPTAIN'
+  , '팀장'
+  );
+  
+INSERT
+  INTO AUTHORITY
+  (
+    AUTHORITY_CODE
+  , AUTHORITY_NAME
+  , AUTHORITY_DESC
+  )
+  VALUES
+  (
+    3
   , 'ROLE_ADMIN'
   , '관리자'
   );
   
 -- 회원별권한 테이블 INSERT
-INSERT
-  INTO MEMBER_ROLE
+INSERT INTO MEMBER_ROLE
+  VALUES
   (
-    AUTHORITY_CODE
-  , MEMBER_NAME
-  )
+    1
+  , '황성연'
+  );
+INSERT INTO MEMBER_ROLE
   VALUES
   (
     1
@@ -1125,10 +1140,6 @@ INSERT
   );
 INSERT
   INTO MEMBER_ROLE
-  (
-    AUTHORITY_CODE
-  , MEMBER_NAME
-  )
   VALUES
   (
     1
@@ -1136,14 +1147,52 @@ INSERT
   );
 INSERT
   INTO MEMBER_ROLE
+  VALUES
   (
-    AUTHORITY_CODE
-  , MEMBER_NAME
-  )
+    1
+  , '최유정'
+  );
+INSERT
+  INTO MEMBER_ROLE
+  VALUES
+  (
+    1
+  , '김가희'
+  );
+INSERT
+  INTO MEMBER_ROLE
+  VALUES
+  (
+    1
+  , '김성민'
+  );
+INSERT
+  INTO MEMBER_ROLE
+  VALUES
+  (
+    1
+  , '최호진'
+  );
+INSERT
+  INTO MEMBER_ROLE
   VALUES
   (
     2
   , '김종현'
+  );
+INSERT
+  INTO MEMBER_ROLE
+  VALUES
+  (
+    3
+  , '김종현'
+  );
+INSERT
+  INTO MEMBER_ROLE
+  VALUES
+  (
+    2
+  , '김가희'
   );
 
 REM INSERTING into ERP_BOMB.DOCUMENT_FORM
@@ -2333,9 +2382,9 @@ table.MsoTableGrid
   <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
   line-height:normal'><b style='mso-bidi-font-weight:normal'><span
   style='font-size:22.0pt'>사 <span lang=EN-US><span
-  style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'> </span></span>직
-  <span lang=EN-US><span style='mso-spacerun:yes'>  </span><span
-  style='mso-spacerun:yes'> </span></span>서<span lang=EN-US><o:p></o:p></span></span></b></p]')
+  style='mso-spacerun:yes'>??</span><span style='mso-spacerun:yes'>?</span></span>직
+  <span lang=EN-US><span style='mso-spacerun:yes'>??</span><span
+  style='mso-spacerun:yes'>?</span></span>서<span lang=EN-US><o:p></o:p></span></span></b></p]')
 || TO_CLOB(q'[>
   </td>
  </tr>
@@ -2478,7 +2527,7 @@ line-height:normal'><span lang=EN-US style='font-size:1.0pt'><o:p>&nbsp;</o:p></
 || TO_CLOB(q'[argin-bottom:0cm;text-align:center;
   line-height:normal'><b style='mso-bidi-font-weight:normal'><span
   style='font-size:11.0pt'>부<span lang=EN-US style='color:black;mso-color-alt:
-  windowtext'><span style='mso-spacerun:yes'>    </span></span><span
+  windowtext'><span style='mso-spacerun:yes'>??? </span></span><span
   style='color:black;mso-color-alt:windowtext'>서</span><span lang=EN-US><o:p></o:p></span></span></b></p>
   </td>
   <td width=567 style='width:15.0cm;border-top:solid windowtext 1.5pt;
@@ -2503,7 +2552,7 @@ line-height:normal'><span lang=EN-US style='font-size:1.0pt'><o:p>&nbsp;</o:p></
   li]')
 || TO_CLOB(q'[ne-height:normal'><b style='mso-bidi-font-weight:normal'><span
   style='font-size:11.0pt;color:black;mso-color-alt:windowtext'>직<span
-  lang=EN-US><span style='mso-spacerun:yes'>    </span></span>위</span></b><b
+  lang=EN-US><span style='mso-spacerun:yes'>??? </span></span>위</span></b><b
   style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
   </td>
   <td width=567 style='width:15.0cm;border-top:none;border-left:none;
@@ -2527,7 +2576,7 @@ line-height:normal'><span lang=EN-US style='font-size:1.0pt'><o:p>&nbsp;</o:p></
   line-height:normal'><b style='mso-bidi-font-weight:normal'><span
   style='font-size:11.0pt;color:black;]')
 || TO_CLOB(q'[mso-color-alt:windowtext'>성 <span
-  lang=EN-US><span style='mso-spacerun:yes'>   </span></span>명</span></b><b
+  lang=EN-US><span style='mso-spacerun:yes'>???</span></span>명</span></b><b
   style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
   </td>
   <td width=567 style='width:15.0cm;border-top:none;border-left:none;
@@ -2574,7 +2623,7 @@ line-height:normal'><span lang=EN-US style='font-size:1.0pt'><o:p>&nbsp;</o:p></
   <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
   line-height:normal'><b style='mso-bidi-font-weight:normal'><span
   style='font-size:11.0pt;color:black;mso-color-alt:windowtext'>주<span
-  lang=EN-US><span style='mso-spacerun:yes'>    </span></span>소</span></b><b
+  lang=EN-US><span style='mso-spacerun:yes'>??? </span></span>소</span></b><b
   style='mso-bidi-font-weight:normal'><span lang=EN-US style='font-size:11.0pt'><o:p></o:p></span></b></p>
   </td>
   <td width=56]')
@@ -2645,12 +2694,12 @@ style='font-size:14.0pt;line-height:115%'>상기 퇴사희망일 부로 사직�
 
 <p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><span
 class=GramE><u><span lang=EN-US style='font-size:11.0pt;line-height:115%'>20<span
-style='mso-spacerun:yes'>  </span></span></u><u><span style='font-size:11.0pt;
+style='mso-spacerun:yes'>? </span></span></u><u><span style='font-size:11.0pt;
 line-height:1]')
 || TO_CLOB(q'[15%'>년</span></u></span><span style='font-size:11.0pt;line-height:
-115%'> <u><span lang=EN-US><span style='mso-spacerun:yes'>  </span></span>월</u>
-<u><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'> </span>일</u><span lang=EN-US><o:p></o:p></span></span></p>
+115%'> <u><span lang=EN-US><span style='mso-spacerun:yes'>??</span></span>월</u>
+<u><span style='mso-spacerun:yes'>?</span><span
+style='mso-spacerun:yes'>?</span>일</u><span lang=EN-US><o:p></o:p></span></span></p>
 
 <p class=MsoNormal style='margin-bottom:0cm'><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
@@ -2660,8 +2709,8 @@ style='mso-spacerun:yes'> </span>일</u><span lang=EN-US><o:p></o:p></span></sp
 || TO_CLOB(q'[e='margin-bottom:0cm;text-align:right'><b
 style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt;line-height:
 115%'>작성자 </span></b><span style='font-size:11.0pt;line-height:115%'><span
-style='mso-spacerun:yes'> </span><u><span lang=EN-US><span
-style='mso-spacerun:yes'>                 </span></span></u><span lang=EN-US>(</span>인<span
+style='mso-spacerun:yes'>?</span><u><span lang=EN-US><span
+style='mso-spacerun:yes'>?????????????????</span></span></u><span lang=EN-US>(</span>인<span
 lang=EN-US>)<o:p></o:p></span></span></p>
 
 <p class=MsoNormal align=left style='margin-bottom:0cm;text-align:left'><span
