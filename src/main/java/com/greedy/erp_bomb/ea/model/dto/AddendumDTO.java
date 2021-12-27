@@ -147,6 +147,7 @@ public class AddendumDTO implements Serializable,Comparable<AddendumDTO> {
 		return "AddendumDTO [no=" + no + ", refNo=" + refNo + ", ea=" + ea.getTitle() + ", member=" + member.getName() + ", content="
 				+ content + ", date=" + date + ", dept=" + depth + ", length=" + length + ", requestYn=" + requestYn + "]";
 	}
+	
 	@Override
 	public int compareTo(AddendumDTO o) {
 		if (o.getLength() < this.length) {

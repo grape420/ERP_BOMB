@@ -87,6 +87,7 @@ public class EaService {
 		eaDAO.deleteEa(userName, eaNo);
 	}
 
+	@Transactional
 	public List<DocumentFormDTO> findeDocumentFormList() {
 		return eaDAO.findeDocumentFormList();
 	}
