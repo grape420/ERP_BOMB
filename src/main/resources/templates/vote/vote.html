@@ -30,6 +30,10 @@
 		float: right;
 		text-align: right;
 	}
+	
+	#topVote{
+		color: green;
+	}
 </style>
 
 <title>ERP BOMB</title>
@@ -61,13 +65,7 @@
 	                    <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	                </li>
 	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	                </li>
-	                <li class="nav-item mr-3">
 	                    <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	                </li>
-	                <li class="nav-item mr-3">
-	                    <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	                </li>
 	                <li class="nav-item mr-3">
 	                    <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -94,16 +92,16 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 
-				<!-- Nav Item - Pages Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link" href="/board/noticeList">
-						<span>공지사항</span>
-					</a>
-				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
 				<li class="nav-item">
 					<a class="nav-link" href="/board/boardList">
 						<span>사내게시판</span>
+					</a>
+				</li>
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link" href="/board/noticeList">
+						<span>공지사항</span>
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
@@ -355,7 +353,7 @@
 									</div>
 								</div>
 								<div class="btn_area">
-									<button type="button" class="blue_btn pop_btn" data-button="new-vote">신규</button>							
+									<button sec:authorize="hasRole('ROLE_CAPTAIN')" type="button" class="blue_btn pop_btn" data-button="new-vote">신규</button>							
 								</div>
 							</div>
 						</div>
@@ -402,7 +400,7 @@
 				<button type="button" class="pop_close" data-button="vote-detail">닫기</button>
 			</div>
 			<div class="pop_inner">
-				<button type="button" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;" onclick="resultVote()">결과보기</button>
+				<button type="button" id="ddd" class="blue_btn pop_btn" data-button="resultVote" style="float: right; margin-right: 20px;" onclick="resultVote()">중간결과</button>
 				<p id="titleVo"></p>
 				<hr>
 				<p id="contentVo"></p> 
@@ -456,6 +454,8 @@
 	
 	
 	<script>
+	let exT;
+	
 	/* 신규 투표작성 */
 	function insertVote(){
 		var titleFlag = false;
@@ -524,11 +524,16 @@
 	      success: function(data){
 	         var date1 = new Date(data.endDate);
 	         var voteCheckFlag = false;
+	         var topMath = Math.max(date.voteOptionList);
 	         
 	         if(date > date1){
 	            vvote = true;
 	            candi = true;
 	            voteCheckFlag = true;
+	            
+	            $("#ddd").css("display","none");
+	         } else {
+	        	 $("#ddd").css("display","block");
 	         }
 	         
 	         for(var index in data.voteParticipationList){
@@ -539,16 +544,22 @@
 	         }
 	         
 	         title.text("제목 : " + data.title);                        
-	         content.text("내용 : " + data.content);
+	         content.html("내용 : " + data.content.replace(/(?:\r\n|\r|\n)/g, "<br>"));
 	         
-	         title.append("<button id='pareNum' type='button' style='display:none' value='" + data.serialNo +"'>as</button>")
+	         exT = data.serialNo;
 	         
 	         if(data.voteOptionList != ""){
 	            
 	            for(var index in data.voteOptionList){
 	               $index = "vote" + index;
 	               
-	               if(voteCheckFlag){
+	               if(date > date1){
+	            	   if(data.voteOptionList[index].topVote == 1){
+	            		   voteList.append("<li id='topVote'><h6>" + data.voteOptionList[index].desc + "<label style='float:right; margin-right:5px'>" + data.voteOptionList[index].voteCount + " 표" + "</label></h6></li>")	   
+	            	   } else {
+	            		   voteList.append("<li><h6>" + data.voteOptionList[index].desc + "<label style='float:right; margin-right:5px'>" + data.voteOptionList[index].voteCount + " 표" + "</label></h6></li>")   
+	            	   }
+	               } else if(voteCheckFlag){
 	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label></li>")
 	               } else {
 	                  voteList.append("<li><label for="+ $index +">" + data.voteOptionList[index].desc + "</label><input type='radio' id="+ "'" + $index + "'" + "class='vote'" + "name='votes'" + "value='"+ data.voteOptionList[index].desc + "'" + "></li>")
@@ -557,18 +568,12 @@
 	               if(bob == data.voteOptionList[index].member.name ){
 	                  candi = true;
 	               }
-	               
 	            }
-	            
-	            
 	            
 	            if(date > date1){
 	               vvote = true;
 	               candi = true;
 	            }
-	            
-	            /* Controller로 보내기위한 임의적인 input */
-	            voteList.append("<input type='text' class='serialNo' style='display: none;' value='"+ data.serialNo + "'></input>");
 	            
 	            if(!candi){
 	               buttonArea.append("<button class='blue_btn pop_btn' style='margin-right: 5px;' data-button='insertVote' id='voteInIN'>후보등록</button>")   ;   
@@ -591,7 +596,10 @@
 	         $("#candiArea").html("");
 	         $("#candiArea").append("<p>제목 : " + data.title + "</p>");
 	         $("#candiArea").append("<p>후보 이름 : <input type'text' placeholder='후보는 1개만 가능합니다.' style='width: 70%;' id='candiInsert'/></p>");
-	         
+	         $("#voteInIN").click(function() {
+	     		console.log("Test");
+	     		$("#candiInsert").val("");
+	     	});
 	      },
 	      error: function(xhr){
 	         console.log(xhr);
@@ -599,6 +607,7 @@
 	      });
 	   }
 	   
+	
 	   /* 후보 추가 */
 	   function plusCandi(num){
 	      var candiInsert = $("#candiInsert").val();
@@ -632,7 +641,7 @@
 	               voteDetail(votenum);
 	            },
 	            error: function(xhr){
-	               console.log(xhr);
+	               alert("권한이 필요한 기능입니다");
 	                }
 	         });
 	      }
@@ -641,7 +650,6 @@
 		/* 투표하기 */
 		function vVote(){
 			var voteFlag = false;
-			const serialNo = $(".serialNo").val();
 			var desc = $(":input:radio[name=votes]:checked").val();
 			
 			if($(".vote").is(":checked")){
@@ -655,11 +663,11 @@
 					url: "/vote/vvote",
 					type: "post",
 					data: {
-						serialNo : serialNo,
+						serialNo : exT,
 						desc : desc
 					},
 					success: function(data){
-						voteDetail(serialNo);
+						voteDetail(exT);
 					},
 					error: function(xhr){
 						console.log("에러임");
@@ -671,7 +679,6 @@
 		
 		/* 투표결과조회 */
 		function resultVote(){
-			var voteNumber = $("#pareNum").val();
 			const resultVoteBody = $("#resultVoteBody");
 			const voteResultTable = $("#voteResultTable");
 			
@@ -682,7 +689,7 @@
 				url: "/vote/resultVote",
 				type: "get",
 				data: {
-					voteNumber : voteNumber
+					voteNumber : exT
 				},
 				success: function(data){
 					

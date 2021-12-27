@@ -17,9 +17,10 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -48,14 +49,8 @@
 	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	               </li>
 	               <li class="nav-item mr-3 tab-selected">
 	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -85,7 +80,7 @@
 
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
-					<a class="nav-link" href="inventory/inventory">
+					<a class="nav-link on" href="inventory/inventory">
 					<span>재고 관리</span>
 					</a>
 				</li>
@@ -168,22 +163,22 @@
 											</select>
 										</td>
 										<td>
-											<input type="number" name="invenRemainStock">
+											<input type="number" name="invenRemainStock" required="required">
 										</td> 
 									</tr>
 								</tbody>
 							</table>
 							<div class="btn_area mt-2" style="text-align: center;">
-								<button type="submit" class="blue_btn pop_close" data-button="new_inventory_pop">추가</button> 
+								<button type="submit" class="blue_btn" data-button="new_inventory_pop" id="submitBtn">추가</button> 
 								<a style="cursor: pointer;" class="gray_btn pop_close" data-button="new_inventory_pop">닫기</a>
 							</div>
 						</form>
 						</div>
 					</div>
 					<!-- 입출고 추가 -->
-					<div class="btn_area" style="margin-left: 10px;">
+					<!-- <div class="btn_area" style="margin-left: 10px;">
 						<a style="cursor: pointer;" class="blue_btn pop_btn" data-button="new_inventory_pop">추가</a> 
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -220,6 +215,12 @@
 			}
 		});
 		
+		$("#submitBtn").click(function() {
+			if($("input[type=number]").val() < 1) {
+				alert("1보다 큰 숫자를 입력하세요");
+			}
+		});	
+		
 		/* dataTable */
 		var timer = setInterval(function() {
 			$.fn.DataTable.ext.pager.numbers_length = 5;
@@ -253,6 +254,12 @@
 			
 			clearInterval(timer);
 		}, 100);
+		
+		const errorMessage = "[[${ errorMessage }]]";	
+				
+		if(errorMessage){
+			alert(errorMessage);
+		}
 	</script>
 	
 	<!-- dataTable -->

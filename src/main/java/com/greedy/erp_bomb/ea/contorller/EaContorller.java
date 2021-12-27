@@ -175,7 +175,7 @@ public class EaContorller {
 	@GetMapping("/eaCancle")
 	public ModelAndView eaCancle(@AuthenticationPrincipal UserImpl user, ModelAndView mv, @RequestParam int no, @RequestParam(defaultValue = "0") int type) {
 		eaService.eaCancle(user.getName(), no, type);
-		mv.setViewName("redirect:/ea/ea");
+		mv.setViewName("redirect:/ea/ea?tab=2");
 		return mv;
 	}
 	
@@ -304,7 +304,7 @@ public class EaContorller {
 		model.addAttribute("myEaList", myEaList);
 		model.addAttribute("myEaPathList", myEaPathList);
 		model.addAttribute("myEaCarbonList", myEaCarbonList);
-		model.addAttribute("allEaList", allEaList);
+		model.addAttribute("allEaList", allEaList.stream().distinct().toList());
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("tab", tab);
 		
@@ -316,7 +316,7 @@ public class EaContorller {
 		eaService.deleteAddendum(no);
 	}
 	
-	@GetMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/replyAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public AddendumDTO replyAddendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO replyAd = new AddendumDTO();
@@ -353,7 +353,7 @@ public class EaContorller {
 		return replyAd;
 	}
 	
-	@GetMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/addAddendum", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public AddendumDTO addADdendum(@RequestParam int no, @RequestParam String content, @AuthenticationPrincipal UserImpl user, Model model) {
 		AddendumDTO addAd = new AddendumDTO();

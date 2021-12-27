@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +17,7 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/common/denied.css}">	<!-- 여기에 페이지 css파일 적용 -->
 <title>ERP BOMB</title>
 </head>
@@ -27,8 +29,8 @@
 	<section>
 		<div id="wrapper" style="height: 50vh;">
             <div class="login_div row" style="display: flex; align-items: center;">
-				<h2 class="headline-2"><strong>This page does not have access rights</strong></h2>
-				<h5 class="error-info" style="width: 100%;">접근 권한이 없는 페이지입니다.<br><br>궁금하신 사항은 <u>관리자</u>에 문의해주시기 바랍니다.</h5>
+				<h2 class="headline-2"><strong>Page Error</strong></h2>
+				<h5 class="error-info" style="width: 100%;">요청하신 페이지에 오류가 발생하였습니다.<br><br><u>입력값</u> 또는 <u>주소</u>가 잘못되어 해당 페이지를 찾을 수 없습니다.</h5>
 			</div>
 		</div>
 	</section>

@@ -77,5 +77,14 @@ public class NoteService {
 		return noteDAO.findAllMember();
 	}
 	
+	@Transactional
+	public int getReceiveMessageCount(String name){
+		return noteDAO.getReceiveMessageCount(name);
+	}
+	
+	@Transactional
+	public void updateNoteDelYn(int serialNo, String type) {
+		noteDAO.updateNoteDelYn(serialNo, type);
+	}
 	
 }

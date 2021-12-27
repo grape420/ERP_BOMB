@@ -49,13 +49,7 @@
 						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -75,7 +69,7 @@
 							<p class="titleM">공지사항</p>
 							<ul class="notice_list">
 								<li th:each="board : ${ boardList }">
-									<a th:href="@{/board/detail(no=${board.no})}">
+									<a th:href="@{/board/nodetail(no=${board.no})}">
 										<p th:text="${ board.title }"></p>
 										<span class="date" th:text="${ board.regDate }"></span>
 									</a>
@@ -90,8 +84,8 @@
 					<div class="main_right">
 						<div class="status">
 							<p class="titleM">근태현황</p>
-							<span class="time_p"></span>
-							<p th:if="${ todayWorkFlag }" class="text">출근시 아래 버튼을 클릭하세요.</p>
+							<span class="time_p">오전 09:00 후에 출근 시 자동으로 지각 처리됩니다.</span>
+							<p th:if="${ todayWorkFlag }" class="text">출근 시 아래 버튼을 클릭하세요.</p>
 							<p th:unless="${ todayWorkFlag }" class="text">금일 이미 출근을 하셨습니다.</p>
 							<div class="btn_area">
 								<button th:if="${ todayWorkFlag }" class="ent_work" type="button" th:attr="onclick=|location.replace('/main/entWork')|">출근</button>

@@ -1,5 +1,6 @@
 package com.greedy.erp_bomb.admin.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -45,20 +46,56 @@ public class AdminMemberController {
 	
 	@GetMapping(value = "companyCode", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<CompanyDTO> findCompanyList() {
-		return adminMemberService.findCompanyList();
+	public List<CompanyDTO> findCompanyList(@RequestParam String detailName) {
+		List<CompanyDTO> companyList = adminMemberService.findCompanyList();
+		
+		int companyNo = adminMemberService.memDetail(detailName).getCompany().getSerialNo();
+		
+		for(CompanyDTO com : companyList) {
+			if(companyNo == com.getSerialNo()) {
+				com.setStatus("A");
+			} else {
+				com.setStatus("B");
+			}
+		}
+		
+		return companyList;
 	}
 	
 	@GetMapping(value = "deptCode", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<DeptDTO> findDeptCodeList() {
-		return adminMemberService.findDeptCodeList();
+	public List<DeptDTO> findDeptCodeList(@RequestParam String detailName) {
+		List<DeptDTO> deptList = adminMemberService.findDeptCodeList();
+		
+		int deptCode = adminMemberService.memDetail(detailName).getDept().getNo();
+		
+		for(DeptDTO dept : deptList) {
+			if(deptCode == dept.getNo()) {
+				dept.setMemberList(new ArrayList<>());
+			} else {
+				dept.setMemberList(null);
+			}
+		}
+		
+		return deptList;
 	}
 	
 	@GetMapping(value = "rankCode", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<RankDTO> findRankCodeList() {
-		return adminMemberService.findRankCodeList();
+	public List<RankDTO> findRankCodeList(@RequestParam String detailName) {
+		List<RankDTO> rankList = adminMemberService.findRankCodeList();
+		
+		int rankNo = adminMemberService.memDetail(detailName).getRank().getNo();
+		
+		for(RankDTO rank : rankList) {
+			if(rankNo == rank.getNo()) {
+				rank.setMemberList(new ArrayList<>());
+			} else {
+				rank.setMemberList(null);
+			}
+		}
+		
+		return rankList;
 	}
 	
 	@GetMapping("/registMember")
@@ -142,8 +179,6 @@ public class AdminMemberController {
 	
 	@PostMapping("/updateMem")
 	public String updateMem(@RequestParam int companyCode, @RequestParam int deptCode, @RequestParam int rankCode, @ModelAttribute MemberDTO member) {
-		String encodePassword = passwordEncoder.encode(member.getPwd());
-		
 		CompanyDTO com = new CompanyDTO();
 		com.setSerialNo(companyCode);
 		
@@ -156,7 +191,13 @@ public class AdminMemberController {
 		member.setCompany(com);
 		member.setRank(rank);
 		member.setDept(dept);
-		member.setPwd(encodePassword);
+		if(!member.getPwd().equals("")) {
+			member.setPwd(passwordEncoder.encode(member.getPwd()));
+		}
+		
+		if(member.getEntYn().equals("Y")) {
+			member.setQuitDate(new java.sql.Date(System.currentTimeMillis()));
+		}
 		
 		adminMemberService.updateMem(member);
 		

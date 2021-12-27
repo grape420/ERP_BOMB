@@ -3,7 +3,6 @@ package com.greedy.erp_bomb.note.model.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,17 +46,25 @@ public class NoteDTO implements Serializable {
 	
 	@Column(name = "NOTE_CONTENT")
 	private String content;
+	
+	@Column(name = "SEND_DEL_YN")
+	private String sendDelYn;
+	
+	@Column(name = "RECEIVE_DEL_YN")
+	private String receiveDelYn;
 
 	public NoteDTO() {
 	}
 	public NoteDTO(int serialNo, MemberDTO sentMember, MemberDTO receiveMember, Date sendDate, String reception,
-			String content) {
+			String content, String sendDelYn, String receiveDelYn) {
 		this.serialNo = serialNo;
 		this.sentMember = sentMember;
 		this.receiveMember = receiveMember;
 		this.sendDate = sendDate;
 		this.reception = reception;
 		this.content = content;
+		this.sendDelYn = sendDelYn;
+		this.receiveDelYn = receiveDelYn;
 	}
 	
 	public int getSerialNo() {
@@ -96,6 +103,18 @@ public class NoteDTO implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getSendDelYn() {
+		return sendDelYn;
+	}
+	public void setSendDelYn(String sendDelYn) {
+		this.sendDelYn = sendDelYn;
+	}
+	public String getReceiveDelYn() {
+		return receiveDelYn;
+	}
+	public void setReceiveDelYn(String receiveDelYn) {
+		this.receiveDelYn = receiveDelYn;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -103,6 +122,6 @@ public class NoteDTO implements Serializable {
 	@Override
 	public String toString() {
 		return "NoteDTO [serialNo=" + serialNo + ", sentMember=" + sentMember + ", receiveMember=" + receiveMember
-				+ ", sendDate=" + sendDate + ", reception=" + reception + ", content=" + content + "]";
+				+ ", sendDate=" + sendDate + ", reception=" + reception + ", content=" + content + ", sendDelYn=" + sendDelYn + ", receiveDelYn=" + receiveDelYn + "]";
 	}
 }

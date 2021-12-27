@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="shortcut icon" th:href="@{/uses/Logo.png}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@100&display=swap">
@@ -17,9 +17,9 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/salary/salary.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <style>
 	.fDiv{
 		float: left;
@@ -59,13 +59,7 @@
 	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	               </li>
-	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -78,7 +72,7 @@
 
 			<!-- Sidebar -->
 			<ul
-				class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+				class="mt-0 navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 				id="accordionSidebar">
 
 				<!-- Sidebar - Brand -->
@@ -119,8 +113,11 @@
 					<a class="nav-link mt-1" href="/admin/document">
 						<span>문서 관리</span>
 					</a>
-					<a class="nav-link mt-1 on" href="/admin/document">
+					<a class="nav-link mt-1 on" href="/admin/salary">
 						<span>급여 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/tna">
+						<span>근태 관리</span>
 					</a>
 				</li>
 
@@ -165,7 +162,7 @@
 										<tbody>
 											<tr th:each="salary : ${ allSalaryList }">
 												<td th:text="${ salary.serialNo }"></td>
-												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" class="t_center pop_btn" th:attr="data-button=${ 'payroll_detail_pop' + salary.serialNo }"></td>
+												<td th:text="${ #dates.format(salary.Date, 'yyyy-MM') }" ></td>
 												<td th:text="${ salary.member.name }"></td>
 												<td th:text="${ #numbers.formatInteger(salary.regularPay, 1, 'COMMA') }"></td>
 												<td th:text="${ #numbers.formatInteger(salary.bonus, 1, 'COMMA') }"></td>

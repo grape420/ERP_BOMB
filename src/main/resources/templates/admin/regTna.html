@@ -93,8 +93,35 @@
 				<hr class="sidebar-divider">
 
 				<li class="nav-item">
-					<a class="nav-link collapsed on" href="/tna/regTna">
-						<span>근태조회</span>
+					<a class="nav-link " href="/admin/authority">
+						<span>권한 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/member">
+						<span>회원 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/company">
+						<span>회사 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/rank">
+						<span>직급 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/dept">
+						<span>부서 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/icecream">
+						<span>아이스크림 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/sp">
+						<span>퇴직금 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/document">
+						<span>문서 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/salary">
+						<span>급여 관리</span>
+					</a>
+					<a class="nav-link mt-1 on" href="/admin/tna">
+						<span>근태 관리</span>
 					</a>
 				</li>
 
@@ -164,7 +191,7 @@
 			window.onload = function(){
 				find = 0;
 				var ttt = $.ajax({
-					url: "/tna/tnaList",
+					url: "/admin/tnaList",
 					type: "get",
 					data: {
 						find : find
@@ -227,7 +254,7 @@
 								
 								
 								var ttt = $.ajax({
-										url: "/tna/tnaList",
+										url: "/admin/tnaList",
 										type: "get",
 										data: {
 											find : find
@@ -284,7 +311,7 @@
 				$(document).on('click', 'button[name="ddd"]', function() {
 				     var name = $(this).attr('value');
 				     
-				     location.href="/tna/detail?name=" + name;
+				     location.href="/admin/detail?name=" + name;
 				});
 		})
 							</script>

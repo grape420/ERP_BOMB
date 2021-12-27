@@ -1,12 +1,13 @@
 package com.greedy.erp_bomb.note.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.greedy.erp_bomb.member.model.dto.MemberDTO;
 import com.greedy.erp_bomb.member.model.dto.UserImpl;
 import com.greedy.erp_bomb.note.model.dto.NoteDTO;
 import com.greedy.erp_bomb.note.model.service.NoteService;
+
 
 @Controller
 @RequestMapping("/note")
@@ -56,6 +58,8 @@ public class NoteContorller {
 		noteDto.setContent(content);
 		noteDto.setSendDate(new Date());
 		noteDto.setReception("N");
+		noteDto.setSendDelYn("N");
+		noteDto.setReceiveDelYn("N");
 		
 		String result = "";
 		try {
@@ -76,30 +80,34 @@ public class NoteContorller {
 	@PostMapping(value = "deleteMessage", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> deleteMessage(@RequestParam HashMap<String, Object> map, @RequestParam(value="serialNo[]") List<String> serialNo, 
-			@RequestParam(value="send_member[]") List<String> send_member, @RequestParam(value="receive_member[]") List<String> receive_member) {
+			@RequestParam(value="send_member[]") List<String> send_member, @RequestParam(value="receive_member[]") List<String> receive_member, @RequestParam String type) {
 		String result = "";
 		String userName = map.get("userName").toString(); // 유저정보
 		
 		/* 체크된 항목 Delete */
+		/*
+		 * for(int i=0; i<serialNo.size(); i++) { String no = serialNo.get(i);
+		 * if(!no.isEmpty()) { MemberDTO sendMemberDto = new MemberDTO(); MemberDTO
+		 * rcvMemberDto = new MemberDTO(); NoteDTO noteDto = new NoteDTO();
+		 * 
+		 * String sendMember = send_member.get(i).toString(); String receiveMember =
+		 * receive_member.get(i).toString();
+		 * 
+		 * sendMemberDto.setName(sendMember); rcvMemberDto.setName(receiveMember);
+		 * 
+		 * noteDto.setSerialNo(Integer.parseInt(serialNo.get(i)));
+		 * noteDto.setSentMember(sendMemberDto); noteDto.setReceiveMember(rcvMemberDto);
+		 * 
+		 * try { noteService.remove(noteDto); result = "success"; } catch (Exception e)
+		 * { // TODO: handle exception System.out.println("error ==> " + e); result =
+		 * e.getMessage(); } } }
+		 */
+		/* 체크된 항목 Delete */
 		for(int i=0; i<serialNo.size(); i++) {
 			String no = serialNo.get(i);
 			if(!no.isEmpty()) {
-				MemberDTO sendMemberDto = new MemberDTO();
-				MemberDTO rcvMemberDto = new MemberDTO();
-				NoteDTO noteDto = new NoteDTO();
-				
-				String sendMember = send_member.get(i).toString();
-				String receiveMember = receive_member.get(i).toString();
-				
-				sendMemberDto.setName(sendMember);
-				rcvMemberDto.setName(receiveMember);
-				
-				noteDto.setSerialNo(Integer.parseInt(serialNo.get(i)));
-				noteDto.setSentMember(sendMemberDto);
-				noteDto.setReceiveMember(rcvMemberDto);
-				
 				try {
-					noteService.remove(noteDto);
+					noteService.updateNoteDelYn(Integer.parseInt(serialNo.get(i)), type);
 					result = "success";
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -121,7 +129,7 @@ public class NoteContorller {
 	public HashMap<String, Object> getSendMessage(@RequestParam String name, @RequestParam int pageNumber) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int messageTotalCount = noteService.getSendTotalCount(name);
-		/*** 3번쨰 변수 listSize ***/
+		/*** 3번째 변수 listSize ***/
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(pageNumber, messageTotalCount, 10, 5);
 		
 		/* 보낸 쪽지 SELECT */
@@ -136,7 +144,7 @@ public class NoteContorller {
 	public HashMap<String, Object> getreceiveMessage(@RequestParam String name, @RequestParam int pageNumber) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int messageTotalCount = noteService.getreceiveTotalCount(name);
-		/*** 3번쨰 변수 listSize ***/
+		/*** 3번째 변수 listSize ***/
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(pageNumber, messageTotalCount, 10, 5);
 		
 		
@@ -172,7 +180,7 @@ public class NoteContorller {
 				Object prev = null;
 				if(i == 0) { // 첫 쪽지
 					
-					if(noteList.size() != 1) { // 쪽지가 한개이상 일 떄만 next
+					if(noteList.size() != 1) { // 쪽지가 한 개 이상 일 때만 next
 						next = noteList.get(i+1).get("serialNo");
 					}
 					prev = null;
@@ -201,14 +209,14 @@ public class NoteContorller {
 	
 	@PostMapping(value = "getReceiveMember", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<HashMap<String, Object>> getReceiveMember(@AuthenticationPrincipal UserImpl user) {
+	public List<HashMap<String, Object>> getReceiveMember(Principal principal) {
 		
 		List<HashMap<String, Object>> memberList = new ArrayList<HashMap<String,Object>>();
 		
 		List<MemberDTO> findAllMember = noteService.findAllMember();
 		
 		for(MemberDTO member : findAllMember) {
-			if(!user.getName().equals(member.getName().toString())) {
+			if(!((UserImpl)((Authentication)principal).getPrincipal()).getName().equals(member.getName().toString())) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("name", member.getName());
 				memberList.add(map);
@@ -216,6 +224,15 @@ public class NoteContorller {
 		}
 		
 		return memberList;
+	}
+	
+	@PostMapping(value = "getReceiveMessageCount", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public int getReceiveMessageCount(Principal principal) {
+		
+		int messageCount = noteService.getReceiveMessageCount(((UserImpl)((Authentication)principal).getPrincipal()).getName());
+		
+		return messageCount;
 	}
 }
 

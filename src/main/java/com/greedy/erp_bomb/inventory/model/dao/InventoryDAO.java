@@ -19,7 +19,7 @@ public class InventoryDAO {
 	private EntityManager em;
 
 	public List<InventoryDTO> findInvenList() {
-		String jpql = "SELECT m FROM InventoryDTO as m ORDER BY m.company.serialNo, m.iceCream.name";
+		String jpql = "SELECT m FROM InventoryDTO as m WHERE m.company.status = 'Y' ORDER BY m.company.serialNo, m.iceCream.name";
 		
 		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class).getResultList();
 		
@@ -51,15 +51,29 @@ public class InventoryDAO {
 		return icecreamList;
 	}
 
-	public void registNewIce(IceCreamDTO ice) {
-		em.persist(ice);
-	}
-
 	public void registInven(InventoryDTO inven) {
 		inven.setCompany(em.find(CompanyDTO.class, inven.getCompany().getSerialNo()));
 		inven.setIceCream(em.find(IceCreamDTO.class, inven.getIceCream().getNo()));
 		
 		em.persist(inven);
+	}
+
+	public List<InventoryDTO> findPresentInvenList() {
+		String jpql = "SELECT a FROM InventoryDTO a";
+		
+		List<InventoryDTO> invenList = em.createQuery(jpql, InventoryDTO.class).getResultList();
+		
+		return invenList;
+	}
+
+	public InventoryDTO findInsertInven(InventoryDTO inven) {
+		InventoryPk pk = new InventoryPk();
+		pk.setCompany(inven.getCompany().getSerialNo());
+		pk.setIceCream(inven.getIceCream().getNo());
+		
+		InventoryDTO presentInven = em.find(InventoryDTO.class, pk);
+		
+		return presentInven;
 	}
 
 //	public List<InventoryDTO> searchInven(String keyword) {

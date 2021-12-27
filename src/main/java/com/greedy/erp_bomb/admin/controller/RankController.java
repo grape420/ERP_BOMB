@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.greedy.erp_bomb.admin.model.service.RankService;
+import com.greedy.erp_bomb.member.model.dto.DeptDTO;
 import com.greedy.erp_bomb.member.model.dto.RankDTO;
 
 @Controller

@@ -29,7 +29,7 @@ public class AdminMemberDAO {
 	}
 
 	public List<CompanyDTO> findCompanyList() {
-		String jpql = "SELECT m FROM CompanyDTO as m ORDER BY m.serialNo";
+		String jpql = "SELECT m FROM CompanyDTO as m WHERE m.status = 'Y' ORDER BY m.serialNo";
 		
 		List<CompanyDTO> companyList = em.createQuery(jpql, CompanyDTO.class).getResultList();
 		
@@ -81,25 +81,6 @@ public class AdminMemberDAO {
 	public MemberDTO memDetail(String detailName) {
 		MemberDTO member = em.find(MemberDTO.class, detailName);
 		
-		member.getCompany().setInventoryList(null);
-		member.getCompany().setMemberList(null);
-		member.getDept().setMemberList(null);
-		member.getRank().setMemberList(null);
-		member.setAddendumList(null);
-		member.setBoardList(null);
-		member.setCommentList(null);
-		member.setEaBonDTOList(null);
-		member.setEaList(null);
-		member.setEaPathList(null);
-		member.setMemberRoleList(null);
-		member.setReceiveMemberList(null);
-		member.setSalaryList(null);
-		member.setSentNoteList(null);
-		member.setTnaList(null);
-		member.setVoteList(null);
-		member.setVoteOptionList(null);
-		member.setVoteParticipationList(null);
-		
 		return member;
 	}
 
@@ -108,9 +89,12 @@ public class AdminMemberDAO {
 		mem.setCompany(member.getCompany());
 		mem.setDept(member.getDept());
 		mem.setRank(member.getRank());
-		mem.setPwd(member.getPwd());
 		mem.setEmail(member.getEmail());
 		mem.setEntYn(member.getEntYn());
 		mem.setPhone(member.getPhone());
+		mem.setQuitDate(member.getQuitDate());
+		if(!member.getPwd().equals("")) {
+			mem.setPwd(member.getPwd());
+		}
 	}
 }

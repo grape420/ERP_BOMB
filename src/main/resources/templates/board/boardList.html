@@ -18,8 +18,12 @@
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
-<link rel="stylesheet" th:href="@{/css/board/boardList.css}">	<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" th:href="@{/css/board/boardList.css}">	
+<!-- 여기에 페이지 css파일 적용 -->
 <style>
 	
 	.fDiv{
@@ -62,13 +66,7 @@
 						<a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 					</li>
 					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-					</li>
-					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-					</li>
-					<li class="nav-item mr-3">
-						<a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 					</li>
 					<li class="nav-item mr-3">
 						<a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -95,6 +93,13 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link on" href="/board/boardList" data-target="#collapseUtilities"
+						aria-expanded="true" aria-controls="collapseUtilities">
+						<span>사내게시판</span>
+					</a>
+				</li>
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item">
 					<a class="nav-link collapsed" href="/board/noticeList" data-target="#collapseUtilities"
@@ -103,18 +108,11 @@
 					</a>
 				</li>
 				<!-- Nav Item - Utilities Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link collapsed on" href="/board/boardList" data-target="#collapseUtilities"
-						aria-expanded="true" aria-controls="collapseUtilities">
-						<span>사내게시판</span>
-					</a>
-				</li>
-				<!-- Nav Item - Utilities Collapse Menu -->
-				<li class="nav-item">
-					<a class="nav-link" href="/vote/vote" >
-						<span>투표 게시판</span>
-					</a>
-				</li>
+	            <li class="nav-item">
+	               <a class="nav-link" href="/vote/vote" >
+	                  <span>투표 게시판</span>
+	               </a>
+	            </li>				
 				<hr class="sidebar-divider">
 			</ul>
 			<!-- End of Sidebar -->
@@ -124,26 +122,26 @@
 					<button type="button" class="btn btn-outline-secondary" id="listBtn" style="float: right;">신규</button>
 					<h3 style="font-weight: 900;">사내게시판</h3>
 					<colgroup>
-								<col style="width:20%" />
+								<col style="width:10%" />
 								<col style="width:65%" />
 								<col style="width:15%" />
-								<col style="width:9%" />
+								<col style="width:10%" />
 					</colgroup>
 					 	<thead >
 								<tr>
-								<th></th>
-								<th  style="text-align: left;"></th>
-								<th  style="text-align: right;"></th>
-								<th  style="text-align: right;"></th>
+									<th style="text-align: center;">작성자</th>
+									<th style="text-align: left;">제목</th>
+									<th style="text-align: center;">작성일</th>
+									<th style="text-align: center;">조회수</th>
 								</tr>
 						</thead> 
 					
 					<tbody>
 					  <tr th:each="board : ${ boardList }" >
-					  	<td  th:if="${ board.category } == 2" th:text="[사내게시판]" style="color: black"></td>
+					  	<td  th:text="${ board.member.name }" style="color: black; text-align: center;"></td>
 						<td><a th:text="${ board.title }" th:href="@{/board/detail(no=${board.no})}" style="color: black"></a></td>
-						<td  th:text="${ board.regDate }"style="text-align: right; color:black;" ></td>
-						<td  th:text="${ board.hit}"style="text-align: right; color:black;"></td>
+						<td th:text="${ board.regDate }"style="text-align: center; color:black;" ></td>
+						<td th:text="${ board.hit}"style="text-align: center; color:black;"></td>
 					  </tr>
 					</tbody>
 				  </table>
@@ -188,7 +186,7 @@
 	}, 100);
 		
 	</script>
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 </body>
 </html>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	lang="ko">
+<html xmlns:th="https://www.thymeleaf.org" 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" 	lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,6 +18,9 @@
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/board/boardDetail.css}">
 <!-- 여기에 페이지 css파일 적용 -->
@@ -39,20 +40,16 @@
 			</a>
 			<div class="collapse navbar-collapse function-tab">
 				<ul class="navbar-nav mr-3 top-tap">
-					<li class="nav-item mr-3 tab-selected"><a
+					<li class="nav-item mr-3"><a
 						class="nav-link font-weight-bold" href="/main/main">메인 페이지</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
+					<li class="nav-item mr-3 tab-selected"><a class="nav-link font-weight-bold"
 						href="/board/boardList">게시판</a></li>
 					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
 						href="/ea/ea">전자결재</a></li>
 					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
 						href="/salary/salary">급여관리</a></li>
 					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="/sp/sp">퇴직금</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
 						href="/inventory/inventory">재고 관리</a></li>
-					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
-						href="/tna/tna">근태 관리</a></li>
 					<li class="nav-item mr-3"><a class="nav-link font-weight-bold"
 						href="/inOut/inOut">입출고</a></li>
 				</ul>
@@ -78,21 +75,23 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item">
+				<a class="nav-link on"
+					href="/board/boardList" data-target="#collapseUtilities"
+					aria-expanded="true" aria-controls="collapseUtilities"> <span>사내게시판</span>
+				</a></li>
 				<!-- Nav Item - Pages Collapse Menu -->
 				<li class="nav-item"><a class="nav-link collapsed"
 					href="/board/noticeList" data-target="#collapseUtilities"
 					aria-expanded="true" aria-controls="collapseUtilities"> <span>공지사항</span>
 				</a></li>
 				<!-- Nav Item - Utilities Collapse Menu -->
-				<li class="nav-item"><a class="nav-link collapsed on"
-					href="/board/boardList" data-target="#collapseUtilities"
-					aria-expanded="true" aria-controls="collapseUtilities"> <span>사내게시판</span>
-				</a></li>
-				<li class="nav-item">
-					<a class="nav-link" href="/vote/vote" >
-						<span>투표 게시판</span>
-					</a>
-				</li>
+	            <li class="nav-item">
+	               <a class="nav-link" href="/vote/vote" >
+	                  <span>투표 게시판</span>
+	               </a>
+	            </li>
 				
 				<hr class="sidebar-divider">
 			</ul>
@@ -107,14 +106,13 @@
 
 				<hr style="clear: both;">
 				<div class="bonmun">
-					<p th:text="${ boardDetail.regDate }"></p>
-					<p th:if="${ boardDetail.no } == 1"
-						th:text="[공지]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
-					<p th:if="${ boardDetail.no } == 2"
-						th:text="[사내게시판]  + '&nbsp;&nbsp' + ${ boardDetail.title } "></p>
+					<p th:text="${ '작성자 : ' + boardDetail.member.name }"></p>
+					<p th:text="${ '작성일 : ' + boardDetail.regDate }"></p>
+					<hr>
 					<br>
 					<div class="realBonmun">
-						<p th:text="${ boardDetail.content }"></p>
+						<p th:utext="${ #strings.replace(boardDetail.content,'
+','<br>') }"></p>
 					</div>
 				</div>
 				<hr style="clear: both;">
@@ -123,7 +121,7 @@
 
 				<h5 class="comment_title" style="font-weight: bold">댓글</h5>
 
-				<div class="comments mb-2" style="background-color: #b6e8fd;" th:each="ad : ${ boardDetail.commentList } " th:attr="id=${'comment' + ad.no}">
+				<div class="comments mb-2 pb-4" style="background-color: #b6e8fd;" th:each="ad : ${ boardDetail.commentList } " th:attr="id=${'comment' + ad.no}">
 					<p class="comment_info_date" style="float: right;" th:text="${ ad.date }"></p>
 					<div class="row"><!-- 댓글 내용만 들어가게 -->
 						<th:block th:if="${ ad.depth != 0 } ">
@@ -134,7 +132,6 @@
 								</div>
 							</th:block>
 						</th:block>
-	
 						<div class="comment_text_box col">
 							<p class="comment_nickname">
 							<span th:if="${ boardDetail.member.name == ad.member.name }"
@@ -143,35 +140,65 @@
 								th:utext="${ ad.member.name }"></span>
 							</p>
 							<p class="comment_text_view">
-								<span class="text_comment" th:utext="${#strings.replace(ad.content,'
-','<br>')} "></span>
+								<span class="text_comment" th:utext="${#strings.replace(ad.content,'&#10;','&lt;br&gt;')} "></span>
 							</p>
 						</div>
 					</div>
-					<div class="comment_info_box">
-						<a href="#" role="button" class="comment_info_button"
-							style="float: right;">답글쓰기</a>
-						<hr class="mt-0">
+					<hr class="mt-0">
+				    <button class="ml-3 reply_btn pop_btn" style="font-size: 13px; float: right; " data-button="reply_comment_pop" id="comment" th:value="${ad.no}">답글</button>
+				    
+					<button th:if="${#authentication.name} == ${ad.member.name}" type="button" class="ml-3 delete_btn" style="font-size: 13px; float: right;" th:attr="onclick=|location.href='/board/deleteComment?no=${ ad.no }&detail=${boardDetail.no}'|">삭제</button>
+		
 					</div>
+			<!-- 답글 쓰기 팝업 -->
+			<div id="reply_comment_pop" class="pop_layer new_comment_pop">
+				<div class="top_area">
+					<h2>답글</h2>
+					<button type="button" class="pop_close close_reply" data-button="reply_comment_pop">닫기</button>
 				</div>
-
-
-				<br>
-				<div class="comment_inbox">
-					<br> <a id="cih75070218" href="#" role="button"
-						aria-haspopup="true" aria-expanded="false"
-						class="comment_nickname" style="margin-left: 20px;">본사: 런닝맨</a>
-					<button type="button" class="inbox_btn"
-						style="float: right; margin: 50px;">등록</button>
-					<div class="comment_text">
-						<textarea placeholder="댓글을 남겨보세요" class="comment_inbox_text"
-							style="margin-left: 10px; border: none; resize: none; width: 750px; height: 70px; margin: 20px; outline-style: none;"></textarea>
-					</div>
+				<div class="pop_inner">
+					<textarea id="reply_content" class="commnet_content_text" name="content"></textarea>
+				</div>
+				<div class="btn_area ac">
+					<input name="no" type="hidden" >
+					<button id="recoment" type="button" class="blue_btn pop_close reply_comment mr-1" data-button="reply_comment_pop" >작성</button>
+					<a id="close_btn_reply_comment" class="gray_btn pop_close close_reply" style="cursor: pointer;" data-button="reply_comment_pop">닫기</a>
 				</div>
 			</div>
+			
+			<!-- 신규 댓글 작성 -->
+				<br>
+				<form action="/board/addComment" method="post">
+					<div class="comment_inbox" th:each="ad : ${ boardDetail } ">
+						<br>
+						<a id="cih75070218" class="comment_nickname" style="margin-left: 20px;"
+							th:utext="${ #authentication.principal.name }"></a>
+						<button type="submit" class="inbox_btn"	style="float: right; margin: 20px;">등록</button>
+					  	<div class="comment_text"> 
+					  		<input type="hidden" name="no" th:value="${ ad.no }">
+							<textarea placeholder="댓글을 남겨보세요" class="comment_inbox_text" name="content"
+								style="margin-left: 10px; border: none; resize: none; width: 750px; height: 70px; margin: 20px; outline-style: none;"></textarea>
+						</div>
+					</div>
+			</form>
 		</div>
 	</section>
 	
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+	<script>
+ 		let refid;
+ 		$(".reply_btn").click(function(){ 
+ 			refid=$(this).val();
+ 			console.log(refid);
+ 		});
+ 		
+ 		$("#close_btn_reply_comment").click(function() {
+ 			$("#reply_content").val("");
+ 		});
+ 		
+ 		$("#recoment").click(function(){ 
+ 			location.href="/board/replyComment?no="+refid+"&content="+$("#reply_content").val();
+ 		});
+ 	
+	</script>
 </body>
 </html>

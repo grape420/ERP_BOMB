@@ -24,7 +24,7 @@ public class BoardDAO {
 	
 	/* 사내게시판 리스트 */ 
 	public List<BoardDTO> findBoardList() {
-		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 2 ORDER BY m.no ASC";	
+		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 2 ORDER BY m.no DESC";	
 		   TypedQuery<BoardDTO> query = em.createQuery(jpql,BoardDTO.class);
 		   List<BoardDTO> boardList = query.getResultList();
 		   return boardList;
@@ -52,7 +52,7 @@ public class BoardDAO {
 	
 	/* 공지사항 리스트 */ 
 	public List<BoardDTO> findNoticeList() {
-		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 1 ORDER BY m.no ASC";
+		   String jpql = "SELECT m FROM BoardDTO as m WHERE m.category = 1 ORDER BY m.no DESC";
 		   TypedQuery<BoardDTO> query = em.createQuery(jpql,BoardDTO.class); 
 		   List<BoardDTO> noticeList = query.getResultList();
 		   return noticeList;
@@ -78,34 +78,37 @@ public class BoardDAO {
 
 	/* 사내게시판 대댓글 */ 
 	public CommentDTO replyComment(CommentDTO replyCm) {
-		CommentDTO eaCm = em.find(CommentDTO.class, replyCm.getRefNo().getNo());
+		CommentDTO reCm = em.find(CommentDTO.class, replyCm.getRefNo().getNo());
 		
-		replyCm.setRefNo(eaCm);
-		replyCm.setBoard(eaCm.getBoard());
+		System.out.println("돌아가냐?");
+		replyCm.setRefNo(reCm);
+		replyCm.setBoard(reCm.getBoard());
 		replyCm.setMember(em.find(MemberDTO.class, replyCm.getMember().getName()));
-		replyCm.setDepth(eaCm.getDepth() + 1);
-		replyCm.setLength(eaCm.getLength() + 1);
+		replyCm.setDepth(reCm.getDepth() + 1);
+		replyCm.setLength(reCm.getLength() + 1);
 		
-		String jpql = "SELECT a FROM CommentDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
-		List<CommentDTO> adList = em.createQuery(jpql, CommentDTO.class).setParameter("no", eaCm.getBoard().getNo()).getResultList();
+		String jpql = "SELECT a FROM CommentDTO as a WHERE a.board.no = :no ORDER BY a.length";
+		List<CommentDTO> adList = em.createQuery(jpql, CommentDTO.class).setParameter("no", reCm.getBoard().getNo()).getResultList();
 		
 		replyCm.getBoard().getMember().getName();
 		replyCm.getMember().getName();
 		
 		for(CommentDTO ad : adList) { 
-			if(eaCm.getLength() < ad.getLength()) { 
+			if(reCm.getLength() < ad.getLength()) { 
 				ad.setLength(ad.getLength() +1);
+				System.out.println("ad : " + ad);
 			}
 		}
 		em.persist(replyCm);
+		
 		return replyCm;
 	}
-
+	/* 사내게시판 댓글 입력*/
 	public CommentDTO addComment(CommentDTO addAd) {
 		addAd.setBoard(em.find(BoardDTO.class, addAd.getBoard().getNo()));
 		addAd.setMember(em.find(MemberDTO.class, addAd.getMember().getName()));
 		
-		String jpql = "SELECT a FROM CommentDTO as a WHERE a.ea.serialNo = :no ORDER BY a.length";
+		String jpql = "SELECT a FROM CommentDTO as a WHERE a.board.no = :no ORDER BY a.length";
 		List<CommentDTO> adList = em.createQuery(jpql, CommentDTO.class).setParameter("no", addAd.getBoard().getNo()).getResultList();
 		
 		addAd.setLength(adList.size() + 1);
@@ -126,5 +129,6 @@ public class BoardDAO {
 		ad.setMember(null);
 		ad.setBoard(null);
 		em.remove(ad);
+		
 	}
 }

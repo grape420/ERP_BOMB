@@ -37,6 +37,8 @@ public class MemberService implements UserDetailsService {
 
 		if (member == null) {
 			member = new MemberDTO();
+		} else if(member.getEntYn().equals("Y")) {
+			member = new MemberDTO();
 		}
 
 		List<GrantedAuthority> authorities = new ArrayList<>();

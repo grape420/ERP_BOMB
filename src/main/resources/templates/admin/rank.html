@@ -17,9 +17,10 @@
 <link th:href="@{/uses/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <link th:href="@{/uses/css/sb-admin-2.min.css}" rel="stylesheet">
 <link th:href="@{/uses/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/inventory/inventory.css}">
+<!-- 여기에 페이지 css파일 적용 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"><!-- dataTable -->
 <title>ERP BOMB</title>
 </head>
 <body>
@@ -49,13 +50,7 @@
 	                  <a class="nav-link font-weight-bold" href="/salary/salary">급여관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/sp/sp">퇴직금</a>
-	               </li>
-	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inventory/inventory">재고 관리</a>
-	               </li>
-	               <li class="nav-item mr-3">
-	                  <a class="nav-link font-weight-bold" href="/tna/tna">근태 관리</a>
 	               </li>
 	               <li class="nav-item mr-3">
 	                  <a class="nav-link font-weight-bold" href="/inOut/inOut">입출고</a>
@@ -109,6 +104,12 @@
 					<a class="nav-link mt-1" href="/admin/document">
 						<span>문서 관리</span>
 					</a>
+					<a class="nav-link mt-1" href="/admin/salary">
+						<span>급여 관리</span>
+					</a>
+					<a class="nav-link mt-1" href="/admin/tna">
+						<span>근태 관리</span>
+					</a>
 				</li>
 
 
@@ -138,8 +139,8 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th>부서 번호</th>
-										<th>부서 이름</th>
+										<th>직급 번호</th>
+										<th>직급 명</th>
 									</tr>
 								</thead>
 								<tbody>
