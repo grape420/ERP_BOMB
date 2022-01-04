@@ -49,9 +49,25 @@ public class EADTO implements Serializable, Comparable<EADTO> {
 	@Column(name = "EA_CONTENT")
 	private String content;
 	
+	/*
+	 * 결재 상태를 보여주는 컬럼
+	 * 1 : 결재 중
+	 * 2 : 결재 완료
+	 * 3 : 결재 반려
+	 * 4 : 임시 저장
+	 */
 	@Column(name = "EA_STATUS")
 	private int eaStatus;
 	
+	/*
+	 * 현재 사용자가 결재 문서에 사용할 기능을 구분하는 속성
+	 * 같은 결재 문서여도 사용자마다 기능이 구분되어있어 DB 컬럼에서는 제외 함
+	 * 결재 라인과 결재 상태에 따라서 Controller에서 속성의 값을 결정 함
+	 * 1 : 결재, 반려(접속자가 결재 순번)
+	 * 2 : 결재 취소(접속자가 결재를 하고 다음 결재자가 결재/반려를 하지 않음)
+	 * 3 : 결재 취소(접속자가 기안자이면서 처음 결재자가 결재/반려를 하지 않음)
+	 * 4 : 없음(자신이 결재/반려/결재 취소를 하는 결재 순번이 아니거나 참조자)
+	 */
 	@Transient
 	private int saveNo;
 	
