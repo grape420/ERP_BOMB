@@ -381,11 +381,15 @@ public class EaContorller {
 		adMember.setName(addAd.getMember().getName());
 		
 		addAd.setAddendumList(null);
+		addAd.setAddendumList(null);
 		addAd.setEa(ea);
 		addAd.setMember(adMember);
 		addAd.setRefNo(null);
 		
 		return addAd;
+		
+		/* test */
+		
 	}
 	
 	private List<EADTO> eaSort(List<EADTO> eaList) {
