@@ -393,6 +393,7 @@ public class EaContorller {
 			Collections.sort(ea.getEaApprovalPathList());
 			Collections.sort(ea.getAddendumList());
 		}
+		
 		return eaList;
 	}
 	
