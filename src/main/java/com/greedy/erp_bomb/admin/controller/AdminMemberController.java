@@ -80,7 +80,7 @@ public class AdminMemberController {
 			return true;
 		}
 	}
-	
+	 
 	@PostMapping("/signup")
 	public ModelAndView registMember(ModelAndView mv, @RequestParam int companyCode, @RequestParam int deptCode, @RequestParam int rankCode, @ModelAttribute MemberDTO member) {
 		String encodePassword = passwordEncoder.encode(member.getPwd());
